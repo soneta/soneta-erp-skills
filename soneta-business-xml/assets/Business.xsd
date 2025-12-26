@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-16"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns="http://www.enova.pl/schema/business_struct.xsd" targetNamespace="http://www.enova.pl/schema/business_struct.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:simpleType name="RequiredType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value="noverified"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReadonlyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value="set"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocalizationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="dictionary"/>
+			<xs:enumeration value="db"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="module">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="import" type="xs:string" />
+					<xs:element name="using" type="xs:string" />
+					<xs:element name="customcode" type="xs:string" />
+					<xs:element name="simpletype">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:choice maxOccurs="unbounded">
+									<xs:element name="cstype" type="xs:string" />
+									<xs:element name="cscreator" type="xs:string" />
+									<xs:element name="csinitializer" type="xs:string" />
+									<xs:element name="nullcondition" type="xs:string" />
+									<xs:element name="null" type="xs:string" />
+									<xs:element name="attribute" type="xs:string" />
+									<xs:element name="setter" type="xs:string" />
+									<xs:element maxOccurs="unbounded" name="dbfield">
+										<xs:complexType>
+											<xs:attribute name="type" type="xs:string" use="required" />
+											<xs:attribute name="postfix" type="xs:string" use="optional" />
+										</xs:complexType>
+									</xs:element>
+								</xs:choice>
+							</xs:sequence>
+							<xs:attribute name="name" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" name="subrow">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="key" type="keyType">
+								</xs:element>
+								<xs:element minOccurs="0" maxOccurs="unbounded" name="col" type="colType">
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="name" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="enum">
+						<xs:complexType>
+							<xs:attribute name="name" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="interface">
+						<xs:complexType>
+							<xs:attribute name="name" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="table">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:choice maxOccurs="unbounded">
+									<xs:element maxOccurs="unbounded" name="interface" type="xs:string" />
+									<xs:element maxOccurs="unbounded" name="key" type="keyType">
+									</xs:element>
+									<xs:element maxOccurs="unbounded" name="col" type="colType"></xs:element>
+								</xs:choice>
+							</xs:sequence>
+							<xs:attribute name="name" type="xs:string" use="required" />
+							<xs:attribute name="tablename" type="xs:string" use="required" />
+							<xs:attribute name="warnings" type="xs:string" use="optional" />
+							<xs:attribute name="name8" type="xs:string" use="optional" />
+							<xs:attribute name="guided" type="xs:string" use="optional" />
+							<xs:attribute name="config" type="xs:boolean" use="optional" />
+							<xs:attribute name="caption" type="xs:string" use="optional" />
+							<xs:attribute name="tablecaption" type="xs:string" use="optional" />
+							<xs:attribute name="namespace" type="xs:string" use="optional" />
+							<xs:attribute name="lock" type="xs:string" use="optional" />
+							<xs:attribute name="cached" type="xs:boolean" use="optional" />
+							<xs:attribute name="timestamp" type="xs:boolean" use="optional" />
+							<xs:attribute name="optimisticlocking" type="xs:boolean" use="optional" />
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required" />
+			<xs:attribute name="namespace" type="xs:string" use="required" />
+			<xs:attribute name="versionName" type="xs:string" use="required" />
+			<xs:attribute name="versionNumber" type="xs:int" default="0" use="optional" />
+			<xs:attribute name="snapshotsDb" type="xs:boolean" default="false" use="optional" />
+			<xs:attribute name="internal" type="xs:boolean" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:complexType name="colType">
+		<xs:sequence minOccurs="0">
+			<xs:choice maxOccurs="unbounded">
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="attribute" type="xs:string" />
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="verifier">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required" />
+						<xs:attribute name="onadded" type="xs:boolean" use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="keycol">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="keyinclude">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="type" type="xs:string" use="required" />
+		<xs:attribute name="readonly" type="ReadonlyType" use="optional" />
+		<xs:attribute name="required" type="RequiredType" use="optional" />
+		<xs:attribute name="localization" type="LocalizationType" use="optional" />
+		<xs:attribute name="setonlynull" type="xs:boolean" use="optional" />
+		<xs:attribute name="reldefault" type="xs:boolean" use="optional" />
+		<xs:attribute name="keyunique" type="xs:boolean" use="optional" />
+		<xs:attribute name="relname" type="xs:string" use="optional" />
+		<xs:attribute name="relguided" type="xs:string" use="optional" />
+		<xs:attribute name="delete" type="xs:string" use="optional" />
+		<xs:attribute name="length" type="xs:unsignedInt" use="optional" />
+		<xs:attribute name="category" type="xs:string" use="optional" />
+		<xs:attribute name="modifier" type="xs:string" use="optional" />
+		<xs:attribute name="selector" type="xs:boolean" use="optional" />
+		<xs:attribute name="batchfield" type="xs:boolean" use="optional" />
+		<xs:attribute name="children" type="xs:string" use="optional" />
+		<xs:attribute name="childrenclass" type="xs:string" use="optional" />
+		<xs:attribute name="name12" type="xs:string" use="optional" />
+		<xs:attribute name="cstype" type="xs:string" use="optional" />
+		<xs:attribute name="relright" type="xs:boolean" use="optional" />
+		<xs:attribute name="fulltext" type="xs:boolean" use="optional" />
+		<xs:attribute name="description" type="xs:string" use="optional" />
+		<xs:attribute name="caption" type="xs:string" use="optional" />
+		<xs:attribute name="keyclass" type="xs:string" use="optional" />
+		<xs:attribute name="keyclasscol" type="xs:string" use="optional" />
+		<xs:attribute name="keyprimary" type="xs:boolean" use="optional" />
+		<xs:attribute name="lock" type="xs:string" use="optional" />
+		<xs:attribute name="important" type="xs:boolean" use="optional" />
+		<xs:attribute name="specialaccess" type="xs:boolean" use="optional" />
+	</xs:complexType>
+
+
+	<xs:complexType name="keyType">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element maxOccurs="unbounded" name="keycol">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="keyinclude">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="keyunique" type="xs:boolean" use="optional" />
+		<xs:attribute name="keyprimary" type="xs:boolean" use="optional" />
+		<xs:attribute name="keyclass" type="xs:string" use="optional" />
+		<xs:attribute name="keyclasscol" type="xs:string" use="optional" />
+		<xs:attribute name="lock" type="xs:string" use="optional" />
+	</xs:complexType>
+
+
+</xs:schema>
