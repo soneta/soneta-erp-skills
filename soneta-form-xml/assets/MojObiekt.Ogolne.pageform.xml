@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Szablon: Zakładka formularza (pageform.xml)
+  
+  Format nazwy pliku: {DataType}.{PageName}.pageform.xml
+  Przykłady:
+    - Towar.Ogolne.pageform.xml
+    - Kontrahent.Adresy.pageform.xml
+    - Zamowienie.Pozycje.pageform.xml
+-->
+<DataForm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+          xmlns="http://www.enova.pl/schema/form.xsd"
+          xsi:schemaLocation="http://www.enova.pl/schema/ http://www.enova.pl/schema/form.xsd"
+          Priority="10">
+  
+  <Page CaptionHtml="Ogólne" DataContext="{DataSource}">
+    
+    <!-- Grupa z polami w jednej kolumnie -->
+    <Group CaptionHtml="Dane podstawowe">
+      <Field CaptionHtml="Kod" Width="20" EditValue="{Kod}" />
+      <Field CaptionHtml="Nazwa" Width="*" EditValue="{Nazwa}" />
+      <Row>
+        <Field CaptionHtml="Data utworzenia" Width="15" EditValue="{DataUtworzenia}" />
+        <Field CaptionHtml="Status" Width="15" EditValue="{Status}" />
+      </Row>
+    </Group>
+    
+    <!-- Grupa z układem dwukolumnowym -->
+    <Group CaptionHtml="Dane szczegółowe">
+      <Row>
+        <Stack>
+          <Field CaptionHtml="Typ" Width="15" EditValue="{Typ}" />
+          <Field CaptionHtml="Kategoria" Width="20" EditValue="{Kategoria}" />
+        </Stack>
+        <Stack>
+          <Field CaptionHtml="Źródło" Width="15" EditValue="{Zrodlo}" />
+          <Field CaptionHtml="Priorytet" Width="10" EditValue="{Priorytet}" />
+        </Stack>
+      </Row>
+    </Group>
+    
+    <!-- Grupa z listą pozycji -->
+    <Group CaptionHtml="Pozycje">
+      <Grid Width="*" Height="*" 
+            EditValue="{Pozycje}" 
+            IsToolbarVisible="true"
+            EditInPlace="true"
+            NewInPlace="true">
+        <Field CaptionHtml="Lp" Width="5" EditValue="{Lp}" />
+        <Field CaptionHtml="Opis" Width="*" EditValue="{Opis}" />
+        <Field CaptionHtml="Ilość" Width="10" EditValue="{Ilosc}" Footer="Sum" />
+        <Field CaptionHtml="Wartość" Width="15" EditValue="{Wartosc}" Footer="Sum" />
+      </Grid>
+    </Group>
+    
+  </Page>
+</DataForm>

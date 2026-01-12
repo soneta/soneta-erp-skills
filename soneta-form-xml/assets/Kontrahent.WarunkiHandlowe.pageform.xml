@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Szablon: Zakładka z warunkami handlowymi
+  
+  Plik: Kontrahent.WarunkiHandlowe.pageform.xml
+  
+  Zawiera przykłady: Row, Gap, Command, Grid z rachunkami bankowymi
+-->
+<DataForm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+          xmlns="http://www.enova.pl/schema/form.xsd"
+          xsi:schemaLocation="http://www.enova.pl/schema/ http://www.enova.pl/schema/form.xsd"
+          Priority="20">
+  
+  <Page CaptionHtml="Warunki handlowe" DataContext="{DataSource}">
+    
+    <!-- Warunki płatności -->
+    <Group CaptionHtml="Warunki płatności">
+      <Row>
+        <Field CaptionHtml="Sposób płatności" Width="20" EditValue="{SposobZaplaty}" />
+        <Field CaptionHtml="Termin (dni)" Width="10" EditValue="{Termin}" />
+      </Row>
+      <Row>
+        <Field CaptionHtml="Waluta" Width="10" EditValue="{Waluta}" />
+        <Field CaptionHtml="Domyślny płatnik" Width="*" EditValue="{Platnik}" />
+        <!-- Przyciski akcji -->
+        <Command CaptionHtml="Dodaj" Width="8" MethodName="Dodaj" 
+                 DataContext="{new PlatnikExtender}" Visibility="{IsVisibleDodaj}" />
+        <Command CaptionHtml="Usuń" Width="8" MethodName="Usun" 
+                 DataContext="{new PlatnikExtender}" Visibility="{IsVisibleUsun}" />
+      </Row>
+    </Group>
+    
+    <!-- Limity kredytowe -->
+    <Group CaptionHtml="Limity">
+      <Row>
+        <Field CaptionHtml="Blokada sprzedaży" Width="8" Class="LeftAlign" EditValue="{BlokadaSprzedazy}" />
+      </Row>
+      <Row>
+        <Field CaptionHtml="Limit kredytu" Width="18" EditValue="{TypLimitu}" />
+        <Field CaptionHtml="" Width="15" EditValue="{LimitKredytu}" />
+        <Field CaptionHtml="Dostępny" Width="15" EditValue="{LimitDostepny}" 
+               Visibility="{new LimitExtender.IsVisible()}" />
+      </Row>
+    </Group>
+    
+    <!-- Rachunki bankowe - tabela -->
+    <Group CaptionHtml="Rachunki bankowe">
+      <Grid Width="*" Height="*" 
+            EditValue="{Rachunki}" 
+            IsToolbarVisible="true"
+            NewInPlace="true"
+            EditInPlace="true">
+        <Field CaptionHtml="Bank" Width="25" EditValue="{Rachunek.Bank}" />
+        <Field CaptionHtml="Numer rachunku" Width="35" EditValue="{Rachunek.Numer}" />
+        <Field CaptionHtml="Domyślny" Width="8" EditValue="{Domyslne}" />
+        <Field CaptionHtml="Status" Width="15" EditValue="{Status}" />
+      </Grid>
+    </Group>
+    
+  </Page>
+</DataForm>
