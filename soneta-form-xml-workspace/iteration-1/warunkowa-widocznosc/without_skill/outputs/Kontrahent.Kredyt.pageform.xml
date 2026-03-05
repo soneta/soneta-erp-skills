@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kontrahent.Kredyt.pageform.xml
+     Przykład warunkowej widoczności pól w enova365 za pomocą wyrażeń RowCondition/Renderable.
+     Obiekt biznesowy: Kontrahent (moduł Handel)
+-->
+<Form
+  xmlns="http://www.enova.pl/schema/Form.xsd"
+  Caption="Kredyt kontrahenta"
+  Domain="Handel"
+  Class="Kontrahent"
+  View="Kredyt">
+
+  <!-- ============================================================
+       ŹRÓDŁO DANYCH
+       ============================================================ -->
+  <DataSources>
+    <DataSource Name="Kontrahent" Class="Kontrahent" />
+  </DataSources>
+
+  <!-- ============================================================
+       KONTROLKI / LAYOUT
+       ============================================================ -->
+  <Controls>
+
+    <!-- ──────────────────────────────────────────────────────────
+         1. Pole 'LimitKredytu' widoczne tylko gdy TypKlienta = 'Korporacyjny'
+            Użycie atrybutu RowCondition z wyrażeniem porównania wartości enumeracji/stringa.
+         ────────────────────────────────────────────────────────── -->
+    <Edit
+      Name="LimitKredytu"
+      Caption="Limit kredytu"
+      Source="Kontrahent.LimitKredytu"
+      RowCondition="Kontrahent.TypKlienta = 'Korporacyjny'"
+      Visible="True" />
+
+    <!--
+      Uwaga: atrybut RowCondition przyjmuje wyrażenie ewaluowane przez silnik
+      wyrażeń Soneta (podobne do SQL WHERE). Gdy warunek jest False, wiersz
+      (kontrolka) jest ukrywany – odpowiednik Visible=False ustawianego
+      dynamicznie w runtime.
+    -->
+
+
+    <!-- ──────────────────────────────────────────────────────────
+         2. Pole 'WarunkiSpecjalne' widoczne gdy Status = 'Premium' LUB Status = 'VIP'
+            Łączenie warunków operatorem OR (w Soneta: słowo kluczowe OR lub ||).
+         ────────────────────────────────────────────────────────── -->
+    <Edit
+      Name="WarunkiSpecjalne"
+      Caption="Warunki specjalne"
+      Source="Kontrahent.WarunkiSpecjalne"
+      RowCondition="Kontrahent.Status = 'Premium' OR Kontrahent.Status = 'VIP'"
+      Visible="True" />
+
+    <!--
+      Alternatywna forma z nawiasami (zalecana dla czytelności):
+        RowCondition="(Kontrahent.Status = 'Premium') OR (Kontrahent.Status = 'VIP')"
+    -->
+
+
+    <!-- ──────────────────────────────────────────────────────────
+         3. Pole 'OstrzezenieBranze' widoczne gdy NIE Status = 'Aktywny'
+            Negacja warunku – operator NOT lub <>  (różne od).
+         ────────────────────────────────────────────────────────── -->
+    <Edit
+      Name="OstrzezenieBranze"
+      Caption="Ostrzeżenie branży"
+      Source="Kontrahent.OstrzezenieBranze"
+      RowCondition="NOT (Kontrahent.Status = 'Aktywny')"
+      Visible="True" />
+
+    <!--
+      Równoważna postać z operatorem nierówności:
+        RowCondition="Kontrahent.Status &lt;&gt; 'Aktywny'"
+      W XML znaki < i > muszą być escapowane jako &lt; i &gt;.
+    -->
+
+
+    <!-- ──────────────────────────────────────────────────────────
+         4. Przycisk Command widoczny gdy ObrotyRoczne > 0
+            Dla warunków numerycznych zalecane jest mapowanie na właściwość bool
+            po stronie C# (np. MaObroty : bool { get => ObrotyRoczne > 0; })
+            i użycie jej w RowCondition lub WorkCondition.
+
+            Wariant A – bezpośrednie wyrażenie numeryczne w RowCondition:
+         ────────────────────────────────────────────────────────── -->
+    <Command
+      Name="PrzeliczKredyt"
+      Caption="Przelicz limit kredytu"
+      Action="Kontrahent.PrzeliczKredyt"
+      RowCondition="Kontrahent.ObrotyRoczne &gt; 0" />
+
+    <!--
+      Wariant B – użycie właściwości bool z obiektu biznesowego (ZALECANE):
+        <Command
+          Name="PrzeliczKredyt"
+          Caption="Przelicz limit kredytu"
+          Action="Kontrahent.PrzeliczKredyt"
+          WorkCondition="Kontrahent.MaObroty" />
+
+      WorkCondition kontroluje AKTYWNOŚĆ (enabled) przycisku,
+      RowCondition kontroluje WIDOCZNOŚĆ (visible).
+      Można stosować oba jednocześnie.
+
+      Wariant C – oba atrybuty razem:
+        <Command
+          Name="PrzeliczKredyt"
+          Caption="Przelicz limit kredytu"
+          Action="Kontrahent.PrzeliczKredyt"
+          RowCondition="Kontrahent.ObrotyRoczne &gt; 0"
+          WorkCondition="Kontrahent.MaObroty" />
+    -->
+
+
+    <!-- ──────────────────────────────────────────────────────────
+         5. Grupa 'Dane zaawansowane' – zwijalna (Collapsable) z Renderable
+            uzależnionym od licencji.
+
+            Collapsable="True"  – pozwala użytkownikowi zwinąć grupę w UI.
+            Renderable           – wyrażenie decydujące, czy kontrolka jest w ogóle
+                                   renderowana (silniejsze niż Visible: nie zajmuje
+                                   miejsca w DOM formularza gdy False).
+                                   Tu: sprawdzamy dostępność modułu/licencji
+                                   przez wywołanie metody pomocniczej lub właściwość
+                                   sesji, np. Session.IsModuleAvailable('CRM').
+         ────────────────────────────────────────────────────────── -->
+    <Group
+      Name="DaneZaawansowane"
+      Caption="Dane zaawansowane"
+      Collapsable="True"
+      Collapsed="False"
+      Renderable="Session.Features.IsAvailable('Kontrahent.DaneZaawansowane')">
+
+      <!-- Pola wewnątrz grupy zaawansowanej -->
+      <Edit
+        Name="KategoriaRyzyka"
+        Caption="Kategoria ryzyka"
+        Source="Kontrahent.KategoriaRyzyka" />
+
+      <Edit
+        Name="SkorKredytowy"
+        Caption="Skor kredytowy"
+        Source="Kontrahent.SkorKredytowy" />
+
+      <Edit
+        Name="DataOstatnejWeryfikacji"
+        Caption="Data ostatniej weryfikacji"
+        Source="Kontrahent.DataOstatnejWeryfikacji" />
+
+    </Group>
+
+    <!--
+      Uwaga do Renderable:
+        – Gdy Renderable = False, kontrolka NIE jest tworzona w ogóle (brak węzła w drzewie UI).
+        – Gdy Visible = False lub RowCondition = False, kontrolka istnieje, ale jest ukryta.
+        – Renderable jest lepsze dla elementów zależnych od licencji/uprawnień,
+          ponieważ eliminuje element z drzewa renderowania.
+
+      Przykładowe wyrażenia Renderable uzależnione od licencji:
+        Renderable="Session.IsLicensed('ModulCRM')"
+        Renderable="Session.Rights.HasFeature('KredytKorporacyjny')"
+        Renderable="App.Configuration.GetBool('pokazDaneZaawansowane')"
+    -->
+
+  </Controls>
+
+</Form>

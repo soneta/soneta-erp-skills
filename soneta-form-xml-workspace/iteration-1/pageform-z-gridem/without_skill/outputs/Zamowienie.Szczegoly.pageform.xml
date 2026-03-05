@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PageForm xmlns="http://www.enova.pl/schemas/form">
+  <PageForm.Priority>10</PageForm.Priority>
+  <PageForm.Groups>
+    <Group Name="Dane podstawowe">
+      <Group.Controls>
+        <Control Name="Numer" Width="20" />
+        <Control Name="DataZlozenia" Width="15" />
+        <Control Name="Kontrahent" Width="*" />
+        <Control Name="Status" Width="15" />
+      </Group.Controls>
+    </Group>
+    <Group Name="Warunki">
+      <Group.Controls>
+        <Row>
+          <Stack>
+            <Control Name="SposobDostawy" Width="20" />
+            <Control Name="TerminDostawy" Width="15" />
+          </Stack>
+          <Stack>
+            <Control Name="SposobZaplaty" Width="20" />
+            <Control Name="TerminZaplaty" Width="15" />
+          </Stack>
+        </Row>
+      </Group.Controls>
+    </Group>
+    <Group Name="Pozycje">
+      <Group.Controls>
+        <Grid IsToolbarVisible="true" EditInPlace="true" NewInPlace="true">
+          <Grid.Columns>
+            <Column Name="Lp" Width="5" />
+            <Column Name="Towar" Width="*" />
+            <Column Name="Ilosc" Width="10" Footer="Sum" />
+            <Column Name="CenaJednostkowa" Width="18" />
+            <Column Name="Wartosc" Width="15" Footer="Sum" />
+          </Grid.Columns>
+        </Grid>
+      </Group.Controls>
+    </Group>
+  </PageForm.Groups>
+</PageForm>

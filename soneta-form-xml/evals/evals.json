@@ -1,0 +1,49 @@
+{
+  "skill_name": "soneta-form-xml",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Utwórz plik Zamowienie.Szczegoly.pageform.xml dla platformy enova365. Zakładka powinna zawierać:\n- Grupę 'Dane podstawowe' z polami: Numer (szerokość 20), DataZlozenia (szerokość 15), Kontrahent (szerokość *), Status (szerokość 15)\n- Grupę 'Warunki' z układem dwukolumnowym (Row > Stack): lewa kolumna ma SposobDostawy (20) i TerminDostawy (15), prawa kolumna ma SposobZaplaty (20) i TerminZaplaty (15)\n- Grupę 'Pozycje' z Grid (IsToolbarVisible, EditInPlace, NewInPlace) i kolumnami: Lp (5), Towar (*), Ilosc (10) z Footer=Sum, CenaJednostkowa (18), Wartosc (15) z Footer=Sum\nPriority zakładki: 10.",
+      "expected_output": "Poprawny plik XML pageform.xml z deklaracją XML, elementem DataForm z atrybutami xmlns i Priority=10, elementem Page z DataContext={DataSource}, trzema grupami z odpowiednimi polami i gridem. Plik powinien być gotowy do użycia w projekcie enova365.",
+      "files": [],
+      "assertions": [
+        "Plik zaczyna się od <?xml version=\"1.0\" encoding=\"utf-8\"?>",
+        "Element DataForm ma atrybut Priority=\"10\"",
+        "Element Page ma atrybut DataContext=\"{DataSource}\"",
+        "Są trzy elementy Group: 'Dane podstawowe', 'Warunki', 'Pozycje'",
+        "Układ dwukolumnowy w grupie Warunki używa Row zawierającego Stack",
+        "Element Grid ma atrybuty IsToolbarVisible=\"true\", EditInPlace=\"true\", NewInPlace=\"true\"",
+        "Pola Ilosc i Wartosc w Grid mają atrybut Footer=\"Sum\"",
+        "Binding pól używa składni {NazwaPola} w cudzysłowie"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Stwórz plik Pracownicy.viewform.xml dla widoku listy pracowników w enova365. Widok listy powinien zawierać kolumny: Kod (8), NazwiskoImie (30), NumerPracownika (20), Dzial (*), Stanowisko (20), DataZatrudnienia (15). Domyślne sortowanie po NazwiskoImie. Dodaj IsToolbarVisible i IsFilterRowVisible. Zachowaj właściwą strukturę pliku viewform.xml.",
+      "expected_output": "Poprawny plik viewform.xml z elementem DataForm (bez Page), elementem Grid z kolumnami i sortowaniem OrderBy=\"NazwiskoImie\". Plik zgodny ze standardem enova365.",
+      "files": [],
+      "assertions": [
+        "Plik ma poprawną deklarację XML",
+        "Element DataForm ma xmlns=\"http://www.enova.pl/schema/form.xsd\"",
+        "Jest element Grid z EditValue lub bez (dla widoku listy)",
+        "Grid ma atrybut OrderBy=\"NazwiskoImie\"",
+        "Grid ma IsToolbarVisible=\"true\" i IsFilterRowVisible=\"true\"",
+        "Są kolumny Field dla: Kod, NazwiskoImie, NumerPracownika, Dzial, Stanowisko, DataZatrudnienia",
+        "Pole Dzial ma Width=\"*\""
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Pokaż jak w pageform.xml enova365 zastosować warunkową widoczność pól używając wyrażeń RowCondition. Stwórz przykładowy plik Kontrahent.Kredyt.pageform.xml z następującymi wzorcami:\n1. Pole 'LimitKredytu' widoczne tylko gdy TypKlienta='Korporacyjny'\n2. Pole 'WarunkiSpecjalne' widoczne gdy Status='Premium' LUB Status='VIP'\n3. Pole 'OstrzezenieBranze' widoczne gdy NIE Status='Aktywny'\n4. Przycisk Command widoczny gdy ObrotyRoczne > 0 (użyj WorkCondition lub własność bool)\n5. Cała Grupa 'Dane zaawansowane' zwijalna (Collapsable) z Renderable uzależnionym od licencji",
+      "expected_output": "Plik pageform.xml demonstrujący różne wzorce warunkowej widoczności: Visibility=\"{?TypKlienta=Korporacyjny}\", Visibility=\"{?Status=Premium or Status=VIP}\", Visibility=\"{?!Status=Aktywny}\", użycie klasy Collapsable dla grupy.",
+      "files": [],
+      "assertions": [
+        "Użyto składni Visibility=\"{?Pole=Wartość}\" dla warunku równości",
+        "Użyto składni OR dla wielu wartości: {?Status=Premium or Status=VIP}",
+        "Użyto negacji: {?!Status=Aktywny}",
+        "Klasa Collapsable jest zastosowana do grupy",
+        "Atrybut Renderable jest użyty dla warunku licencji"
+      ]
+    }
+  ]
+}

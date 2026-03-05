@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataForm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+          xmlns="http://www.enova.pl/schema/form.xsd"
+          xsi:schemaLocation="http://www.enova.pl/schema/ http://www.enova.pl/schema/form.xsd"
+          ViewType="Folder"
+          Mode="Folder">
+
+  <Grid Width="*" Height="*"
+        IsToolbarVisible="true"
+        IsFilterRowVisible="true"
+        OrderBy="NazwiskoImie">
+    <Field CaptionHtml="Kod" Width="8" EditValue="{Kod}" />
+    <Field CaptionHtml="Nazwisko i imię" Width="30" EditValue="{NazwiskoImie}" />
+    <Field CaptionHtml="Numer pracownika" Width="20" EditValue="{NumerPracownika}" />
+    <Field CaptionHtml="Dział" Width="*" EditValue="{Dzial}" />
+    <Field CaptionHtml="Stanowisko" Width="20" EditValue="{Stanowisko}" />
+    <Field CaptionHtml="Data zatrudnienia" Width="15" EditValue="{DataZatrudnienia}" />
+  </Grid>
+
+</DataForm>

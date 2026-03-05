@@ -1,0 +1,45 @@
+{
+  "expectations": [
+    {
+      "text": "Plik ma poprawną deklarację XML",
+      "passed": true,
+      "evidence": "Linia 1: <?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    },
+    {
+      "text": "Element DataForm ma xmlns=\"http://www.enova.pl/schema/form.xsd\"",
+      "passed": false,
+      "evidence": "Użyto <viewform xmlns=\"http://www.soneta.pl/viewform\"> zamiast <DataForm xmlns=\"http://www.enova.pl/schema/form.xsd\">"
+    },
+    {
+      "text": "Jest element Grid z EditValue lub bez (dla widoku listy)",
+      "passed": false,
+      "evidence": "Użyto <grid> (lowercase) zamiast <Grid>. Elementy XML są case-sensitive — to błąd."
+    },
+    {
+      "text": "Grid ma atrybut OrderBy=\"NazwiskoImie\"",
+      "passed": false,
+      "evidence": "Użyto defaultsort=\"NazwiskoImie\" zamiast OrderBy=\"NazwiskoImie\""
+    },
+    {
+      "text": "Grid ma IsToolbarVisible=\"true\" i IsFilterRowVisible=\"true\"",
+      "passed": false,
+      "evidence": "Użyto istoolbarvisible=\"true\" isfilterrowvisible=\"true\" (lowercase) zamiast PascalCase"
+    },
+    {
+      "text": "Są kolumny Field dla: Kod, NazwiskoImie, NumerPracownika, Dzial, Stanowisko, DataZatrudnienia",
+      "passed": true,
+      "evidence": "6 elementów <column> z właściwymi nazwami — poprawne pola, choć element to <column> nie <Field>"
+    },
+    {
+      "text": "Pole Dzial ma Width=\"*\"",
+      "passed": true,
+      "evidence": "Linia 8: <column name=\"Dzial\" width=\"*\" /> — prawidłowe *"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 4,
+    "total": 7,
+    "pass_rate": 0.43
+  }
+}

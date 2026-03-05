@@ -771,31 +771,6 @@ Wszystkie elementy UI dziedziczą następujące atrybuty z `uiElement`:
 | `FontBold` | boolean | Pogrubienie |
 | `FontItalic` | boolean | Kursywa |
 
-**Składnia warunku Appearance** — dwie formy:
-```xml
-<!-- Forma 1: krótka, bez spacji (dla enumów i wartości bez spacji) -->
-<Appearance Condition="{?Typ=usługa}" ForeColor="#800080" />
-
-<!-- Forma 2: z nawiasami kwadratowymi i cudzysłowami (dla stringów, gdy pole ma spacje) -->
-<Appearance Condition="{?[Typ] = 'usługa'}" ForeColor="#800080" />
-```
-
----
-
-## Składnia wyrażeń bindowania
-
-### Operator `+` — nawigacja przez powiązane obiekty
-
-Stosowany gdy widok listy (`viewform.xml`) korzysta z obiektu ViewInfo który agreguje parametry:
-
-```xml
-<!-- ViewInfo+Params.Właściwość — dostęp do parametrów widoku -->
-<Field EditValue="{CennikViewInfo+CennikParams.Magazyn}" />
-<Field EditValue="{ZamowieniaViewInfo+ZamowieniaParams.Status}" />
-```
-
-Wzorzec `{ObiektViewInfo+TypParams.Właściwość}` jest typowy dla paneli filtrów w viewform.xml — gdzie `+` łączy obiekt ViewInfo z typem jego pola będącego obiektem parametrów.
-
 ---
 
 ## Wartości Class (enumSingleClass)

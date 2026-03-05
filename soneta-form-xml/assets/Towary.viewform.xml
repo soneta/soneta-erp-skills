@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Szablon: Widok listy (viewform.xml)
+
+  Format nazwy pliku: {NazwaWidoku}.viewform.xml
+  Przykłady:
+    - Towary.viewform.xml
+    - Kontrahenci.viewform.xml
+    - DokumentyHandlowe.viewform.xml
+
+  Struktura:
+    - <Flow Name="FilterPanel"> — panel filtrów nad listą (opcjonalny)
+    - <Grid Name="List"> — główna lista
+    - Brak elementu <Page> — Grid jest bezpośrednio w DataForm
+
+  Uwaga: ViewType i Mode na DataForm są opcjonalne — dodawaj je tylko
+  gdy viewform jest rejestrowany przez FolderViewAttribute.
+-->
+<DataForm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+          xmlns="http://www.enova.pl/schema/form.xsd"
+          xsi:schemaLocation="http://www.enova.pl/schema/ http://www.enova.pl/schema/form.xsd">
+
+  <!-- Panel filtrów - Flow z polami filtrującymi nad gridem -->
+  <!-- Important="true" oznacza pole jako główne kryterium filtrowania -->
+  <!-- EditValue używa operatora + do nawigacji przez obiekt ViewInfo+Params -->
+  <Flow Name="FilterPanel">
+    <Field CaptionHtml="Typ" Width="12"
+           EditValue="{TowaryViewInfo+TowaryParams.Typ}" Important="true" />
+    <Field CaptionHtml="Magazyn" Width="16"
+           EditValue="{TowaryViewInfo+TowaryParams.Magazyn}" Important="true" />
+    <Field CaptionHtml="Kategoria" Width="18"
+           EditValue="{TowaryViewInfo+TowaryParams.Kategoria}" />
+  </Flow>
+
+  <!-- Główna lista -->
+  <Grid Name="List"
+        OrderBy="Nazwa"
+        FilterPanelWidth="120"
+        IsToolbarVisible="true"
+        IsFilterRowVisible="false"
+        SumType="All"
+        IsSmartOpen="true"
+        VisibleFeatures="Asortyment,Producent">
+
+    <!-- Formatowanie warunkowe wierszy -->
+    <Appearance Condition="{?[Typ] = 'usługa'}" ForeColor="#800080" />
+    <Appearance Condition="{?[Typ] = 'produkt'}" ForeColor="#0000FF" />
+
+    <!-- Kolumny listy -->
+    <Field CaptionHtml="Kod" Width="22" EditValue="{Kod}" />
+    <Field CaptionHtml="Nazwa" Width="30" EditValue="{Nazwa}" />
+    <Field CaptionHtml="Typ" Width="12" EditValue="{Typ}" />
+    <Field CaptionHtml="Stan magazynu" Width="14"
+           EditValue="{Workers.StanMagazynu.StanRazem}" Footer="Sum" />
+    <Field CaptionHtml="Cena podstawowa" Width="15"
+           EditValue="{Workers.TowarCeny.Podstawowa.Netto}" Footer="Sum" />
+
+    <!-- Predefiniowany filtr użytkownika -->
+    <UserFilter Value="Aktywny='True'" />
+
+  </Grid>
+
+</DataForm>

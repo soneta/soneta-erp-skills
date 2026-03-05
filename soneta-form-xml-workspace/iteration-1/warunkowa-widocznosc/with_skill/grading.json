@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Użyto składni Visibility=\"{?Pole=Wartość}\" dla warunku równości",
+      "passed": true,
+      "evidence": "Linia 30: Visibility=\"{?TypKlienta=Korporacyjny}\" — poprawna składnia RowCondition"
+    },
+    {
+      "text": "Użyto składni OR dla wielu wartości: {?Status=Premium or Status=VIP}",
+      "passed": true,
+      "evidence": "Linia 48: Visibility=\"{?Status=Premium or Status=VIP}\" — poprawny operator or"
+    },
+    {
+      "text": "Użyto negacji: {?!Status=Aktywny}",
+      "passed": true,
+      "evidence": "Linia 65: Visibility=\"{?!Status=Aktywny}\" — poprawna negacja z !"
+    },
+    {
+      "text": "Klasa Collapsable jest zastosowana do grupy",
+      "passed": true,
+      "evidence": "Linia 109: <Group CaptionHtml=\"Dane zaawansowane\" Class=\"Collapsable\" ...>"
+    },
+    {
+      "text": "Atrybut Renderable jest użyty dla warunku licencji",
+      "passed": true,
+      "evidence": "Linia 110: Renderable=\"{Licence.HAN}\" — licencja HAN jako warunek renderowania"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

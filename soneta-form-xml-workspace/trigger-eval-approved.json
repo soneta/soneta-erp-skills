@@ -1,0 +1,78 @@
+[
+  {
+    "query": "utwórz zakładkę pageform.xml dla obiektu Dokument z polami Numer, Data, Kontrahent i listą pozycji",
+    "should_trigger": true
+  },
+  {
+    "query": "jak zrobić widok listy viewform.xml dla Kontrahentów z kolumnami Kod, Nazwa, NIP, Miasto?",
+    "should_trigger": true
+  },
+  {
+    "query": "potrzebuję plik Adres.form.xml jako współdzielony fragment z polami adresowymi do użycia przez Include",
+    "should_trigger": true
+  },
+  {
+    "query": "jak ukryć pole w form.xml enova365 gdy Status nie jest równy 'Aktywny'? co to Visibility i RowCondition?",
+    "should_trigger": true
+  },
+  {
+    "query": "zrób mi zakładkę Towar.Ogolne.pageform.xml z grupą 'Dane podstawowe' i grupą z dwukolumnowym układem Row Stack",
+    "should_trigger": true
+  },
+  {
+    "query": "jak dodać Grid z IsToolbarVisible EditInPlace NewInPlace i Footer Sum do pageform.xml?",
+    "should_trigger": true
+  },
+  {
+    "query": "potrzebuję lookupform.xml dla wyboru Towaru z kolumnami Kod Nazwa Cena",
+    "should_trigger": true
+  },
+  {
+    "query": "co to Class Collapsable w enova365? chcę zwinąć grupę filtrów we ViewInfo i uzależnić Renderable od licencji HAN",
+    "should_trigger": true
+  },
+  {
+    "query": "jak w viewform.xml dodać Flow jako panel filtrów nad gridem? chcę użyć FilterPanelWidth i operatora + w EditValue",
+    "should_trigger": true
+  },
+  {
+    "query": "chcę zrobić Appearance warunkowe formatowanie wierszy w Grid — jak ustawić ForeColor gdy Typ='usługa'?",
+    "should_trigger": true
+  },
+  {
+    "query": "napisz mi metodę w C# która oblicza VAT dla pozycji faktury w enova365",
+    "should_trigger": false
+  },
+  {
+    "query": "jak skonfigurować business.xml dla nowego modułu? potrzebuję definicję tabeli z relacją do Kontrahenta",
+    "should_trigger": false
+  },
+  {
+    "query": "zrób raport RDLC pokazujący listę faktur z podsumowaniem",
+    "should_trigger": false
+  },
+  {
+    "query": "jak zarejestrować FolderViewAttribute i WorkerAttribute w enova365?",
+    "should_trigger": false
+  },
+  {
+    "query": "jak zbudować API REST w ASP.NET Core do pobierania danych kontrahentów?",
+    "should_trigger": false
+  },
+  {
+    "query": "zrób mi worker C# który liczy saldo kontrahenta i eksponuje je jako właściwość w enova365",
+    "should_trigger": false
+  },
+  {
+    "query": "jak skonfigurować uprawnienia RightName i RightContext dla modułu enova365?",
+    "should_trigger": false
+  },
+  {
+    "query": "jak zmodyfikować istniejący pageform.xml — chcę dodać nowe pole do już istniejącej zakładki Ogólne Towaru",
+    "should_trigger": true
+  },
+  {
+    "query": "jak używać DataContext i EditValue żeby wyświetlić pola zagnieżdżonego obiektu np. Adres.Miasto w formularzu enova365?",
+    "should_trigger": true
+  }
+]
