@@ -68,6 +68,18 @@ System projektowy (design system) Soneta / enova365 do budowania aplikacji webow
 
 **Kiedy używać:** projektowanie stron/aplikacji w stylu enova365, dashboardy, formularze, strony logowania, panele administracyjne.
 
+### 6. soneta-addon-webapi-create
+
+Szybkie tworzenie nowych projektów dodatków WebAPI/DynamicAPI.
+
+**Zakres:**
+- Inicjalizacja projektu (Soneta.Sdk, .NET 8)
+- Inspekcja metadanych bibliotek Soneta (ApiDumper)
+- Implementacja interfejsów i kontrolerów API
+- Sprawdzone wzorce dostępu do modułów i tabel
+
+**Kiedy używać:** tworzenie nowego projektu dodatku z endpointami WebAPI/DynamicAPI, praca z modułami enova365 przez API.
+
 ## Powiązania między skillami
 
 Skille są zaprojektowane do współpracy:
@@ -77,6 +89,7 @@ Skille są zaprojektowane do współpracy:
 3. **soneta-programming-basics** → pokazuje jak pracować z wygenerowanymi klasami C#
 4. **soneta-form-xml** → tworzy formularze UI dla obiektów
 5. **soneta-ui-style** → styluje interfejs webowy zgodnie z design systemem enova365
+6. **soneta-addon-webapi-create** → wystawia funkcjonalność przez nowoczesne WebAPI
 
 ## Instalacja
 

@@ -1,0 +1,16 @@
+<Project Sdk="Soneta.Sdk/1.1.7">
+  <PropertyGroup>
+    <TargetFramework>$(SonetaTargetFramework)</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Soneta.Business" Version="$(SonetaPackageVersion)" />
+    <PackageReference Include="Soneta.Core" Version="$(SonetaPackageVersion)" />
+    <PackageReference Include="Soneta.CRM" Version="$(SonetaPackageVersion)" />
+    <PackageReference Include="Soneta.Handel" Version="$(SonetaPackageVersion)" />
+    <PackageReference Include="Soneta.Types" Version="$(SonetaPackageVersion)" />
+    <PackageReference Include="Soneta.Data" Version="$(SonetaPackageVersion)" />
+  </ItemGroup>
+</Project>

@@ -1,1 +1,24 @@
+# OS files
+.DS_Store
+
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docuser
+
+# IDE files
+.vs/
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local config
+.env
+
+# Workspace
 **-workspace/**

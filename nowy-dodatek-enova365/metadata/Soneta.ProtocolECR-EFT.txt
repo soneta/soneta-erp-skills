@@ -1,0 +1,432 @@
+Assembly: Soneta.ProtocolECR-EFT, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393
+================================================================================
+
+Type: Soneta.ProtocolECR_EFT.Connection.Connection
+  Meth: Void Dispose()
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String Read(Boolean watchTimeout)
+  Meth: Void Send(Byte[] toSend)
+  Meth: Void StopListening()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Connection.ConnectionFactory
+  Meth: IConnection Create(ConnectionModel ConnectionModel)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Connection.ConnectionModel
+  Prop: Int32 BaudRate
+  Prop: RodzajPolaczenia connectionType
+  Prop: IPEndPoint endPoint
+  Prop: TextField IdentyfikatorECR
+  Prop: String Key
+  Prop: String portCOM
+  Prop: TerminalProvider TerminalProvider
+  Prop: Int32 timeout
+  Meth: String CreateConnectionString(ConnectionModel model)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Connection.SerialPort
+  Prop: SerialPort _SerialPort
+  Meth: Void Dispose()
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String Read(Boolean watchTimeout)
+  Meth: Void Send(Byte[] toSend)
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Connection.SerialPort+Message
+  Prop: Boolean isRead
+  Prop: String msg
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Connection.TCPIP
+  Meth: Void Dispose()
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String Read(Boolean watchTimeout)
+  Meth: Void Send(Byte[] toSend)
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.AesEncryptor
+  Prop: Byte[] IV
+  Meth: String DecryptData(Byte[] data, Byte[] Key)
+  Meth: Byte[] EncryptStringToBytes_Aes(String plainText, Byte[] Key)
+  Meth: Boolean Equals(Object obj)
+  Meth: Byte[] GenerateKey()
+  Meth: Int32 GetHashCode()
+  Meth: BinaryField GetKcv(Byte[] key)
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.BinaryField
+  Prop: Boolean flexible
+  Prop: Int32 length
+  Prop: String Value
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.Command
+  Prop: ExtendedTextField DodatkoweAtrybuty
+  Prop: Byte[] Key
+  Prop: BinaryField Token
+  Prop: TextField TypPakietu
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ParsedCommand()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandFactory
+  Prop: ICommandParser commandParser
+  Prop: Byte[] Key
+  Meth: Command Create(String commandOrData)
+  Meth: S1 CreateTransactionCommand(IEcr eCR, ValueTuple`2 kwota, String dokument)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: BinaryField Token(String commandStringWithoutSTX)
+  Meth: String ToString()
+  Meth: TextField TypPakietu(String data)
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandHandlers.CommandHandler
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Command GetResponse(Command command, String identifierValue, TerminalProvider terminalProvider, Boolean potwierdzenieDlaKlienta)
+  Meth: Type GetType()
+  Meth: Command Handle(Command command, String identifierValue, TerminalProvider terminalProvider, Boolean potwierdzenieDlaKlienta)
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandHandlers.Responses.D0Response
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: Command MakeResponse()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandHandlers.Responses.D3Response
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: Command MakeResponse()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandHandlers.Responses.D5Response
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: Command MakeResponse()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandHandlers.Responses.K0Response
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: Command MakeResponse()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandHandlers.Responses.Response
+  Meth: Command MakeResponse()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandHandlers.Responses.T2Response
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: Command MakeResponse()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.CommandParser
+  Prop: Boolean encrypt
+  Prop: Byte[] Key
+  Meth: Boolean Equals(Object obj)
+  Meth: Byte[] GetCommnadBytes(String command, Boolean encrypted)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.Device
+  Prop: IConnection _connection
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String Read(Boolean watchTimeout)
+  Meth: Void Send(Byte[] message)
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.direction
+  Meth: Int32 CompareTo(Object target)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: TypeCode GetTypeCode()
+  Meth: Boolean HasFlag(Enum flag)
+  Meth: String ToString()
+  Meth: String ToString(String format)
+  Meth: String ToString(IFormatProvider provider)
+  Meth: String ToString(String format, IFormatProvider provider)
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.ECR
+  Prop: IConnection _connection
+  Prop: CommandFactory CommandFactory
+  Prop: TextField IdentifierECR
+  Prop: Byte[] Key
+  Prop: String Producer
+  Prop: BinaryField Token
+  Prop: String Type
+  Meth: Void Dispose()
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: Void Idle()
+  Meth: String PairDevice()
+  Meth: String Read(Boolean watchTimeout)
+  Meth: Void ResetListening(IConnection Connection)
+  Meth: Void Send(Byte[] message)
+  Meth: Void SendCommand(Command command, Boolean encrypted)
+  Meth: Boolean TestEncryptedConnection()
+  Meth: String ToString()
+  Meth: Void Transaction(S1 s1, Boolean potwierdzenieDlaKlienta)
+  Meth: Void UruchomAplikacjeTerminala()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.ECRFactory
+  Meth: IEcr Create(String ConnectionString)
+  Meth: IEcr Create(ConnectionModel connectionModel)
+  Meth: IEcr Create(IConnection Connection, String IdentyfikatorECR, Int32 Timeout, String Key)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.ExtendedTextField
+  Prop: Boolean flexible
+  Prop: Int32 length
+  Prop: String Value
+  Prop: String[] Values
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.Field
+  Prop: Boolean flexible
+  Prop: Int32 length
+  Prop: String Value
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.FieldError
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.HelperMethods
+  Meth: Byte[] Base64Decode(String base64EncodedData)
+  Meth: String Base64Encode(Byte[] plainTextBytes)
+  Meth: String ByteArrayToHexString(Byte[] data)
+  Meth: String DataFromCommand(String command)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: List`1 StringToByteList(String str)
+  Meth: Byte[] StringToHex(String stringHex)
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.LogMsg
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.NumericField
+  Prop: Boolean flexible
+  Prop: Int32 length
+  Prop: String Value
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.RodzajPolaczenia
+  Meth: Int32 CompareTo(Object target)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: TypeCode GetTypeCode()
+  Meth: Boolean HasFlag(Enum flag)
+  Meth: String ToString()
+  Meth: String ToString(String format)
+  Meth: String ToString(IFormatProvider provider)
+  Meth: String ToString(String format, IFormatProvider provider)
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.S1
+  Prop: ExtendedTextField DodatkoweAtrybuty
+  Prop: TextField IdentyfikatorDokumentuSorzedazy
+  Prop: TextField IdentyfikatorUrzadzenia
+  Prop: Byte[] Key
+  Prop: TextField KodWaluty
+  Prop: NumericField KwotaCashBack
+  Prop: NumericField KwotaSprzedazyBrutto
+  Prop: NumericField MaksymalnaKwotaCashBack
+  Prop: BinaryField Token
+  Prop: TextField TypOperacji
+  Prop: TextField TypPakietu
+  Prop: NumericField WartoscSprzedazyNetto
+  Prop: NumericField WartoscVat
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ParsedCommand()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.T1
+  Prop: ExtendedTextField DodatkoweAtrybuty
+  Prop: Byte[] Key
+  Prop: BinaryField Token
+  Prop: TextField TypPakietu
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ParsedCommand()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.T2
+  Prop: ExtendedTextField DodatkoweAtrybuty
+  Prop: TextField IdentyfikatorUrzadzenia
+  Prop: Byte[] Key
+  Prop: TextField Producent
+  Prop: BinaryField Token
+  Prop: TextField Typ
+  Prop: TextField TypPakietu
+  Prop: TextField WersjaProtokolu
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ParsedCommand()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.TerminalProvider
+  Meth: Int32 CompareTo(Object target)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: TypeCode GetTypeCode()
+  Meth: Boolean HasFlag(Enum flag)
+  Meth: String ToString()
+  Meth: String ToString(String format)
+  Meth: String ToString(IFormatProvider provider)
+  Meth: String ToString(String format, IFormatProvider provider)
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.ECR.TextField
+  Prop: Boolean flexible
+  Prop: Int32 length
+  Prop: String Value
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Interfaces.ICommandFactory
+  Prop: ICommandParser commandParser
+  Prop: Byte[] Key
+  Meth: Command Create(String commandOrData)
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Interfaces.ICommandParser
+  Prop: Boolean encrypt
+  Prop: Byte[] Key
+  Meth: Byte[] GetCommnadBytes(String command, Boolean encrypted)
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Interfaces.IConnection
+  Meth: Void Dispose()
+  Meth: String Read(Boolean watchTimeout)
+  Meth: Void Send(Byte[] toSend)
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Interfaces.IEcr
+  Prop: TextField IdentifierECR
+  Prop: Byte[] Key
+  Prop: BinaryField Token
+  Meth: Void Idle()
+  Meth: String PairDevice()
+  Meth: Void ResetListening(IConnection Connection)
+  Meth: Boolean TestEncryptedConnection()
+  Meth: Void Transaction(S1 S1, Boolean potwierdzenieDlaKlienta)
+  Meth: Void UruchomAplikacjeTerminala()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Interfaces.IEcrService
+  Meth: IEcr GetEcr()
+  Meth: Boolean IsRunnig()
+  Meth: IEcr RestartECR()
+  Meth: Void Start()
+  Meth: Boolean TestConnection()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Listeners.ECRService
+  Meth: Boolean Equals(Object obj)
+  Meth: IEcr GetEcr()
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: Boolean IsRunnig()
+  Meth: IEcr RestartECR()
+  Meth: Void Start()
+  Meth: Boolean TestConnection()
+  Meth: String ToString()
+
+----------------------------------------
+Type: Soneta.ProtocolECR_EFT.Listeners.ErrorParser
+  Meth: String CreateErrorMessage(String ErrorNumber)
+  Meth: Boolean Equals(Object obj)
+  Meth: Int32 GetHashCode()
+  Meth: Type GetType()
+  Meth: String ToString()
+
+----------------------------------------
