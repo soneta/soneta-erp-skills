@@ -1,154 +1,118 @@
----
-name: soneta-addon-planning
-description: >
-  Planowanie projektów dodatków dla platformy enova365/Soneta Enterprise. Tworzy 
-  kompletną dokumentację projektową obejmującą: strukturę danych (tabele, relacje), 
-  elementy konfigurowalne, definicje list i menu, formularze, workery i raporty.
-  Używaj gdy użytkownik prosi o zaplanowanie nowego modułu/dodatku enova365, 
-  przygotowanie założeń projektu, stworzenie specyfikacji funkcjonalnej dodatku,
-  lub zdefiniowanie struktury danych i interfejsu użytkownika dla nowego modułu.
----
 
-# Soneta Addon Planning
+# Uwagi ogólne do tworzenia dokuemntu planowania projektu modułu/dodatku
 
-Skill do tworzenia planów projektów dodatków dla platformy enova365. Plan projektu stanowi podstawę do dalszych prac implementacyjnych z wykorzystaniem skilli `enova365-business-xml` i `soneta-programming-basics`.
+## Przeznaczenie dokumentu planu projektu
+Planowanie projektów modułów fukcjonalności dla platformy enova365/Soneta Enterprise.
+Przygotowuje opis funkcjonalności nowego modułu z punktu widzenia używania go do stworzenia kolejnych planów implementacji poszczególnych elementów programu Soneta.
+Plan będzie wykorzystywany w kolejnych etapach do budowania:
+* struktury bazy danych,
+* listy dostępnych list i widoków,
+* innych ważnych/kluczowych elementów interfejsu,
+* formularzy,
+* tworzenia raportów i wydruków,
+* praw dostępu,
+* ról operatorów,
+* zaplanowania testów,
+* budowy dokumentacji
+* i innych tego typu elementów prohjektu.
 
-## Struktura planu projektu
 
-Plan projektu dodatku enova365 składa się z następujących sekcji:
+## Różne tematy do ujęcia w planie
+- ogarnąć temat licencji w szczególności jakie licencję wymagane są do działania kontrolingu
+- opracować punkty ograniczające modułu. Ograniczenia mogą dotyczyć np. zakresu funkcjonalności, wymagań technicznych, integracji z innymi systemami, czy też ograniczeń wynikających z przepisów prawa.
+- opracować zmiany w aktualnych strukturach programu enova które są potrzebne do realizacji tego modułu
+- opracować tabele i dane które będą wykorzystywane przez moduł kontrolingu, opisać krótko jaki jest cel u tych danych, a które znajdują się w programie enowa
+- Przygotować plan todo czyli kolejne elementy do realizacji po planowaniu
+- plan powinien rozpoczynać się podstawową ideą którą chcemy osiągnąć w danym systemie danym module. w tym przypadku chodzi o to że podstawową rzeczą jest przygotowanie danych które dopiero później będą wykorzystywane do analizy za pomocą innych narzędzi
+- określić jakiego typu dane będą potrzebne do wczytywania systemu BI ale również jakie dane będą dostarczane do systemu BI
+- zdefiniować jakie procesy będą realizowane w ramach danego modułu. Te procesy będą wykorzystane później do stworzenia procesów workflow a także do przypisania ich do poszczególnych operatorów ról
+- określić jakie rolę będą realizowane przez system czyli opisać rolę operatorów i zadania które w ramach tej roli będą realizowane
+- określić foldery i elementy interfejs-owę które będą dostępne z punktu widzenia modułu do opisania są funkcjonalności, które są szczególnie ważne interfejs sowo żeby produkt odniósł sukces. W kontrolingu ważnym elementem będzie miejsce w którym będzie można budować gotowe zapytania i warunki na podobieństwo Arkusz Excel owy m na zasadzie and/or. Wskazać które elementy interfejsu są krytyczne albo są sednem danego modułu
+- określić zakres konfiguracji czyli wskazać ustawienia które będą definiowane w procesie konfigurowania programu a także różnego rodzaju definicję które będą wykorzystywane jako podpowiedzi przetwarzaniu już danych operacyjnych
 
-### 1. Założenia projektu
-- Cel biznesowy dodatku
-- Zakres funkcjonalny (co dodatek ma robić)
-- Elementy konfigurowalne na etapie wdrożenia
-- Integracje z istniejącymi modułami enova365
-- Ograniczenia i wymagania niefunkcjonalne
 
-### 2. Model danych
-- Lista tabel z podziałem na operacyjne i konfiguracyjne
-- Pola każdej tabeli (nazwa, typ, wymagalność, opis)
-- Relacje między tabelami (diagram lub lista)
-- Klucze i indeksy
-
-### 3. Struktura menu modułu
-- Hierarchia list w menu głównym
-- Grupowanie funkcjonalne
-
-### 4. Definicje list
-Dla każdej listy:
-- Filtry (pola filtrujące, filtry predefiniowane)
-- Kolumny (kolejność, szerokość, formatowanie)
-- Czynności (workery) - nazwa i krótki opis
-- Raporty/wydruki - nazwa i krótki opis
-
-### 5. Definicje formularzy
-Dla każdego formularza obiektu:
-- Zakładki (grupowanie logiczne)
-- Pola na zakładkach (pogrupowane)
-- Listy szczegółów (sublists) z kolumnami
-- Czynności (workery) dostępne z formularza
-- Raporty/wydruki dostępne z formularza
-
-### 6. Słowniki i konfiguracja
-- Tabele słownikowe (config=true)
-- Wartości domyślne
-- Parametry konfiguracyjne modułu
-
-### 7. Uprawnienia
-- Role użytkowników
-- Prawa dostępu do obiektów i funkcji
-
-## Workflow tworzenia planu
-
-```
-1. Zebranie wymagań
-   ↓
-2. Zdefiniowanie założeń i elementów konfigurowalnych
-   ↓
-3. Zaprojektowanie modelu danych
-   ↓
-4. Określenie struktury menu
-   ↓
-5. Zdefiniowanie list (filtry, kolumny, akcje)
-   ↓
-6. Zdefiniowanie formularzy (zakładki, pola, sublists)
-   ↓
-7. Określenie słowników i konfiguracji
-   ↓
-8. Zdefiniowanie uprawnień
-```
-
-## Format dokumentu planu
-
-Plan projektu generowany jest jako dokument Markdown z następującą strukturą:
-
-```markdown
-# Plan projektu: [Nazwa dodatku]
-
-## 1. Założenia projektu
-### 1.1. Cel biznesowy
-### 1.2. Zakres funkcjonalny
-### 1.3. Elementy konfigurowalne
-### 1.4. Integracje
-### 1.5. Ograniczenia
-
-## 2. Model danych
-### 2.1. Tabele operacyjne
-### 2.2. Tabele konfiguracyjne
-### 2.3. Diagram relacji
-
-## 3. Struktura menu
-### 3.1. Menu główne modułu
-
-## 4. Listy
-### 4.1. [Nazwa listy]
-#### Filtry
-#### Kolumny
-#### Czynności
-#### Raporty
-
-## 5. Formularze
-### 5.1. [Nazwa formularza]
-#### Zakładki i pola
-#### Listy szczegółów
-#### Czynności
-#### Raporty
-
-## 6. Słowniki i konfiguracja
-
-## 7. Uprawnienia
-```
-
-## Konwencje nazewnicze
-
-| Element | Konwencja | Przykład |
-|---------|-----------|----------|
-| Tabela operacyjna | PascalCase, l.poj. | `Zlecenie`, `PozycjaZlecenia` |
-| Tabela konfiguracyjna | PascalCase, l.poj. | `DefinicjaZlecenia`, `StatusZlecenia` |
-| Worker | PascalCase + Worker | `ZatwierdzZlecenieWorker` |
-| Raport | PascalCase | `ZestawienieZlecen`, `KartaZlecenia` |
-| Lista | l.mn. lub opis | `Zlecenia`, `ZleceniaDoRealizacji` |
 
 ## Poziom szczegółowości
+Plan projektu zawiera ogólne opisy elementów projektu. Nie zawiera szczególowych inforamcji, które będą uzupełniane w kolejnych etapach. Na tym etapie chodzi o określenie ogólnych założeń, zakresu funkcjonalności...
 
-Plan projektu zawiera **ogólne opisy** elementów:
-- Nazwy i krótkie opisy (1-2 zdania)
-- Typy danych bez szczegółów implementacyjnych
-- Logiczne grupowanie bez dokładnych pozycji
+## ETAP 1: Określenie ogólnych założeń mmodułu oraz ogólny opis funkcjonalności
 
-**Szczegóły doprecyzowywane w kolejnych etapach:**
-- Dokładne atrybuty kolumn (długość, walidacje)
-- Implementacja workerów (algorytmy, kroki)
-- Szablony raportów (układ, pola)
-- Warunki filtrów (wyrażenia, wartości domyślne)
+## Elementy planu projektu
 
-## Powiązanie z innymi skillami
+### Cel biznesowy projektu
+Krótka informacja cztery, pięć zdań o tym co jest celem projektu. Jaki jest jego kluczowy element. Najważniejsza rzecz, którą chcemy osiągnąć.
 
-Po zatwierdzeniu planu projektu:
-1. **enova365-business-xml** - generowanie pliku business.xml na podstawie modelu danych
-2. **soneta-programming-basics** - implementacja workerów i logiki biznesowej
+### Firmy docelowe
+Ogólne określenie użytkownika końcowego, który będzie używał tego rowiązania. Firma mała, średnia, duża? Branża? Działalność?
 
-## Szczegółowa dokumentacja
+### Korzyści dla klienta
+Zdefiniowanie najważniejszych korzyści dla klienta, określenie problemów rozwiązywanych przez moduł. Informacja ma być wykorzystywana w działach marketingu i sprzedaży, a także jako wprowadzenie do spotkań w temacie modułu.
 
-- **[references/project-template.md](references/project-template.md)** - pełny szablon dokumentu planu projektu
-- **[references/checklist.md](references/checklist.md)** - lista kontrolna kompletności planu
+### Najważniejsze funkcjonalności
+Krótka lista najważniejszych funkcjonalności modułu. Te funkcjonalności będą szczegółowo opisywane w kolejnych etapach, ale już na tym etapie warto wskazać te kluczowe, które są sednem modułu i które będą najbardziej istotne z punktu widzenia klienta. Wyszczególnione w krótkich punktach.
+
+### Scenariusze użytkownika
+Opis kilku kluczowych scenariuszy użytkownika, które pokazują jak użytkownik będzie korzystał z modułu. Scenariusze powinny być opisane w formie krok po kroku, pokazując jakie działania użytkownik będzie podejmował, ogólnie jakie dane będzie wprowadzał, jakie wyniki będzie otrzymywał. Scenariusze powinny ograniczyć się tylko do najważniejszych,kluczowych danych. Szczegóły będą uzupełniane w kolejnych etapach.
+
+### Proesy biznesowe
+Procesy biznesowe, które będą realizowane w całoci przez moduł, ale także inne procesy biznesowe, w których części realizacji będzie wykorzystana funkcjonalność modułu, włącznie z pozostałymi elementami programu.
+
+
+## ETAP 2: Ogólne określenie szczegółowych elementów projektu
+
+### Role użytkowników. 
+Lista operatorów, którzy będą korzystać z modułu? Jakie zadanie będzie realizować. W jakich procesach będą uczestniczyć? 
+
+### Zakres konfiguracji modułu
+Opisy elementów systemu, które będą konfigurowane. Ogólny opis zakresu konfiguracji, pozwalające na dostosowanie modułu do różnych potrzeb różnych klientów. Określenie ewentualnych definicji dokumentów, słowników, konfigurowanych ustawień, opcji programu dostępnych tylko dla pewnych grup klientów.
+
+### Kluczowe struktury danych
+Określenie najważniejszych struktur danych, które będą podstawą modułu. Podstawowe listy dokumentów, kartoteki. Bez opis szczegółowej zawartości, która będzie okreslona w kolejnym etapie.
+
+## Kierunki rozwoju modułu w przyszłości o ile taki rozwój jest planowany.
+Okreslenie kierunków rozwoju modułu w przyszłości, jakie funkcjonalności mogą być dodane w kolejnych etapach, które nie powinny być rozwijane w tej wersji rozwiązania.
+
+## Relacje z innymi systemami
+Określenie relacji z innymi systemami, które będą wykorzystywane przez moduł, ale także innych systemów, które będą integrowane z modułem. Określenie jakie dane będą wymieniane między modułem a innymi systemami, jakie procesy będą realizowane w ramach tej integracji.
+
+
+## ETAP 2: Uszczegółowienie elementów projektu
+
+### Dane operacyjne
+Rozwiniecie struktu danych operacyjnych. Wskazanie ich dodatkowych cech, jak hostoryczność danych, wykorzystanie numeracji dokumentów. Wyszczególnienie pól danych. Określenie list szczegółowych w ramach obiektu. Określenie relacji do innych danych modułu, a także innych danych programu Soneta (poza projektowanych modułem).
+Określenie części konfiguracyjnej, jak typy definicje, słowniki, itp. powiązanych z omawianym obiektem.
+Przykład: Dokument jest numerowany, określa datę wprowadzenia, zatwierdzenia, stany (bufor, zatwierdzony, odrzucony), jest powiązany z pracownikiem.
+Przypisany do definicji dokumentu. okreslającej zasady numeracji, tytuł dokuemntu, warunki akceptacji, itp.
+
+### Relacje do danych programu
+Określenie relacji do danych programu Soneta z poza modułu, które będą integrowane z modułem. Określenie jakie dane będą wymieniane między modułem, a innymi danymi programu Soneta.
+
+### Podstawowe listy modułu
+Wyszczególnienie głównych list obiektów modułu.
+Wyspecifikowanie podstawowych kolumn listy, oraz kolumn opcjonalnych dostępnych dopiera w opcjach konfiguracyjnych.
+Określenie podstawowych pól filtrtujących dane, podstawowych filtrów oraz dodatkowych (po rozwinięciu).
+
+### Formularze
+Wyszczególnienie podstawowych formularzy obiektów dostępnych z list. Opisanie ich zawartości, pól znajdujących się w obiekcie oraz list szczegółowych. Pogrupowanie danych w zakłądki oraz grupy na zakładkach.
+
+## Przygotowanie dokumentu TODO
+Dokument powinien określać kolejne kroki w projekcie i procesie implementacji. Powinien to być osobny dokument, wykorzystywany przez zespół implementacyjny, oraz AI do realizacji kolejnych kroków tworzenia modułu, ale także przez inne działy firmy Soneta, jak marketing, sprzedaż, czy dział wsparcia. Dokument powinien być aktualizowany w trakcie realizacji projektu, a także po jego zakończeniu, w celu określenia kolejnych kroków rozwoju modułu.
+
+### Punkty do dokumentu TODO:
+- [ ] Określenie modelu danych projektu, takich jak tabele, pola, relacje, itp.
+- [ ] Zbudownie na podstawie modelu pliku business.xml
+- [ ] Struktura menu modułu, listy, widoki
+- [ ] Wyglądy formularzy, ich zakładek
+- [ ] Zakładki konfiguracji, takich jak słowniki, definicje, ustawienia
+- [ ] Workery, menu "Czynności" dostępne na listach i formularzach
+- [ ] Raporty i wydruki dostępne na listach i formularzach
+- [ ] Procesy Workflow w których uczestniczy moduł i realizowane w module
+- [ ] Wskaźniki, listy, agregaty, wykresy BI
+- [ ] Uprawnienia i role użytkowników
+- [ ] Punkty styku/integracji z innymi systemami
+- [ ] Uzupełnienie bazy Demo, i inne bazy demostracyjne
+- [ ] Testy integracyjne, interface-owych
+- [ ] Określenie struktury dokumentacji użytkownika i technicznej
+
+
+
