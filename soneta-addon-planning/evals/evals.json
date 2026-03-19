@@ -1,0 +1,53 @@
+{
+  "skill_name": "soneta-addon-planning",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Chcę zaplanować moduł do zarządzania szkoleniami pracowników. Firmy średnie i duże, kadry i HR. Moduł powinien umożliwiać planowanie szkoleń, rejestrację uczestników, śledzenie budżetu szkoleniowego i generowanie zaświadczeń. Zacznij od Etapu 1.",
+      "expected_output": "Dokument Etapu 1 (Wizja i kontekst biznesowy) zawierający sekcje 1.1-1.11, z uwzględnieniem integracji z modułami Kadry/HR, priorytetyzacją funkcjonalności i scenariuszami użytkownika.",
+      "files": [],
+      "assertions": [
+        {"description": "Zawiera wszystkie 11 sekcji Etapu 1 (1.1 do 1.11)", "type": "structure"},
+        {"description": "Sekcja 1.4 zawiera podział must-have / should-have / nice-to-have", "type": "content"},
+        {"description": "Sekcja 1.5 zawiera konkretne scenariusze krok po kroku", "type": "content"},
+        {"description": "Dokument odwołuje się do platformy Soneta (nie ogólne ERP)", "type": "content"},
+        {"description": "Wspomina konkretne moduły lub tabele z istniejącego systemu Soneta", "type": "content"},
+        {"description": "Sekcja 1.6 definiuje procesy biznesowe", "type": "content"},
+        {"description": "Sekcja 1.9 zawiera ryzyka z planem mitygacji", "type": "content"},
+        {"description": "Dokument jest w języku polskim", "type": "format"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Potrzebuję moduł ewidencji czasu pracy zdalnej i hybrydowej z integracją z obecnym modułem kadrowym. Pracownicy powinni móc rejestrować dni pracy zdalnej, a kierownicy zatwierdzać wnioski. Chcę też raporty frekwencji. Przygotuj plan Etapu 1.",
+      "expected_output": "Dokument Etapu 1 z naciskiem na integrację z istniejącymi modułami (Kadry, PracaHybrydowa, Kalend), workflow zatwierdzania wniosków i raportowanie.",
+      "files": [],
+      "assertions": [
+        {"description": "Zawiera wszystkie 11 sekcji Etapu 1 (1.1 do 1.11)", "type": "structure"},
+        {"description": "Sekcja 1.4 zawiera podział must-have / should-have / nice-to-have", "type": "content"},
+        {"description": "Sekcja 1.5 zawiera konkretne scenariusze krok po kroku", "type": "content"},
+        {"description": "Dokument odwołuje się do platformy Soneta (nie ogólne ERP)", "type": "content"},
+        {"description": "Wspomina konkretne moduły lub tabele z istniejącego systemu Soneta (np. Kadry, PracaHybrydowa, Kalend)", "type": "content"},
+        {"description": "Sekcja 1.6 definiuje procesy biznesowe z workflow zatwierdzania", "type": "content"},
+        {"description": "Sekcja 1.9 zawiera ryzyka z planem mitygacji", "type": "content"},
+        {"description": "Dokument jest w języku polskim", "type": "format"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Zaplanuj dodatek do obsługi benefitów pracowniczych — karty sportowe, opieka medyczna, ubezpieczenia grupowe. Moduł ma pozwalać na definiowanie pakietów benefitów, przypisywanie ich pracownikom i rozliczanie kosztów. Zrób Etap 1.",
+      "expected_output": "Dokument Etapu 1 z opisem systemu benefitów, relacjami do modułu Kadry, konfigurowalnością pakietów i rozliczaniem kosztów.",
+      "files": [],
+      "assertions": [
+        {"description": "Zawiera wszystkie 11 sekcji Etapu 1 (1.1 do 1.11)", "type": "structure"},
+        {"description": "Sekcja 1.4 zawiera podział must-have / should-have / nice-to-have", "type": "content"},
+        {"description": "Sekcja 1.5 zawiera konkretne scenariusze krok po kroku", "type": "content"},
+        {"description": "Dokument odwołuje się do platformy Soneta (nie ogólne ERP)", "type": "content"},
+        {"description": "Wspomina konkretne moduły lub tabele z istniejącego systemu Soneta (np. Kadry, Place)", "type": "content"},
+        {"description": "Sekcja 1.6 definiuje procesy biznesowe", "type": "content"},
+        {"description": "Sekcja 1.9 zawiera ryzyka z planem mitygacji", "type": "content"},
+        {"description": "Dokument jest w języku polskim", "type": "format"}
+      ]
+    }
+  ]
+}
