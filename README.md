@@ -1,12 +1,8 @@
-# Soneta ORM AI Skills
+# Soneta / enova365 AI Skills
 
-Zestaw skills dla asystentów AI (Claude, Cursor, Windsurf, itp.) wspierających programowanie z ORM platformy **enova365/Soneta Enterprise**.
+Zestaw skills dla asystentów AI (Claude, Cursor, Windsurf, itp.) wspierających programowanie i projektowanie z platformą **enova365/Soneta Enterprise**.
 
-## 🎯 Cel projektu
-
-Skille zawierają dokumentację i wzorce programistyczne, które pozwalają asystentom AI efektywnie pomagać w tworzeniu dodatków dla systemu enova365. Dzięki nim AI rozumie specyfikę platformy Soneta: mapowanie obiektowo-relacyjne, strukturę modułów, zarządzanie sesjami i transakcjami.
-
-## 📦 Dostępne skille
+## Dostępne skille
 
 ### 1. soneta-programming-basics
 
@@ -19,13 +15,9 @@ Fundamentalne klasy ORM platformy enova365/Soneta Enterprise.
 - Paczki danych (`Datapack`, `GuidedRow`) i synchronizacja
 - Kontekst aplikacji (`Context`)
 
-**Kiedy używać:**
-- Pytania o podstawowe klasy logiki biznesowej
-- Praca z sesjami i transakcjami
-- Tworzenie, modyfikacja i usuwanie obiektów
-- Zrozumienie hierarchii `Row` → `Table` → `Module`
+**Kiedy używać:** pytania o klasy logiki biznesowej, sesje, transakcje, hierarchię `Row` → `Table` → `Module`.
 
-### 2. enova365-business-xml
+### 2. soneta-business-xml
 
 Generator plików `business.xml` definiujących strukturę obiektów biznesowych.
 
@@ -36,116 +28,66 @@ Generator plików `business.xml` definiujących strukturę obiektów biznesowych
 - Klucze i indeksy
 - Wzorce: słowniki, dokumenty z pozycjami, historia zmian
 
-**Kiedy używać:**
-- Tworzenie nowego modułu biznesowego
-- Definiowanie encji do przechowywania w bazie
-- Tworzenie relacji między obiektami
-- Generowanie plików `*.business.xml`
+**Kiedy używać:** tworzenie nowego modułu biznesowego, definiowanie encji, generowanie plików `*.business.xml`.
 
-## 🚀 Instalacja
+### 3. soneta-form-xml
 
-### Claude Desktop / Claude.ai
+Tworzenie plików `form.xml` opisujących formularze i widoki UI platformy enova365.
 
-Skopiuj folder ze skillem do katalogu skills w konfiguracji Claude.
+**Zakres:**
+- Formularze stron (`pageform.xml`), widoki list (`viewform.xml`), lookupy (`lookupform.xml`), gridy (`gridform.xml`)
+- Elementy: `DataForm`, `Page`, `Group`, `Grid`, `Field`, `Row`, `Stack`, `Flow`, `Command`
+- Atrybuty: `EditValue`, `DataContext`, `Visibility`, `RowCondition`, `Renderable`, `CaptionHtml`
+- Warunkowe formatowanie, wiązanie danych, wzorce UI
+
+**Kiedy używać:** tworzenie zakładek, widoków list, formularzy i lookupów dla enova365.
+
+### 4. soneta-addon-planning
+
+Planowanie projektów dodatków dla platformy enova365/Soneta Enterprise.
+
+**Zakres:**
+- Interaktywny proces planowania w 3 etapach (wizja, architektura, specyfikacja szczegółowa)
+- Struktura danych (tabele, relacje)
+- Elementy konfigurowalne, definicje list i menu
+- Formularze, workery i raporty
+- Dokumentacja implementacyjna z TODO
+
+**Kiedy używać:** planowanie nowego modułu/dodatku, przygotowanie założeń projektu, specyfikacja funkcjonalna.
+
+### 5. soneta-ui-style
+
+System projektowy (design system) Soneta / enova365 do budowania aplikacji webowych.
+
+**Zakres:**
+- Palety kolorów (motywy jasny/ciemny) — szmaragdowy `#016E46` jako kolor główny
+- Typografia (Roboto), layout, system odstępów (skala 4px)
+- Komponenty UI: przyciski, formularze, tabele, sidebar, header, kafelki, modale
+- Cienie, ikony SVG (~370 ikon liniowych), animacje, responsywność
+- Enterprise minimalism, flat design z subtelnymi cieniami
+
+**Kiedy używać:** projektowanie stron/aplikacji w stylu enova365, dashboardy, formularze, strony logowania, panele administracyjne.
+
+## Powiązania między skillami
+
+Skille są zaprojektowane do współpracy:
+
+1. **soneta-addon-planning** → planuje strukturę nowego dodatku
+2. **soneta-business-xml** → definiuje obiekty biznesowe w XML
+3. **soneta-programming-basics** → pokazuje jak pracować z wygenerowanymi klasami C#
+4. **soneta-form-xml** → tworzy formularze UI dla obiektów
+5. **soneta-ui-style** → styluje interfejs webowy zgodnie z design systemem enova365
+
+## Instalacja
+
+### Claude Code
+
+Skopiuj folder ze skillem do `~/.claude/skills/`.
 
 ### Cursor / Windsurf / inne IDE
 
 Dodaj zawartość skilli do kontekstu projektu lub rules.
 
-## 📁 Struktura repozytorium
-
-```
-soneta-ai-skills/
-├── README.md
-├── soneta-programming-basics/
-│   ├── SKILL.md                    # Główna dokumentacja
-│   └── references/
-│       ├── session-login.md        # BusApplication, Database, Login, Session
-│       ├── datapack-guidedrow.md   # Paczki danych, GuidedRow, synchronizacja
-│       ├── context.md              # Klasa Context, komunikacja UI ↔ logika
-│       └── examples.md             # Przykłady kodu i wzorce użycia
-│
-└── enova365-business-xml/
-    ├── SKILL.md                    # Główna dokumentacja
-    ├── assets/
-    │   └── business_struct.xsd     # Schemat XSD dla walidacji
-    └── references/
-        ├── modules-catalog.md      # Katalog modułów enova365
-        ├── table-reference.md      # Dokumentacja atrybutów table i col
-        ├── relations-guide.md      # Tworzenie relacji między obiektami
-        └── examples.md             # Przykłady z rzeczywistych modułów
-```
-
-## 💡 Przykłady użycia
-
-### Tworzenie nowego obiektu
-
-```csharp
-using (var session = login.CreateSession(false, false, "Dodawanie"))
-{
-    var tm = session.GetTowary();
-    
-    using (var transaction = session.Logout(editMode: true))
-    {
-        var towar = new Towar();
-        tm.Towary.AddRow(towar);
-        towar.Kod = "NOWY001";
-        towar.Nazwa = "Nowy towar";
-        transaction.Commit();
-    }
-    
-    session.Save();
-}
-```
-
-### Definicja obiektu w business.xml
-
-```xml
-<table name="Towar" tablename="Towary" guided="Root" 
-       caption="Towar" tablecaption="Towary">
-  <key name="WgKodu" keyunique="true" keyprimary="true">
-    <keycol name="Kod"/>
-  </key>
-  <col name="Kod" type="string" length="100" required="true"/>
-  <col name="Nazwa" type="string" length="200" required="true"/>
-  <col name="Cena" type="currency"/>
-</table>
-```
-
-## 🔗 Powiązania między skillami
-
-Skille są zaprojektowane do współpracy:
-
-1. **enova365-business-xml** → definiuje strukturę obiektów
-2. **soneta-programming-basics** → pokazuje jak pracować z wygenerowanymi klasami
-
-Generator `BusinessGenerator` automatycznie tworzy klasy C# z plików `*.business.xml` podczas kompilacji projektu.
-
-## 📝 Konwencje nazewnicze
-
-| Element | Konwencja | Przykład |
-|---------|-----------|----------|
-| Klasa wiersza | PascalCase, l.poj. | `Towar`, `Kontrahent` |
-| Klasa tabeli | PascalCase, l.mn. | `Towary`, `Kontrahenci` |
-| Klasa modułu | Nazwa + Module | `TowaryModule` |
-| Klucz | Wg + nazwa kolumny | `WgKodu`, `WgNazwy` |
-| Namespace | Soneta.NazwaModułu | `Soneta.Towary` |
-
-Obiekty biznesowe (domenowe) nazywane są po polsku: `Towar`, `Faktura`, `Kontrahent`.
-Obiekty systemowe (techniczne) po angielsku: `Session`, `Context`, `Row`.
-
-## 🤝 Współpraca
-
-Zapraszamy do zgłaszania issues i pull requestów. Szczególnie cenne są:
-- Nowe przykłady kodu
-- Poprawki w dokumentacji
-- Dodatkowe wzorce programistyczne
-
-## 📄 Licencja
+## Licencja
 
 MIT
-
-## 🔗 Linki
-
-- [Dokumentacja enova365](https://www.enova.pl/)
-- [Soneta Developer Portal](https://developer.enova365.pl/)
