@@ -1,0 +1,9 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.stack {
+  @include partial-row-start-top;
+  @include flexWrap(wrap);
+  background-color: $stack_bg;
+}

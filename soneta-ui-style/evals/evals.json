@@ -1,0 +1,23 @@
+{
+  "skill_name": "soneta-ui-style",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Stwórz stronę logowania w stylu enova365 jako pojedynczy plik HTML z CSS. Formularz logowania z polami login, hasło, przyciskiem zaloguj i linkiem 'Nie pamiętasz hasła?'. Motyw jasny.",
+      "expected_output": "Plik HTML ze stroną logowania w stylu enova365: dwuczęściowy layout (lewa branding, prawa formularz), zielony przycisk zaloguj, kolory brand #016E46, profesjonalny enterprise look",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Zbuduj dashboard modułów enova365 z kafelkami w stylu Soneta. Użyj HTML/CSS. Pokaż 6 modułów: Kadry i płace, Księgowość, Handel, CRM, Terminarz, Produkcja. Motyw jasny.",
+      "expected_output": "Plik HTML z dashboardem kafelków: tło rgb(230,231,231), białe kafelki 352px z border-left kolorowym, ikony modułów z odpowiednimi kolorami, header bar zielony",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Stwórz stronę z formularzem kontrahenta (pola: Nazwa, NIP, Adres, Telefon, Email) i tabelą listy dokumentów poniżej, w stylu enova365. HTML/CSS, motyw ciemny. Dodaj header z logo i sidebar.",
+      "expected_output": "Plik HTML z pełnym layoutem enova365 (header, sidebar, content) w motywie ciemnym: formularz z etykietami i inputami, tabela z naprzemiennymi wierszami, kolory ciemnego motywu",
+      "files": []
+    }
+  ]
+}

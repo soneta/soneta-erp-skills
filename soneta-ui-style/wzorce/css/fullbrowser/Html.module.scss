@@ -1,0 +1,252 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.html :global {
+  @include partial-column-start;
+  position: absolute;
+  align-items: flex-start;
+  width: inherit;
+  overflow-y: auto;
+  margin: 0 4px;
+  color: $html_fg;
+  outline: none;
+
+  div:first-child {
+    width: 100%;
+  }
+
+  .totp-qrcode {
+    @include partial-column-center;
+    position: relative;
+
+    img {
+      position: relative;
+      width: 250px;
+      height: 250px;
+    }
+  }
+
+  .mfa-info {
+    position: relative;
+    color: $mfa_label_fg;
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+    overflow: hidden;
+    font-family: $mfa_font_family;
+
+    div:first-child {
+      font-size: 11pt;
+      font-weight: bold;
+    }
+
+    ol {
+      margin-block-start: 6px;
+      margin-block-end: 10px;
+    }
+  }
+
+  .mfa-label,
+  .mfa-label-bold {
+    position: relative;
+    color: $mfa_label_fg;
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+
+    div:first-child {
+      font-size: 11pt;
+    }
+  }
+
+  .mfa-label-bold {
+    div:first-child {
+      font-weight: bold;
+    }
+  }
+
+  .totp-code-digit {
+    @include partial-column-center;
+    position: relative;
+    color: $mfa_label_fg;
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+  }
+
+  .totp-unique {
+    @include partial-column-center;
+    position: relative;
+    color: $mfa_label_fg;
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 16pt;
+  }
+
+  .fido-register {
+    @include partial-column-center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    svg {
+      width: auto;
+      height: 160px;
+
+      path {
+        fill: $mfa_svg_fill;
+      }
+    }
+  }
+
+  .soneta-rss-source-link {
+    padding: 0px 0px 10px 0px;
+
+    a {
+      color: $html_rss_fg;
+      font-size: $font_size_body;
+      font-weight: bold;
+      padding: 0px;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      text-decoration: underline !important;
+    }
+  }
+
+  .soneta-rss-element {
+    width: 100%;
+    padding: 0px 0px 15px 0px;
+    background-color: transparent;
+
+    div {
+      width: 100%;
+    }
+
+    .soneta-rss-element-title {
+      border-bottom: 1px solid $html_rss_border;
+      padding: 0px;
+
+      a {
+        color: $html_rss_fg;
+        font-size: $font_size_label;
+        padding: 0px;
+        text-decoration: none !important;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: block;
+        overflow: hidden;
+      }
+
+      a:hover {
+        text-decoration: underline !important;
+      }
+    }
+
+    .soneta-rss-element-date-info {
+      padding: 0px;
+      color: $html_rss_date_info_fg;
+      font-size: $font_size_label;
+      font-family: $defaultFont;
+    }
+  }
+
+  .soneta-rss-element-description {
+    @include partial-row-start-top;
+    color: $html_rss_desc_fg;
+    font-size: $font_size_label;
+
+    img {
+      margin: 0 10px 10px 0;
+      width: 30%;
+    }
+  }
+
+  .soneta-rss-error {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: 30px;
+    width: 80%;
+    color: $html_rss_error_fg;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: $font_size_title;
+    text-align: center;
+  }
+
+  .soneta-demo-info :global {
+    p {
+      margin: 0;
+
+      .soneta-hyperlink {
+        color: $html_hyperlink_fg !important;
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:focus-visible {
+          @include focus($outline-offset: -1px);
+        }
+
+        &:active,
+        &:hover,
+        &:visited {
+          color: $html_hyperlink_fg !important;
+        }
+      }
+    }
+  }
+}
+
+.html-modal :global {
+  position: absolute;
+  width: unset;
+  margin: unset;
+  overflow: hidden;
+  font-family: $tertiaryFont;
+  font-size: 16px;
+  line-height: 22px;
+  color: $modal_label_fg;
+
+  div {
+    width: 100%;
+
+    .soneta-verifier {
+      @include partial-row-center-start;
+      min-height: 28px;
+      margin: 5px 0;
+
+      .soneta-verifier-text {
+        flex: 1;
+        width: calc(100% - 28px);
+        padding-left: 5px;
+      }
+
+      .soneta-verifier-error,
+      .soneta-verifier-warning {
+        width: 28px;
+        height: 28px;
+      }
+
+      .soneta-verifier-error {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxODAgMTgwJyB3aWR0aD0nMjBweCcgaGVpZ2h0PScyMHB4Jz48cGF0aCB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIGZpbGw9J3JnYigxNzksIDAsIDApJyBkPSdNIDc5Ljk5OTk5OCwyLjE1MTYyIEMgMzYuOTQzOTk5LDIuMTUxNjIgMiwzNy4wNjE2NTcgMiw4MC4wNzU4MDkgMiwxMjMuMDg5OTYgMzYuOTQzOTk5LDE1OCA3OS45OTk5OTgsMTU4IDEyMy4wNTYsMTU4IDE1OCwxMjMuMDg5OTYgMTU4LDgwLjA3NTgwOSAxNTgsMzcuMDYxNjU3IDEyMy4wNTYsMi4xNTE2MiA3OS45OTk5OTgsMi4xNTE2MiB6IG0gNy44LDExNi44ODYyOCBoIC0xNS42IHYgLTE1LjU4NDgzIGggMTUuNiB2IDE1LjU4NDgzIHogbSAwLC0zMS4xNjk2NzIgaCAtMTUuNiBWIDQxLjExMzcxNSBoIDE1LjYgdiA0Ni43NTQ1MTMgeicgLz48L3N2Zz4=");
+      }
+
+      .soneta-verifier-warning {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxODAgMTgwJyB3aWR0aD0nMjBweCcgaGVpZ2h0PScyMHB4Jz48cGF0aCB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIGZpbGw9J3JnYigyMzgsIDE4NSwgMCknIGQ9J00gMiwxNDYgSCAxNTggTCA3OS45OTk5OTgsMTAuNTg3NjQgMiwxNDYgeiBNIDg3LjA5MDkwMywxMjQuNjE5MSBIIDcyLjkwOTA5MiB2IC0xNC4yNTM5MyBoIDE0LjE4MTgxMSB2IDE0LjI1MzkzIHogbSAwLC0yOC41MDc4NjggSCA3Mi45MDkwOTIgViA2Ny42MDMzNyBoIDE0LjE4MTgxMSB2IDI4LjUwNzg2MiB6JyAvPjwvc3ZnPg==");
+      }
+    }
+  }
+}

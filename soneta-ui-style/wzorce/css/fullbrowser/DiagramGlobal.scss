@@ -1,0 +1,25 @@
+@import "./Variables.scss";
+
+:global {
+  .e-diagram {
+    div::-webkit-scrollbar {
+      width: 16px;
+    }
+
+    div::-webkit-scrollbar-track {
+      background: #D4D4D4;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+    }
+
+    div::-webkit-scrollbar-thumb {
+      background: #A3A3A3;
+      border-radius: 4px;
+    }
+
+    div::-webkit-scrollbar-thumb:hover {
+      background: #737373;
+    }
+  }
+}

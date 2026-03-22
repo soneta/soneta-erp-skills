@@ -1,0 +1,114 @@
+@import '../../Themes/common/PredefinedMixins.scss';
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.pb {
+  @include partial-row-center;
+	position: absolute;
+	left: 5px;
+	right: 0;
+
+	.pb-icon, .pb-fav {
+		@include partial-column-center;
+		position: absolute;
+		left: 0;
+		height: inherit;
+		font-size: 170%;
+		color: $path_icon;
+		cursor: pointer;
+
+		&:before {
+			content: "\2605";
+		}
+
+		svg {
+			@include partial-column-center;
+			height: inherit;
+			width: 16px;
+
+			path {
+				fill: $path_active_icon;
+			}
+		}
+	}
+
+	.pb-fav {
+		color: $path_active_icon;
+
+		svg {
+			path {
+				color: $path_active_icon;
+			}
+		}
+	}
+
+	.pb-paths {
+		@include partial-row-center-start;
+		position: absolute;
+		left: 5px;
+		top: 0;
+		height: inherit;
+    margin: 0;
+		padding: 0;
+
+		.pb-cmd {
+			@include partial-transition;
+			margin-left: 4px;
+			padding: 0;
+			cursor: pointer;
+			height: inherit;
+
+			.content {
+				@include partial-row-center-start;
+				align-items: center;
+				text-align: center;
+				width: 100%;
+				height: inherit;
+				overflow: hidden;
+
+				.text {
+					@include partial-row-center-start;
+					height: inherit;
+					font-size: 9pt;
+					line-height: 9pt;
+					font-family: $primaryFont;
+					color: $path_fg;
+				}
+
+				.path-separator {
+					width: 6px;
+					height: 6px;
+					padding: 0 8px;
+
+					&:after {
+						position: relative;
+						width: 6px;
+						height: 6px;
+						transform: rotate(45deg);
+						transform-origin: 4px 0;
+						border-top: $path_separator_border;
+						border-right: $path_separator_border;
+						content: '';
+						display: block;
+					}
+				}
+			}
+
+			&:last-child {
+				.path-separator {
+					padding: 0;
+					display: none;
+				}
+			}
+
+			&:hover {
+				.content {
+					.text {
+						color: $path_hover_fg;
+					}
+				}
+			}
+		}
+	}
+}
+

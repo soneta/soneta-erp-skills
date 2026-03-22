@@ -1,0 +1,26 @@
+@import "./Variables.scss";
+
+.popup-window-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 290000;
+  background-color: $nav_popup_overlay_bg;
+}
+
+.popup {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	background-color: $popup_overlay;
+}
+
+.popup-window {
+  position: fixed;
+  z-index: 300000;
+}

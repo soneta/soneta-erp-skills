@@ -1,0 +1,56 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.features-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 200px;
+
+  .features-container {
+    @include partial-column-start-start-wrap;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    background: $featurebar_bg;
+
+    .features-header:first-of-type {
+      background: inherit;
+    }
+
+    .features-header,
+    .features-items {
+      position: relative;
+    }
+
+    .features-header {
+      @include partial-row-center-start;
+      min-height: 33px;
+      overflow: hidden;
+      background-color: $featurebar_features_header_bg;
+      border-bottom: $featurebar_features_border;
+      margin: 0;
+      padding: 0;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+
+			&:hover {
+				background-color: $featurebar_item_hover_bg;
+			}
+    }
+
+    .features-items {
+      padding: 0;
+      bottom: 0;
+      width: 100%;
+      overflow: hidden;
+      background-color: $featurebar_item_bg;
+    }
+  }
+}

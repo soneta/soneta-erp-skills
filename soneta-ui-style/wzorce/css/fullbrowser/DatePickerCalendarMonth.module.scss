@@ -1,0 +1,29 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/DatePickerCalendarMonth.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.container {
+  .month-button {
+    .label {
+      cursor: pointer;
+    }
+  }
+
+  .month-section {
+
+    .week-numbers {
+      .week-number {
+        cursor: pointer;
+      }
+    }
+
+    .days {
+      .wrapper-day {
+        .day:not(.day-off) {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

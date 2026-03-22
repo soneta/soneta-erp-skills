@@ -1,0 +1,222 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$indicator_caption_height: 14px;
+$indicator_font_size: 12px;
+
+.flip-in-hor-bottom :global {
+  -webkit-animation: flip-in-hor-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: flip-in-hor-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.swing-in-top-fwd :global {
+	-webkit-animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) 0.5s both;
+	animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) 0.5s both;
+}
+
+.indicator {
+  position: absolute;
+  overflow: hidden;
+  border: none;
+  border-radius: 2px;
+  color: $indicator_fg;
+  box-shadow: $indicator_shadow;
+  background-color: unset;
+
+  .ind-container {
+    @include partial-column-start;
+    justify-content: space-around;
+    width: inherit;
+    height: inherit;
+
+    .ind-header {
+      @include partial-row-center-end;
+      width: 100%;
+      height: 30px;
+      line-height: calc(#{$font_size_label} + 4px);
+      font-size: $font_size_label;
+      cursor: inherit;
+
+      .ind-time-icon {
+        height: 100%;
+        width: 18px;
+        padding-left: 0;
+        float: unset;
+        margin: 0 2px;
+        float: left;
+        fill: $indicator_icon;
+
+        svg {
+          width: 16px;
+          height: inherit;
+        }
+      }
+
+      .ind-time {
+        @include partial-ellipsis;
+        @include partial-row-center-start;
+        width: unset;
+        line-height: unset;
+        padding: 0 2px;
+        float: unset;
+      }
+
+      .ind-unit {
+        @include partial-ellipsis;
+        overflow: hidden;
+        width: 40px;
+        height: 100%;
+        text-align: right;
+        padding: 4px 4px 4px 0;
+        line-height: inherit;
+        float: right;
+      }
+
+    }
+
+    .ind-content {
+      @include partial-row-center-start;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      display: block;
+
+      .ind-icon {
+        float: left;
+        margin-left: 8px;
+        height: 100%;
+
+        svg {
+          width: 24px;
+          height: 100%;
+
+          path {
+            fill: $indicator_icon;
+          }
+        }
+      }
+
+      .ind-value {
+        @extend .swing-in-top-fwd;
+        display: inline-flex;
+        width: unset;
+        height: unset;
+        line-height: unset;
+        font-size: 24pt;
+        margin: 0 8px;
+        text-align: center;
+        cursor: default;
+      }
+
+      .ind-value-icon {
+        @include partial-row-center;
+        height: inherit;
+        width: inherit;
+
+        svg {
+          width: 36px;
+          height: 100%;
+
+          rect {
+            fill: $indicator_value_icon;
+          }
+        }
+      }
+
+      .ind-unit {
+        @extend .swing-in-top-fwd;
+        display: inline-flex;
+        height: inherit;
+      }
+    }
+
+    .ind-footer {
+      @include transition(background-color, .5s, linear, 0s);
+      @include partial-row-center-start;
+      @include flexAlignItems(center, center);
+      width: 100%;
+      height: 40px;
+      padding: 0 4px;
+      background-color: $indicator_footer_bg;
+      font-size: 10pt;
+      cursor: pointer;
+
+      .ind-caption {
+        @include multilineEllipsis(2);
+      }
+
+      .ind-caption-not-fit {
+        width: 100%;
+        padding: 0 4px;
+        line-height: calc(#{$font_size_label} + 4px);
+      }
+
+      .ind-caption-fit {
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+
+  &.dashboard {
+    .ind-container {
+      justify-content: flex-start;
+
+      .ind-content {
+        height: 32px;
+      }
+
+      .ind-footer {
+        position: absolute;
+        bottom: 0;
+        font-size: 9pt;
+        line-height: 11pt;
+        padding: 0 6px;
+        height: auto;
+
+        &.desc-fit {
+          padding: 6px 10px;
+          cursor: default;
+        }
+
+        &.flip-in-hor-bottom {
+          font-weight: normal;
+          cursor: default;
+        }
+      }
+    }
+
+    &.small {
+      .ind-container {
+        .ind-content {
+          .ind-value {
+            font-size: 16pt;
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+
+    &.medium {
+      .ind-container {
+        .ind-content {
+          line-height: 25px;
+
+          .ind-value {
+            font-size: 21pt;
+          }
+        }
+      }
+    }
+
+    &.large {
+      .ind-container {
+        .ind-content {
+          height: 45px;
+          line-height: 45px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,107 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.nav-header {
+  @include flexDisplay();
+  @include flexJustifyContent(space-between, justify);
+  height: 44px;
+  width: 100%;
+  padding: 0 8px;
+  background-color: $nav_tree_header_bg;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  .button {
+    @include flexDisplay();
+    @include flexJustifyContent(center, center);
+    @include flexAlignItems(center, center);
+    height: inherit;
+    font-weight: 300;
+    font-size: 12px;
+    color: $nav_tree_header_fg;
+
+    .icon {
+      @include flexDisplay();
+      @include flexJustifyContent(center, center);
+      @include flexAlignItems(center, center);
+      width: 44px;
+      height: inherit;
+      cursor: pointer;
+      border-radius: 12px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+          fill: $nav_tree_header_fg;
+        }
+      }
+
+      &:hover {
+        background-color: $nav_tree_header_hover;
+      }
+
+      &:focus-visible {
+          @include focus(
+            $outline-offset: -2px,
+            $box-shadow: none,
+            $border-radius: 8px
+          );
+        }
+      }
+  }
+
+  &.collapsed {
+    @include flexJustifyContent(stretch, stretch);
+
+    .button {
+      display: none;
+
+      &.expand {
+        display: block;
+        width: 100%;
+
+        .icon {
+          width: 100%;
+
+          svg {
+            @include transition(transform, .1s, ease-out, 0s);
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+  }
+
+  &:not(.collapsed) {
+    .button {
+
+      &.expand .icon {
+        @include transition(transform, .2s, ease-out, 0s);
+      }
+    }
+  }
+}
+
+.nav-header.form {
+  background-color: $nav_tree_form_header_bg;
+
+  .button {
+    color: $nav_tree_form_header_fg;
+
+    .icon {
+      svg {
+        path {
+          fill: $nav_tree_form_header_fg;
+        }
+      }
+
+      &:hover {
+        background-color: $nav_tree_form_header_hover;
+      }
+    }
+
+  }
+}

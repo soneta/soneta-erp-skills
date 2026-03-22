@@ -1,0 +1,42 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.image {
+  @include partial-row-center;
+  align-content: center;
+  width: inherit;
+  height: inherit;
+
+  .lazy-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .lazy-spinner {
+    @include partial-row-center;
+    height: inherit;
+    width: inherit;
+    svg {
+      width: 36px;
+      height: 100%;
+      rect {
+        fill: $indicator_value_icon;
+      }
+    }
+  }
+
+  img {
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.5s ease-in-out;
+  }
+}

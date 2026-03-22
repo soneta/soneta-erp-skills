@@ -1,0 +1,22 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.chart {
+  position: absolute;
+  background-color: $chart_bg;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  img {
+    border: $chart_border;
+  }
+
+  &.dashboard {
+    img {
+      border: 0;
+    }
+  }
+}

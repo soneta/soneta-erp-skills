@@ -1,0 +1,86 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.nav-panel-tree {
+  @include flexDisplay();
+  @include flexDirection(column);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+
+  .fav-nav-menu, .nav-menu {
+    @include partial-column-start;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: $secondaryFont;
+
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-color: $nav_tree_scrollbar_thumb $nav_tree_scrollbar_track;
+    scrollbar-width: none;  /* Firefox */
+
+    &.premium {
+      font-family: $primaryFont;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;  /* Safari and Chrome */
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $nav_tree_scrollbar_track;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $nav_tree_scrollbar_thumb;
+      border-radius: 4px;
+    }
+
+    &.form {
+      scrollbar-color: $nav_tree_form_scrollbar_thumb $nav_tree_form_scrollbar_track;
+
+      &::-webkit-scrollbar-track {
+        background: $nav_tree_form_scrollbar_track;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $nav_tree_form_scrollbar_thumb;
+      }
+    }
+
+    &:hover .scroll-indicator {
+      height: 0;
+    }
+
+    &.expanded {
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: block;
+      }
+    }
+
+    .fav-nav-items, .nav-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  .nav-menu {
+    height: 100%;
+    overflow: auto;
+    padding-bottom: $space_16;
+  }
+}

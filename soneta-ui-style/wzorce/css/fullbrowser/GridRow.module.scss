@@ -1,0 +1,406 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$grid_headercolumn_height: 32px;
+
+.partial-summary {
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: $grid_headercolumn_height;
+    font-size: 9pt;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    cursor: pointer;
+}
+
+.partial-cells {
+	top: 0;
+	height: 100%;
+	font-size: 9pt;
+	background-color: $grid_headercolumn_bg;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+.partial-fill-before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	content: " ";
+}
+
+.grid-row {
+  cursor: default;
+  overflow: hidden;
+
+  &.regular, &.focused, &.selected {
+    min-height: $grid_headercolumn_height;
+    /* Likwiduje obszar podczas klikania na wierszu grida */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  &.focused {
+    &:not(.selected) {
+      &:not(.no-grid-lines) {
+        background-color: $grid_row_focused_bg !important;
+        color: $grid_row_focused_fg;
+        fill: $grid_row_focused_fg;
+      }
+      &.no-grid-lines {
+        color: $grid_row_content_fg;
+        fill: $grid_row_content_fg;
+      }
+    }
+  }
+
+  &.focused.selected {
+    color: $grid_row_focused_selected_color;
+
+    [class*="gc-text"] [class*="icon"] svg path,
+    [class*="gc-image"] [class*="icon"] svg path,
+    [class*="gc-color"] [class*="icon"] svg path,
+    [class*="gc-icon"] [class*="icon"] svg path,
+    [class*="gc-command"] [class*="icon"] svg path,
+    [class*="gc-color-status"] [class*="icon"] svg path {
+      fill: $grid_row_focused_selected_icon_color !important;
+    }
+  }
+
+  &.dragenterDown {
+    border-bottom: 1px solid $grid_row_drag_enter;
+  }
+
+  &.dragenterUp {
+    border-top: 1px solid $grid_row_drag_enter;
+  }
+
+  &.selected {
+    background-color: $grid_row_selected_bg !important;
+    color: $grid_row_focused_fg;
+
+    &:not(.focused) {
+      color: $grid_row_focused_selected_color;
+    }
+  }
+
+  &:not(.grid-row-card) {
+    &.regular {
+      color: $grid_row_content_fg;
+      fill: $grid_row_content_fg;
+    }
+
+    &.odd:before, &.even:before {
+      @extend .partial-fill-before;
+    }
+
+    &.odd:before {
+      background-color: $grid_odd_bg;
+    }
+
+    &.even:before {
+      background-color: $grid_even_bg;
+    }
+
+    &.selected.focused {
+      border-collapse: collapse;
+      border-top: 2px solid $grid_row_selected_focused_border;
+      border-bottom: 2px solid $grid_row_selected_focused_border;
+    }
+  }
+
+  &.locator, &.nonoptimal, &.loadmore, &.grouping, &.sumgrouping, &.new {
+    height: $grid_headercolumn_height;
+    line-height: $grid_headercolumn_height;
+    background-color: $grid_special_row_bg;
+    color: $grid_row_content_fg;
+    cursor: pointer;
+
+    .icon {
+      @include partial-column-center;
+      float: left;
+      height: inherit;
+      width: $grid_headercolumn_height;
+
+      svg {
+        width: 20px;
+
+        path {
+          fill: $grid_icon;
+        }
+      }
+    }
+
+    .text {
+      @include partial-ellipsis;
+      height: inherit;
+      padding: 0 4px;
+      line-height: $grid_headercolumn_height;
+      font-size: $font_size_label;
+      width: 100%;
+    }
+
+    .icon + .text {
+      width: calc(100% - #{$grid_headercolumn_height});
+    }
+  }
+
+  &.grouping {
+    border-top: $grid_row_grouping_border_top;
+    border-bottom: $grid_row_grouping_border_bottom;
+    background-color: $grid_row_grouping_bg;
+
+    .icon {
+      width: 18px;
+      margin: 0 7px;
+
+      svg {
+        width: unset;
+      }
+    }
+
+    .text {
+      color: $grid_row_grouping_fg;
+      font-size: $grid_row_grouping_fs;
+      font-weight: $grid_row_grouping_fw;
+    }
+  }
+
+  &.grouping-cards {
+    height: 48px;
+    width: calc(100% - 16px);
+    margin: 0 0 8px 8px;
+    background-color: $grid_cards_odd_bg;
+
+    &:first-child {
+      margin-top: 8px;
+    }
+
+    .text {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+
+  &.sumgrouping {
+    @extend .partial-summary;
+    cursor: default;
+
+    .sum-cells {
+      @extend .partial-cells;
+    }
+
+    .text {
+      font-style: normal;
+    }
+  }
+}
+
+.gr-empty-content {
+  @include partial-column-center;
+  height: calc(100% - 20px);
+
+  .empty-image {
+    height: 100%;
+    width: 100%;
+
+    svg {
+      width: 100%;
+      height: 100%;
+
+      path {
+        fill: $grid_emptycontent;
+      }
+
+      text {
+        tspan {
+          fill: $grid_emptycontent;
+        }
+      }
+    }
+  }
+}
+
+.gf-summary {
+  @extend .partial-summary;
+  border-top: $grid_row_sumgrouping_border;
+  overflow: hidden;
+
+  .gf-cells {
+    @extend .partial-cells;
+  }
+}
+
+.grid-row-card {
+  font-size: 12px;
+  color: $grid_cards_color;
+  border: 4px solid transparent;
+  box-sizing: initial;
+  border-radius: 12px;
+  box-shadow: $grid_cards_box_shadow;
+
+  &.selected {
+    background-color: rgb(236, 249, 255);
+
+    &.focused {
+      box-shadow: 0px 0px 0px 2px $grid_row_selected_focused_border;
+    }
+  }
+
+  &:not(.grid-row-card-single) {
+    margin: 0 0 8px 8px;
+    background-color: $grid_cards_odd_bg;
+  }
+  &.grid-row-card-single {
+    &.odd {
+      background-color: $grid_cards_odd_bg;
+    }
+    &.even {
+      background-color: $grid_cards_even_bg;
+    }
+
+    .grid-row-hover-panel {
+      .grid-card-panel-cmd:last-child {
+        margin-right: 25px;
+      }
+    }
+  }
+
+  .grid-row-hover-panel {
+    @include partial-row-center-space-between;
+    position: absolute;
+    height: 32px;
+    z-index: 100;
+    transition: 0s ease-in .2s visibility;
+
+    &:not(.grid-row-hover-panel-active) {
+      visibility: hidden;
+    }
+  }
+
+  .grid-row-hover-panel-active {
+    visibility: visible;
+  }
+
+  .grid-card-panel-cmds {
+    @include partial-row-center-start;
+    height: 32px;
+    background-color: transparent;
+    cursor: pointer;
+
+    .grid-card-panel-cmd {
+      @include partial-row-center;
+      width: 24px;
+      height: 24px;
+      margin-right: 5px;
+      border-radius: 4px;
+      z-index: 101;
+      background-color: $grid_card_panel_cmd_bg;
+
+      .icon {
+        width: 14px;
+        height: 14px;
+        fill: $grid_card_panel_cmd_icon;
+      }
+
+      &:hover {
+        background-color: $grid_card_panel_cmd_hover_bg;
+        .icon {
+          fill: $grid_card_panel_cmd_hover_icon;
+        }
+      }
+    }
+  }
+
+  .grid-row-card-select-cmd {
+    @include partial-row-center;
+    width: 32px;
+    height: 32px;
+    z-index: 101;
+    cursor: pointer;
+  }
+}
+
+.grid-card-content {
+  overflow: hidden;
+
+  .icon {
+    height: 100%;
+    width: 100%;
+    svg {
+      height: inherit;
+      width: inherit;
+    }
+  }
+}
+
+.grid-card-content, .grid-card-column {
+  position: absolute;
+}
+
+.grid-card-column {
+  overflow: hidden;
+
+  &.textright {
+    text-align: right;
+  }
+  &.largefont {
+    font-size: 14pt;
+  }
+  &.boldfont {
+    font-weight: 600;
+  }
+  &.grid-card-field {
+    @include partial-row-center-start;
+    .grid-card-field-ph {
+      font-weight: $grid_card_cap_fw;
+    }
+    &:not(.grid-card-field-ph) {
+      font-weight: $grid_card_val_fw;
+    }
+  }
+  &.label-center {
+    align-items: center;
+    justify-content: center;
+  }
+  &.grid-card-image {
+    @include partial-row-center;
+    .empty-img {
+      height: inherit;
+      width: inherit;
+      svg {
+        height: inherit;
+        width: inherit;
+        fill: $grid_emptycontent;
+      }
+    }
+    img {
+      border-radius: 12px;
+    }
+  }
+  &.grid-card-image-circle {
+    img {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      object-fit: cover;
+    }
+  }
+}
+
+.grid-card-field-ellipsis {
+  @include partial-ellipsis;
+}
+
+.grid-card-btn {
+  @include partial-row-center-start;
+  @include partial-command;
+  position: absolute;
+}

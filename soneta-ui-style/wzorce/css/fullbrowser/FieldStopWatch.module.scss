@@ -1,0 +1,7 @@
+@import "./Variables.scss";
+@import "./FieldBase.module.scss";
+
+.field-stopwatch {
+  border: $stop_watch_border;
+  background-color: $stop_watch_bg;
+}

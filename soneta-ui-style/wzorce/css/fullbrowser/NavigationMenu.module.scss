@@ -1,0 +1,40 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./PinnOffset.module.scss";
+
+.nav-bar-c {
+  width: 1px;
+  height: 1px;
+}
+
+.nav-bar-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: transparent;
+}
+
+.nav-bar,
+.popup-nav-menu {
+  @include partial-row-start-top;
+}
+
+.nav-bar {
+  position: fixed;
+  top: $hb_height;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  background: $nav_bar_gradient;
+  font-family: $primaryFont;
+}
+
+.popup-nav-menu {
+  position: absolute;
+  height: 100%;
+  font-family: $defaultFont;
+}

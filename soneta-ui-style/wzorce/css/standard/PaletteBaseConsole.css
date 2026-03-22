@@ -1,0 +1,825 @@
+﻿.PaletteBaseConsole {
+  --defaultFont: 'Lato', 'ROBOTO', 'Segoe UI', Arial;
+  --primaryFont: var(--defaultFont);
+  --secondaryFont: var(--defaultFont);
+  --primaryMediumFont: 'ROBOTO-Medium', 'Segoe UI', Arial;
+
+  --window_top_margin: 80px;
+  --window_footer_height: 30px;
+  --window_padding: 16px;
+
+  --font_size_label: 24px;
+  --font_size_body: 14px;
+  --font_size_button: 14px;
+  --font_size_title: 16px;
+  --font_size_special: 24px;
+  --group_title_font_size: 24px;
+
+  /* FIELD SIZE*/
+  --field_height: 60px;
+  --field_min_height: 50px;
+  --field_padding_top: 12px;
+  --field_padding_bottom: 4px;
+
+  --input_height: 38px;
+  --input_margin_bottom: 4px;
+
+  --editorlabel_height: 12px;
+  --editorlabel_margin_bottom: 4px;
+
+  --white: 255, 255, 255;
+
+  --lightGray: 208, 208, 208;
+  --lightGray2: 213, 213, 213;
+  --lightGray3: 187, 187, 187;
+  --lightGray4: 172, 172, 172;
+
+  --verylightGray: 242, 242, 242;
+  --verylightGray2: 224, 224, 224;
+  --verylightGray4: 234, 234, 234;
+  --verylightGray5: 229, 229, 229;
+  --verylightGray6: 193, 193, 193;
+  --verylightGray7: 245, 245, 245;
+
+  --darkGray: 140, 140, 140;
+  --darkGray2: 128, 128, 128;
+  --verydarkGray: 70, 70, 70;
+  --verydarkGray2: 95, 95, 95;
+
+  --darkGreen: 27, 94, 32;
+  --darkGreen3: 100, 146, 0;
+
+  --pureBlack: 0, 0, 0;
+  --mostlyBlack: 45, 45, 45;
+  --strongYellow: 200, 200, 50;
+  --strongOrange: 255, 152, 0;
+  --strongRed: 220, 20, 0;
+  --strongGreen: 60, 130, 50;
+  --strongBlue: 0, 178, 238;
+
+  --mostlydesaturateddarkBlue: 94, 134, 152;
+  --lightdesaturateddarkBlue: 120, 170, 195, 0.85;
+  --verypaleYellow: 255, 250, 208;
+
+  --vividBlue: 34, 34, 255;
+  --vividLimeGreen: 34, 255, 34;
+  --vividOrange: 255, 165, 34;
+  --vividRed: 255, 34, 34;
+
+  --palette_premium_blue: 59, 134, 255;
+  --palette_premium_green: 61, 207, 120;
+  --palette_premium_gray: 66, 82, 109;
+  --palette_premium_orange: 255, 157, 0;
+  --palette_premium_red: 214, 36, 77;
+  --palette_premium_turquise: 66, 210, 212;
+
+  --palette_premium_darkgreen: 43, 157, 31;
+  --palette_premium_lightgray: 229, 233, 243;
+
+  --background: var(--white);
+  --backgroundContrast: var(--pureBlack);
+
+  /* SKALA SZAROŚCI OD TŁA GŁÓWNEGO */
+  --verylightContrast1: 245, 245, 245;
+  --verylightContrast2: 242, 242, 242;
+  --verylightContrast3: 234, 234, 234;
+  --verylightContrast4: 229, 229, 229;
+  --verylightContrast5: 224, 224, 224;
+
+  --lightContrast1: 213, 213, 213;
+  --lightContrast2: 208, 208, 208;
+  --lightContrast3: 193, 193, 193;
+  --lightContrast4: 187, 187, 187;
+  --lightContrast5: 172, 172, 172;
+
+  --strongContrast1: 140, 140, 140;
+  --strongContrast2: 128, 128, 128;
+  --verystrongContrast1: 163, 163, 163;
+  --verystrongContrast2: 70, 70, 70;
+  --verystrongContrast3: 82, 82, 82;
+
+  --almostfullContrast: var(--mostlyBlack);
+  --fullContrast: var(--pureBlack);
+
+  /*------------------------------------------------*/
+
+  --theme: 118, 163, 0;
+  --themeContrast: var(--white);
+  --theme_contrast: var(--white);
+  --themeAccent: 94, 134, 152;
+  --themeAccentContrast: var(--white);
+
+  --primaryText: var(--almostfullContrast);
+  --secondaryText: 114, 114, 114;
+  --labelColor: var(--pureBlack);
+
+  --menuBackground: RGBA(var(--white), 1);
+  --menuBackgroundContrast: RGBA(var(--strongContrast2), 1);
+
+  /* GENERAL */
+  --warning: RGBA(var(--strongOrange), 1);
+  --error: RGBA(var(--strongRed), 1);
+  --info: RGBA(var(--strongGreen), 1);
+  --question: rgb(29, 78, 216);
+
+  /* THEME */
+  --theme_bg: RGBA(var(--background), 1);
+  --theme_body_fg: rgb(255, 192, 203);
+
+  --theme_border: 1px solid RGBA(var(--lightContrast4), 1);
+  --theme_border_light: 1px solid RGBA(var(--verylightContrast5), 1);
+  --theme_border2: RGBA(var(--theme), 0.3);
+  --theme_text_icon: RGBA(var(--white), 1);
+  --theme_blink_normal: RGBA(var(--lightContrast1), 0.2);
+  --theme_blink_blue: rgba(154, 219, 249, 0.2);
+  --theme_accent: RGBA(var(--themeAccent), 1);
+  --theme_accent_opacity: RGBA(var(--themeAccent), 0.7);
+  --theme_divider: RGBA(var(--lightContrast5), 1);
+  --theme_primary_text: RGBA(var(--primaryText), 1);
+  --theme_form_bg: RGBA(var(--background), 1);
+  --theme_layer_bg: RGBA(var(--almostfullContrast), 0);
+  --theme_tap_highlight: RGBA(var(--fullContrast), 0);
+  --theme_shadow: rgba(70, 70, 70, 0.3);
+  --theme_light_shadow: RGBA(var(--almostfullContrast), 0.4);
+  --theme_overlay_bg: RGBA(var(--mostlyBlack), 0.3);
+
+  --theme_hover_shadow: 0 0 0 1px RGBA(var(--theme_box_shadow), 0.1), 1px 1px 6px 2px RGBA(var(--theme_box_shadow), 0.2);
+  --theme_active_shadow: 0 0 1px 1px RGBA(var(--theme_box_shadow_light), 0.1), 0 0 1px 1px RGBA(var(--theme_box_shadow_light), 0.2);
+  --theme_shadow_hover_btn: 0 0 0 1px RGBA(var(--pureBlack), 0.1), 1px 1px 6px 2px RGBA(var(--pureBlack), 0.2);
+
+  --theme_link_fg: rgb(34, 34, 255);
+  --theme_error: rgb(220, 20, 0);
+  --theme_warning: rgb(255, 152, 0);
+  --theme_info: rgb(60, 130, 50);
+  --theme_question: RGBA(var(--themeAccent), 1);
+
+  /* PARTIAL */
+  --theme_icon: RGBA(var(--white), 1);
+  --theme_box_shadow: RGBA(var(--pureBlack), 1);
+  --theme_box_shadow_light: RGBA(var(--lightContrast5), 1);
+  --theme_content_icon: RGBA(var(--themeAccent), 1);
+  --theme_content_title_fg: RGBA(var(--themeAccent), 1);
+
+  /* HeaderBar */
+  --headerbar_bg: RGBA(var(--theme), 1);
+  --headerbar_fg: RGBA(var(--white), 1);
+  --headerbar_command_bg: RGBA(var(--darkGreen3), 1);
+  --headerbar_command_hover_bg: RGBA(75, 106, 120);
+  --headerbar_icon: RGBA(var(--white), 1);
+  --headerbar_icon_hover: RGBA(var(--white), 1);
+  --headerbar_logo_icon: RGBA(var(--white), 1);
+  --headerbar_command_bell_bg: RGBA(179, 0, 0);
+  --headerbar_command_special_bg: RGBA(179, 0, 0);
+  --headerbar_command_special_icon: RGBA(var(--white), 1);
+  --headerbar_command_special_shadow: 2px 4px 14px rgba(120, 120, 120, 0.8);
+
+  /* GROUP */
+  --group_bg: RGBA(245, 245, 245, 1);
+  --group_title_fg: RGBA(23, 23, 23, 1);
+  --group_item_fg: RGBA(114, 114, 114, 1);
+  --group_icon: RGBA(var(--theme), 1);
+  --group_content_fg: RGBA(23, 23, 23, 1);
+  --group_shadow: unset;
+  --group_border: 1px solid RGBA(212, 212, 212, 1);
+
+  /* INPUT SEARCH */
+  --input_search_fg: RGBA(var(--mostlyBlack), 1);
+  --input_search_placeholder_fg: RGBA(var(--white), 0.6);
+  --input_search_icon: RGBA(var(--white), 0.8);
+
+  /* WINDOW */
+  --window_bg: RGBA(var(--background), 1);
+
+  /* Scroll */
+  --scroll_con_bg: transparent;
+  --scroll_icon_fg: RGBA(0, 0, 0, 1);
+  --scroll_icon_bg: RGBA(255, 255, 255, 1);
+  --scroll_icon_border: 0.6px solid RGBA(163, 163, 163, 1);
+  --scroll_icon_shadow: 1.2px 1.2px 3px 0px RGBA(0, 0, 0, 0.50);
+
+  /* WIZARD */
+  --wizard_bg: RGBA(var(--background), 1);
+  --wizard_buttons_bg: inherit;
+  --wizard_command_fg: RGBA(var(--themeAccent), 1);
+  --wizard_headerbar_bg: RGBA(var(--themeAccent), 1);
+  --wizard_headerbar_fg: RGBA(var(--themeAccentContrast), 1);
+  --wizard_headerbar_icon: RGBA(var(--themeAccentContrast), 1);
+  --wizard_title_bg: RGBA(var(--themeAccent), 1);
+  --wizard_label_fg: RGBA(var(--secondaryText), 1);
+  --wizard_title_fg: RGBA(var(--white), 1);
+
+  /* EDITOR */
+  --theme_editor_bg: RGBA(var(--background), 1);
+  --theme_editor_disabled_bg: RGBA(var(--verylightGray5), 1);
+  --theme_editor_fg: RGBA(var(--almostfullContrast), 1);
+  --theme_editor_disabled_fg: RGBA(var(--strongContrast2), 1);
+  --theme_editor_border: rgb(195, 227, 234);
+  --theme_editor_disabled_border: RGBA(var(--lightGray2), 1);
+  --theme_editor_focused_bg: rgb(255, 250, 208);
+  --theme_editor_label_fg: RGBA(23, 23, 23, 1);
+
+  /* CHECKBOX */
+  --checkbox_bg:  RGBA(73, 126, 77, 1);
+  --checkbox_bg_hover: RGBA(58, 142, 111);
+  --checkbox_fill_color: RGBA(var(--white), 1);
+  --checkbox_border: 2px solid RGBA(77, 81, 80);
+  --checkbox_border_hover: 2px solid RGBA(133, 139, 137);
+  --checkbox_border_disabled: 2px solid RGBA(var(--verylightContrast5), 1);
+  --checkbox_disabled_fg: RGBA(var(--neutral_600));
+  --checkbox_disabled_icon: RGBA(109, 115, 113);
+  --checkbox_disabled_color: RGBA(230, 231, 231);
+  --checkbox_grid_border: 2px solid RGBA(0, 0, 0, 1);
+  --checkbox_grid_bg: RGBA(255, 255, 255, 1);
+
+  /* RADIOBUTTON */
+  --radiobutton_checked: RGBA(var(--theme), 1);
+  --radiobutton_unchecked: RGBA(var(--strongContrast2), 1);
+  --radiobutton_disabled: RGBA(var(--verylightContrast5), 1);
+  --radiobutton_bg: var(--theme_editor_bg);
+  --radiobutton_tap_highlight: var(--theme_tap_highlight);
+
+  /* COMMAND */
+  --command_form_bg: RGBA(255, 255, 255, 1);
+  --command_form_fg: RGBA(0, 0, 0, 1);
+  --command_form_active_fg: RGBA(var(--palette_premium_gray));
+  --command_icon: RGBA(var(--verydarkGray2));
+  --command_title_fg: var(--theme_primary_text);
+  --command_important_fg: RGBA(var(--white));
+  --command_important_bg: RGBA(var(--theme), 1);
+  --command_disabled_bg: RGBA(163, 163, 163, 1);
+  --command_disabled_opacity: 0.6;
+
+  /* DATEPICKER */
+  --dp_box_bg: RGBA(var(--background), 1);
+  --dp_box_shadow: 0px 0px 18px 0px var(--theme_shadow);
+  --dp_header_bg: RGBA(var(--verystrongContrast1), 1);
+  --dp_header_fg: RGBA(var(--white), 1);
+  --dp_header_year_fg: RGBA(var(--white), 0.7);
+  --dp_fullday_bg: RGBA(var(--verystrongContrast2), 1);
+  --dp_fullday_fg: RGBA(var(--white), 1);
+  --dp_navigation_icon: RGBA(var(--verystrongContrast2), 1);
+  --dp_navigation_fg: RGBA(var(--themeAccentContrast), 1);
+  --dp_navigation_bg: RGBA(var(--verystrongContrast2), 1);
+  --dp_element_fg: RGBA(var(--primaryText), 1);
+  --dp_selected_day_fg: RGBA(var(--white), 1);
+  --dp_selected_day_bg: rgb(70, 70, 70);
+  --dp_current_day_fg: rgb(200, 200, 50);
+  --dp_button_fg: RGBA(var(--verystrongContrast2), 1);
+  --dp_ym_header_bg: RGBA(var(--verystrongContrast2), 1);
+  --dp_ym_header_fg: RGBA(var(--themeAccentContrast), 1);
+  --dp_ym_month_bg: RGBA(var(--strongContrast1), 1);
+  --dp_ym_month_fg: RGBA(var(--themeContrast), 1);
+  --dp_ym_month_icon: RGBA(var(--verystrongContrast2), 1);
+  --dp_fn_bg: RGBA(var(--background), 1);
+  --dp_fn_fg: RGBA(var(--fullContrast), 0.7);
+  --dp_item_border: RGBA(var(--verylightContrast5), 1);
+  --dp_button_icon: RGBA(var(--verystrongContrast1), 1);
+  --dp_week_fg: RGBA(var(--theme), 1);
+  --dp_overlay_bg: var(--theme_light_shadow);
+  --dp_fn_selected_fg: var(--dp_header_fg);
+  --dp_fn_selected_bg: RGBA(var(--verystrongContrast1), 1);
+  --dp_fn_separator: 1px solid RGBA(var(--verylightGray2), 1);
+  --dp_shortday_fg: var(--dp_element_fg);
+  --dp_week_border: var(--theme_border_light);
+  --dp_day_range: rgb(182, 182, 182);
+
+  /* Verifiers */
+  --verifier_error_bg: RGBA(140, 13, 0, 0.85);
+  --verifier_error_icon_bg: RGBA(140, 13, 0), 1;
+  --verifier_error_color: RGBA(var(--white), 1);
+  --verifier_warning_bg: RGBA(254, 203, 22, 0.85);
+  --verifier_warning_icon_bg: RGBA(254, 203, 22), 1;
+  --verifier_warning_color: RGBA(var(--mostlyBlack));
+  --verifier_info_bg: RGBA(61, 128, 51, 0.85);
+  --verifier_info_icon_bg: RGBA(61, 128, 51), 1;
+  --verifier_info_color: RGBA(var(--white), 1);
+
+  /* TIMEPICKER */
+  --tp_bg: RGBA(255, 255, 255, 1);
+  --tp_sep: RGBA(0, 0, 0);
+  --tp_color: RGBA(0, 0, 0);
+  --tp_border: 1px solid RGBA(133, 139, 137);
+  --tp_box_shadow: 0px 0px 10px RGBA(0, 0, 0, 0.12);
+  --tp_overlay_bg: var(--theme_light_shadow);
+  --tp_mark: RGBA(var(--theme), 1);
+  --tp_focus: 1px solid RGBA(0, 0, 0);
+
+  /* PAGE */
+  --page_header_logo: url("data:image/png;base64,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") no-repeat;
+  --page_bg: RGBA(var(--theme), 1) var(--page_header_logo) no-repeat center !important;
+  --page_content_fg: RGBA(var(--strongContrast2), 1);
+  --page_footer_fg: RGBA(var(--strongContrast2), 1);
+  --page_shadow: var(--theme_shadow);
+
+  /* FIELD */
+  --field_icon: RGBA(var(--strongContrast2), 1);
+  --field_warning_label_fg: RGBA(var(--strongRed), 1);
+  --field_image_circle_bg: RGBA(213, 213, 213, 1);
+  --field_image_circle_border: 1px solid rgb(222, 222, 222);
+  --field_image_full_screen_shadow: 1px 1px 4px rgb(var(--darkGray2));
+  --field_image_full_screen_bg: rgb(var(--white));
+  --field_image_full_screen_fg: rgb(90, 90, 90);
+  --field_border: 1px solid rgb(115, 115, 115);
+  --field_bg: rgb(245, 245, 245);
+  --field_border_color: rgb(115, 115, 115);
+  --full-screen-field-bg: rgb(var(--white));
+
+  /* PDF Viewer */
+  --pdf_viewer_bg_start: RGBA(82, 82, 82, 0.99);
+  --pdf_viewer_bg_stop: RGBA(69, 69, 69, 0.95);
+  --pdf_viewer_shadow: 5px 3px 5px -1px RGBA(var(--mostlyBlack));
+  --pdf_full_screen_shadow: 1px 1px 4px rgb(var(--darkGray2));
+  --pdf_full_screen_bg: rgb(var(--white));
+  --pdf_full_screen_fg: rgb(90, 90, 90);
+  --pdf_hide_toolbar_bg: rgb(237, 237, 240);
+
+  /* HEADER BAR*/
+  --headerbar_bg: RGBA(var(--theme), 1);
+  --headerbar_fg: RGBA(var(--themeContrast), 1);
+  --headerbar_icon: RGBA(var(--themeContrast), 1);
+  --headerbar_border: none;
+  --headerbar_search_bg: var(--theme_divider);
+  --headerbar_notification_bg: rgb(220, 20, 0);
+  --headerbar_notification_fg: RGBA(var(--white), 1);
+  --headerbar_blink_bg: var(--theme_blink_normal);
+
+  /* WINDOW BAR CONSOLE */
+  --wb_border_color: 1px solid rgb(200, 215, 220);
+  --wb_command_active: RGBA(177, 177, 177, 1);
+  --wb_command_shadow: var(--theme_shadow_active);
+  --wb_command_bg: RGBA(var(--verylightGray), 1);
+  --wb_bg: RGBA(245, 245, 245, 1);
+  --wb_header_icon_color: RGBA(204, 204, 204, 1);
+  --wb_header_icon_fav_color: RGBA(244, 176, 5, 1);
+  --wb_header_color: var(--theme_accent);
+  --wb_split_icon_bg: RGBA(232, 232, 232, 1);
+  --wb_split_icon_color: var(--theme_accent);
+  --wb_split_icon_hover_bg: RGBA(225, 236, 242, 1);
+  --wb_split_icon_hover_color: var(--theme_accent);
+  --wb_split_icon_border: 1px dotted rgb(199, 199, 199);
+  --wb_close_color: RGBA(var(--strongRed), 1);
+  --wb_command_shadow: var(--theme_shadow_btn);
+  --wb_command_hover_shadow: var(--theme_shadow_hover_btn);
+  --wb_command_color: var(--theme_command_fg);
+  --wb_command_icon_color: var(--theme_command_fg);
+  --wb_command_hover_fg: var(--theme_command_fg_hover);
+  --wb_command_hover_bg: var(--theme_command_bg_hover);
+  --wb_command_hover_icon_color: var(--theme_command_fg_hover);
+  --wb_command_important_fg: var(--theme_command_important_fg);
+  --wb_command_important_bg: var(--theme_command_important_bg);
+  --wb_wiz_bg: var(--theme_bg);
+  --wb_command_disabled: RGBA(var(--lightGray));
+
+  /* SECOND HEADER BAR*/
+  --second_headerbar_bg: var(--theme_accent_opacity);
+  --second_headerbar_command_bg: RGBA(var(--themeAccent), 1);
+  --second_headerbar_command_fg: RGBA(var(--themeAccentContrast), 1);
+  --second_headerbar_command_icon: RGBA(var(--themeAccentContrast), 1);
+
+  /* EDITOR LABEL */
+  --editorlabel_disabled_fg: RGBA(var(--strongContrast2), 1);
+  --editorlabel_topside_fg: RGBA(var(--labelColor), 1);
+  --editorlabel_leftside_fg: RGBA(var(--almostfullContrast), 1);
+
+  /* INPUT EDITOR */
+  --input_bar_border: var(--theme_border);
+  --input_fg: RGBA(var(--pureBlack));
+  --input_disabled_fg: RGBA(var(--strongContrast2), 1);
+  --input_disabled_fg_ios: RGBA(var(--fullContrast), 1);
+  --input_icon: rgb(29, 78, 216);
+  --input_disabled_icon: RGBA(var(--strongContrast2), 1);
+  --input_focused_bg: rgb(255, 250, 208);
+  --input_warning_bg: var(--theme_warning);
+  --editorlabel_warning_fg: var(--theme_warning);
+  --input_error_bg: var(--theme_error);
+  --editorlabel_error_fg: var(--theme_error);
+  --input_memo_focused_border: 1px solid var(--input_focused_bg);
+  --input_memo_warning_border: 2px solid RGBA(var(--input_warning_bg), 1);
+  --input_memo_error_border: 2px solid RGBA(var(--input_error_bg), 1);
+
+  /* LABEL */
+  --label_fg: RGBA(23, 23, 23, 1);
+  --label_green_fg: RGBA(var(--strongGreen), 1);
+  --label_red_fg: RGBA(var(--strongRed), 1);
+  --label_warning_fg: RGBA(var(--strongRed), 1);
+  --label_info_fg: RGBA(var(--strongBlue), 1);
+  --label_tip_fg: RGBA(var(--white), 1);
+  --label_tip_bg: RGBA(55, 78, 89, 1);
+  --label_tip_border: 1px solid var(--theme_editor_border);
+
+  /* Stack */
+  --stack_label_fg: var(--theme_editor_label_fg);
+
+  /* STOPWATCH */
+  --stop_watch_bg: RGBA(239, 239, 239, 0.3);
+  --stop_watch_border: 1px solid RGBA(118, 118, 118, 0.3);
+
+  /* LOOKUP EDITOR */
+  --lookup_header_title: rgb(153, 153, 153);
+  --lookup_border_color: RGBA(var(--theme), 1);
+  --lookup_header_border: 1px solid RGBA(var(--verylightGray2), 1);
+  --lookup_item_bg: var(--menuBackground);
+  --lookup_item_fg: rgb(23, 23, 23);
+  --lookup_clear_icon: rgb(198, 198, 198);
+  --lookup_icon: RGBA(var(--strongContrast2), 0.7);
+  --lookup_border: rgb(221, 221, 221);
+  --lookup_blink_bg: var(--theme_blink_normal);
+  --lookup_auto_bg: rgb(229, 229, 229);
+  --lookup_auto_shadow: 2px 2px 5px 0px #00000080;
+  --lookup_item_hover_fg: var(--lookup_item_fg);
+  --lookup_item_hover_bg: rgb(216, 216, 216);
+  --lookup_item_shadow: 2px 2px 5px 0px #00000080;
+
+  /* TileMenu */
+  --tile_group_fg: var(--theme_primary_text);
+  --tile_group_hover_bg: linear-gradient(to bottom, RGBA(var(--verylightGray5), 1), RGBA(var(--verylightGray5), 1) 2px, RGBA(var(--verylightGray5), 1) 2px, rgb(246, 246, 246) 10px, RGBA(var(--white), 1));
+  --tile_item_bg: RGBA(252, 252, 252, 1);
+  --tile_active_fg: RGBA(var(--lightGray4), 1);
+  --tile_active_bg: RGBA(var(--verylightGray), 1);
+  --tile_hover_fg: RGBA(var(--theme), 1);
+  --tile_command_icon: RGBA(var(--verydarkGray2), 1);
+  --tile_command_fg: var(--theme_primary_text);
+  --tile_desc_fg: RGBA(var(--mostlyBlack), 1);
+  --tile_group_active_bg: linear-gradient(to bottom, rgb(171, 171, 171), rgb(171, 171, 171) 2px, rgb(240, 240, 240) 2px, transparent);
+  --tile_item_border_fg: 1px solid rgb(227, 227, 227);
+  --tile_shadow: 0 0 0 1px RGBA(var(--pureBlack), 0.1), 0 2px 3px RGBA(var(--pureBlack), 0.1);
+
+  /* MODAL */
+  --modal_bg: rgb(250, 250, 250);
+  --modal_bar_bg: RGBA(var(--verylightGray5), 1);
+  --modal_bar_fg: RGBA(var(--theme_primary_text), 1);
+  --modal_bar_icon: RGBA(var(--mostlyBlack), 1);
+  --modal_bar_title_fg: var(--theme_primary_text);
+  --modal_section_fg: var(--theme_primary_text);
+  --modal_command_fg: RGBA(var(--white), 1);
+  --modal_command_bg: RGBA(var(--theme), 1);
+  --modal_overlay_bg: var(--theme_overlay_bg);
+  --modal_command_error_icon: var(--error);
+  --modal_command_info_icon: var(--info);
+  --modal_command_question_icon: var(--question);
+  --modal_command_warning_icon: var(--warning);
+
+  /* PAGE ERROR */
+  --error_bg: RGBA(var(--background), 1);
+  --error_fg: RGBA(var(--strongContrast2), 1);
+  --error_border: 1px solid RGBA(var(--verylightGray2), 1);
+  --error_command_bg: RGBA(var(--theme), 1);
+  --error_command_fg: RGBA(var(--white), 1);
+  --error_command_active_bg: RGBA(var(--verylightContrast4), 1);
+  --error_command_active_fg: RGBA(var(--strongContrast1), 1);
+  --error_bar_bg: var(--modal_bar_bg);
+  --error_bar_fg: var(--modal_bar_fg);
+  --error_bar_border: 1px solid RGBA(var(--background), 1);
+  --error_title_fg: RGBA(var(--mostlyBlack), 1);
+  --error_bar_icon: var(--theme_error);
+  --error_warning_bar_icon: var(--theme_warning);
+  --error_command_shadow: 0 0 0 1px RGBA(var(--pureBlack), 0.1);
+  --error_command_hover_shadow: var(--theme_hover_shadow);
+  --error_command_active_shadow: var(--theme_active_shadow);
+
+  /* SIMPLE FORM */
+  --simpleform_container_bg: RGBA(var(--background), 1);
+  --simpleform_container_fg: RGBA(var(--primaryText), 1);
+  --simpleform_label_fg: var(--editorlabel_topside_fg);
+  --simpleform_value_fg: RGBA(var(--primaryText), 1);
+  --simpleform_bar_border: var(--theme_border);
+
+  /* GRID */
+  --grid_bar_gradient: -webkit-linear-gradient(top, rgb(55, 78, 89), rgb(75, 106, 120));
+  --grid_command_bg: RGBA(var(--mostlyBlack), 0.2);
+  --grid_bar_command_border_bottom: 1px solid rgba(75, 106, 120, 0.8);
+  --grid_command_icon: RGBA(var(--white), 1);
+  --grid_command_icon_hover: RGBA(var(--white), 1);
+  --grid_special_row_bg: RGBA(190, 217, 230, 0.5);
+  --grid_row_border: 1px solid RGBA(212, 212, 212, 1);
+  --grid_row_focused_bg: RGBA(var(--mostlydesaturateddarkBlue), 1);
+  --grid_row_selected_bg: RGBA(120, 170, 195, 0.85);
+  --grid_headercolumn_fg: RGBA(29, 27, 32, 1);
+  --grid_row_content_fg: RGBA(29, 27, 32, 1);
+  --grid_row_grouping_fg: var(--theme_accent);
+  --grid_row_focused_fg: RGBA(var(--pureBlack), 1);
+  --grid_row_sum_icon: RGBA(0, 0, 0);
+  --grid_icon: RGBA(var(--theme), 1);
+  --grid_tree_icon: RGBA(var(--theme), 1);
+
+  --grid_row_check: RGBA(var(--pureBlack), 1);
+  --grid_row_check_checked: RGBA(var(--theme), 1);
+  --grid_row_check_unchecked: RGBA(var(--pureBlack), 1);
+  --grid_row_drag_enter: var(--theme_accent);
+  --grid_emptycontent: RGBA(var(--lightGray), 1);
+  --grid_header_sort: RGBA(171, 171, 171, 1);
+  --grid_border: 1px solid rgb(216, 216, 216);
+  --grid_focused_border: 1px solid RGBA(var(--theme), 1);
+  --grid_footercolumn_bg: RGBA(212, 212, 212, 1);
+  --grid_filter_focused_bg: RGBA(255, 250, 208, 1);
+  --grid_column_smartopen_even_bg: RGBA(225, 243, 251, 1);
+  --grid_column_smartopen_odd_bg: RGBA(236, 249, 255, 1);
+  --grid_column_frozen_border_color: rgb(216, 216, 216);
+  --grid_column_command_hover_bg: rgb(76, 108, 122);
+  --grid_column_focused_bg: rgb(116, 178, 206);
+  --grid_column_focused_border: 1px dashed rgb(178, 198, 207);
+  --grid_footer_column_border: 1px solid RGBA(255, 255, 255, 1);
+
+  --grid_row_grouping_border_top: 1px solid rgb(225, 225, 225);
+  --grid_row_grouping_border_bottom: 1px solid rgb(209, 209, 209);
+  --grid_row_grouping_bg: RGBA(238, 238, 238, 1);
+  --grid_gfsum_before_bg: RGBA(var(--verydarkGray), 0.1);
+  --grid_header_pulse_bg: RGBA(var(--mostlydesaturateddarkBlue), 0.2);
+  --grid_header_pulse_shadow: 0 0 1px 2px RGBA(var(--mostlydesaturateddarkBlue), 1);
+  --grid_header_filter_bg: RGBA(251, 251, 251, 1);
+  --grid_header_boxshadow: inset 0 -2px 0 RGBA(160, 160, 160, 1);
+  --grid_row_icon: RGBA(var(--white), 1);
+  --grid_row_selected_focused_border: RGBA(var(--pureBlack), 1);
+  --grid_row_frozen_odd_bg: RGBA(255, 255, 255, 1);
+  --grid_row_frozen_even_bg: RGBA(var(--verylightGray), 1);
+  --grid_command_hover_bg: RGBA(75, 106, 120, 1);
+  --grid_bar_special_icon: RGBA(var(--white), 1);
+  --grid_bar_special_icon_border: 1px dotted RGBA(var(75, 106, 120, 0.8));
+  --grid_bar_special_icon_hover: RGBA(var(--white), 1);
+  --grid_bar_special_icon_hover_bg: RGBA(75, 106, 120, 1);
+  --grid_cell_fg: RGBA(163, 163, 163, 1);
+  --grid_cell_ac_fg: RGBA(0, 0, 0, 1);
+  --grid_cell_highlight_bg: RGBA(9, 116, 0, 0.10);
+  --grid_cell_border: 1px solid rgb(9, 116, 0);
+  --grid_cell_boxshadow: 1px 1px 2px 1px rgb(115, 115, 115) inset;
+
+  --grid_loc_command_bg: RGBA(var(--verylightGray7), 1);
+  --grid_loc_command_shadow: 0 0 0 1px RGBA(var(--pureBlack), 0.1);
+  --grid_loc_command_icon: var(--theme_accent);
+  --grid_loc_command_hover_shadow: var(--theme_shadow_hover_btn);
+  --grid_loc_command_active_shadow: 0 0 1px 1px rgba(175, 175, 175, 0.2), 0 0 1px 1px rgba(175, 175, 175, 0.2);
+  --grid_loc_command_active_bg: RGBA(var(--verylightGray), 1);
+  --grid_loc_command_active_icon: RGBA(177, 177, 177, 1);
+  --grid_loc_command_on_bg: RGBA(var(--theme), 1);
+  --grid_loc_command_on_icon: RGBA(var(--white), 1);
+  --grid_loc_input_placeholder_fg: RGBA(177, 177, 177, 1);
+
+  /* Grid Cards */
+  --grid_cards_bg: RGBA(255, 255, 255, 1);
+  --grid_cards_color: RGBA(var(--mostlyBlack), 1);
+  --grid_cards_odd_bg: RGBA(var(--darkGray), 0.1);
+  --grid_cards_even_bg: RGBA(var(--darkGray), 0.1);
+  --grid_cards_cmd_bg: RGBA(121, 124, 149, 1);
+  --grid_cards_cmd_hover_bg: RGBA(97, 99, 122, 1);
+  --grid_cards_cmd_icon: RGBA(255, 255, 255, 1);
+  --grid_cards_cmd_hover_icon: RGBA(255, 255, 255, 1);
+  --grid_cards_cp_bg: RGBA(232, 232, 232, 1);
+  --grid_cards_column_select_bg: RGBA(121, 124, 149, 1);
+  --grid_cards_column_select_open_rect: transparent;
+  --grid_cards_column_select_open_path: RGBA(var(--pureBlack), 1);
+  --grid_cards_column_select_close_rect: transparent;
+  --grid_card_panel_cmd_bg: RGBA(121, 124, 149, 1);
+  --grid_card_panel_cmd_hover_bg: RGBA(97, 99, 122, 1);
+  --grid_card_panel_cmd_icon: RGBA(var(--white), 1);
+  --grid_card_panel_cmd_hover_icon: RGBA(var(--white), 1);
+
+  /* SLIDEMENU */
+  --slidemenu_header_bg: rgb(170, 170, 170);
+  --slidemenu_header_fg: RGBA(var(--white), 1);
+  --slidemenu_groups_bg: RGBA(var(--verystrongContrast1), 1);
+  --slidemenu_group_title_fg: RGBA(var(--white), 1);
+  --slidemenu_group_active_bg: rgb(70, 70, 70);
+  --slidemenu_group_active_fg: RGBA(var(--theme), 1);
+  --slidemenu_group_icon: RGBA(var(--white), 1);
+  --slidemenu_items_bg: var(--menuBackground);
+  --slidemenu_item_fg: RGBA(var(--strongContrast2), 1);
+  --slidemenu_item_border: 1px solid RGBA(var(--menuBackground), 1);
+  --slidemenu_header_icon_fg: var(--input_search_icon);
+
+  /* HTML */
+  --html_fg: RGBA(var(--primaryText), 1);
+  --html_rss_fg: rgb(60, 130, 50);
+  --html_hyperlink_fg: RGBA(var(--darkGreen), 1);
+  --html_rss_border: RGBA(var(--lightContrast4));
+  --html_rss_element_info_fg: RGBA(var(--strongContrast2), 1);
+  --html_rss_element_desc_fg: RGBA(var(--almostfullContrast), 1);
+  --html_rss_element_error_fg: RGBA(var(--verystrongContrast1), 1);
+
+  /* LOGIN */
+  --page_header_bg: RGBA(var(--theme), 1);
+  --theme_login_button_bg: RGBA(var(--theme), 1);
+  --page_header_border: none;
+  --page_header_icon: RGBA(var(--white), 1);
+  --biometric_btn_bg: RGBA(var(--white), 1);
+  --biometric_btn_border: 1px solid RGBA(var(--theme), 1);
+  --biometric_btn_fg: RGBA(var(--fullContrast), 1);
+
+  /* LOADER */
+  --loader_bg: RGBA(var(--white), 0.7);
+  --loader_sp_w: 2px;
+  --loader_color1: RGBA(var(--vividBlue), 1);
+  --loader_color2: RGBA(var(--vividLimeGreen), 1);
+  --loader_color3: RGBA(var(--vividOrange), 1);
+  --loader_color4: RGBA(var(--vividRed), 1);
+
+  /* SIMPLE SCHEDULER */
+  --simple_scheduler_command_bg: RGBA(var(--theme), 1);
+  --simple_scheduler_command_fg: RGBA(var(--themeContrast), 1);
+  --simple_scheduler_task_marker: RGBA(var(--theme), 1);
+  --simple_scheduler_current_day: rgb(200, 200, 50);
+  --simple_scheduler_selected_day: RGBA(var(--themeAccent), 1);
+  --simple_scheduler_selected_day_bg: RGBA(var(--verylightContrast5), 1);
+  --simple_scheduler_selected_day_marker: rgb(112, 112, 112);
+  --simple_scheduler_task_bg: RGBA(var(--white), 1);
+  --simple_scheduler_task_border: 1px solid RGBA(var(--lightContrast3), 1);
+  --simple_scheduler_task_fg: rgba(66, 82, 109, 1);
+  --simple_scheduler_task_shadow: 0 2px 3px RGBA(var(--pureBlack), 0.08);
+  --simple_scheduler_task_date_fg: rgb(177, 181, 195);
+  --simple_scheduler_task_icon: RGBA(var(--strongContrast1), 1);
+  --simple_scheduler_task_add_icon_fg: RGBA(var(--themeAccentContrast), 1);
+  --simple_scheduler_task_add_icon_bg: RGBA(var(--themeAccent), 1);
+  --simple_scheduler_horizontal_bg_img: linear-gradient(RGBA(var(--verylightContrast4), 1), RGBA(var(--background), 1));
+
+  /* RECOVERY PANEL */
+  --recovery_reset_info_fg: var(--error_fg);
+  --recovery_field_bg: RGBA(var(--background), 1);
+  --recovery_field_border: var(--theme_border);
+  --recovery_field_icon: RGBA(var(--lightContrast4), 1);
+  --recovery_field_focus_bg: var(--theme_editor_focused_bg);
+  --recovery_field_focus_border: 1px solid RGBA(var(--strongContrast1), 1);
+  --recovery_field_focus_icon: RGBA(var(--strongContrast1), 1);
+  --recovery_signText_input_fg: RGBA(var(--strongContrast1), 1);
+  --recovery_btn_bg: var(--theme_login_button_bg);
+  --recovery_btn_fg: var(--theme_text_icon);
+  --recovery_title_active_bg: RGBA(var(--verylightContrast4), 1);
+  --recovery_title_active_fg: RGBA(var(--strongContrast1), 1);
+  --recovery_response_info_fg: var(--theme_error);
+  --recovery_btn_shadow: 0 0 0 1px RGBA(var(--pureBlack), 0.1);
+  --recovery_title_hover_shadow: var(--theme_hover_shadow);
+  --recovery_title_active_shadow: var(--theme_active_shadow);
+
+  /* SCROLL */
+  --scroll_hover_bg: RGBA(var(--lightContrast4), 0.4);
+  --scroll_thumb_bg: RGBA(var(--lightContrast5), 0.6);
+  --scroll_thumb_hover_bg: RGBA(var(--theme), 1);
+
+  /* SIGN IN PANEL */
+  --signin_field_border: 1px solid var(--field_border_color);
+  --signin_field_bg: var(--theme_editor_bg);
+  --signin_field_icon: RGBA(23, 23, 23, 1);
+  --signin_field_icon_fg: RGBA(187, 187, 187, 1);
+  --signin_field_input_fg: RGBA(var(--primaryText), 1);
+  --signin_field_focus_bg: var(--theme_editor_focused_bg);
+  --signin_field_focus_fg: RGBA(var(--primaryText), 1);
+  --signin_field_focus_icon: RGBA(var(--theme), 1);
+  --signin_field_check_label_fg: RGBA(var(--verystrongContrast1), 1);
+  --signin_field_check_icon: RGBA(var(--verystrongContrast1), 1);
+  --signin_field_check_checked_icon: RGBA(var(--theme), 1);
+  --signin_field_check_unchecked_border: 1px solid RGBA(var(--verystrongContrast1), 1);
+  --signin_content_border: var(--theme_border);
+  --signin_content_info_company_icon: RGBA(var(--primaryText), 1);
+  --signin_content_info_fg: RGBA(var(--primaryText), 1);
+  --signin_action_active_fg: RGBA(var(--strongContrast1), 1);
+  --signin_action_active_bg: RGBA(var(--verylightContrast4), 1);
+  --signin_action_button_bg: RGBA(var(--theme), 1);
+  --signin_action_button_fg: var(--theme_text_icon);
+  --signin_version_button_bg: RGBA(var(--background), 1);
+  --signin_version_button_fg: RGBA(var(--themeAccent), 1);
+  --signin_version_button_icon: RGBA(var(--themeAccent), 1);
+  --signin_stroke: RGBA(var(--white), 1);
+  --signin_btn_bg: RGBA(119, 174, 0, 1);
+  --signin_btn_fc: RGBA(255, 255, 255, 1);;
+  --signin_btn_hover_shadow: var(--theme_hover_shadow);
+  --signin_btn_active_shadow: var(--theme_active_shadow);
+  --signIn_btn_action_bg: var(--theme_command_important_bg);
+  --signIn_btn_action_fg: var(--theme_command_important_fg);
+  --spinner_wait_color: RGBA(var(--white), 1);
+
+  /* SWIPED PANEL */
+  --swiped_bg: var(--theme_form_bg);
+  --swiped_box_shadow: 0 3px 6px -1px RGBA(var(--theme_shadow), 1);
+  --swiped_layer_bg: var(--theme_layer_bg);
+
+  /* TILE MENU */
+  --tilemenu_fg: RGBA(var(--primaryText), 1);
+  --tilemenu_border: 1px solid RGBA(var(--theme), 0.3);
+  --tilemenu_icon: RGBA(var(--theme), 1);
+  --tilemenu_title_fg: RGBA(var(--mostlyBlack));
+  --tilemenu_bg: RGBA(var(--verylightGray), 1);
+  --tile_item_bg: RGBA(var(--white), 1);
+  --tilemenu_group_title_fg: RGBA(var(--primaryText), 1);
+
+  /* LIST MENU  */
+  --listmenu_bg: transparent;
+  --listmenu_icon: RGBA(var(--theme));
+  --listmenu_title_fg: RGBA(var(--mostlyBlack), 1);
+  --listmenu_desc_fg: RGBA(var(--secondaryText), 1);
+  --listmenu_group_title_fg: RGBA(var(--primaryText), 1);
+  --list_item_bg: transparent;
+
+  /* SvgIcon */
+  --svg_icon_main_stop: RGBA(var(--secondaryText), 1);
+  --svg_icon_alt_stop: RGBA(var(--secondaryText), 1);
+
+  /* CHART */
+  --chart_bg: transparent;
+
+  /* Pick file popup */
+  --pickfile_fg: RGBA(var(--themeAccent), 1);
+  --pickfile_bg: RGBA(var(--background), 1);
+  --pickfile_btn_border: 1px dashed RGBA(var(--lightGray), 1);
+  --pickfile_btn_hover_bg: RGBA(250, 235, 215, 1);
+  --pickfile_btn_hover_fg: var(--theme_accent);
+  --pickfile_label_fg: RGBA(var(--pureBlack), 1);
+  --pickfile_label_bg: RGBA(var(--verylightGray), 1);
+  --pickfile_shadow: 0 2px 4px RGBA(var(--pureBlack), 0.2);
+  --pickfile_border: RGBA(var(--pureBlack), 0.2);
+
+  /* Carousel */
+  --carousel_arrow_border: var(--theme_border);
+  --carousel_arrow_bg: RGBA(var(--background), 1);
+  --carousel_arrow_fg: RGBA(var(--verystrongContrast3), 1);
+  --carousel_item_fg: RGBA(77, 81, 80);
+  --carousel_item_bg: RGBA(var(--background), 1);
+  --carousel_item_selected_fg: RGBA(var(--darkGray3), 1);
+  --carousel_item_selected_border: 2px solid RGBA(var(--verystrongContrast1), 1);
+  --carousel_timepicker_item_fg: RGBA(133, 139, 137);
+  --carousel_timepicker_item_selected_fg: RGBA(0, 0, 0);
+  --carousel_timepicker_item_selected_fg_prev_next: RGBA(68, 70, 69);
+  --dp_ym_level_0_fg: RGBA(0, 0, 0);
+  --dp_ym_level_1_fg: rgb(68, 70, 69);
+  --dp_ym_level_2_fg: rgb(130, 139, 137);
+  --dp_ym_level_3_fg: RGBA(212, 212, 212, 1);
+
+  /* Dashboard */
+  --dashboard_item_bg: RGBA(var(--white), 1);
+  --dashboard_item_fg: inherit;
+  --dashboard_item_shadow: 0 10px 10px 0 rgb(219, 221, 230);
+  --dashboard_item_title_fg: rgb(66, 82, 109);
+  --dashboard_item_title_pipe: rgb(74, 217, 145);
+  --dashboard_item_group_fill: rgb(66, 82, 109);
+  --dashboard_command_list_icon_bg: rgba(102, 102, 102, 0.25);
+  --dashboard_item_icon_bg: rgb(var(--mostlydesaturateddarkBlue));
+
+  /* EditorHtml */
+  --editor_html_content_fg: var(--input_disabled_fg);
+  --editor_html_content_shadow: 0 1px 3px RGBA(var(--pureBlack), 0.25);
+
+  /* FloatingBar */
+  --floatingbar_blink_bg: var(--theme_blink_blue);
+
+  /* Progress Bar */
+  --progress_bar_circle_bg: RGBA(var(--theme));
+  --progress_bar_background_circle_bg: RGBA(var(--lightGray));
+  --progress_bar_in_percent_fg: RGBA(var(--mostlyBlack));
+  --progress_bar_btn_information_fg: RGBA(var(--mostlydesaturateddarkBlue));
+  --progress_bar_information_fg: RGBA(var(--mostlyBlack));
+  --progress_bar_btn_disabled: RGBA(var(--lightGray));
+  --progress_bar_spinner_wrapper_bg: RGBA(var(--white));
+
+  /* Popup */
+  --popup_overlay_bg: var(--theme_light_shadow);
+  --popup_command_bg: var(--menuBackground);
+  --popup_command_fg: rgb(143, 143, 143);
+
+  /* Slider */
+  --slider_fg: RGBA(var(--labelColor), 1);
+  --slider_btn_fg: RGBA(var(--theme), 1);
+  --slider_bar_bg: rgba(140, 140, 140, 0.1);
+  --slider_filled_bar_bg: RGBA(var(--theme), 1);
+  --slider_knob: RGBA(var(--theme), 1);
+  --slider_value_bg: RGBA(var(--theme), 1);
+  --slider_value_fg: RGBA(var(--background), 1);
+  --slider_disabled_btn_fg: RGBA(var(--strongContrast1), 1);
+  --slider_disabled_bar_bg: RGBA(var(--verylightContrast3), 1);
+  --slider_disabled_filled_bar_bg: RGBA(var(--verylightContrast5), 1);
+  --slider_disabled_knob: RGBA(var(--strongContrast1), 1);
+  --slider_disabled_value_bg: RGBA(var(--strongContrast1), 1);
+
+  /* SplashScreen */
+  --splash_bg: var(--white);
+  --splash_logo: var(--theme);
+  --splash_spinner_border: 1.1em solid RGBA(var(--theme), 0.2);
+  --splash_spinner_border_left: 1.1em solid RGBA(var(--theme), 1);
+
+  /* SplashScreen */
+  --splash_bg: RGBA(var(--white), 1);
+  --splash_logo: RGBA(var(--theme), 1);
+
+  /* CommandKeyboard  */
+  --hb_keyboard_bg: RGBA(255, 255, 255, 1);
+  --hb_keyboard_ac_bg: RGBA(245, 158, 11, 1);
+  --hb_keyboard_ic_color: RGBA(45, 45, 45, 1);
+  --hb_keyboard_ac_ic_color: RGBA(255, 255, 255, 1);
+
+  /* WidgetKeyboard */
+  --widget_keyboard_bg: RGBA(0, 0, 0, 1);
+  --widget_keyboard_fg: RGBA(255, 255, 255, 1);
+  --widget_keyboard_con_bg: RGBA(23, 23, 23, 1);
+  --widget_keyboard_btn_bg: RGBA(38, 38, 38, 1);
+  --widget_keyboard_btn_fg: RGBA(250, 250, 250, 1);
+  --widget_keyboard_overlay_bg: RGBA(45, 45, 45, 0.3);
+  --widget_keyboard_btn_ac_bg: RGBA(100, 146, 0, 1);
+  --widget_keyboard_btn_svg_fg: RGBA(250, 250, 250, 1);
+  --widget_keyboard_btn_enter_bg: RGBA(29, 78, 216, 1);
+
+  /* WaitingIndicator */
+  --wi_color1: RGBA(var(--theme), 0.1);
+  --wi_color2: RGBA(var(--theme), 0.4);
+  --wi_color3: RGBA(var(--theme), 0.7);
+  --wi_color4: RGBA(var(--theme), 1);
+  --wi_icon: RGBA(var(--verystrongContrast3), 1);
+  --wi_bg: RGBA(var(--white));
+  --wi_shadow: 1px 1px 10px 1px var(--theme_shadow);
+  --wi_fg: RGBA(var(--mostlyBlack), 1);
+}

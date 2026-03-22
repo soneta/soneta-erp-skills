@@ -1,0 +1,40 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/DataScopePicker.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.date-scope-picker.horizontal-view {
+  @include flexJustifyContent(flex-start, start);
+  margin: 16px 8px 6px 8px;
+  gap: 9px;
+  font-size: 16px;
+
+  .content:has(> .icon) {
+    @include flexJustifyContent(space-between, space-between);
+    width: 165px;
+  }
+
+  .content:not(:has(> .icon)) {
+    @include flexJustifyContent(space-between, space-between);
+    width: 135px;
+  }
+
+  .content {
+    @include flexJustifyContent(space-between, space-between);
+    gap: 8px;
+
+    .caption {
+      font-size: 16px;
+      font-family: $dsp_font;
+      font-weight: 500;
+    }
+  }
+}
+
+.date-scope-picker {
+  .content {
+    .icon {
+      cursor: pointer;
+    }
+  }
+}

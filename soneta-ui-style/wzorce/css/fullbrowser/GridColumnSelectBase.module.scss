@@ -1,0 +1,294 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.grid-anim-open :global {
+  -webkit-animation-name: anim-open;
+  animation-name: anim-open;
+  -webkit-animation-timing-function: cubic-bezier(0.6, 0, 0.4, 1);
+  animation-timing-function: cubic-bezier(0.6, 0, 0.4, 1);
+}
+
+.grid-anim-close :global {
+  -webkit-animation-name: anim-close;
+  animation-name: anim-close;
+}
+
+.checkbox {
+  @include flexDisplay();
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(center, center);
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  transition: background .12s ease, border-color .12s ease;
+
+  svg {
+    @include flexDisplay();
+    width: 12px;
+  }
+
+  &.checked {
+    background: $checkbox_bg;
+
+    svg {
+      path {
+        fill: $checkbox_fill_color;
+      }
+    }
+  }
+
+  &.unchecked {
+    border: $checkbox_grid_border;
+    background: $grid_headercolumn_bg;
+  }
+
+  &.select-all {
+    &.unchecked {
+      border-color: $grid_headercolumn_fg;
+    }
+  }
+
+  &.disabled {
+    .text {
+      color: $checkbox_disabled_fg;
+    }
+
+    svg {
+      path {
+        fill: $checkbox_disabled_icon;
+      }
+    }
+  }
+
+  &.disabled:not(.checked) {
+    border: $checkbox_border_disabled;
+  }
+
+  &.disabled:not(.unchecked) {
+    background: $checkbox_disabled_color;
+    border: $checkbox_border_disabled;
+  }
+
+  &:hover:not(.disabled):not(.unchecked) {
+    background: $checkbox_bg_hover;
+  }
+
+  &:hover:not(.disabled):not(.checked) {
+    border: $checkbox_border_hover;
+  }
+}
+
+.gc-select {
+  @include partial-unselectable;
+  @include partial-row-center-start;
+  height: inherit;
+  overflow: hidden;
+  min-height: 32px;
+  cursor: pointer;
+
+  &:not(.gc-select-cards) {
+    background-color: $grid_headercolumn_bg;
+  }
+
+  &:not(.premium) {
+    &:not(.gc-select-cards) {
+      border-right: $grid_border;
+    }
+  }
+}
+
+.gc-no-grid-lines {
+  border-right: unset !important;
+}
+
+.gc-foc:not(.gc-sel) {
+  background-color: $grid_column_focused_bg;
+  border: $grid_column_focused_border;
+}
+
+.gc-select,
+.gc-check {
+  @include flexDisplay();
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(center, center);
+  position: absolute;
+
+  .check,
+  .check-open,
+  .check-close {
+    @include partial-column-center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  }
+
+  .check-open,
+  .check-close {
+    svg {
+      width: 16px;
+      height: 100%;
+    }
+
+    &.anim-open {
+      @extend .grid-anim-open;
+    }
+
+    &.anim-close {
+      @extend .grid-anim-close;
+    }
+  }
+
+  .check {
+    svg {
+      width: 16px;
+      height: 100%;
+
+      path {
+        fill: $grid_row_check;
+      }
+    }
+  }
+
+  .check-open {
+    svg {
+      path {
+        fill: $grid_row_check_checked;
+      }
+    }
+  }
+
+  .check-close {
+    svg {
+      path {
+        fill: $grid_row_check_unchecked;
+      }
+    }
+  }
+}
+
+.gc-check:not(.gc-foc) {
+  background-color: inherit;
+}
+
+.frozen {
+  z-index: 100;
+  border-right-color: $grid_column_frozen_border_color;
+  border-left-color: $grid_column_frozen_border_color;
+}
+
+.gr-foc .check,
+.gr-foc .check-open,
+.gr-foc .check-close {
+  svg {
+    path {
+      fill: $grid_row_focused_fg;
+    }
+  }
+}
+
+.gc-select {
+  .cell-sel {
+    @include partial-column-center;
+    width: 100%;
+    svg {
+      width: 22px;
+      height: 22px;
+      path {
+        fill: $grid_cell_fg;
+      }
+    }
+  }
+
+  .cell-sel-all {
+    svg {
+      path {
+        fill: $grid_cell_ac_fg;
+      }
+    }
+  }
+
+  .cell-sel-ac {
+    svg {
+      path {
+        &:nth-child(1) {
+          fill: $grid_cell_ac_fg;
+        }
+        &:nth-child(2) {
+          fill: $grid_cell_ac_fg;
+        }
+      }
+    }
+  }
+}
+
+.gc-select-cards {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  min-height: unset;
+  border-radius: 4px;
+
+  .check-open-cards, .check-close-cards {
+    @include partial-column-center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    rect {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .check-open-cards {
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+    rect {
+      fill: $grid_cards_column_select_open_rect;
+      stroke-width: 4px;
+    }
+    path {
+      fill: $grid_cards_column_select_open_path;
+    }
+  }
+  .check-close-cards {
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+    rect {
+      fill: $grid_cards_column_select_close_rect;
+      stroke: $grid_cards_column_select_open_path;
+      stroke-width: 4px;
+    }
+  }
+}
+
+.gc-select-panel-cards {
+  @extend .gc-select-cards;
+  width: 32px;
+  height: 32px;
+
+  .check-close-cards {
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

@@ -1,0 +1,117 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gb-cmd,
+.special,
+.split {
+  cursor: pointer;
+  background-color: $grid_command_bg;
+  border-bottom: $grid_bar_command_border_bottom;
+  width: 100%;
+  height: 40px;
+
+  .content {
+    @include partial-column-start-start;
+    height: inherit;
+    width: inherit;
+    padding: 0;
+
+    .icon {
+      @include partial-column-center;
+      width: inherit;
+      height: inherit;
+
+      &:focus-visible {
+        @include focus(
+          $outline-offset: -2px,
+          $box-shadow: $focus_box_shadow_inset,
+        );
+      }
+
+      svg {
+        width: 20px;
+        height: inherit;
+
+        path {
+          fill: $grid_command_icon;
+        }
+      }
+
+      &:hover {
+        background-color: $grid_command_hover_bg;
+
+        svg path {
+          fill: $grid_command_icon_hover;
+        }
+      }
+    }
+  }
+}
+
+.gb-cmd {
+  border: none;
+  padding: 0;
+  &:focus-visible {
+    @include focus(
+      $outline-offset: -2px,
+      $box-shadow: $focus_box_shadow_inset,
+    );
+  }
+}
+
+.special {
+  height: 34px;
+}
+
+.split {
+  height: 60px;
+
+  .ic-split {
+    @include partial-column-center;
+    width: inherit;
+    height: 40px;
+
+    svg {
+      width: 20px;
+      height: inherit;
+
+      path {
+        fill: $grid_command_icon;
+      }
+    }
+
+    &:hover {
+      background-color: $grid_command_hover_bg;
+
+      svg path {
+        fill: $grid_command_icon_hover;
+      }
+    }
+  }
+
+  .s-icon {
+    @include partial-column-center;
+    border-top: $grid_bar_special_icon_border;
+    background-color: inherit;
+    width: inherit;
+    height: 20px;
+
+    svg {
+      width: 12px;
+      height: inherit;
+
+      path {
+        fill: $grid_bar_special_icon;
+      }
+    }
+
+    &:hover {
+      background-color: $grid_bar_special_icon_hover_bg;
+
+      svg path {
+        fill: $grid_bar_special_icon_hover;
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/Tooltip.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.tooltip {
+  font-family: $tertiaryFont;
+}

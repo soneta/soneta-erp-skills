@@ -1,0 +1,15 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "../mobilebrowser/Carousel.module.scss";
+
+.carousel {
+  &:focus-visible {
+    @include focus(
+      $outline-offset: -2px,
+      $outline-width: 2px,
+      $box-shadow: none,
+      $border-radius: 12px,
+    );
+  }
+}

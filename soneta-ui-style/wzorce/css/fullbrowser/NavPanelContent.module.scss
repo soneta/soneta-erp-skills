@@ -1,0 +1,40 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.nav-menu-l {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: inherit;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.nav-menu-con {
+  @include partial-column-start;
+  height: 100%;
+  background-color: $nav_con_bg;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+
+  &:not(.popup) {
+    width: $nav_menu_width;
+
+    &:last-of-type {
+      box-shadow: $nav_con_shadow;
+    }
+  }
+
+  &.form,
+  &.popup {
+    width: $nav_menu_form_width;
+  }
+
+  &.popup,
+  &.popup.form {
+    @include partial-ellipsis;
+    width: $nav_menu_popup_width;
+  }
+}

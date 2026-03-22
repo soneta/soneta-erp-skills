@@ -1,0 +1,46 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gb-cmd {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  background: $grid_cards_cmd_bg;
+  border-radius: 4px;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .content {
+    @include partial-column-start-start;
+    height: inherit;
+    width: inherit;
+
+    .icon {
+      @include partial-column-center;
+      width: inherit;
+      height: inherit;
+
+      svg {
+        width: 18px;
+        height: 18px;
+
+        path {
+          fill: $grid_cards_cmd_icon;
+        }
+      }
+
+      &:hover {
+        border-radius: 4px;
+        background-color: $grid_cards_cmd_hover_bg;
+
+        svg path {
+          fill: $grid_cards_cmd_hover_icon;
+        }
+      }
+    }
+  }
+}

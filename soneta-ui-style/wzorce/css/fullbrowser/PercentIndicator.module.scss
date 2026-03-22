@@ -1,0 +1,32 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.percent-indicator {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 2px;
+  color: $indicator_fg;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .value {
+    width: inherit;
+    height: inherit;
+    padding: 20px;
+
+    svg {
+      text {
+        fill: $indicator_text_fg;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        font-stretch: normal;
+        font-size: 20px;
+        font-family: Arial;
+      }
+    }
+  }
+}

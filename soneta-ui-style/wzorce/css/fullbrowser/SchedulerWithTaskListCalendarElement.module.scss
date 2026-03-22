@@ -1,0 +1,64 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.calendar-element {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+}
+
+.day-button-blank {
+  @extend .calendar-element;
+  color: transparent;
+}
+
+.day-button {
+  @extend .calendar-element;
+  position: relative;
+  color: $ss_tl_btn_fg;
+  font-family: $primaryFont;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .task-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 5px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: $ss_tl_btn_bg;
+  }
+
+  &.day-button-current {
+    font-weight: 600;
+    color: $ss_tl_btn_fg;
+    cursor: pointer;
+  }
+
+  &.day-button-selected {
+    color: $ss_tl_btn_selected_fg;
+    background-color: $ss_tl_btn_selected_bg;
+    border-radius: 50%;
+    cursor: pointer;
+
+    .task-marker {
+      background-color: $ss_tl_day_marker_selected;
+    }
+  }
+
+  &.day-button-disabled {
+    opacity: 0.4;
+  }
+}

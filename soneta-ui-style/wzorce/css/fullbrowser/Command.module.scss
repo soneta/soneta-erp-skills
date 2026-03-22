@@ -1,0 +1,587 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./Popup.module.scss";
+
+.command {
+  @include partial-row-center-start;
+  @include partial-transition;
+  position: absolute;
+  cursor: pointer;
+  padding: 8px 12px;
+  height: 38px;
+  font-family: $command_font;
+  color: $command_form_fg;
+  box-shadow: $command_form_shadow;
+  border: $command_border;
+  border-radius: 8px;
+
+  &:not(.search-more) {
+    &:focus, &:focus-visible {
+      @include focus(
+        $outline-offset: 2px,
+        $outline-width: 2px,
+      );
+    }
+  }
+
+  .content {
+    @include partial-row-center-start;
+    gap: 8px;
+    width: 100%;
+    line-height: 16px;
+    font-size: 14px;
+    font-weight: 400;
+
+    .icon {
+      @include partial-column-center;
+      float: left;
+
+      svg {
+        @include partial-column-center;
+        width: 12px;
+        height: 12px;
+
+        path {
+          fill: $command_form_fg;
+        }
+      }
+    }
+
+    .title {
+      @include partial-ellipsis;
+      float: left;
+      height: inherit;
+      line-height: 16px;
+      font-size: 14px;
+      font-weight: 400;
+      text-align: center;
+      flex-shrink: 1;
+    }
+
+    .icon + .title {
+      text-align: start;
+      overflow: hidden;
+    }
+  }
+
+  &.small {
+    padding: 6px 10px;
+    height: 32px;
+  }
+
+  &.medium {
+    padding: 8px 12px;
+    height: 38px;
+  }
+
+  &.large {
+    padding: 12px 16px;
+    height: 44px;
+  }
+
+  &.icon-right {
+    .content {
+      @include flexJustifyContent(flex-end, end);
+      @include flexDirection(row-reverse);
+    }
+  }
+
+  &.center {
+    @include flexJustifyContent(center, center);
+
+    .content {
+      @include flexJustifyContent(center, center);
+
+      .title {
+        @include flexAlignItems(center, center);
+        text-align: center;
+      }
+    }
+  }
+
+  &:hover:not(.disabled),
+  &.hover:not(.disabled) {
+    box-shadow: $command_shadow;
+    background-color: $command_hover_bg;
+  }
+
+  &:active:not(.disabled) {
+    background-color: $command_form_active_bg;
+    color: $command_form_active_fg;
+
+    .content {
+      .icon {
+        svg {
+          path {
+            fill: $command_form_active_fg;
+          }
+        }
+      }
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+    box-shadow: none;
+  }
+
+  &.primary {
+    color: $command_primary_fg;
+    background-color: $command_primary_bg;
+    border-color: $command_primary_border_color;
+
+    .content .icon svg path {
+      fill: $command_primary_fg;
+    }
+
+    &:hover:not(.disabled),
+    &.hover:not(.disabled) {
+      color: $command_primary_hover_fg;
+      background-color: $command_primary_hover_bg;
+      border-color: $command_primary_hover_border_color;
+
+      .content .icon svg path {
+        fill: $command_primary_hover_fg;
+      }
+    }
+
+    &:focus:not(.disabled),
+    &.focused:not(.disabled) {
+      color: $command_primary_focused_fg;
+      background-color: $command_primary_focused_bg;
+      border-color: $command_primary_focused_border_color;
+
+      .content .icon svg path {
+        fill: $command_primary_focused_fg;
+      }
+    }
+
+    &:active:not(.disabled) {
+      color: $command_primary_pressed_fg;
+      background-color: $command_primary_pressed_bg;
+      border-color: $command_primary_pressed_border_color;
+
+      .content .icon svg path {
+        fill: $command_primary_pressed_fg;
+      }
+    }
+
+    &.selected:not(.disabled) {
+      color: $command_primary_selected_fg;
+      background-color: $command_primary_selected_bg;
+      border-color: $command_primary_selected_border_color;
+
+      .content .icon svg path {
+        fill: $command_primary_selected_fg;
+      }
+    }
+
+    &.disabled {
+      color: $command_primary_disabled_fg;
+      background-color: $command_primary_disabled_bg;
+      border-color: $command_primary_disabled_border_color;
+
+      .content .icon svg path {
+        fill: $command_primary_disabled_fg;
+      }
+    }
+  }
+
+  &.secondary {
+    color: $command_secondary_fg;
+    background-color: $command_secondary_bg;
+    border-color: $command_secondary_border_color;
+
+    .content .icon svg path {
+      fill: $command_secondary_fg;
+    }
+
+    &:hover:not(.disabled),
+    &.hover:not(.disabled) {
+      color: $command_secondary_hover_fg;
+      background-color: $command_secondary_hover_bg;
+      border-color: $command_secondary_hover_border_color;
+
+      .content .icon svg path {
+        fill: $command_secondary_hover_fg;
+      }
+    }
+
+    &:focus:not(.disabled),
+    &.focused:not(.disabled) {
+      color: $command_secondary_focused_fg;
+      background-color: $command_secondary_focused_bg;
+      border-color: $command_secondary_focused_border_color;
+
+      .content .icon svg path {
+        fill: $command_secondary_focused_fg;
+      }
+    }
+
+    &:active:not(.disabled) {
+      color: $command_secondary_pressed_fg;
+      background-color: $command_secondary_pressed_bg;
+      border-color: $command_secondary_pressed_border_color;
+
+      .content .icon svg path {
+        fill: $command_secondary_pressed_fg;
+      }
+    }
+
+    &.selected:not(.disabled) {
+      color: $command_secondary_selected_fg;
+      background-color: $command_secondary_selected_bg;
+      border-color: $command_secondary_selected_border_color;
+
+      .content .icon svg path {
+        fill: $command_secondary_selected_fg;
+      }
+    }
+
+    &.disabled {
+      color: $command_secondary_disabled_fg;
+      background-color: $command_secondary_disabled_bg;
+      border-color: $command_secondary_disabled_border_color;
+
+      .content .icon svg path {
+        fill: $command_secondary_disabled_fg;
+      }
+    }
+  }
+
+  &.tertiary {
+    color: $command_tertiary_fg;
+    background-color: $command_tertiary_bg;
+    border-color: $command_tertiary_border_color;
+    box-shadow: none;
+
+    .content .icon svg path {
+      fill: $command_tertiary_icon;
+    }
+
+    &:hover:not(.disabled),
+    &.hover:not(.disabled) {
+      color: $command_tertiary_hover_fg;
+      background-color: $command_tertiary_hover_bg;
+      border-color: $command_tertiary_hover_border_color;
+      box-shadow: $command_form_shadow;
+
+      .content .icon svg path {
+        fill: $command_tertiary_hover_icon;
+      }
+    }
+
+    &:focus:not(.disabled),
+    &.focused:not(.disabled) {
+      color: $command_tertiary_focused_fg;
+      background-color: $command_tertiary_focused_bg;
+      border-color: $command_tertiary_focused_border_color;
+
+      .content .icon svg path {
+        fill: $command_tertiary_focused_icon;
+      }
+    }
+
+    &:active:not(.disabled) {
+      color: $command_tertiary_pressed_fg;
+      background-color: $command_tertiary_pressed_bg;
+      border-color: $command_tertiary_pressed_border_color;
+      box-shadow: $command_form_shadow;
+
+      .content .icon svg path {
+        fill: $command_tertiary_pressed_icon;
+      }
+    }
+
+    &.selected:not(.disabled) {
+      color: $command_tertiary_selected_fg;
+      background-color: $command_tertiary_selected_bg;
+      border-color: $command_tertiary_selected_border_color;
+
+      .content .icon svg path {
+        fill: $command_tertiary_selected_fg;
+      }
+    }
+
+    &.disabled {
+      color: $command_tertiary_disabled_fg;
+      background-color: $command_tertiary_disabled_bg;
+      border-color: $command_tertiary_disabled_border_color;
+
+      .content .icon svg path {
+        fill: $command_tertiary_disabled_icon;
+      }
+    }
+  }
+
+  &.red {
+    color: $wb_close_color;
+    border-color: $wb_close_color;
+
+    .content {
+      .icon svg path {
+          fill: $wb_close_color;
+        }
+      }
+
+    &:hover:not(.disabled),
+    &.hover:not(.disabled),
+    &:focus:not(.disabled),
+    &.focused:not(.disabled),
+    &:active:not(.disabled) {
+      color: $wb_close_color;
+
+      .content {
+        .icon svg path {
+          fill: $wb_close_color;
+        }
+      }
+    }
+  }
+
+  &.command-modal,
+  &.gridbar-command,
+  &.simple-command,
+  &.command-profile,
+  &.command-toggle {
+    position: relative;
+  }
+
+  &.command-modal {
+    .content  {
+      text-transform: uppercase;
+    }
+  }
+
+  &.gridbar-command {
+    &.commandlist .content  {
+      padding-right: 28px;
+    }
+  }
+
+  &.command-short {
+    width: 38px;
+
+    &.small {
+      width: 32px;
+    }
+
+    &.medium {
+      width: 38px;
+    }
+
+    &.large {
+      width: 44px;
+    }
+  }
+
+  &.ganttcommand,
+  &.schedulercommand,
+  &.kanbancommand,
+  &.panelwinitem {
+    position: absolute;
+  }
+
+  &.skiptabindex {
+    opacity: 1;
+  }
+
+  &.ganttcommand,
+  &.schedulercommand,
+  &.kanbancommand {
+    .content {
+      @include flexJustifyContent(center, center);
+    }
+  }
+
+
+  &.loc-command {
+    &:not(.search-more) {
+      box-shadow: none;
+      border-color: $grid_loc_command_border_color;
+    }
+
+    &.search-more {
+      border: $command_border;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+
+      &:focus-visible {
+        @include focus();
+        border: $command_border;
+        border-color: var(--grid_loc_command_border_color);
+        width: 36px;
+        margin-right: 2px;
+      }
+    }
+  }
+
+  &.dashboard {
+    .content {
+      .title {
+        @include multilineEllipsis(2);
+        white-space: normal;
+        line-height: 14px;
+        font-size: 12px;
+        font-weight: 400;
+        flex-shrink: 1;
+      }
+    }
+  }
+}
+
+.command, .splitcommand {
+  @include partial-row-center-start;
+}
+
+.window-bar  {
+  position: relative;
+  height: 32px;
+
+  .content {
+    .title {
+      font-family: $wb_command_font_family;
+      font-size: $wb_command_font_size;
+    }
+  }
+}
+
+.commandlist {
+  .content {
+    .title {
+      width: 100%;
+      flex-grow: 1;
+    }
+  }
+
+  &.splitcommand {
+    .content {
+      .title {
+        padding-right: 30px;
+
+      }
+      .s-icon {
+        position: absolute;
+        height: 100%;
+        width: 30px;
+        right: 2px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          height: 26px;
+          width: 1px;
+          background-color: transparent;
+        }
+      }
+    }
+
+    &.small {
+      .content .s-icon {
+        width: 30px;
+        right: 0;
+
+        &::before {
+          height: 24px;
+        }
+      }
+    }
+
+    &.medium {
+      .content .s-icon {
+        width: 30px;
+        right: 2px;
+
+        &::before {
+          height: 26px;
+        }
+      }
+    }
+
+    &.large {
+      .content .s-icon {
+        width: 30px;
+        right: 6px;
+
+        &::before {
+          height: 34px;
+        }
+      }
+    }
+
+    &.primary {
+      .content .s-icon::before {
+        background-color: $command_primary_fg;
+      }
+
+      &.disabled {
+        .content .s-icon::before {
+          background-color: $command_primary_disabled_fg;
+        }
+      }
+    }
+
+    &.secondary {
+      .content .s-icon::before {
+        background-color: $command_secondary_fg;
+      }
+      &.disabled {
+        .content .s-icon::before {
+          background-color: $command_secondary_disabled_fg;
+        }
+      }
+    }
+
+    &.tertiary {
+      .content .s-icon::before {
+        background-color: $command_tertiary_fg;
+      }
+
+      &.disabled {
+        .content .s-icon::before {
+          background-color: $command_tertiary_disabled_fg;
+        }
+      }
+    }
+
+    &.dashboard {
+      &.small {
+        .content .s-icon {
+          &::before {
+            height: 24px;
+          }
+        }
+      }
+
+      &.medium {
+        .content .s-icon {
+          &::before {
+            height: 62px;
+          }
+        }
+      }
+
+      &.large {
+        .content .s-icon {
+          &::before {
+            height: 88%;
+          }
+        }
+      }
+    }
+  }
+
+  &.only-child {
+    border-radius: 12px;
+
+    &:focus-visible {
+      @include focus(
+        $outline-offset: -2px,
+        $outline-width: 2px,
+        $box-shadow: none,
+      );
+    }
+  }
+}

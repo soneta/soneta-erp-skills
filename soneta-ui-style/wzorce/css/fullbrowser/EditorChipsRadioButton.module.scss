@@ -1,0 +1,54 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-radiochips {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: inherit;
+  width: 100%;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+
+  input {
+    display: none;
+  }
+
+  .chips {
+    @include partial-ellipsis;
+    text-align: center;
+    padding: 2px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    color: $radiobutton_chips_fg;
+    cursor: pointer;
+
+    &:focus-visible {
+      @include focus(
+        $outline-offset: -2px,
+        $outline-width: 2px,
+        $box-shadow: none,
+        $border-radius: 8px,
+      );
+    }
+
+    &:not(.checked) {
+      border: 1px solid $radiobutton_chips_border;
+    }
+
+    &.checked {
+      border: 1px solid $radiobutton_chips_checked_bg;
+      background-color: $radiobutton_chips_checked_bg;
+    }
+
+    &.disabled {
+      cursor: auto;
+      border: 1px solid $radiobutton_chips_disabled_bg;
+      background-color: $radiobutton_chips_disabled_bg;
+    }
+
+  }
+}

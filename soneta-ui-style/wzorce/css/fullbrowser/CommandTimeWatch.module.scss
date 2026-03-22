@@ -1,0 +1,150 @@
+@import "./Variables.scss";
+@import "./FieldBase.module.scss";
+@import "./CommandTopBar.module.scss";
+
+.command {
+  width: unset;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: unset;
+  justify-content: center;
+  border: none;
+  padding: 0px 7px;
+
+  .content {
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: inherit;
+    color: $headerbar_icon;
+    width: unset;
+    height: unset;
+
+    .time {
+      width: 40px;
+      text-align: center;
+      height: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      line-height: 10pt;
+      line-height: 16px;
+      font-size: 14px;
+
+      &.time-with-desc {
+        padding-top: 10px;
+      }
+
+      .timeDesc {
+        font-size: 7pt;
+      }
+    }
+
+    .s-icon {
+      border-left: 1px dotted $headerbar_bg;
+      width: 20px;
+      height: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        width: 12px;
+
+        path {
+          fill: $command_timewatch_svg_fg;
+        }
+      }
+
+      &:hover {
+        background-color: $command_timewatch_svg_hover_bg;
+
+        svg {
+          path {
+            fill: $headerbar_icon;
+          }
+        }
+      }
+
+      &:focus-visible {
+        @include focus(
+          $outline: $focus_outline_secondary,
+          $outline-offset: -2px,
+          $box-shadow: none
+        );
+      }
+    }
+  }
+
+  &:hover {
+    .content {
+      .time {
+        color: $headerbar_icon_hover;
+      }
+
+      .s-icon {
+        svg {
+          path {
+            fill: $headerbar_icon_hover;
+          }
+        }
+      }
+    }
+  }
+}
+
+.command-p {
+  margin-right: 0;
+  background-color: unset;
+
+  .content {
+    .time {
+      font-size: 15px;
+      color: $headerbar_icon;
+
+      .timeDesc {
+        font-size: 8pt;
+      }
+    }
+
+    .s-icon {
+      svg {
+        path {
+          fill: $headerbar_icon;
+        }
+      }
+
+      &:hover {
+        background-color: $palette_premium_lightgray;
+      }
+
+      &:focus-visible {
+        @include focus(
+          $outline: $focus_outline_secondary,
+          $outline-offset: -3px,
+          $box-shadow: none
+        );
+      }
+    }
+  }
+
+  &:hover {
+    .content {
+      .time {
+        color: $headerbar_icon_hover;
+      }
+
+      .s-icon {
+        svg {
+          path {
+            fill: $headerbar_icon_hover;
+          }
+        }
+      }
+    }
+  }
+}

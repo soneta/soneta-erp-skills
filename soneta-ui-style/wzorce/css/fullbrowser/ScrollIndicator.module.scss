@@ -1,0 +1,60 @@
+@import "../common/PredefinedMixins.scss";
+@import "./Variables.scss";
+
+
+.scroll-indicator {
+  position: fixed;
+  left: 0;
+  width: var(--nav_folder_width);
+  height: $nav_tree_scroll_indicator_height;
+  max-height: 20%;
+  z-index: 1000;
+  transition: height .05s ease-in-out;
+
+  &.favorites {
+    height: 112px;
+  }
+
+  &.menu-collapsed {
+    width: var(--nav_folder_collapsed_width);
+  }
+
+  &:not(.menu-collapsed){
+    @include transition(width, .3s, ease-out, 0s);
+  }
+
+  &.down {
+    bottom: 0;
+    background: $nav_tree_scroll_indicator_down_bg;
+
+    &.favorites {
+      bottom: unset;
+      transform: translateY(-112px);
+    }
+  }
+
+  &.up {
+    background: $nav_tree_scroll_indicator_up_bg;
+  }
+
+  &.hide {
+    height: 0;
+  }
+}
+
+.scroll-indicator.form {
+  left: unset;
+  width: var(--nav_form_width);
+
+  &.menu-collapsed {
+    width: var(--nav_form_collapsed_width);
+  }
+
+  &.down {
+    background: $nav_tree_form_scroll_indicator_down_bg;
+  }
+
+  &.up {
+    background: $nav_tree_form_scroll_indicator_up_bg;
+  }
+}

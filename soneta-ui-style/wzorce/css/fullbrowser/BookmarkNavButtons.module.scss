@@ -1,0 +1,74 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.b-new,
+.b-nav {
+  @include partial-row-center;
+  height: 34px;
+  width: 36px;
+  margin-top: 5px;
+  padding-top: 5px;
+  cursor: pointer;
+
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  box-shadow: $bookmark_shadow;
+  background-color: $bookmark_bg;
+  color: $bookmark_fg;
+
+  &:focus-visible {
+    @include focus(
+      $outline: $focus_outline_secondary,
+      $outline-offset: 0px,
+      $box-shadow: none,
+    );
+  }
+
+  svg {
+    height: 15px;
+    width: 15px;
+
+    path {
+      fill: $bookmark_icon;
+    }
+  }
+
+  &:hover {
+    color: $bookmark_hover_fg;
+    background-color: $bookmark_hover_bg;
+
+    svg path {
+      fill: $bookmark_hover_icon;
+    }
+  }
+
+  &.focused, &:focus {
+    color: $bookmark_focused_fg;
+    background-color: $bookmark_focused_bg;
+    border: 1px solid $bookmark_focused_border_color;
+
+    svg path {
+      fill: $bookmark_focused_icon;
+    }
+  }
+
+  &:active, &:target {
+    color: $bookmark_pressed_fg;
+    background-color: $bookmark_pressed_bg;
+
+    svg path {
+      fill: $bookmark_pressed_icon;
+    }
+  }
+
+  &.disabled {
+    cursor: unset;
+    background-color: $bookmark_disabled_bg;
+
+    svg path {
+      fill: $bookmark_disabled_icon;
+    }
+  }
+}

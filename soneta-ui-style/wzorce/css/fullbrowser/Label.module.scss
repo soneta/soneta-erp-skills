@@ -1,0 +1,172 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.label {
+  @include partial-column-center-start;
+  position: absolute;
+  font-size: $font_size_label;
+  line-height: calc($font_size_label + (.44 * $font_size_label));
+  color: $label_fg;
+  overflow: hidden;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  a {
+    color: $label_fg;
+  }
+
+  &.vertical {
+    font-family: $tertiaryFont;
+    font-size: 14px;
+  }
+
+  &.green {
+    color: $label_green_fg !important;
+  }
+
+  &.red {
+    color: $label_red_fg !important;
+  }
+
+  &.large {
+    font-family: $secondaryFont;
+    line-height: $font_size_special !important;
+    font-size: 16pt !important;
+    color: $label_color;
+
+    &.stack {
+      color: $stack_label_fg;
+    }
+  }
+
+  &.bold {
+    font-weight: 600 !important;
+  }
+
+  &.center {
+    align-items: center;
+  }
+
+  &.multilinelabel {
+    div {
+      overflow: hidden;
+    }
+
+    &.center {
+      div {
+        width: unset;
+        text-align: center;
+      }
+    }
+
+    &.rightlabel {
+      div {
+        width: unset;
+        text-align: right;
+      }
+    }
+  }
+
+  &.rightlabel {
+    align-items: flex-end;
+  }
+
+  &.warninglabel {
+    color: $label_warning_fg !important;
+  }
+
+  &.infolabel {
+    color: $label_info_fg2 !important;
+    font-weight: $label_info_fw;
+  }
+
+  &.tiplabel {
+    color: $label_tip_fg !important;
+    background-color: $label_tip_bg;
+    border: $label_tip_border;
+  }
+
+  &.modalLabel {
+    @include partial-column-start;
+    align-items: flex-start;
+    position: absolute;
+    font-size: 16px;
+    line-height: 22px;
+    color: $modal_label_fg;
+  }
+
+  &.group {
+    color: $group_content_fg;
+    text-align: left;
+    line-height: 16px;
+    width: 100%;
+    padding-left: 0px;
+
+    &:focus-visible {
+      @include focus();
+    }
+  }
+
+  &.dashboard {
+    color: $dashboard_fg;
+    text-align: left;
+    line-height: 26px;
+    width: 100%;
+    padding-left: 0px;
+    margin: 2px 4px;
+
+    &:not(.multilinelabel):not(.label-premium) {
+      div {
+        @include partial-ellipsis;
+        width: inherit;
+      }
+    }
+
+    &.multilinelabel {
+      div {
+        overflow: hidden;
+      }
+
+      &.center {
+        div {
+          width: unset;
+          text-align: center;
+        }
+      }
+
+      &.rightlabel {
+        div {
+          width: unset;
+          text-align: right;
+        }
+      }
+    }
+
+    :not(.green, .red) {
+      color: $dashboard_item_fg;
+      line-height: calc(#{$font_size_label} + 8px);
+    }
+  }
+}
+
+.label-premium {
+  overflow: unset;
+
+  &.dashboard {
+    @include flexJustifyContent(flex-start, start);
+    color: $dashboard_fg;
+    line-height: 26px;
+    margin: 2px 0;
+
+    div {
+      height: unset;
+    }
+
+    &.group {
+      @include flexJustifyContent(center, center);
+    }
+  }
+}

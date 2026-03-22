@@ -1,0 +1,174 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gantt-main:focus-visible {
+  @include focus();
+}
+
+.gantt-main :global {
+  position: absolute;
+  line-height: normal;
+
+    .holiday {
+      background: $gantt_holiday_bg !important;
+
+      .e-span {
+        color: $gantt_holiday_fg !important;
+      }
+    }
+
+    .e-gantt .e-gantt-chart .e-weekend-header-cell,
+    .e-gantt .e-gantt-chart .e-weekend {
+      background: var(--gantt_not_working_days_bg) !important;
+    }
+
+    .holiday-connector {
+      background: $gantt_holiday_connector_bg !important;
+
+      .e-span {
+        color: $gantt_holiday_connector_fg !important;
+      }
+    }
+
+    .workingArea {
+      margin-left: -1px !important;
+      border-left: 0 !important;
+      background: $gantt_working_area_bg;
+      z-index: 1 !important;
+    }
+
+    .e-gantt-dependency-view-container {
+      .e-connector-line-container {
+        .e-connector-line {
+          stroke: $gantt_connector_bg;
+        }
+
+        .e-connector-line-arrow {
+          fill: $gantt_connector_bg;
+        }
+
+        &:hover .e-connector-line {
+          stroke-width: 3;
+        }
+      }
+
+      .focused {
+        .e-connector-line {
+          stroke-width: 3;
+          stroke: $gantt_connector_hover_bg;
+        }
+
+        .e-connector-line-arrow {
+          fill: $gantt_connector_hover_bg;
+        }
+      }
+    }
+
+    .e-splitter .e-split-bar.e-split-bar-horizontal {
+      background-color: $gantt_border !important;
+
+      &:hover, &:active {
+        background-color: $gantt_connector_hover_bg !important;
+      }
+    }
+
+    .e-gantt-tree-grid {
+      &.e-control {
+        height: 100%;
+      }
+      .e-grid {
+        height: 100%;
+
+        .e-content {
+          height: 100% !important;
+        }
+      }
+    }
+
+    .e-gantt-chart .e-chart-root-container,
+    .e-gantt-chart .e-timeline-header-container,
+    .e-grid,
+    .e-grid .e-content,
+    .e-grid .e-detailcel,
+    .e-grid .e-gridcontent,
+    .e-grid .e-table,
+    .e-grid .e-gridheader,
+    .e-grid .e-headercell {
+      background-color: transparent !important;
+    }
+
+    .e-gantt-chart .e-timeline-top-header-cell,
+    .e-gantt-chart .e-timeline-single-header-cell,
+    .e-gantt-chart .e-line-container-cell,
+    .e-gantt-chart .e-timeline-header-container,
+    .e-gantt-splitter,
+    .e-grid .e-rowcell,
+    .e-grid .e-gridheader,
+    .e-grid .e-headercell {
+      border-color: $gantt_border !important;
+    }
+
+    .e-gantt-chart .e-line-container-cell:nth-of-type(-n+5),
+    .e-gantt-chart .e-line-container-cell:nth-last-child(-n+5) {
+      border-color: transparent !important;
+    }
+
+    .e-gantt-chart .e-chart-row-cell.e-lastrow {
+      border-bottom: 1px solid $gantt_border;
+    }
+
+    .e-grid .e-gridheader,
+    .e-gantt-chart .e-timeline-top-header-cell,
+    .e-gantt-chart .e-timeline-single-header-cell,
+    .e-grid .e-gridcontent .e-content .e-row .e-treecolumn-container .e-icons {
+      color: $gantt_header_fg !important;
+    }
+
+    .e-treegrid .e-treegridexpand:hover::before,
+    .e-treegrid .e-treegridcollapse:hover::before {
+      color: $gantt_icon_hover_fg !important;
+    }
+
+    .e-grid .e-rowcell:not(.e-editedbatchcell),
+    .e-grid .e-detailrowcollapse:not(.e-editedbatchcell),
+    .e-grid .e-detailrowexpand:not(.e-editedbatchcell),
+    .e-grid .e-gridcontent .e-rowdragdrop:not(.e-editedbatchcell),
+    .e-grid .e-emptyrow:not(.e-editedbatchcell),
+    .e-gantt-chart .e-label {
+      color: $gantt_fg !important;
+    }
+
+    .e-gantt-chart .e-active,
+    .e-gantt-tree-grid-pane .e-grid td.e-active {
+      background: $gantt_focused_row_bg !important;
+    }
+
+    .e-gantt-chart .e-progress-resize-gripper.no-edit {
+      display: none;
+    }
+
+    .e-gantt .e-grid .e-focused:not(.e-menu-item) {
+      box-shadow: $focus_box_shadow_inset !important;
+    }
+
+    .e-gantt .e-gantt-chart .e-active-container {
+      box-shadow: $focus_box_shadow_inset !important;
+    } 
+
+    @mixin notWorkinDays($from, $to, $step) {
+      $i: $from;
+
+      @while $i <= $to {
+        .notWorkingDays#{$i} {
+          border-left: 0 !important;
+          background: $gantt_not_working_days_bg;
+          z-index: 0 !important;
+          width: $i + px !important;
+        }
+        $i: $i + $step;
+      }
+    }
+
+    @include notWorkinDays(8, 104, 4);
+}

@@ -1,0 +1,14 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.wizard-bar {
+  @include flexDisplay;
+  @include flexWrap(wrap);
+  @include flexJustifyContent(space-between, justify);
+  position: absolute;
+  height: 90px;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+}

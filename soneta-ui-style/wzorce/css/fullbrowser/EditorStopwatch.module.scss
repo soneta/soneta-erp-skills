@@ -1,0 +1,16 @@
+@import "../common/PredefinedMixins.scss";
+@import "./Variables.scss";
+
+.stopwatch {
+	width: inherit;
+	height: inherit;
+	border: none;
+	text-align: right;
+	padding-right: 7px;
+  color: $input_text_editor_fg;
+	background-color: transparent;
+
+	&:focus-visible {
+		@include focus;
+	}
+}

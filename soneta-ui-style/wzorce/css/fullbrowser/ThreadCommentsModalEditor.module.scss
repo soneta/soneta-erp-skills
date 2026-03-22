@@ -1,0 +1,69 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.tc-overlay {
+  @include partial-column-center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 190000;
+  background-color: $threads_modal_overlay_bg;
+}
+
+.tc-con {
+  @include partial-column-center-end;
+  min-height: 200px;
+  height: 50%;
+  width: calc(90% - 40px);
+  margin: 20px;
+  padding: 20px 20px 5px 20px;
+  border-radius: 2px;
+  background-color: $threads_modal_con_bg;
+}
+
+.tc-btns-con {
+  @include partial-row-center-end;
+  width: 100%;
+  height: 48px;
+  gap: 8px;
+}
+
+.btn-c, .btn-s {
+  @include partial-column-center;
+  width: 92px;
+  height: 32px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: $primaryFont;
+  cursor: pointer;
+
+  &:active {
+    background: $th_btn_active_bg;
+    border: $th_btn_active_border;
+  }
+}
+
+.btn-c {
+  margin-right: 20px;
+  color: $th_btn_cancel_fg;
+  background-color: $th_btn_cancel_bg;
+  border: $th_btn_cancel_border;
+
+  &:hover {
+    background: $th_btn_cancel_hover;
+  }
+}
+
+.btn-s {
+  color: $th_btn_save_fg;
+  background-color: $th_btn_save_bg;
+  font-size: $th_btn_save_fs;
+
+  &:hover {
+    background: $th_btn_save_hover;
+  }
+}

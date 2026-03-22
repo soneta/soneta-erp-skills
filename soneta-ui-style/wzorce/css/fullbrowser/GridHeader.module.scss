@@ -1,0 +1,17 @@
+@import "./Variables.scss";
+
+.grid-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 32px;
+  margin: 0;
+  padding: 0;
+  background-color: $grid_headercolumn_bg;
+  border-bottom: $grid_border;
+}
+
+.grid-header-premium {
+  border-bottom: $grid_header_line_color;
+}

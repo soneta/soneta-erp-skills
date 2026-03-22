@@ -1,0 +1,14 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gp {
+  @include partial-row-start-top;
+  position: absolute;
+
+  .content {
+    @include partial-row-center-start;
+    height: inherit;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,54 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.field {
+  position: absolute;
+  min-height: 26px;
+
+  &.hidden {
+    display: none;
+  }
+
+  // Special Class
+  &.largefont {
+    input {
+      font-size: 12pt !important;
+    }
+  }
+
+  &.fixedwidthfont {
+    input,
+    textarea {
+      font-family: $monospaceFont !important;
+    }
+  }
+
+  &.boldfont {
+    input {
+      font-weight: 600 !important;
+    }
+  }
+
+  &.warningfont {
+    input {
+      color: $field_warning_label_fg !important;
+    }
+  }
+
+  &.field-v {
+    @include flexDisplay();
+    @include flexWrap(nowrap);
+    @include flexDirection(column);
+    @include flexJustifyContent(flex-end, flex-end);
+    @include flexAlignItems(flex-start, flex-start);
+    @include flexAlignContent(stretch, stretch);
+  }
+
+  &.rangeslider {
+    @include flexDisplay;
+    @include flexAlignItems(flex-end, end);
+    width: 100%;
+    padding: 6px 0 10px 0;
+  }
+}

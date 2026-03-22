@@ -1,0 +1,171 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$bookmark_font_size: 14px;
+
+.hb-bookmark {
+  @include partial-row-center;
+  cursor: pointer;
+  height: 34px;
+  min-width: 100px;
+  max-width: 250px;
+  margin-top: 5px;
+  margin-right: 4px;
+  font-family: $bookmark_font;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  &:focus-visible {
+    @include focus(
+      $outline: $focus_outline_secondary,
+      $outline-offset: 2px,
+      $box-shadow: none,
+      $border-radius: inherit,
+    );
+  }
+  overflow: hidden;
+
+  box-shadow: $bookmark_shadow;
+  background-color: $bookmark_bg;
+  color: $bookmark_fg;
+
+  svg path {
+    fill: $bookmark_icon;
+  }
+
+  .b-txt {
+    @include partial-row-center;
+    @include partial-ellipsis;
+    height: 100%;
+    width: calc(100% - 51px);
+    padding-left: 16px;
+    border-top-left-radius: 12px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    flex-shrink: 1;
+    flex-grow: 1;
+
+    div {
+      @include partial-ellipsis;
+      width: 100%;
+    }
+  }
+
+  .b-close {
+    @include partial-row-center;
+    align-items: center;
+    padding: 4px;
+    margin: 7px 12px;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    .icon {
+      @include flexDisplay();
+      @include flexWrap(nowrap);
+      @include flexDirection(column);
+      @include flexJustifyContent(center, center);
+      @include flexAlignItems(center, center);
+      @include flexAlignContent(stretch, stretch);
+      width: 11px;
+      height: 11px;
+
+      svg {
+        width: 11px;
+        height: 11px;
+      }
+    }
+  }
+
+  &.selected {
+    box-shadow: none;
+    color: $bookmark_selected_fg;
+    background-color: $bookmark_selected_bg;
+    z-index: 1;
+
+    svg path {
+      fill: $bookmark_selected_icon;
+    }
+
+    &:hover {
+      box-shadow: $bookmark_shadow;
+      color: $bookmark_selected_hover_fg;
+      background-color: $bookmark_selected_hover_bg;
+
+      svg path {
+        fill: $bookmark_selected_hover_icon;
+      }
+    }
+
+    &.focused, &:focus {
+      box-shadow: $bookmark_shadow;
+      color: $bookmark_selected_focused_fg;
+      background-color: $bookmark_selected_focused_bg;
+      border: 1px solid $bookmark_selected_focused_border_color;
+
+      svg path {
+        fill: $bookmark_selected_focused_icon;
+      }
+    }
+
+    &:active, &:target {
+      box-shadow: $bookmark_shadow;
+      color: $bookmark_selected_pressed_fg;
+      background-color: $bookmark_selected_pressed_bg;
+
+      svg path {
+        fill: $bookmark_selected_pressed_icon;
+      }
+    }
+
+    .b-close:hover {
+      color: $bookmark_close_hover_icon;
+      background-color: $bookmark_close_hover_bg;
+    }
+  }
+
+  &:not(.selected) {
+    box-shadow: $bookmark_shadow;
+    background-color: $bookmark_bg;
+    color: $bookmark_fg;
+
+    svg path {
+      fill: $bookmark_icon;
+    }
+
+    &:hover {
+      color: $bookmark_hover_fg;
+      background-color: $bookmark_hover_bg;
+
+      svg path {
+        fill: $bookmark_hover_icon;
+      }
+    }
+
+    &.focused, &:focus {
+      color: $bookmark_focused_fg;
+      background-color: $bookmark_focused_bg;
+      border: 1px solid $bookmark_focused_border_color;
+
+      svg path {
+        fill: $bookmark_focused_icon;
+      }
+    }
+
+    &:active, &:target {
+      color: $bookmark_pressed_fg;
+      background-color: $bookmark_pressed_bg;
+
+      svg path {
+        fill: $bookmark_pressed_icon;
+      }
+    }
+
+    .b-close:hover {
+      color: $bookmark_close_selected_hover_icon;
+      background-color: $bookmark_close_selected_hover_bg;
+    }
+  }
+}

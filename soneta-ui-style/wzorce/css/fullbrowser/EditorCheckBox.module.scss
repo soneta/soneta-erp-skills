@@ -1,0 +1,212 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.checkbox {
+  @include flexDisplay();
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(center, center);
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  transition: background .12s ease, border-color .12s ease;
+
+  svg {
+    @include flexDisplay();
+    width: 12px;
+  }
+
+  &.checked {
+    background: $checkbox_bg;
+
+    svg {
+      path {
+        fill: $checkbox_fill_color;
+      }
+    }
+  }
+
+  &.unchecked {
+    border: $checkbox_border;
+
+    svg {
+      path {
+        fill: $checkbox_border;
+      }
+    }
+  }
+
+  &.disabled {
+    .text {
+      color: $checkbox_disabled_fg;
+    }
+
+    svg {
+      path {
+        fill: $checkbox_disabled_icon;
+      }
+    }
+  }
+
+  &.disabled:not(.checked) {
+    border: $checkbox_border_disabled;
+  }
+
+  &.disabled:not(.unchecked) {
+    background: $checkbox_disabled_color;
+    border: $checkbox_border_disabled;
+  }
+
+  &:hover:not(.disabled):not(.unchecked) {
+    background: $checkbox_bg_hover;
+  }
+
+  &:hover:not(.disabled):not(.checked) {
+    border: $checkbox_border_hover;
+  }
+}
+
+.editor-checkbox {
+  @include partial-row-center-start;
+  @include flexDisplay();
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(center, center);
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  font-size: $font_size_label;
+
+  .ch-content {
+    @include flexDisplay();
+    @include flexAlignItems(center, center);
+    @include flexAlignContent(center, center);
+    @include flexJustifyContent(flex-start, start);
+    position: absolute;
+    height: inherit;
+    width: 32px;
+    cursor: pointer;
+    background-color: transparent;
+
+    &:focus-visible {
+      @include focus();
+    }
+
+    input {
+      display: none;
+      pointer-events: none;
+    }
+
+    .icon {
+      @include partial-column-center;
+      position: absolute;
+      height: inherit;
+      width: 20px;
+    }
+  }
+
+  &.vertical {
+    .ch-content {
+      @include flexDisplay();
+      @include flexAlignItems(center, center);
+      @include flexJustifyContent(center, center);
+    }
+  }
+
+  .ch-right {
+    .text {
+      right: 0;
+    }
+
+    .icon {
+      left: 2px;
+    }
+  }
+
+  .ch-left {
+    .text {
+      left: 0;
+    }
+
+    .icon {
+      right: 2px;
+    }
+  }
+
+  &.multiline-label {
+    .ch-content {
+      bottom: 0;
+    }
+  }
+
+  &.grid {
+    .ch-content {
+      @include partial-column-center;
+      border: none;
+
+      .icon {
+        position: unset;
+        right: unset;
+        width: 20px;
+        left: 0;
+
+        svg path {
+          fill: $grid_row_focused_fg;
+        }
+      }
+    }
+  }
+}
+
+.field-check {
+  @include partial-row-center;
+  justify-content: space-between;
+  position: relative;
+  height: 40px;
+  cursor: default;
+
+  .ch-content {
+    @include flexDisplay();
+    @include flexJustifyContent(center, center);
+    @include flexAlignItems(center, center);
+    position: unset;
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+      @include focus();
+    }
+
+    input {
+      display: none;
+    }
+
+    .text {
+      display: none;
+    }
+
+    .icon {
+      @include partial-column-center;
+      position: unset;
+      width: 40px;
+      height: 100%;
+
+      svg {
+        height: 24px;
+        width: 24px;
+
+        path {
+          fill: $signIn_check_color;
+        }
+      }
+    }
+  }
+}

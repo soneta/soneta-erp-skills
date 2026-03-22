@@ -1,0 +1,28 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import './CommandTopBar.module.scss';
+
+.command {
+  .bell-con {
+    height: inherit;
+    position: relative;
+
+    .notification {
+      @include partial-row-center;
+      position: absolute;
+      padding: 0 4px;
+      top: 3px;
+      left: 12px;
+      min-width: 16px;
+      height: 16px;
+      background-color: $headerbar_command_bell_bg;
+      color: $headerbar_command_bell_fg;
+      border-radius: 16px;
+      text-align: center;
+      font-family: $tertiaryFont;
+      font-size: 12px;
+      font-weight: 300;
+    }
+  }
+}

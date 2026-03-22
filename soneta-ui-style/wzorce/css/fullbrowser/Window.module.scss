@@ -1,0 +1,53 @@
+@import "./Variables.scss";
+
+.window {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	overflow: auto;
+	background-color: $window_main_bg;
+
+	.form {
+		left: 0;
+	}
+}
+
+.main-menu {
+	top: 0;
+	border-radius: 12px;
+	background-color: $window_main_menu_bg;
+}
+
+.window-disabled-scroll {
+  position: fixed;
+  overflow: hidden;
+  top: $window_top_margin;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.window-premium {
+  left: 10px;
+  background-color: $window_bg;
+
+  .form {
+    left: 50px;
+    background-color: $window_bg;
+  }
+
+	&.main-menu {
+		left: 10px;
+	}
+}
+
+.window-premium-console {
+  left: 0px;
+}
+
+// Scrollbar
+::-webkit-scrollbar:not(.e-diagram) {
+  width: 0px;
+}

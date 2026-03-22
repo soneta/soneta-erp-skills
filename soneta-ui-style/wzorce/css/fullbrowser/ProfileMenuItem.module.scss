@@ -1,0 +1,56 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.menu-item {
+  @include partial-column-center;
+  @include flexSelf(0, 0, auto);
+  width: 100%;
+  height: 36px;
+  color: $profile_menu_item_fg;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 8px;
+
+  &.version {
+    color: $profile_menu_version_fg;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0.25px;
+  }
+
+  &:not(.non-clickable) {
+    cursor: pointer;
+  }
+
+  &.focus:not(:hover) {
+    @include focus();
+  }
+
+  &:hover:not(.non-clickable) {
+    color: $lookup_item_hover_fg;
+    background: $lookup_item_hover_bg;
+  }
+
+  &:not(.premium) {
+    display: block;
+    line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &.premium {
+    font-size: 10pt;
+    width: 95%;
+    height: 30px;
+    border-radius: 4px;
+    padding: 0 5px;
+
+    &:hover:not(.non-clickable) {
+      color: $profile_menu_item_hover_premium_color;
+      background: $profile_menu_item_hover_premium_bg;
+    }
+  }
+}

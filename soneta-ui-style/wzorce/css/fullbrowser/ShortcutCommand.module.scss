@@ -1,0 +1,81 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.shortcut-cmd {
+  margin: 5px 5px 5px 5px;
+  height: 30px;
+  min-width: 200px;
+  max-width: 250px;
+  font-size: 9pt;
+  font-family: $secondaryFont;
+  color: $shortcut_cmd_fg;
+  border: none;
+  background-color: transparent;
+
+  .content {
+    @include partial-row-center-start;
+    align-items: baseline;
+    width: inherit;
+    height: 100%;
+
+    .key-cmd {
+      @include partial-column-center;
+      @include partial-transition;
+      box-shadow: $shortcut_shadow_fg;
+      height: inherit;
+      width: 50px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 9pt;
+      color: $shortcut_cmd_key_fg;
+      background-color: $shortcut_cmd_key_bg;
+    }
+
+    .key-desc {
+      @include partial-ellipsis;
+      display: block;
+      padding: 0 4px 0 10px;
+      max-width: 200px;
+      font-size: 9pt;
+      color: $shortcut_cmd_key_fg;
+      font-family: $primaryFont;
+      overflow: hidden;
+    }
+  }
+
+  &:hover {
+    .key-cmd {
+      box-shadow: $shortcut_shadow_hover_fg;
+      background-color: $shortcut_shadow_hover_bg;
+    }
+  }
+
+  &:active {
+    .key-cmd {
+      box-shadow: $theme_shadow_active;
+      background-color: $shortcut_cmd_key_active_bg;
+      border:  $shortcut_cmd_key_active_border;
+    }
+
+    .content {
+      .key-cmd,
+      .key-desc {
+        color: $shortcut_cmd_key_active_fg;
+      }
+    }
+  }
+}
+
+.shortcut-cmd-premium {
+  .content {
+    .key-cmd {
+      color: $shortcut_btn_color;
+      background-color: $shortcut_btn_bg;
+    }
+
+    .key-desc {
+      color: $shortcut_btn_color;
+    }
+  }
+}

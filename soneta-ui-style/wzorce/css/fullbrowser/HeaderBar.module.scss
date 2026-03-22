@@ -1,0 +1,86 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.hb-main {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(space-between, space-between);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  height: $hb_height;
+  z-index: 1001;
+  color: $headerbar_fg;
+  background: $headerbar_bg;
+  border-bottom: none;
+
+  .hb-home {
+    @include flexDisplay();
+    @include flexWrap(nowrap);
+    @include flexDirection(row);
+    @include flexJustifyContent(center, center);
+    @include flexAlignItems(center, center);
+    @include flexAlignContent(stretch, stretch);
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    cursor: pointer;
+    height: inherit;
+
+    .logo {
+      @include partial-column-center-start;
+      height: inherit;
+      width: 180px;
+
+      svg {
+        path {
+          fill: $headerbar_logo_icon;
+        }
+      }
+
+      svg *:last-child {
+        fill: $headerbar_logo_icon2 !important;
+      }
+    }
+
+    .custom-logo {
+      @include partial-column-center-start;
+      height: inherit;
+      width: inherit;
+      padding: 0 5px;
+      background-position: 50% 50%;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+.hb-main-premium {
+  .hb-home {
+    .logo {
+      align-items: center;
+      padding: 6px;
+
+      svg {
+        path {
+          &:nth-of-type(1) {
+            fill: #31e2b8 !important;
+          }
+
+          &:nth-of-type(2) {
+            fill: #6acbf3 !important;
+          }
+
+          &:nth-of-type(3) {
+            fill: $headerbar_logo_icon !important;
+          }
+        }
+      }
+    }
+  }
+}

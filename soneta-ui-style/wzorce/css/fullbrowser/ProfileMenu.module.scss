@@ -1,0 +1,72 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/ProfileMenu.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.overlay {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.profile-menu {
+  width: 339px;
+  max-height: calc(100vh - $hb_height);
+  font-family: $profile_menu_font;
+  top: calc($hb_height - 8px);
+  right: 0;
+
+  .menu-items {
+    border-radius: 16px;
+
+    .header-group {
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+
+      .options-wrapper {
+        .option-label,
+        .option-value {
+          @include partial-ellipsis;
+        }
+
+        .option-label {
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0.1px;
+
+          &:not(:first-of-type) {
+            margin-top: 8px;
+          }
+        }
+
+        .option-value {
+          text-align: left;
+          font-size: 16px;
+          line-height: 22px;
+        }
+      }
+    }
+
+    .scrollable-group {
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      padding: 4px;
+
+      &::-webkit-scrollbar {
+        display: block;
+      }
+    }
+
+    &.premium {
+      top: 30px;
+      left: 30px;
+      outline: none;
+
+      .menu-items {
+        top: -10px;
+      }
+    }
+  }
+}

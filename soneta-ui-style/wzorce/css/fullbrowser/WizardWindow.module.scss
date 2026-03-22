@@ -1,0 +1,13 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./Window.module.scss";
+
+.wizard-content {
+  position: absolute;
+  top: 64px;
+  width: 100%;
+  max-height: calc(100% - 116px);
+  padding: 0px 24px;
+  overflow-y: auto;
+}

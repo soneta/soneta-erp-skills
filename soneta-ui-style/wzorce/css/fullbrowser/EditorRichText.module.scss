@@ -1,0 +1,729 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-rte {
+  @include flexDisplay();
+  @include flexDirection(row);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(center, center);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  .content {
+    position: absolute;
+    height: inherit;
+    border: $rte_border;
+    border-radius: 8px;
+    overflow: hidden;
+    &:focus-visible {
+      @include focus();
+    }
+
+  }
+
+  &.vertical {
+    @include flexDirection(column);
+    @include flexJustifyContent(flex-end, end);
+
+    .content {
+      @include flexDisplay();
+      @include flexDirection(column);
+      @include flexAlignItems(flex-end, end);
+      @include flexJustifyContent(flex-start, start);
+      position: relative;
+      width: 100%;
+      height: calc(100% - 20px);
+    }
+  }
+}
+
+.editor-rte-p {
+  &.focused {
+    .content {
+      @include partial-editor-shadow-premium;
+      border: $rte_focused_border;
+    }
+  }
+
+  .content {
+    .jodit {
+      .jodit_toolbar :global {
+        background-color: $rte_toolbar_bg;
+      }
+    }
+  }
+}
+
+.editor-rte-comment {
+  position: relative;
+  min-height: 200px;
+  left: 0;
+  right: 0;
+
+  .content {
+    left: 0;
+    right: 0;
+  }
+}
+
+.editor-rte :global {
+
+  .jodit {
+
+    &.jodit-container {
+      border: 0;
+    }
+
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $rte_bg;
+    color: $rte_fg;
+
+    .jodit-toolbar__box {
+      .jodit_icon {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        fill: $rte_icon;
+      }
+
+      .jodit-toolbar-button__button:hover {
+        background-color: $rte_toolbar_item_hover_bg;
+      }
+    }
+
+    .jodit-toolbar__box {
+      background-color: $rte_toolbar_bg;
+      display: inline-table;
+      width: 100% !important;
+      border-top: unset;
+
+      li {
+        .jodit_dropdownlist h4,
+        .jodit_dropdownlist blockquote,
+        .jodit_dropdownlist pre {
+          line-height: 2;
+        }
+
+        .jodit_dropdownlist h5,
+        .jodit_dropdownlist h6 {
+          line-height: 2.4;
+        }
+
+        .jodit_dropdownlist h6 {
+          font-size: 0.7em;
+          font-weight: 400;
+          margin: 0;
+        }
+
+        .jodit_tabs {
+          color: $rte_tabs_fg;
+        }
+      }
+
+      .toolbar-fontsize {
+        .jodit_dropdownlist {
+          li {
+            a {
+              padding: 0 12px;
+              font-size: 9pt;
+            }
+          }
+        }
+      }
+    }
+
+    .jodit-workplace {
+      background-color: $rte_editor_bg;
+      color: $rte_editor_fg;
+      text-rendering: optimizeLegibility;
+    }
+  }
+
+  .jodit_theme_dark-standard-fullbrowser {
+    .jodit-toolbar-button__button:hover {
+      background-color: $rte_toolbar_color2;
+    }
+
+    .jodit-toolbar-button__trigger:hover:not([disabled]) {
+      background-color: $rte_toolbar_color1;
+    }
+
+    .jodit-toolbar-button_with-trigger_true:hover:not([disabled]) {
+      background-color: $rte_toolbar_color2;
+      border-color: $rte_toolbar_color3;
+    }
+
+    .jodit-ui-separator {
+      border-right: $rte_toolbar_border_right;
+    }
+
+    .jodit-wysiwyg {
+      background-color: $rte_content_bg;
+      color: $rte_content_fc;
+    }
+
+    .jodit-status-bar {
+      background-color: $rte_status_bg;
+      border-color: $rte_border_color;
+      color: $rte_status_fc;
+
+      .jodit-xpath__item a {
+        color: $rte_status_button_fc;
+      }
+
+      .jodit-xpath__item a:hover {
+        background-color: $rte_status_button_hover;;
+      }
+
+      .jodit-toolbar-button__icon svg {
+        fill: $rte_status_fc;
+        stroke: $rte_status_fc;
+      }
+
+      .jodit-toolbar-button__button:hover:not([disabled]) {
+        background-color: $rte_status_button_hover;
+      }
+    }
+  }
+
+  .jodit_theme_dark .jodit-wysiwyg {
+    background-color: $rte_content_bg !important;
+    color: $rte_content_fc !important;
+  }
+
+}
+
+* :global {
+  .not-mobile-device {
+    .jodit {
+
+      hr {
+        border-width: 0 0 1px 0;
+        border-color: $rte_hr;
+      }
+
+      .jodit-dialog__panel {
+        @include partial-box-shadow;
+        text-rendering: optimizeLegibility;
+        background: $rte_dialog_bg;
+        font-family: $rte_dialog_font;
+        border-radius: $rte_dialog_border_radius;
+
+        .jodit-dialog__header {
+          height: 50px;
+          background: $rte_dialog_header_bg;
+          border-bottom: $rte_dialog_header_border;
+          cursor: move;
+          box-shadow: unset;
+          border-top-left-radius: $rte_dialog_border_radius;
+          border-top-right-radius: $rte_dialog_border_radius;
+
+          .jodit-dialog__header-toolbar {
+            padding: 0;
+
+            .jodit-toolbar-button {
+              margin: 0;
+              border: 0;
+              border-radius: 0;
+              height: 48px;
+              width: 48px;
+
+              .jodit-toolbar-button__button {
+                border-radius: 0;
+                height: 48px;
+                width: 48px;
+                background: $rte_dialog_button_bg;
+
+                .jodit_icon {
+                  fill: $rte_dialog_button_fg;
+                }
+
+                &:hover {
+                  background: $rte_dialog_button_hover_bg;
+
+                  .jodit_icon {
+                    fill: $rte_dialog_button_hover_fg;
+                  }
+                }
+              }
+            }
+
+            .jodit-toolbar-button_fullsize {
+              display: none;
+            }
+          }
+
+          .jodit-dialog__header-title {
+            padding: 0 0 0 20px;
+            text-align: left;
+            font-weight: lighter;
+            font-size: $rte_dialog_header_fontsize;
+            color: $rte_dialog_header_fg;
+          }
+        }
+
+        .jodit-dialog__content {
+          font-family: $defaultFont;
+          color: $rte_dialog_content_fg;
+
+          .jodit-dialog_prompt {
+            max-width: none;
+          }
+
+          .jodit-tabs {
+            color: $rte_dialog_content_fg;
+
+            .jodit-tabs__buttons {
+              margin-bottom: 0;
+
+              button {
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                background: transparent;
+                border: none;
+
+                .jodit-ui-button__text {
+                  @include partial-ellipsis;
+                  color: $rte_dialog_content_fg;
+                  font-family: $defaultFont;
+                  font-size: $rte_dialog_content_fontsize;
+                  font-weight: 300;
+                }
+
+                &[aria-pressed='true'] {
+                  background: $rte_dialog_content_tabs_wrapper_bg;
+
+                  .jodit-ui-button__text {
+                    font-weight: 600;
+                  }
+                }
+
+                &:hover {
+                  border: none;
+
+                  &[aria-pressed='false']  {
+                    background: $rte_dialog_content_tabs_hover_bg;
+                  }
+                }
+              }
+            }
+
+            .jodit-tabs__wrapper {
+              padding: 5px 0;
+              background: $rte_dialog_content_tabs_wrapper_bg;
+            }
+          }
+
+          label {
+            @include partial-ellipsis;
+            font-family: $defaultFont;
+            font-size: $font_size_label;
+            font-weight: 300;
+            max-height: 100%;
+            margin-bottom: -4px;
+          }
+
+          .jodit-properties__lock {
+            cursor: pointer;
+          }
+        }
+
+        .jodit-dialog__footer {
+          @include partial-row-center-end;
+          width: 100%;
+          height: 50px;
+          background-color: $rte_dialog_footer_bg;
+          border-top: $rte_dialog_footer_border;
+          border-bottom-left-radius: $rte_dialog_border_radius;
+          border-bottom-right-radius: $rte_dialog_border_radius;
+
+          .jodit-ui-button {
+            @include partial-transition;
+            @include partial-column-center;
+            @include partial-ellipsis;
+            position: relative;
+            margin: 0 8px 0 0;
+            height: 28px;
+            overflow: hidden;
+            cursor: pointer;
+            min-width: 120px;
+            border: none;
+            border-radius: 3px;
+            background-color: $rte_dialog_footer_button_bg;
+            box-shadow: $rte_dialog_footer_button_shadow;
+            text-shadow: $rte_dialog_footer_button_text_shadow;
+            color: $rte_dialog_footer_button_fg;
+            font-size: $font_size_body;
+            font-weight: $rte_dialog_footer_button_font_weight;
+            text-align: center;
+            text-transform: $rte_dialog_footer_button_text_transform;
+            outline: none;
+
+            .jodit-ui-button__icon {
+              display: none;
+            }
+
+            .jodit-ui-button__text {
+              font-family: var(--secondaryFont);
+              font-size: $font_size_body;
+              flex-grow: unset;
+            }
+
+            &:hover, &.hover {
+              box-shadow: $rte_dialog_footer_button_hover_shadow;
+              color: $rte_dialog_footer_button_hover_fg;
+              background-color: $rte_dialog_footer_button_hover_bg;
+            }
+          }
+        }
+
+        .jodit-dialog__resizer {
+          display: none;
+        }
+
+        .jodit_icon {
+          fill: $rte_dialog_button_fg;
+        }
+
+        .jodit-properties .jodit-properties_view_box {
+          .jodit-properties_image_view{
+            background-color: $rte_dialog_image_preview_bg;
+          }
+
+          .jodit-properties_image_sizes.jodit-form__group {
+            justify-content: space-between;
+
+            .jodit-input {
+              width: calc(50% - 13px) !important;
+            }
+          }
+        }
+      }
+
+      .jodit-dialog__panel .jodit-dialog__content,
+
+      &.jodit-popup-container {
+        padding: 0;
+        font-family: $primaryFont;
+
+        a {
+          background-repeat: no-repeat;
+          background-position: 30% center;
+        }
+
+        .jodit-image-popup {
+          width: 190px;
+          color: #444444;
+
+          .jodit-tabs__buttons {
+            button, button:hover {
+              cursor: default;
+              background-color: transparent;
+            }
+          }
+        }
+
+        .jodit-popup__content {
+          font-size: 9pt;
+          color: $rte_dialog_content_fg;
+
+          select.jodit-select {
+            background: none;
+            appearance: auto;
+            padding: 0 4px;
+          }
+
+          .jodit-ui-input__wrapper {
+            border: 0;
+          }
+
+          input.jodit-input,
+          input.jodit-ui-input__input,
+          select.jodit-select {
+            font-family: $defaultFont;
+            height: $input_height;
+            border: $input_border;
+            border-radius: $rte_dialog_input_border_radius;
+            background-color: $input_bg;
+            line-height: $font_size_input;
+            font-size: $font_size_input;
+            font-family: $defaultFont;
+            text-align: left;
+            box-sizing: border-box;
+            box-shadow: none;
+            color: $input_text_editor_fg;
+            outline: none;
+
+            option {
+              background-color: $input_bg;
+            }
+
+            &::placeholder {
+              color: $input_text_editor_fg;
+            }
+
+            &[disabled] {
+              background: $input_disabled_bg;
+              color: $input_disabled_fg;
+              text-shadow: $input_shadow_disabled;
+
+              &::placeholder {
+                color: $input_disabled_fg;
+              }
+            }
+
+            &:focus {
+              @include partial-editor-shadow;
+              border: $rte_dialog_input_focused_border;
+              color: $input_focused_fg;
+              background-color: $input_focused_bg;
+              outline: none;
+
+              input:-webkit-autofill,
+              input:-webkit-autofill:hover,
+              input:-webkit-autofill:focus,
+              input:-internal-autofill-selected,
+              textarea:-webkit-autofill,
+              textarea:-webkit-autofill:hover,
+              textarea:-webkit-autofill:focus,
+              select:-webkit-autofill,
+              select:-webkit-autofill:hover,
+              select:-webkit-autofill:focus {
+                color: var(--input_text_editor_fg) !important;
+                -webkit-text-fill-color: var(--input_text_editor_fg) !important;
+                background-color: var(--input_bg) !important;
+                border: $rte_dialog_input_focused_border !important;
+                box-shadow: $rte_dialog_input_focused_shadow !important;
+                -webkit-box-shadow: $rte_dialog_input_focused_shadow !important;
+              }
+            }
+          }
+
+          .jodit-ui-button_variant_primary,
+          .jodit-ui-button_variant_default {
+            box-shadow: $theme_shadow_btn;
+            font-family: $primaryFont;
+            font-size: 8pt;
+
+            .jodit-ui-button__text {
+              font-family: $primaryFont;
+              font-size: 8pt;
+            }
+
+            &:hover {
+              box-shadow: $theme_shadow_hover_btn;
+            }
+          }
+
+          .jodit-ui-button_variant_primary {
+            background-color: $theme_command_important_bg;
+            color: $theme_command_important_fg;
+
+            .jodit-ui-button__text {
+              color: $theme_command_important_fg;
+            }
+
+            &:hover {
+              background-color: $theme_command_important_bg;
+            }
+          }
+
+          .jodit-ui-button_variant_default {
+            background-color: $theme_command_bg;
+            color: $theme_command_fg;
+
+            .jodit-ui-button__text {
+              color: $theme_command_fg;
+            }
+
+            &:hover {
+              background-color: $theme_command_bg_hover;
+            }
+          }
+
+          .jodit-ui-input__label {
+            font-size: $font_size_label;
+          }
+
+          .jodit_interline {
+            display: inline-flex;
+            padding: 0;
+            width: 100%;
+
+            .text {
+              @include partial-row-center-start;
+              padding: 0 6px 0 0;
+              width: calc(100% - 32px);
+            }
+
+            .icon {
+              height: 32px;
+              width: 32px;
+            }
+
+            .active,
+            .i6,
+            .i7 {
+              background-size: 16px 16px;
+              background-repeat: no-repeat;
+              background-position: center center;
+            }
+
+            .active {
+              background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPScjMDAwMDAwJyBoZWlnaHQ9JzI0JyB2aWV3Qm94PScwIDAgMjQgMjQnIHdpZHRoPScyNCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNOSAxNi4yTDQuOCAxMmwtMS40IDEuNEw5IDE5IDIxIDdsLTEuNC0xLjRMOSAxNi4yeicvPjwvc3ZnPg==);
+            }
+
+            .i6 {
+              background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPScjMDAwMDAwJyBoZWlnaHQ9JzI0JyB2aWV3Qm94PScwIDAgMTYwIDE2MCcgd2lkdGg9JzI0JyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxwYXRoIGQ9J004MC4wODcgNTBhNC45ODUgNC45ODcgMCAwIDAgNC45MDktNS4wNTdWMTcuMDg4bDYuNDQ1IDYuNDQ4YTQuOTg1IDQuOTg3IDAgMCAwIDMuNTc3IDEuNTExIDQuOTg1IDQuOTg3IDAgMCAwIDMuNDcyLTguNTYzTDgzLjk3MiAxLjk2MWE0Ljk4NSA0Ljk4NyAwIDAgMC03LjkzOS4wMThsLTE0LjUgMTQuNTA1YTQuOTg1IDQuOTg3IDAgMSAwIDcuMDQ4IDcuMDUybDYuNDQ1LTYuNDQ4djI3Ljg1NWE0Ljk4NSA0Ljk4NyAwIDAgMCA1LjA2MSA1LjA1NnpNNS4wNjcgNjBhNC45OTYgNSAwIDEgMCAwIDEwaDE0OS44NjZhNC45OTYgNSAwIDEgMCAwLTEwSDUuMDY3em0wIDI5Ljk5OGE0Ljk5NiA1IDAgMSAwIDAgMTBoOTkuOTFhNC45OTYgNSAwIDEgMCAwLTEwSDUuMDY4em0wIDMwYTQuOTk2IDUgMCAxIDAgMCAxMGgxNDkuODY2YTQuOTk2IDUgMCAxIDAgMC0xMEg1LjA2N3ptMCAzMGE0Ljk5NiA1IDAgMSAwIDAgMTBsMTQ5Ljg2Ni4wMDJhNC45OTYgNSAwIDEgMCAwLTEwbC0xNDkuODY2LS4wMDJ6Jy8+PC9zdmc+);
+            }
+
+            .i7 {
+              background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPScjMDAwMDAwJyBoZWlnaHQ9JzI0JyB2aWV3Qm94PScwIDAgMTYwIDE2MCcgd2lkdGg9JzI0JyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxwYXRoIGQ9J001LjA2NyAwYTQuOTk2IDUgMCAxIDAgMCAxMEgxNTQuOTRhNC45OTYgNSAwIDEgMCAwLTEwSDUuMDY3em0wIDI5Ljk5OWE0Ljk5NiA1IDAgMSAwIDAgMTBoOTkuOTE2YTQuOTk2IDUgMCAxIDAgMC0xMEg1LjA2N3ptMCAzMGE0Ljk5NiA1IDAgMSAwIDAgMTBIMTU0Ljk0YTQuOTk2IDUgMCAxIDAgMC0xMEg1LjA2N3ptMCAzMGE0Ljk5NiA1IDAgMSAwIDAgMTBMMTU0Ljk0IDEwMGE0Ljk5NiA1IDAgMSAwIDAtMTBMNS4wNjcgODkuOTk5ek03OS45MTYgMTEwYTQuOTg1IDQuOTg3IDAgMCAwLTQuOTA5IDUuMDU2djI3Ljg1NmwtNi40NDUtNi40NDhhNC45ODUgNC45ODcgMCAwIDAtMy41NzctMS41MTEgNC45ODUgNC45ODcgMCAwIDAtMy40NzMgOC41NjJsMTQuNTIgMTQuNTI0YTQuOTg1IDQuOTg3IDAgMCAwIDcuOTM4LS4wMThsMTQuNTAxLTE0LjUwNmE0Ljk4NSA0Ljk4NyAwIDEgMC03LjA1LTcuMDVsLTYuNDQzIDYuNDQ3di0yNy44NTZhNC45ODUgNC45ODcgMCAwIDAtNS4wNjItNS4wNTZ6Jy8+PC9zdmc+);
+            }
+          }
+
+          .jodit_paste {
+            display: inline-flex;
+            padding: 0;
+            width: 100%;
+
+            .text {
+              @include partial-row-center-start;
+              padding: 0 0 0 6px;
+            }
+
+            .icon {
+              height: 18px;
+              width: 18px;
+            }
+          }
+
+          .toolbar-i6 {
+            border-top: $rte_dropdown_toolbar_border;
+          }
+        }
+      }
+    }
+
+    .jodit_theme_dark-standard-fullbrowser {
+      .jodit-ui-form {
+        .jodit-ui-input__label {
+          color: $rte_toolbar_color4;
+        }
+
+        .jodit-ui-button_variant_primary {
+          background-color: $rte_toolbar_color5 !important;
+
+          .jodit-ui-button__text {
+            color: $rte_content_fc !important;
+          }
+
+          &:hover {
+            background-color: $rte_status_button_hover !important;
+          }
+        }
+      }
+
+      .jodit-toolbar-editor-collection::after {
+        content: none;
+      }
+
+      .jodit-toolbar-button__icon {
+        .jodit_icon {
+          fill: $rte_toolbar_color4;
+        }
+      }
+
+      .jodit-toolbar-button {
+        .icon > svg {
+          fill: $rte_toolbar_color4;
+        }
+      }
+
+      .jodit-toolbar-button__text {
+        color: $rte_content_fc;
+      }
+
+      .jodit-toolbar-button__button:hover:not([disabled]) {
+        background-color: $rte_toolbar_color2;
+      }
+
+      .jodit-toolbar-button__trigger:hover:not([disabled]) {
+        background-color: $rte_toolbar_color1;
+      }
+
+      .jodit-toolbar-button_with-trigger_true:hover:not([disabled]) {
+        border-color: $rte_toolbar_color1;
+      }
+
+      .jodit-popup__content {
+        background-color: $rte_toolbar_color3;
+      }
+
+      .jodit-popup__content_custom {
+        background-image: none;
+        &::after {
+          content: none;
+        }
+      }
+
+      .jodit-tabs__button_columns_2 {
+        color: $rte_content_fc;
+      }
+
+      .jodit-ui-button[aria-pressed='true']:hover:not([disabled]) {
+        background-color: $rte_status_button_hover;
+      }
+
+      .jodit-ui-button[aria-pressed='true']:not([disabled]){
+        background-color: $rte_toolbar_color1;
+      }
+
+      .jodit-ui-button:hover:not([disabled]) {
+        background-color: $rte_status_button_hover;
+      }
+
+      .jodit-color-picker__native svg{
+        fill: $rte_toolbar_color4;
+      }
+
+      .jodit-drag-and-drop__file-box {
+        color: $rte_toolbar_color4;
+        border-color: $rte_toolbar_color1;
+      }
+
+      .jodit-drag-and-drop__file-box:hover {
+        background-color: $rte_toolbar_color2;
+      }
+
+      .jodit-ui-button__icon svg {
+        fill: $rte_status_button_fc;
+      }
+
+      .jodit-form__inserter {
+        .jodit-form__center {
+          color: $rte_toolbar_color7;
+        }
+      }
+
+      .jodit-form__table-creator-box {
+        .jodit-form__container > div > span {
+          border: $rte_table_creator_border;
+        }
+
+        .jodit_hovered {
+          border-color: $rte_toolbar_color6 !important;
+          background: $rte_toolbar_color6 !important;
+        }
+      }
+    }
+  }
+}

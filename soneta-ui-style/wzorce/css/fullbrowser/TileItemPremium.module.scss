@@ -1,0 +1,270 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+@mixin partial-command-title-height {
+  height: inherit;
+  padding: 0 5px 0 10px;
+  line-height: 12pt;
+}
+
+.partial-tile-active :global {
+  -webkit-animation: shadow-inset-center 0.2s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: shadow-inset-center 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.tile-item,
+.tile-item-large,
+.tile-item-small {
+  @include partial-transition;
+  @include partial-column-start;
+  margin: 10px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: $primaryFont;
+
+  &:focus-visible {
+    @include focus(
+      $outline-width: 2px,
+      $outline: $focus_outline_secondary,
+      $box-shadow: 0px 0px 3px 1px #000000 !important
+    );
+  }
+
+  &.hover {
+    border: 2px solid $tile_active_fg !important;
+  }
+
+  &:active {
+    @extend .partial-tile-active;
+    box-shadow: none;
+
+    .t-desc,
+    .t-title {
+      color: $tile_active_fg;
+    }
+  }
+}
+
+.tile-item,
+.tile-item-small {
+  .t-content {
+    @include partial-row-center-start;
+    flex-direction: row-reverse;
+    width: inherit;
+
+    .t-icon {
+      @include partial-column-center;
+      align-items: flex-start;
+      height: inherit;
+      width: 48px;
+
+      svg {
+        width: 36px;
+        height: 100%;
+
+        path {
+          transition: fill 0.2s ease-in 0s;
+        }
+
+        defs + path {
+          fill: url(#linear);
+        }
+
+        tspan {
+          transition: fill 0.2s ease-in 0s;
+          fill: $tile_command_icon;
+        }
+      }
+    }
+
+    .t-title {
+      @include partial-command-title-height;
+      @include partial-column-center-start;
+      width: calc(100% - 60px);
+      height: inherit;
+      font-size: 12pt;
+      font-family: $primaryFont;
+      color: $tile_command_fg;
+      transition: color 0.2s ease-in 0s;
+    }
+  }
+
+  .t-desc {
+    @include partial-column-center-start;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0 5px;
+    font-size: 11pt;
+    line-height: 11pt;
+    background-color: $tile_desc_bg;
+    color: $tile_desc_fg;
+    transition: color 0.2s ease-in 0s;
+    overflow: hidden;
+
+    .t-title {
+      @include partial-column-center-start;
+      width: calc(100% - 40px);
+      height: inherit;
+    }
+
+    .moreIcon {
+      @include partial-column-center;
+      height: 22px;
+      width: 22px;
+      margin: 8px;
+      border-radius: 50%;
+
+      svg {
+        width: inherit;
+        height: inherit;
+        transform: rotate(-90deg);
+
+        path {
+          transition: fill 0.2s ease-in 0s;
+        }
+      }
+    }
+  }
+}
+
+.tile-item-small {
+  .t-content {
+    height: inherit;
+
+    .t-icon {
+      width: 40px;
+
+      svg {
+        width: 32px;
+      }
+    }
+
+    .t-title {
+      width: 100%;
+    }
+
+    .t-icon + .t-title {
+      width: calc(100% - 40px);
+    }
+  }
+}
+
+.tile-item-large {
+  justify-content: space-between;
+
+  .t-content {
+    @include partial-row-center-start;
+    width: inherit;
+
+    .content-info {
+      @include partial-column-center-start;
+      justify-content: space-between;
+      padding: 0 10px;
+      height: 100%;
+      width: calc(100% - 90px);
+
+      .t-title {
+        @include partial-command-title-height;
+        @include partial-column-center-start;
+        height: 60px;
+        font-weight: bold;
+        font-size: 13pt;
+        font-family: $primaryFont;
+        padding: 0;
+        transition: color 0.2s ease-in 0s;
+      }
+
+      .t-desc {
+        @include partial-column-center-start;
+        justify-content: flex-end;
+        height: 80px;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding: 0 0 10px 0;
+        font-size: 11pt;
+        line-height: 11pt;
+        transition: color 0.2s ease-in 0s;
+        overflow: hidden;
+      }
+    }
+
+    .t-icon {
+      @include partial-column-center;
+      height: inherit;
+      width: 90px;
+
+      svg {
+        width: 70px;
+        height: 100%;
+
+        path {
+          transition: fill 0.2s ease-in 0s;
+        }
+
+        tspan {
+          transition: fill 0.2s ease-in 0s;
+        }
+      }
+    }
+  }
+
+  &.hoverDesc {
+    justify-content: center;
+
+    .t-desc {
+      font-size: 11pt;
+      line-height: 11pt;
+    }
+  }
+
+  .more {
+    @include partial-column-center-start;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 40px;
+    padding: 0 5px;
+    font-size: 11pt;
+    line-height: 11pt;
+    background-color: $tile_desc_bg;
+    transition: color 0.2s ease-in 0s;
+    overflow: hidden;
+
+    .more-text {
+      @include partial-column-center-start;
+      width: calc(100% - 40px);
+      height: inherit;
+    }
+
+    .more-icon {
+      @include partial-column-center;
+      height: 22px;
+      width: 22px;
+      margin: 8px;
+      border-radius: 50%;
+
+      svg {
+        width: inherit;
+        height: inherit;
+        transform: rotate(-90deg);
+
+        path {
+          transition: fill 0.2s ease-in 0s;
+        }
+      }
+    }
+  }
+}
+
+.tile-item-hover {
+  &:hover {
+    background-color: $tile_item_bg !important;
+  }
+}

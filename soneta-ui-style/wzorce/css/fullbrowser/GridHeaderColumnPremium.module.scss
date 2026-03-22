@@ -1,0 +1,46 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gh-column {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  background-color: $grid_headercolumn_bg;
+  cursor: pointer;
+
+  .ghc-title {
+    @include partial-row-center-start;
+    position: absolute;
+    left: 0;
+    height: inherit;
+    color: $grid_headercolumn_fg;
+    padding: 0 0 0 4px;
+
+    span {
+      @include partial-ellipsis;
+    }
+  }
+
+  .ghc-sort {
+    @include partial-row-center;
+    position: absolute;
+    right: 0;
+    height: inherit;
+    width: 32px;
+    overflow: hidden;
+
+    svg {
+      width: 16px;
+      height: 16px;
+
+      path {
+        fill: $grid_header_sort;
+      }
+    }
+  }
+
+  &.frozen {
+    z-index: 100;
+  }
+}

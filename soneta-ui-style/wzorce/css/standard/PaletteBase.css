@@ -1,0 +1,1769 @@
+﻿.PaletteBase {
+  /* Neutral */
+  --neutral_1000: 25, 27, 24; /* HEX: #191B18 */
+  --neutral_950: 10, 10, 10; /* HEX: #0A0A0A */
+  --neutral_900: 23, 23, 23; /* HEX: #171717 */
+  --neutral_850: 33, 33, 33; /* HEX: #212121 */
+  --neutral_800: 38, 38, 38; /* HEX: #262626 */
+  --neutral_700: 77, 81, 80; /* HEX: #4D5150 */
+  --neutral_600: 82, 82, 82; /* HEX: #525252 */
+  --neutral_500: 109, 115, 113; /* HEX: #6D7371 */
+  --neutral_400: 133, 139, 137; /* HEX: #858B89 */
+  --neutral_300: 212, 212, 212; /* HEX: #D4D4D4 */
+  --neutral_200: 229, 229, 229; /* HEX: #E5E5E5 */
+  --neutral_150: 237, 237, 237; /* HEX: #EDEDED */
+  --neutral_100: 245, 245, 245; /* HEX: #F5F5F5 */
+  --neutral_50: 252, 252, 252; /* HEX: #FCFCFC */
+  --neutral_10: 250, 250, 250; /* HEX: #FAFAFA */
+  --neutral_0: 255, 255, 255; /* HEX: #FFFFFF */
+
+  /* Red/Error */
+  --red_700: 185, 28, 28; /* HEX: #B91C1C */
+  --red_600: 220, 38, 38; /* HEX: #DC2626 */
+  --red_500: 239, 68, 68; /* HEX: #EF4444 */
+  --red_400: 248, 113, 113; /* HEX: #F87171 */
+
+  /* Green */
+  --green_600: 8, 92, 0; /* HEX: #085C00*/
+  --green_500: 9, 116, 0; /* HEX: #097400*/
+  --green_400: 16, 194, 0;  /* HEX: #10C200 */
+  --green_300: 40, 255, 20;  /* HEX: #28FF14 */
+  --green_200: 110, 255, 97; /* HEX: #6EFF61 */
+  --green_100: 185, 255, 179;  /* HEX: #B9FFB3 */
+  --green_50: 218, 255, 214; /* HEX: #DAFFD6 */
+  --green_10: 169, 188, 55;  /* HEX: #A9BC37 */
+
+  /* Blue */
+  --blue_900: 30, 58, 138; /* HEX: #1E3A8A */
+  --blue_800: 30, 64, 175; /* HEX: #1E40AF */
+  --blue_700: 29, 78, 216; /* HEX: #1D4ED8 */
+  --blue_600: 37, 99, 235; /* HEX: #2563EB */
+  --blue_500: 59, 130, 246; /* HEX: #3B82F6 */
+  --blue_400: 96, 165, 250; /* HEX: #60A5FA */
+  --blue_200: 92, 176, 255; /* HEX: #5CB0FF */
+  --blue_100: 173, 216, 255; /* HEX: #ADD8FF */
+  --blue_50: 239, 246, 255; /* HEX: #EFF6FF */
+
+  /* Yellow */
+  --yellow_400: 243, 217, 48; /* HEX: #F3D930 */
+
+  /* Emerald */
+  --emerald_200: 102, 234, 151; /* HEX: #66EA97 */
+  --emerald_300: 30, 220, 100; /* HEX: #1edc64 */
+  --emerald_400: 19, 144, 65; /* HEX: #139041 */
+  --emerald_500: 9, 67, 30; /* HEX: #09431E */
+
+  /* Orange */
+  --orange_400: 251, 146, 60; /* HEX: #FB923C */
+  --orange_500: 249, 115, 22; /* HEX: #F97316 */
+
+  /* Amber */
+  --amber_500: 220, 137, 12; /* HEX: #DC890C */
+
+  /* Gray */
+  --gray_500: 177, 179, 180; /* HEX: #B1B3B4 */
+  --gray_400: 2193, 194, 195; /* HEX: #C1C2C3 */
+  --gray_300: 208, 209, 210; /* HEX: #D0D1D2 */
+
+  /* Brand */
+  --brand_700: 1, 66, 42; /* HEX: #01422A */
+  --brand_600: 1, 84, 54; /* HEX: #015436 */
+  --brand_500: 1, 110, 70; /* HEX: #016E46 */
+  --brand_300: 58, 142, 111; /* HEX: #02BB77 */
+  --brand_200: 2, 227, 145; /* HEX: #02E391 */
+
+  /* Brand OP - White */
+  --brand_60: 103, 168, 144; /* HEX: #67A890 */
+  --brand_30: 179, 212, 200; /* HEX: #B3D4C8 */
+  --brand_20: 204, 226, 218; /* HEX: #CCE2DA */
+  --brand_10: 230, 241, 237; /* HEX: #E6F1ED */
+  --brand_5: 242, 248, 246; /* HEX: #F2F8F6 */
+
+  --defaultFont: "ROBOTO", Arial;
+  --primaryFont: "FiraSans", Arial;
+  --secondaryFont: "FiraSans", Arial;
+  --tertiaryFont: "ROBOTO", sans-serif;
+  --OpenSans: "OpenSans", Arial;
+  --OpenSansSemiBold: "OpenSansSemibBold", Arial;
+
+  --font_size_label: 9pt;
+  --group_title_font_size: 10pt;
+
+  --white: 255, 255, 255;
+
+  --lightGray: 208, 208, 208;
+  --lightGray2: 213, 213, 213;
+  --lightGray3: 187, 187, 187;
+  --lightGray4: 172, 172, 172;
+  --lightGray5: 163, 163, 163;
+  --lightGray6: 82, 82, 82;
+  --lightGray7: 212, 212, 212;
+
+  --verylightGray: 242, 242, 242;
+  --verylightGray2: 224, 224, 224;
+  --verylightGray4: 234, 234, 234;
+  --verylightGray5: 229, 229, 229;
+  --verylightGray6: 193, 193, 193;
+  --verylightGray7: 245, 245, 245;
+
+  --darkGray: 140, 140, 140;
+  --darkGray2: 128, 128, 128;
+  --verydarkGray: 70, 70, 70;
+  --verydarkGray2: 95, 95, 95;
+
+  --darkGreen: 27, 94, 32;
+  --darkGreen3: 100, 146, 0;
+  --darkGreen4: 34, 49, 55, 1;
+
+  --pureBlack: 0, 0, 0;
+  --mostlyBlack: 45, 45, 45;
+  --strongYellow: 200, 200, 50;
+  --strongOrange: 255, 152, 0;
+  --strongRed: 220, 20, 0;
+  --strongGreen: 60, 130, 50;
+  --strongBlue: 0, 178, 238;
+
+  --mostlydesaturateddarkBlue: 94, 134, 152;
+  --lightdesaturateddarkBlue: 120, 170, 195, 0.85;
+  --verypaleYellow: 255, 250, 208;
+
+  --vividBlue: 34, 34, 255;
+  --vividLimeGreen: 34, 255, 34;
+  --vividOrange: 255, 165, 34;
+  --vividRed: 255, 34, 34;
+
+  --palette_premium_blue: 59, 134, 255;
+  --palette_premium_green: 61, 207, 120;
+  --palette_premium_gray: 66, 82, 109;
+  --palette_premium_orange: 255, 157, 0;
+  --palette_premium_red: 214, 36, 77;
+  --palette_premium_turquise: 66, 210, 212;
+
+  --palette_premium_darkgreen: 43, 157, 31;
+  --palette_premium_lightgray: RGBA(195, 52, 235, 1);
+
+  --theme: 118, 163, 0;
+  --theme_bg: rgb(230, 231, 231);
+  --theme_darkprimary_fg: RGBA(var(--darkGreen), 1);
+  --theme_accent: RGBA(var(--mostlydesaturateddarkBlue), 1);
+
+  --theme_primary_text: RGBA(var(--mostlyBlack), 1);
+  --theme_shadow: none;
+  --theme_overlay_bg: RGBA(var(--mostlyBlack), 0.3);
+  --theme_gradient_from: RGBA(var(--theme), 0.3);
+
+
+  --theme_editor_fg: var(--theme_primary_text);
+  --theme_editor_bg: var(--theme_bg);
+  --theme_editor_border: RGBA(195, 227, 234, 1);
+  --theme_editor_common_border: 1px solid RGBA(var(--neutral_300));
+  --theme_editor_disabled_fg: RGBA(var(--darkGray2), 1);
+
+
+  --theme_editor_disabled_bg: RGBA(var(--verylightGray5), 1);
+  --theme_editor_disabled_border: RGBA(var(--lightGray2), 1);
+  --theme_editor_focused_bg: RGBA(var(--verypaleYellow), 1);
+  --theme_editor_label_fg: RGBA(var(--neutral_600));
+  --theme_editor_label_disabled_fg: RGBA(82, 82, 82, 1);
+  --theme_editor_label_border: 1px solid RGBA(var(var(--neutral_300)));
+
+  --theme_window_main_bg: var(--theme_bg);
+
+
+  --theme_shadow_active: 0 0 1px 1px RGBA(var(--lightGray4), 0.1), 0 0 1px 1px RGBA(var(--lightGray4), 0.2);
+  --theme_shadow_btn: 0 0 0 1px RGBA(var(--pureBlack), 0.1);
+  --theme_shadow_hover_btn: 0 0 0 1px RGBA(var(--pureBlack), 0.1), 1px 1px 6px 2px RGBA(var(--pureBlack), 0.2);
+  --theme_command_bg: RGBA(var(--verylightGray7), 1);
+
+  --theme_command_bg_hover: RGBA(var(--verylightGray7), 1);
+  --theme_command_fg: RGBA(var(--darkGreen4));
+  --theme_command_fg_hover: var(--theme_accent);
+  --theme_command_important_bg: RGBA(var(--green_500));
+  --theme_command_important_fg: RGBA(var(--white), 1);
+
+  /* Focus */
+  --focus_outline: 1px solid #016E46;
+  --focus_outline_secondary: 1px solid #FFF;
+  --focus_outline_tertiary: 1px solid #000;
+  --focus_outline_quaternary: 1px solid #000;
+  --focus_outline_quinary: 1px solid #000;
+  --focus_box_shadow: 0 0 3px 1px #016E46;
+  --focus_box_shadow_inset: inset 0 0 3px 1px #016E46;
+  --focus_border: 1px solid #016E46;
+  --focus_color: #016E46;
+
+  /* Logo */
+  --logo_color_1: RGBA(var(--brand_500), 1);
+  --logo_color_2: RGBA(var(--pureBlack), 1);
+
+  /* GENERAL */
+  --warning: RGBA(var(--strongOrange), 1);
+  --error: RGBA(var(--strongRed), 1);
+  --info: RGBA(var(--strongGreen), 1);
+  --question: RGBA(0, 177, 255, 1);
+
+  /* Loader */
+  --loader_bg: RGBA(255, 255, 255, 0.7);
+  --loader_color1: RGBA(var(--vividBlue), 1);
+  --loader_color2: RGBA(var(--vividLimeGreen), 1);
+  --loader_color3: RGBA(var(--vividOrange), 1);
+  --loader_color4: RGBA(var(--vividRed), 1);
+
+  /* PathBar */
+  --path_font_family: var(--tertiaryFont);
+  --path_font_size: 14px;
+  --path_fg: RGBA(0, 97, 255, 1);
+  --path_hover_fg: RGBA(var(--blue_800));
+  --path_separator_border: 1px solid RGBA(var(--neutral_500), 1);
+  --path_icon: RGBA(var(--neutral_400), 1);
+  --path_active_icon: RGBA(var(--amber_500));
+  --path_home: RGBA(var(--blue_700));
+
+  /* WINDOW */
+  --window_main_bg: var(--theme_bg);
+  --window_main_menu_bg: var(--theme_bg);
+  --window_border_top: 1px solid RGBA(var(--neutral_200));
+
+  /* Scroll */
+  --scroll_thumb_bg: RGBA(var(--neutral_400));
+  --scroll_thumb_hover_bg: RGBA(var(--neutral_600));
+  --scroll_track_bg: RGBA(var(--neutral_300));
+
+  /* NAVIGATION BAR | GRID BAR */
+  --nav_bar_dark: RGBA(var(--neutral_0), 1);
+  --nav_bar_border: 1px solid RGBA(var(--neutral_300));
+  --nav_bar_bg: RGBA(var(--neutral_0), 1);
+  --nav_bar_gradient: RGBA(var(--brand_5), 1);
+  --nav_bar_arrows_bg: RGBA(var(--neutral_0));
+
+  --nav_group_bg: none;
+  --nav_con_bg: RGBA(var(--neutral_0), 1);
+  --nav_con_fg: RGBA(var(--mostlyBlack), 1);
+  --nav_con_shadow: 15px 0px 18px -5px RGBA(var(--darkGray2), 0.3);
+  --nav_fg: RGBA(var(--neutral_1000));
+  --nav_placeholder_fg: inherit;
+  --nav_marked_fg: RGBA(var(--neutral_1000));
+  --nav_marked_bg: RGBA(var(--brand_20));
+  --nav_icon: RGBA(var(--neutral_800));
+  --nav_icon_border: RGBA(var(--neutral_50));
+  --nav_marked_icon: RGBA(var(--neutral_1000));
+  --nav_item_hover_bg: RGBA(var(--brand_30), 1);
+  --nav_item_hover_fg: RGBA(var(--neutral_800));
+
+  --nav_item_disabled_fg: rgb(165, 164, 164);
+  --nav_item_disabled_hover_bg: rgb(238, 236, 236);
+  --nav_item_disabled_hover_fg: rgb(165, 164, 164);
+
+  --nav_arrows_icon: RGBA(var(--neutral_500));
+  --nav_arrows_active: RGBA(var(--neutral_800));
+  --nav_arrows_border: 1px solid RGBA(var(--white), 0.3);
+  --nav_menu_form_shadow: var(--theme_shadow_btn);
+  --nav_popup_overlay_bg: var(--theme_overlay_bg);
+  --nav_popup_box_shadow: 0 0 10px 0 RGBA(0, 0, 0, 0.12);
+
+  --nav_menu_input_border: 1px solid RGBA(132, 139, 137, 1);
+  --nav_menu_input_border_radius: 8px;
+
+  --nav_folder_width: 350px;
+  --nav_folder_collapsed_width: 60px;
+  --nav_form_width: 316px;
+  --nav_form_collapsed_width: 60px;
+
+  @media (max-width: 1150px) {
+    --nav_folder_width: 280px;
+    --nav_folder_collapsed_width: 48px;
+    --nav_form_width: 280px;
+    --nav_form_collapsed_width: 48px;
+  }
+
+  @media (max-width: 840px) {
+    --nav_folder_width: 240px;
+    --nav_form_width: 240px;
+  }
+
+  --nav_tree_font: var(--secondaryFont);
+  --nav_tree_bold_font: var(--primaryFont);
+  --nav_tree_header_font: 'FiraSansLightItalic';
+  --nav_tree_search_font: 'FiraSansLightItalic';
+
+  --nav_tree_scrollbar_track: RGBA(var(--neutral_0));
+  --nav_tree_scrollbar_thumb: rgb(172, 178, 176);
+  --nav_tree_panel_fg: RGBA(var(--neutral_0));
+  --nav_tree_panel_icon: RGBA(var(--neutral_0));
+  --nav_tree_panel_bg: RGBA(0, 51, 32, 1);
+  --nav_tree_panel_shadow: none;
+  --nav_tree_panel_font: var(--defaultFont);
+  --nav_tree_group_fg: RGBA(var(--neutral_0));
+  --nav_tree_group_icon: RGBA(var(--neutral_0));
+  --nav_tree_graph: RGBA(172, 178, 176);
+  --nav_tree_header_fg: RGBA(var(--neutral_0));
+  --nav_tree_header_bg: RGBA(0, 51, 32, 1);
+  --nav_tree_header_hover: RGBA(0, 70, 38, 1);
+  --nav_tree_search_fg: RGBA(var(--pureBlack));
+  --nav_tree_search_bg: RGBA(0, 51, 32, 1);
+  --nav_tree_search_input_bg: RGBA(var(--neutral_200));
+  --nav_tree_search_input_placeholder: RGBA(var(--neutral_0));
+  --nav_tree_item_hover: RGBA(0, 70, 38, 1);
+  --nav_tree_item_selected: RGBA(0, 88, 48, 1);
+  --nav_tree_tooltip_bg: RGBA(var(--neutral_800));
+  --nav_tree_tooltip_fg: RGBA(var(--neutral_100));
+  --nav_tree_scroll_indicator_height: 270px;
+  --nav_tree_scroll_indicator_down_bg:  transparent linear-gradient(180deg, rgba(var(--neutral_200), 0) 0%, rgba(var(--neutral_200), 0.5) 100%) 0% 0% no-repeat padding-box;
+  --nav_tree_scroll_indicator_up_bg: none;
+
+  --nav_tree_form_font: 'FiraSans';
+  --nav_tree_form_bold_font: 'FiraSansMedium';
+  --nav_tree_form_header_font: 'FiraSansItalic';
+  --nav_tree_form_search_font: 'FiraSansItalic';
+
+  --nav_tree_form_scrollbar_track: RGBA(var(--neutral_0));
+  --nav_tree_form_scrollbar_thumb: rgb(172, 178, 176);
+  --nav_tree_form_panel_fg: RGBA(var(--neutral_800));
+  --nav_tree_form_panel_icon: RGBA(var(--neutral_600));
+  --nav_tree_form_panel_bg: RGBA(var(--neutral_0), 1);
+  --nav_tree_form_group_fg: RGBA(var(--neutral_800));
+  --nav_tree_form_group_icon: RGBA(var(--neutral_800));
+  --nav_tree_form_graph: rgb(106, 115, 113);
+  --nav_tree_form_header_fg: RGBA(var(--neutral_800));
+  --nav_tree_form_header_bg: RGBA(var(--neutral_0), 1);
+  --nav_tree_form_header_hover: RGBA(var(--neutral_200), 1);
+  --nav_tree_form_search_fg: RGBA(var(--pureBlack));
+  --nav_tree_form_search_wrapper_bg: RGBA(var(--neutral_0));
+  --nav_tree_form_search_bg: RGBA(var(--neutral_0));
+  --nav_tree_form_search_input_bg: rgb(230, 231, 231);
+  --nav_tree_form_item_hover: RGBA(var(--neutral_150), 1);
+  --nav_tree_form_item_selected: RGBA(var(--neutral_200), 1);
+  --nav_tree_form_tooltip_bg: rgb(55, 78, 89);
+  --nav_tree_form_tooltip_fg: rgb(212, 217, 220);
+  --nav_tree_form_scroll_indicator_down_bg:  transparent linear-gradient(180deg, rgba(var(--neutral_200), 0) 0%, rgba(var(--neutral_200), 0.5) 100%) 0% 0% no-repeat padding-box;
+  --nav_tree_form_scroll_indicator_up_bg: none;
+  --nav_tree_favorite_border: 1px solid RGBA(var(--neutral_200));
+
+  /* HeaderBar */
+  --headerbar_bg: RGBA(var(--brand_500), 1);
+  --headerbar_fg: RGBA(var(--neutral_50));
+  --headerbar_command_bg: none;
+  --headerbar_command_hover_bg: rgb(1, 87, 56);
+  --headerbar_icon: RGBA(var(--neutral_0));
+  --headerbar_icon_hover: RGBA(var(--neutral_50));
+  --headerbar_icon_focus: RGBA(var(--neutral_50));
+  --headerbar_logo_icon: RGBA(var(--neutral_50));
+  --headerbar_logo_icon2: RGBA(var(--neutral_50));
+  --headerbar_command_bell_bg: RGBA(var(--red_700));
+  --headerbar_command_bell_fg: RGBA(var(--neutral_0));
+  --headerbar_command_special_bg: RGBA(var(--red_700));
+  --headerbar_command_special_icon: RGBA(var(--neutral_50));
+  --headerbar_command_special_shadow: 2px 4px 14px rgba(120, 120, 120, 0.8);
+  --headerbar_command_special_fill: RGBA(var(--neutral_50));
+  --headerbar_command_special_hover_bg: RGBA(var(--red_600));
+  --headerbar_command_usermenu_fg: RGBA(var(--white), 1);
+  --headerbar_command_split_border: RGBA(var(--white), .4);
+  --headerbar_command_usermenu_font: var(--defaultFont);
+  --headerbar_command_usermenu_bg: rgb(0, 51, 32);
+  --headerbar_command_usermenu_hover_bg: rgb(0, 89, 55);
+
+  /* GRID */
+  --grid_odd_bg: RGBA(var(--neutral_0));
+  --grid_even_bg: RGBA(var(--neutral_100));
+  --grid_viewport: RGBA(var(--neutral_100));
+  --grid_bar_bg: RGBA(var(--neutral_200));
+  --grid_bar_color: RGBA(var(--neutral_800));
+  --grid_bar_gradient: RGBA(var(--neutral_50));
+  --grid_bar_border: RGBA(var(--neutral_200));
+  --grid_bar_border_top: 1px solid RGBA(var(--neutral_200));
+  --grid_bar_border_radius: 0;
+  --grid_bar_command_border_bottom: 1px solid RGBA(var(--neutral_200));
+  --grid_command_bg: RGBA(var(--neutral_50));
+  --grid_command_icon: RGBA(var(--neutral_800));
+  --grid_command_icon_hover: RGBA(var(--neutral_800));
+  --grid_special_row_bg: RGBA(205, 227, 204, 1);
+  --grid_row_focused_bg: RGBA(224, 242, 237, 1);
+  --grid_row_selected_bg: RGBA(204, 226, 218, 1);
+  --grid_headercolumn_bg: RGBA(var(--neutral_50));
+  --grid_headercolumn_fg: RGBA(var(--neutral_1000));
+  --grid_row_content_fg: RGBA(var(--neutral_800));
+  --grid_row_grouping_fg: RGBA(var(--blue_700));
+  --grid_row_grouping_fs: 9pt;
+  --grid_row_grouping_fw: 600;
+  --grid_row_focused_fg: RGBA(var(--neutral_800));
+  --grid_row_sum_icon: RGBA(var(--green_500));
+  --grid_icon: RGBA(var(--green_500));
+  --grid_tree_icon: RGBA(var(--neutral_1000));
+  --grid_sum_color_icon: RGBA(var(--neutral_1000));
+  --grid_row_focused_selected_color: RGBA(var(--neutral_800));
+  --grid_row_focused_selected_icon_color: RGBA(var(--neutral_400));
+  --grid_row_dragenter: rgba(230, 231, 231, 1);
+
+  --grid_row_check_checked: RGBA(var(--green_500));
+  --grid_row_check_unchecked: RGBA(var(--neutral_800), 1);
+  --grid_row_drag_enter: var(--theme_accent);
+  --grid_emptycontent: RGBA(var(--lightGray), 1);
+  --grid_header_sort: RGBA(171, 171, 171, 1);
+  --grid_border: 1px solid transparent;
+  --grid_filter_bg: RGBA(var(--neutral_100), 1);
+  --grid_focused_border: 1px solid RGBA(var(--neutral_300), 1);
+  --grid_filter_focused_bg: RGBA(var(--neutral_100), 1);
+  --grid_column_smartopen_fg: RGBA(var(--blue_700), 1);
+  --grid_column_smartopen_even_bg: RGBA(var(--neutral_150));
+  --grid_column_smartopen_odd_bg: RGBA(var(--neutral_50));
+  --grid_column_frozen_border_color: rgb(216, 216, 216);
+  --grid_column_command_hover_bg: rgb(76, 108, 122);
+  --grid_column_focused_bg: RGBA(var(--green_600));
+  --grid_column_focused_border: 1px dashed rgb(178, 198, 207);
+  --grid_column_focus_fc: RGBA(var(--neutral_0), 1);
+
+  --grid_row_grouping_border_top: 1px solid RGBA(var(--neutral_200));
+  --grid_row_grouping_border_bottom: 1px solid RGBA(var(--neutral_200));
+  --grid_row_grouping_bg: RGBA(var(--neutral_50));
+  --grid_row_sumgrouping_border: none;
+  --grid_gfsum_before_bg: RGBA(var(--neutral_600), 0.1);
+  --grid_gfsum_bg: transparent;
+  --grid_gfsum_border: none;
+  --grid_gfsum_text_fw: inherit;
+  --grid_gfsum_color: RGBA(var(--mostlyBlack), 1);
+  --grid_row_check: RGBA(var(--lightGray3), 1);
+  --grid_header_pulse_bg: RGBA(var(--mostlydesaturateddarkBlue), 0.2);
+  --grid_header_pulse_shadow: 0 0 1px 2px RGBA(var(--mostlydesaturateddarkBlue), 1);
+  --grid_header_filter_bg: RGBA(251, 251, 251, 1);
+  --grid_row_icon: RGBA(var(--neutral_400));
+  --grid_row_selected_focused_border: RGBA(var(--green_500));
+  --grid_row_frozen_odd_bg: RGBA(var(--neutral_50));
+  --grid_row_frozen_even_bg: RGBA(var(--neutral_150));
+  --grid_command_hover_bg: RGBA(var(--neutral_300));
+  --grid_bar_special_icon: RGBA(var(--neutral_800));
+  --grid_bar_special_icon_border: 1px dotted RGBA(var(--neutral_200));
+  --grid_bar_special_icon_hover: RGBA(var(--neutral_800));
+  --grid_bar_special_icon_hover_bg: RGBA(var(--neutral_300));
+  --grid_cell_fg: RGBA(163, 163, 163, 1);
+  --grid_cell_ac_fg: RGBA(0, 0, 0, 1);
+  --grid_cell_highlight_bg: RGBA(9, 116, 0, 0.10);
+  --grid_cell_border: 1px solid rgb(9, 116, 0);
+  --grid_cell_boxshadow: 1px 1px 2px 1px rgb(115, 115, 115) inset;
+
+  --grid_loc_input_placeholder_fg: RGBA(var(--pureBlack), 1);
+  --grid_loc_command_border_color: rgb(212, 212, 212);
+
+  /* Grid Cards */
+  --grid_cards_bg: RGBA(var(--neutral_0));
+  --grid_cards_color: RGBA(var(--mostlyBlack), 1);
+  --grid_cards_box_shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+  --grid_cards_odd_bg: RGBA(var(--neutral_0));
+  --grid_cards_even_bg: RGBA(var(--neutral_0));
+  --grid_cards_cmd_bg: RGBA(var(--neutral_200));
+  --grid_cards_cmd_hover_bg: RGBA(var(--neutral_300));
+  --grid_cards_cmd_icon: RGBA(var(--neutral_800));
+  --grid_cards_cmd_hover_icon: RGBA(var(--neutral_800));
+  --grid_card_cap_fw: 300;
+  --grid_card_val_fw: 500;
+  --grid_card_fc: RGBA(var(--mostlyBlack), 1);
+  --grid_cards_column_select_bg: RGBA(var(--green_500));
+  --grid_cards_column_select_open_rect: RGBA(var(--green_500));
+  --grid_cards_column_select_open_path: RGBA(var(--neutral_50));
+  --grid_cards_column_select_close_rect: RGBA(var(--green_500));
+  --grid_card_panel_cmd_bg: RGBA(0, 114, 61, 1);
+  --grid_card_panel_cmd_hover_bg: RGBA(var(--neutral_500), 1);
+  --grid_card_panel_cmd_icon: RGBA(var(--neutral_200), 1);
+  --grid_card_panel_cmd_hover_icon: RGBA(var(--neutral_200), 1);
+
+  /* FeatureBar */
+  --featurebar_bg: RGBA(var(--neutral_0));
+  --featurebar_item_icon: RGBA(var(--blue_600));
+  --featurebar_item_hover_icon: RGBA(var(--neutral_50));
+  --featurebar_group_bg: RGBA(var(--neutral_50));
+  --featurebar_features_bg: RGBA(var(--neutral_50));
+  --featurebar_features_border: 1px solid RGBA(var(--neutral_200));
+  --featurebar_features_fg: RGBA(var(--neutral_800));
+  --featurebar_text_hover_fg: RGBA(var(--neutral_50));
+  --featurebar_item_hover_bg: RGBA(var(--green_500));
+  --featurebar_features_header_bg: RGBA(var(--neutral_50));
+  --featurebar_item_bg: RGBA(var(--neutral_50));
+
+  /* GROUP */
+  --group_bg: RGBA(var(--neutral_0));
+  --group_bg_image: none;
+  --group_title_fg: RGBA(var(--brand_500));
+  --group_item_fg: RGBA(114, 114, 114, 1);
+  --group_icon: RGBA(var(--green_500), 1);
+  --group_content_fg: RGBA(var(--neutral_800));
+  --group_shadow: none;
+  --group_fw: 400;
+
+  /* COMMAND */
+  --command_shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 1px 1px 6px 2px rgba(0, 0, 0, 0.2);
+  --command_shadow_active: none;
+  --command_hover_bg: RGBA(var(--verylightGray2), 1);
+  --command_form_bg: RGBA(var(--verylightGray2), 1);
+  --command_form_fg: RGBA(var(--darkGreen4));
+  --command_form_active_fg: RGBA(177, 177, 177, 1);
+  --command_form_active_bg: transparent;
+  --command_form_active_border: none;
+  --command_form_shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+  --command_border: 1px solid RGBA(var(--neutral_300));
+  --command_font: 'ROBOTO', sans-serif;
+  --command_icon: RGBA(var(--verydarkGray2), 1);
+  --command_title_fg: var(--theme_primary_text);
+  --command_timewatch_svg_fg: RGBA(var(--neutral_0));
+  --command_timewatch_svg_hover_bg:  RGBA(var(--green_500), 0.2);
+
+  --command_primary_fg: RGBA(var(--neutral_0));
+  --command_primary_bg: rgb(0, 114, 61);
+  --command_primary_border_color: rgb(0, 114, 61);
+  --command_primary_hover_fg: RGBA(var(--neutral_0));
+  --command_primary_hover_bg: rgb(0, 147, 107);
+  --command_primary_hover_border_color: rgb(0, 147, 107);
+  --command_primary_pressed_fg: RGBA(var(--neutral_0));
+  --command_primary_pressed_bg: rgb(0, 70, 38);
+  --command_primary_pressed_border_color: rgb(0, 70, 38);
+  --command_primary_focused_fg: RGBA(var(--neutral_0));
+  --command_primary_focused_bg: rgb(0, 114, 61);
+  --command_primary_focused_border_color: rgb(0, 36, 20);
+  --command_primary_selected_fg: RGBA(var(--neutral_0));
+  --command_primary_selected_bg: rgb(0, 88, 48);
+  --command_primary_selected_border_color: rgb(0, 88, 48);
+  --command_primary_disabled_fg: rgb(106, 115, 113);
+  --command_primary_disabled_bg: rgb(230, 231, 231);
+  --command_primary_disabled_border_color: rgb(230, 231, 231);
+
+  --command_secondary_fg: RGBA(var(--pureBlack));
+  --command_secondary_bg: RGBA(var(--neutral_0));
+  --command_secondary_border_color: rgb(130, 139, 137);
+  --command_secondary_hover_fg: RGBA(var(--pureBlack));
+  --command_secondary_hover_bg: rgb(230, 231, 231);
+  --command_secondary_hover_border_color: rgb(130, 139, 137);
+  --command_secondary_pressed_fg: RGBA(var(--pureBlack));
+  --command_secondary_pressed_bg: rgb(205, 210, 210);
+  --command_secondary_pressed_border_color: rgb(130, 139, 137);
+  --command_secondary_focused_fg: RGBA(var(--pureBlack));
+  --command_secondary_focused_bg: RGBA(var(--neutral_0));
+  --command_secondary_focused_border_color: rgb(0, 5, 3);
+  --command_secondary_selected_fg: RGBA(var(--pureBlack));
+  --command_secondary_selected_bg: rgb(224, 242, 237);
+  --command_secondary_selected_border_color: rgb(0, 90, 48);
+  --command_secondary_disabled_fg: rgb(106, 115, 113);
+  --command_secondary_disabled_bg: RGBA(var(--neutral_0));
+  --command_secondary_disabled_border_color: rgb(205, 210, 210);
+
+  --command_tertiary_fg: RGBA(var(--pureBlack));
+  --command_tertiary_bg: RGBA(var(--neutral_0));
+  --command_tertiary_icon: RGBA(var(--brand_500));
+  --command_tertiary_border_color: RGBA(var(--neutral_0));
+  --command_tertiary_hover_fg: RGBA(var(--pureBlack));
+  --command_tertiary_hover_bg: rgb(230, 231, 231);
+  --command_tertiary_hover_icon: RGBA(var(--brand_500));
+  --command_tertiary_hover_border_color: rgb(230, 231, 231);
+  --command_tertiary_pressed_fg: RGBA(var(--pureBlack));
+  --command_tertiary_pressed_bg: RGBA(var(--neutral_0));
+  --command_tertiary_pressed_icon: rgb(1, 68, 43);
+  --command_tertiary_pressed_border_color: RGBA(var(--neutral_0));
+  --command_tertiary_focused_fg: RGBA(var(--pureBlack));
+  --command_tertiary_focused_bg: RGBA(var(--neutral_0));
+  --command_tertiary_focused_icon: RGBA(var(--brand_500));
+  --command_tertiary_focused_border_color: rgb(0, 5, 3);
+  --command_tertiary_selected_fg: RGBA(var(--pureBlack));
+  --command_tertiary_selected_bg: rgb(224, 242, 237);
+  --command_tertiary_selected_icon: RGBA(var(--pureBlack));
+  --command_tertiary_selected_border_color: rgb(224, 242, 237);
+  --command_tertiary_disabled_fg: rgb(106, 115, 113);
+  --command_tertiary_disabled_bg: RGBA(var(--neutral_0));
+  --command_tertiary_disabled_icon: rgb(109, 115, 113);
+  --command_tertiary_disabled_border_color: RGBA(var(--neutral_0));
+
+
+  --command_cube_fg: RGBA(var(--neutral_1000));
+  --command_cube_bg: RGBA(var(--neutral_0));
+  --command_cube_boxshadow: 0 0 20px 0 RGBA(var(--neutral_1000), 0.18);
+  --command_cube_icon_fg: RGBA(var(--neutral_1000));
+
+  /* WINDOW BAR BROWSER */
+  --wb_bg: RGBA(var(--neutral_0));
+  --wb_shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+  --wb_header_icon_color: RGBA(var(--neutral_1000));
+  --wb_header_icon_fav_color: RGBA(244, 176, 5, 1);
+  --wb_header_color: RGBA(var(--neutral_800));
+  --wb_header_font_family: var(--defaultFont);
+  --wb_header_font_size: 18px;
+  --wb_close_color: rgb(251, 44, 54);
+  --wb_command_bg: transparent;
+  --wb_command_shadow: 0px 0px 10px 1px RGBA(var(--neutral_200));
+  --wb_command_hover_shadow: none;
+  --wb_command_disabled: RGBA(var(--lightGray));
+  --wb_command_font_family: var(--command_font);
+  --wb_command_font_size: 14px;
+
+  /* Page */
+  --page_fg: RGBA(var(--white), 1);
+  --page_footer_fg: RGBA(var(--pureBlack), 1);
+  --page_info_fg: RGBA(250, 250, 250, 1);
+  --page_image_bg_before: linear-gradient(140deg, rgba(211, 227, 180, 1) 0%, rgba(167, 206, 113, 1) 20%, rgba(54, 128, 95, 1) 90%);
+  --page_image_filter: none;
+  --page_header_logo_bg: linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.70) 61.06%);
+  --page_header_text_fg: RGBA(var(--pureBlack), 1);
+
+  --page_info_text_shadow: 1px 1px 1px rgb(34, 34, 34);
+  --page_content_shadow: -15px 0px 45px 0px rgba(50, 50, 50, 0.3);
+  --page_content_bg: RGBA(var(--neutral_0));
+  --page_adm_fg: var(--theme_primary_text);
+  --page_adm_locked_fg: RGBA(255, 0, 0, 1);
+  --page_adm_icon: RGBA(169, 188, 55, 1);
+
+  --page_adm_domain_border: 1px solid rgb(216, 216, 216);
+  --page_adm_domain_bg: RGBA(232, 232, 232, 1);
+  --page_adm_domain_title_fg: var(--theme_primary_text);
+  --page_adm_domain_even_bg: RGBA(var(--darkGray), 0.1);
+  --page_adm_domain_odd_bg: RGBA(var(--white), 0.3);
+
+  --page_adm_action_border: 1px solid RGBA(var(--lightGray3), 1);
+  --page_adm_action_shadow_target_color: RGBA(0, 0, 0, 0.4);
+
+  --page_adm_action_bg: var(--theme_command_bg);
+  --page_adm_action_fg: var(--theme_command_fg);
+  --page_adm_action_hover_bg: var(--theme_command_bg_hover);
+  --page_adm_action_hover_fg: var(--theme_command_fg_hover);
+
+  /* INPUT EDITOR */
+  --input_fg: var(--theme_editor_fg);
+  --input_bg: RGBA(var(--neutral_0));
+  --input_border: 1px solid RGBA(var(--neutral_200));
+  --input_disabled_bg: RGBA(var(--neutral_100));
+  --input_border_disabled: 1px solid RGBA(var(--neutral_200));
+  --input_focused_bg: transparent;
+  --input_test_focused_bg: var(--theme_bg);
+  --input_tooltip_fg: RGBA(214, 214, 214, 1);
+  --input_text_editor_fg: RGBA(var(--neutral_800), 1);
+  --input_text_editor_bg: RGBA(var(--neutral_0), 1);
+  --input_shadow_disabled: 1px 1px 1px RGBA(var(--white), 1);
+  --input_icon_fg: RGBA(var(--green_500));
+  --input_icon_fg_disabled: RGBA(var(--neutral_400), 1);
+  --input_error_shadow: 0px 0px 3px 1px var(--error);
+  --input_warning_shadow: 0px 0px 3px 1px var(--warning);
+  --input_disabled_fg: RGBA(var(--neutral_500), 1);
+  --input_focused_fg: RGBA(var(--neutral_800));
+  --input_autofill_shadow: 0 0 0 30px RGBA(var(--theme_editor_bg), 1) inset;
+  --input_autofill_focused_shadow: 0 0 0 30px var(--theme_editor_focused_bg) inset;
+  --input_text_asteriks_focus_bg:  RGBA(var(--neutral_200));
+  --input_text_asteriks_bg: var(--input_text_editor_fg);
+  --input_text_asteriks_color: var(--input_bg);
+  --input_text_asteriks_border: 1px solid RGBA(var(--neutral_200));
+  --input_vertical_disabled_bg: 1px solid RGBA(var(--neutral_200));
+  --input_vertical_border: 1px solid RGBA(var(--neutral_200));
+  --input_vertical_focused_border: 1px solid RGBA(var(--darkGreen), 1);
+
+  /* RATING EDITOR */
+  --rating_bg: RGBA(var(--theme_editor_bg), 1);
+
+  --rating_fg: RGBA(204, 204, 204, 1);
+  --rating_star_shadow: 1px 1px 2px rgb(250, 250, 250);
+  --rating_hover_fg: RGBA(255, 215, 0, 1);
+  --rating_checked_fg: RGBA(255, 119, 0, 1);
+  --rating_checked_hover_fg: RGBA(238, 170, 0, 1);
+  --rating_hover_shadow: rgb(216, 216, 216) 2px 2px 5px;
+
+  /* DatePicker */
+  --dp_box_bg: RGBA(var(--neutral_0), 1);
+  --dp_element_fg: RGBA(var(--pureBlack), 1);
+  --dp_button_fg: RGBA(var(--verydarkGray), 1);
+  --dp_ym_separator: linear-gradient(to bottom, rgba(17, 218, 0, 0) 0%, rgb(9, 116, 0) 54%, rgba(17, 218, 0, 0) 100%);
+  --dp_ym_level_0_fg: RGBA(var(--neutral_1000), 1);
+  --dp_ym_level_1_fg: rgb(68, 70, 69);
+  --dp_ym_level_2_fg: rgb(130, 139, 137);
+  --dp_ym_level_3_fg: RGBA(var(--neutral_300), 1);
+  --dp_overlay_bg: var(--theme_overlay_bg);
+  --dp_element_fg: RGBA(var(--pureBlack), 1);
+  --dp_week_fg: rgb(0, 97, 255);
+  --dp_shortday_fg: RGBA(var(--lightGray5), 1);
+  --dp_day_range: rgb(9, 116, 0);
+  --dp_day_selected_bg: rgb(0, 114, 61);
+  --dp_day_selected_fg: RGBA(var(--neutral_0));
+  --dp_day_today_border_color: rgb(0, 114, 61);
+  --dp_day_today_fg: rgb(0, 114, 61);
+  --dp_field_border_color: RGBA(var(--lightGray7), 1);
+  --dp_field_border_color_active: rgb(0, 114, 61);
+  --dp_in_range_bg: RGBA(var(--brand_10), 1);
+  --dp_in_range_fg: RGBA(var(--neutral_800));
+  --dp_font: 'ROBOTO', sans-serif;
+  --dp_bg: RGBA(var(--neutral_0), 1);
+  --dp_color: RGBA(var(--neutral_800), 1);
+  --dp_container_bg: RGBA(var(--neutral_0));
+  --dp_navigation_color: RGBA(var(--pureBlack));
+  --dp_border: 1px solid rgb(205, 210, 210);
+  --dp_label_fg: rgb(0, 0, 0);
+  --dp_label_border: 1px solid rgb(130, 139, 137);
+  --dp_label_shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+  --dp_start_color: RGBA(var(--neutral_0));
+  --dp_scrollbar_track_color: transparent;
+  --dp_scrollbar_thumb_bg: transparent;
+  --dp_scrollbar_thumb_hover_bg: transparent;
+  --dp_day_of_week_fg: rgb(68, 70, 69);
+
+  /* TimePicker */
+  --tp_bg: RGBA(var(--neutral_0));
+  --tp_sep: RGBA(0, 0, 0);
+  --tp_color: RGBA(0, 0, 0);
+  --tp_border: 1px solid RGBA(133, 139, 137);
+  --tp_button_ok_bg: RGBA(var(--brand_500));
+  --tp_button_ok_fg: RGBA(var(--neutral_0));
+  --tp_box_shadow: 0px 0px 10px RGBA(0, 0, 0, 0.12);
+  --tp_overlay_bg: RGBA(var(--neutral_1000), 0.5);
+  --tp_mark: RGBA(230, 241, 237);
+  --tp_focus: 1px solid RGBA(var(--neutral_950));
+
+  /* DateScopePicker */
+  --dsp_font: 'ROBOTO', sans-serif;
+  --dsp_command_fg: RGBA(var(--brand_500), 1);
+  --dsp_command_bg: RGBA(var(--white), 1);
+  --dsp_label_fg: var(--primaryText, rgb(0, 0, 0));
+  --dsp_caption_fg: RGBA(var(--pureBlack), 1);
+
+  /* ColorPicker */
+  --cp_box_bg: RGBA(var(--neutral_0));
+  --cp_box_fg: RGBA(var(--neutral_0));
+  --cp_overlay_bg: RGBA(var(--neutral_1000), 0.5);
+  --cp_box_shadow: none;
+  --cp_empty_bg: repeating-linear-gradient(45deg, rgb(220, 220, 220), rgb(220, 220, 220) 5px, RGBA(var(--white)) 5px, RGBA(var(--white)) 10px);
+  --cp_empty_icon: RGBA(38, 38, 38);
+  --cp_box_border: none;
+  --cp_box_fc: RGBA(var(--neutral_1000));
+  --cp_button_save_bg: RGBA(var(--brand_600));
+  --cp_button_box_shadow: 0px 0px 10px RGBA(0, 0, 0, 0.12);
+  --cp_button_color: RGBA(0, 0, 0);
+  --cp_checkbox_bg: RGBA(var(--neutral_0));
+  --cp_checkbox_checked_bg: RGBA(var(--brand_500));
+  --cp_button_understand_bg: RGBA(var(--brand_500));
+  --cp_button_border: 1px solid RGBA(var(--neutral_400));
+  --cp_button_save_color: RGBA(var(--neutral_0));
+  --cp_active: 1px solid RGBA(var(--neutral_950));
+
+  /* StatusPicker */
+  --status_picker_bg: RGBA(var(--neutral_50));
+  --status_picker_border: 1px solid RGBA(var(--neutral_300));
+  --status_picker_items_bg: inherit;
+  --status_picker_item_hover: RGBA(242, 242, 242, 1);
+  --status_picker_item_border: none;
+  --status_picker_item_border_hover: none;
+  --status_picker_cursor: default;
+  --status_picker_item_bg: RGBA(250, 250, 250, 1);
+
+  /* Lookup */
+  --lookup_auto_bg: RGBA(var(--neutral_50));
+  --lookup_header_border: RGBA(var(--neutral_300));
+  --lookup_item_bg: RGBA(var(--neutral_50));
+  --lookup_item_hover_bg: RGBA(var(--brand_30), 1);
+  --lookup_item_fg: RGBA(var(--neutral_1000));
+  --lookup_auto_border: 1px solid RGBA(var(--neutral_300));
+  --lookup_item_hover_fg: RGBA(var(--neutral_1000));
+  --lookup_editor_icon: RGBA(var(--darkGreen), 1);
+
+  /* TileMenu */
+  --tile_group_fg: var(--theme_primary_text);
+  --tile_group_hover_bg: RGBA(var(--neutral_100));
+  --tile_item_bg: RGBA(var(--neutral_0));
+  --tile_active_fg: RGBA(var(--lightGray4), 1);
+  --tile_active_bg: RGBA(var(--verylightGray), 1);
+  --tile_command_icon: RGBA(var(--verydarkGray2), 1);
+  --tile_command_fg: var(--theme_primary_text);
+  --tile_command_shadow: 0px 0px 10px rgb(230, 230, 230);
+  --tile_desc_fg: rgb(68, 70, 69);
+  --tile_group_active_bg: linear-gradient(to bottom, rgb(171, 171, 171), rgb(171, 171, 171) 2px, rgb(240, 240, 240) 2px, transparent);
+  --tile_item_border_fg: none;
+  --tile_shadow: 0px 0px 10px 1px RGBA(var(--neutral_200));
+  --tile_hover: none;
+  --tile_hover_webkit: none;
+  --tile_hover_active: none;
+  --tile_hover_active_webkit: none;
+  --tile_fw: 600;
+  --tile_color: RGBA(var(--pureBlack));
+  --tile_group_bg_image: none;
+
+  /* SvgIcon */
+  --svg_icon_main_stop: RGBA(var(--verydarkGray2), 1);
+  --svg_icon_alt_stop: RGBA(var(--verydarkGray2), 1);
+
+  /* Bookmarks */
+  --bookmark_font: 'ROBOTO', sans-serif;
+  --bookmark_shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+  --bookmark_fg: rgb(68, 70, 69);
+  --bookmark_bg: rgb(230, 231, 231);
+  --bookmark_icon: rgb(75, 81, 80);
+  --bookmark_hover_fg: rgb(68, 70, 69);
+  --bookmark_hover_bg: rgb(230, 231, 231);
+  --bookmark_hover_icon: rgb(75, 81, 80);
+  --bookmark_focused_fg: rgb(68, 70, 69);
+  --bookmark_focused_bg: rgb(230, 231, 231);
+  --bookmark_focused_icon: rgb(75, 81, 80);
+  --bookmark_focused_border_color: rgb(0, 36, 20);
+  --bookmark_pressed_fg: rgb(68, 70, 69);
+  --bookmark_pressed_bg: RGBA(var(--neutral_0), 1);
+  --bookmark_pressed_icon: rgb(75, 81, 80);
+  --bookmark_disabled_bg: none;
+  --bookmark_disabled_icon: RGBA(var(--neutral_600));
+
+  --bookmark_selected_fg: RGBA(var(--pureBlack), 1);
+  --bookmark_selected_bg: RGBA(var(--neutral_0), 1);
+  --bookmark_selected_icon: rgb(75, 81, 80);
+  --bookmark_selected_hover_fg: RGBA(var(--pureBlack), 1);
+  --bookmark_selected_hover_bg: rgb(230, 231, 231);
+  --bookmark_selected_hover_icon: rgb(75, 81, 80);
+  --bookmark_selected_focused_fg: RGBA(var(--pureBlack), 1);
+  --bookmark_selected_focused_bg: RGBA(var(--neutral_0), 1);
+  --bookmark_selected_focused_icon: rgb(75, 81, 80);
+  --bookmark_selected_focused_border_color: rgb(0, 36, 20);
+  --bookmark_selected_pressed_fg: RGBA(var(--pureBlack), 1);
+  --bookmark_selected_pressed_bg: rgb(205, 210, 210);
+  --bookmark_selected_pressed_icon: rgb(75, 81, 80);
+
+  --bookmark_close_hover_bg: rgb(217, 218, 218);
+  --bookmark_close_hover_icon: rgb(75, 81, 80);
+  --bookmark_close_selected_hover_bg: rgb(221, 223, 223);
+  --bookmark_close_selected_hover_icon: rgb(75, 81, 80);
+
+  /* Modal */
+  --modal_bg: RGBA(var(--neutral_0));
+  --modal_border_radius: 12px;
+  --modal_bar_bg: transparent;
+  --modal_bar_fg: RGBA(var(--theme_primary_text), 1);
+  --modal_bar_icon: RGBA(var(--mostlyBlack), 1);
+  --modal_bar_title_fg: RGBA(var(--pureBlack));
+  --modal_bar_border: none;
+  --modal_section_fg: var(--theme_primary_text);
+  --modal_command_bg: transparent;
+  --modal_command_active_bg: RGBA(var(--darkGray2), 1);
+  --modal_command_fg: RGBA(var(--verylightGray5), 1);
+  --modal_command_hover_bg: RGBA(var(--green_600));
+  --modal_command_hover_fg: RGBA(var(--white), 1);
+  --modal_overlay_bg: var(--theme_overlay_bg);
+  --modal_command_shadow: var(--theme_shadow_btn);
+  --modal_command_text_shadow: none;
+  --modal_command_hover_shadow: none;
+  --modal_command_font_size: 1em;
+  --modal_command_active_fg: RGBA(177, 177, 177, 1);
+  --modal_command_active_shadow: var(--theme_shadow_active);
+  --modal_command_active_border: none;
+  --modal_command_icon: var(--white);
+  --modal_command_error_icon: var(--error);
+  --modal_command_info_icon: RGBA(var(--green_500));
+  --modal_command_question_icon: var(--question);
+  --modal_command_warning_icon: var(--warning);
+  --modal_label_fg: rgb(68, 70, 69);
+  --modal_shadow: 0 0 20px 0 rgba(0, 0, 0, 0.18);
+
+  /* Indicator */
+  --indicator_bg: RGBA(var(--neutral_0), 1);
+  --indicator_fg: RGBA(var(--neutral_800));
+  --indicator_icon: RGBA(var(--neutral_700), 1);
+  --indicator_text_fg: RGBA(var(--neutral_800));
+  --indicator_shadow: none;
+  --indicator_value_icon: RGBA(var(--green_500), 1);
+
+  /* Checkbox */
+  --checkbox_bg: RGBA(var(--brand_500), 1);
+  --checkbox_bg_hover: RGBA(58, 142, 111);
+  --checkbox_fill_color: RGBA(var(--neutral_0));
+  --checkbox_border: 2px solid RGBA(77, 81, 80);
+  --checkbox_border_disabled: 2px solid RGBA(230, 231, 231);
+  --checkbox_border_hover: 2px solid RGBA(133, 139, 137);
+  --checkbox_content_border:  1px solid RGBA(var(--neutral_300));
+  --checkbox_disabled_fg: RGBA(var(--neutral_600));
+  --checkbox_disabled_icon: RGBA(109, 115, 113);
+  --checkbox_disabled_color: RGBA(230, 231, 231);
+
+  --checkbox_fg: var(--theme_editor_fg);
+  --checkbox_disabled_bg: RGBA(var(--neutral_200));
+  --checkbox_focused_bg: transparent;
+  --checkbox_check: RGBA(var(--green_500));
+  --checkbox_border_color: RGBA(77, 81, 80);
+  --checkbox_grid_border: 2px solid RGBA(77, 81, 80, 1);
+  --checkbox_border_focused: 2px solid RGBA(0, 34, 22);
+
+  /* Chips */
+  --chips_fg: RGBA(0, 0, 0);
+  --chips_icon: RGBA(0, 0, 0);
+  --chips_border: 1px solid RGBA(133, 139, 137);
+
+  /* Wizard */
+  --wizard_step_fg: RGBA(var(--pureBlack), 1);
+  --wizard_step_icon: RGBA(var(--neutral_0), 1);
+  --wizard_step: rgb(130, 139, 137);
+  --wizard_step_active: rgb(255, 105, 0);
+  --wizard_step_prev: rgb(0, 114, 61);
+
+  /* Cookie Box */
+  --cookie_link_fg: rgb(98, 201, 255);
+  --cookie_path1_color: RGBA(var(--neutral_0));
+  --cookie_path2_color: RGBA(var(--neutral_0));
+  --cookie_path1_fill: RGBA(var(--neutral_0));
+  --cookie_text_fg: RGBA(var(--neutral_0));
+  --cookie_bg: rgb(37, 39, 39);
+  --cookie_shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+  --cookie_action_icon_color: RGBA(var(--neutral_0));
+
+  /* Dashboard */
+  --dashboard_design_icon_bg: RGBA(var(--green_500), 1);
+  --dashboard_bg: var(--theme_bg);
+  --dashboard_fg: RGBA(var(--darkGreen), 1);
+  --dashboard_cell_grid_bg: RGBA(244, 244, 244, 1);
+  --dashboard_item_icon_bg: var(--theme_accent);
+  --dashboard_item_icon_hover_bg: RGBA(var(--green_500), 1);
+  --dashboard_design_icon: RGBA(var(--white), 1);
+  --dashboard_design_icon_border: 1px solid rgb(42, 183, 185);
+  --dashboard_item_fg: RGBA(114, 114, 114, 1);
+  --dashboard_group_border: 1px solid RGBA(var(--pureBlack), 0.1);
+  --dashboard_design_overlay_bg: RGBA(255, 255, 255, 0.8);
+  --dashboard_design_focus_shadow: inset 0 0 0 2px rgb(48, 143, 144);
+  --dashboard_command_split_border: 2px solid RGBA(var(--white), 1);
+  --dashboard_command_list_bg: rgb(47, 168, 108);
+  --dashboard_command_list_icon_bg: rgba(102, 102, 102, 0.25);
+  --dashboard_cell_grid_padding: 20px;
+
+  /* Profile Menu */
+  --profile_menu_bg: RGBA(var(--white), 1);
+  --profile_menu_item_fg: rgb(38, 38, 38);
+  --profile_group_border: 1px solid RGBA(var(--verylightGray2), 1);
+  --profile_group_fg: var(--theme_primary_text);
+  --profile_group_image_bg: RGBA(var(--lightGray2), 1);
+  --profile_shadow: 0 0 0 1px RGBA(var(--pureBlack), .1), 0 2px 3px RGBA(var(--pureBlack), .2);
+  --profile_group_icon: RGBA(var(--white), 1);
+  --profile_menu_image_bg: RGBA(var(--darkGreen3), 1);
+  --profile_menu_icon: RGBA(var(--white), 1);
+  --profile_menu_border: 1px solid RGBA(var(--neutral_300));
+  --profile_menu_item_shadow: var(--theme_shadow);
+  --profile_menu_item_hover_fg: RGBA(var(--white), 1);
+  --profile_menu_item_hover_bg: var(--theme_accent);
+  --profile_menu_fg: var(--theme_primary_text);
+  --profile_menu_header_bg: rgb(224, 242, 237);
+  --profile_menu_header_fg: rgb(0, 0, 0);
+  --profile_menu_header_item_value: RGBA(var(--brand_500));
+  --profile_menu_separator_bg: rgb(229, 229, 229);
+  --profile_menu_version_fg: rgb(115, 115, 115);
+  --profile_menu_font: 'ROBOTO', sans-serif;
+
+  /* Chart */
+  --chart_bg: RGBA(var(--white), 1);
+  --chart_border: 1px solid rgb(200, 215, 220);
+
+  /* Gantt */
+  --gantt_border: RGBA(224, 224, 224, 1);
+  --gantt_header_fg: RGBA(0, 0, 0, 0.54);
+  --gantt_fg: RGBA(var(--pureBlack), 1);
+  --gantt_focused_row_bg: RGBA(63, 81, 181, 0.149);
+  --gantt_connector_bg: RGBA(35, 104, 213, 1);
+  --gantt_connector_hover_bg: RGBA(214, 36, 77, 1);
+  --gantt_icon_hover_fg: RGBA(var(--pureBlack), 1);
+  --gantt_holiday_fg: RGBA(128, 128, 128, 1);
+  --gantt_holiday_bg: RGBA(255, 202, 138, 1);
+  --gantt_holiday_connector_fg: RGBA(128, 128, 128, 1);
+  --gantt_holiday_connector_bg: RGBA(221, 216, 210, 1);
+  --gantt_working_area_bg: RGBA(255, 255, 255, 1);
+  --gantt_not_working_days_bg: RGBA(244, 244, 244, 1);
+
+  /* Tooltip */
+  --tooltip_bg: RGBA(var(--neutral_0));
+  --tooltip_fg: RGBA(0, 0, 0);
+  --tooltip_border: 1px solid RGBA(0, 0, 0);
+  --tooltip_box_shadow: 0px 0px 10px rgba(0, 0, 0, 0.12);
+  --tooltip_icon: RGBA(var(--pureBlack));
+
+  /* EditorHtml */
+  --ehtml_bg: var(--theme_editor_disabled_bg);
+  --ehtml_border: 1px solid var(--theme_editor_disabled_border);
+  --ehtml_fg: RGBA(var(--verydarkGray2), 1);
+  --ehtml_content_line_color: 1px solid RGBA(var(--verylightGray6), 1);
+  --ehtml_fullsize_btn_bg: RGBA(var(--green_500));
+  --ehtml_fullsize_btn_fg: RGBA(var(--verylightGray5), 1);
+  --ehtml_fullsize_btn_shadow: var(--theme_shadow_btn);
+  --ehtml_fullsize_btn_active_bg: RGBA(var(--darkGray2), 1);
+  --ehtml_fullsize_btn_active_fg: RGBA(var(--white), 1);
+  --ehtml_fullsize_btn_active_shadow: var(--theme_shadow_active);
+
+  /* EditorMemoText */
+  --emt_bg: RGBA(var(--neutral_0));
+  --emt_border: 1px solid RGBA(var(--neutral_200));
+
+  /* Diagram */
+  --diagram_palette_accrdn_fg: var(--theme_primary_text);
+  --diagram_palette_accrdn_sel_bg: var(--theme_bg);
+  --diagram_palette_accrdn_sel_fg: RGBA(var(--theme), 1);
+  --diagram_border: 1px solid RGBA(var(--pureBlack), 0.2);
+  --diagram_group_icon: RGBA(var(--pureBlack), 1);
+  --diagram_palette_bg: RGBA(var(--white), 1);
+  --diagram_palette_item_bg_hover: rgb(238, 238, 238);
+  --diagram_grid_opacity: 1;
+  --diagram_palette_active_bg: inherit;
+  --diagram_palette_item_bg_selected: RGBA(189, 189, 189, 1);
+
+  /* TreeDiagram */
+  --tree_diagram_btn_bg: RGBA(var(--theme), 1);
+  --tree_diagram_btn_fg: RGBA(var(--white), 1);
+  --tree_diagram_minimap_bg: rgb(245, 245, 245);
+  --tree_diagram_minimap_border: 1px solid rgb(225, 225, 225);
+  --tree_diagram_minimap_shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  --tree_diagram_border: 1px solid RGBA(var(--pureBlack), 0.2);
+  --tree_diagram_zoom_bg: RGBA(250, 250, 250, 1);
+  --tree_diagram_send_fg: RGBA(var(--pureBlack), 1);
+  --tree_sm_bg: RGBA(250, 250, 250, 1);
+  --tree_sm_border: 1px solid RGBA(var(--pureBlack), 0.2);
+  --tree_sm_el_border: 1px solid rgb(224, 224, 224);
+  --tree_sm_el_fg: RGBA(128, 128, 128, 1);
+  --tree_sm_el_bg: RGBA(var(--white), 1);
+  --tree_sm_el_hover_border: 2px solid rgb(118, 163, 0);
+  --tree_sm_el_hover_fg: RGBA(118, 163, 0, 1);
+  --tree_sm_el_hover_bg: RGBA(245, 245, 245, 1);
+  --tree_filter_input_border: 1px solid rgb(195, 227, 234);
+  --tree_filter_input_bg: RGBA(250, 250, 250, 1);
+  --tree_filter_input_fg: RGBA(var(--mostlyBlack), 1);
+  --tree_filter_input_focus_fg: RGBA(114, 114, 114, 1);
+  --tree_filter_input_shadow: 0 0 0 30px RGBA(var(--theme_editor_bg), 1) inset;
+  --tree_filter_input_placeholder_fg: RGBA(177, 177, 177, 1);
+  --tree_filter_input_icon_fg: RGBA(179, 0, 0, 1);
+  --tree_diagram_bg: RGBA(var(--white), 1);
+  --tree_diagram_shape_color: RGBA(var(--mostlyBlack), 1);
+  --tree_diagram_shape_bg: RGBA(var(--white), 1);
+  --tree_diagram_shape_border: RGBA(180, 180, 180);
+  --tree_diagram_shape_filter_color: var(--theme);
+
+  /* Progress */
+  --progress_icon: RGBA(255, 103, 0, 1);
+  --progress_fg: var(--theme_primary_text);
+  --progress_border: 1px solid rgb(200, 215, 220);
+
+  /* Progress Bar */
+  --progress_bar_circle_bg: RGBA(var(--green_500), 1);
+  --progress_bar_background_circle_bg: RGBA(var(--lightGray));
+  --progress_bar_in_percent_fg: RGBA(var(--mostlyBlack));
+  --progress_bar_btn_information_fg: RGBA(var(--mostlydesaturateddarkBlue));
+  --progress_bar_information_fg: RGBA(var(--mostlyBlack));
+  --progress_bar_spinner_wrapper_bg: RGBA(var(--white));
+  --progress_bar_spinner_border: none;
+
+  /* Popup Simple */
+  --popup_simple_bg: RGBA(var(--neutral_0));
+  --popup_simple_border: unset;
+  --popup_simple_item_fg: RGBA(39, 37, 40, 1);
+  --popup_simple_item_bg: RGBA(var(--white), 1);
+  --popup_simple_item_fg_hover: RGBA(39, 37, 40, 1);
+  --popup_simple_item_bg_hover: RGBA(var(--brand_30), 1);
+
+  --popup_simple_item_disabled_fg: RGBA(179, 177, 177, 1);
+  --popup_simple_item_disabled_hover_bg: RGBA(var(--white), 1);
+  --popup_simple_item_disabled_hover_fg: RGBA(179, 177, 177, 1);
+
+  /* Popup */
+  --popup_command_bg: var(--theme_bg);
+  --popup_overlay: var(--theme_overlay_bg);
+
+  /* Splitter */
+  --splitter_bg: RGBA(var(--neutral_400));
+  --splitter_btn_bg: RGBA(var(--neutral_200));
+  --splitter_hover_bg: RGBA(var(--blue_600));
+  --splitter_icon: RGBA(var(--blue_600));
+
+  /* Html */
+  --html_fg: RGBA(var(--neutral_800));
+  --html_rss_fg: RGBA(var(--strongGreen), 1);
+  --html_hyperlink_fg: RGBA(var(--blue_700), 1);
+  --html_rss_border: RGBA(var(--lightGray3), 1);
+  --html_rss_date_info_fg: RGBA(130, 130, 130, 1);
+  --html_rss_desc_fg: RGBA(var(--mostlyBlack), 1);
+  --html_rss_error_fg: RGBA(var(--verydarkGray2), 1);
+  --html_hyperlink_color: rgb(20, 71, 230);
+
+  /* RichEdit */
+  --rte_fg: var(--theme_editor_fg);
+  --rte_bg: var(--theme_editor_bg);
+  --rte_border: 1px solid var(--theme_editor_border);
+  --rte_focused_bg: var(--theme_editor_focused_bg);
+  --rte_editor_bg: var(--theme_editor_bg);
+  --rte_editor_fg: var(--theme_editor_fg);
+  --rte_hr: RGBA(var(--verylightGray6));
+  --rte_tooltip_bg: RGBA(75, 106, 120, 1);
+  --rte_tooltip_border: 1px solid RGBA(var(--pureBlack), 0.3);
+  --rte_tooltip_shadow: 0.05em 0.2em 0.6em RGBA(var(--pureBlack), 0.2);
+  --rte_toolbar_bg: RGBA(var(--verylightGray7), 1);
+  --rte_toolbar_border: 1px solid rgb(226, 226, 226);
+  --rte_toolbar_item_hover_bg: RGBA(var(--neutral_150));
+  --rte_tabs_fg: var(--theme_accent);
+  --rte_dropdown_toolbar_border: 1px solid rgb(215, 215, 215);
+  --rte_resizer_border: 1px dashed RGBA(var(--lightGray2), 1);
+  --rte_resizer_bg: RGBA(var(--darkGray), 1);
+  --rte_icon: RGBA(var(--neutral_800));
+  --rte_active_border: 1px solid rgba(225, 225, 225, 0.99);
+  --rte_dialog_bg: var(--modal_bg);
+  --rte_dialog_font: var(--secondaryFont);
+  --rte_dialog_border_radius: none;
+  --rte_dialog_header_bg: var(--modal_bar_bg);
+  --rte_dialog_header_fg: var(--modal_bar_title_fg);
+  --rte_dialog_header_fontsize: var(--modal_bar_title_font);
+  --rte_dialog_header_border: var(--modal_bar_border);
+  --rte_dialog_button_bg: transparent;
+  --rte_dialog_button_fg: var(--wb_command_icon_color);
+  --rte_dialog_button_hover_bg: RGBA(var(--mostlydesaturateddarkBlue), .8);
+  --rte_dialog_button_hover_fg: RGBA(var(--white));
+  --rte_dialog_button_hover_border: var(--input_border);
+  --rte_dialog_content_fg: var(--theme_primary_text);
+  --rte_dialog_content_fontsize: var(--font_size_label);
+  --rte_dialog_content_tabs_wrapper_bg: rgba(0, 0, 0, .03);
+  --rte_dialog_content_tabs_hover_bg: rgba(0, 0, 0, .1);
+  --rte_dialog_input_border_radius: 0;
+  --rte_dialog_input_focused_border: none;
+  --rte_dialog_input_focused_shadow: var(--input_autofill_focused_shadow);
+  --rte_dialog_footer_bg: var(--modal_bar_bg);
+  --rte_dialog_footer_border: var(--modal_bar_border);
+  --rte_dialog_footer_button_bg: var(--modal_command_bg);
+  --rte_dialog_footer_button_fg: var(--modal_command_fg);
+  --rte_dialog_footer_button_shadow: var(--modal_command_shadow);
+  --rte_dialog_footer_button_text_shadow: var(--modal_command_text_shadow);
+  --rte_dialog_footer_button_text_transform: uppercase;
+  --rte_dialog_footer_button_font_weight: 600;
+  --rte_dialog_footer_button_hover_bg: var(--modal_command_bg);
+  --rte_dialog_footer_button_hover_fg: var(--modal_command_hover_fg);
+  --rte_dialog_footer_button_hover_shadow: var(--modal_command_hover_shadow);
+  --rte_dialog_resizer_bg: RGBA(var(--lightGray2));
+  --rte_dialog_resizer_hover_bg: RGBA(var(--lightGray4));
+  --rte_dialog_image_preview_bg: RGBA(var(--verylightGray7));
+  --rte_content_bg: unset;
+  --rte_content_fc: unset;
+  --rte_status_bg: unset;
+  --rte_border_color: unset;
+  --rte_status_fc: unset;
+  --rte_status_button_fc: unset;
+  --rte_status_button_hover: unset;
+  --rte_toolbar_border_right: none;
+  --rte_toolbar_border_color: unset;
+  --rte_toolbar_color1: unset;
+  --rte_toolbar_color2: unset;
+  --rte_toolbar_color3: unset;
+  --rte_toolbar_color4: unset;
+  --rte_toolbar_color5: unset;
+  --rte_toolbar_color6: unset;
+  --rte_toolbar_color7: unset;
+
+    /* Pick file popup */
+    --pickfile_fg: var(--theme_accent);
+    --pickfile_bg: var(--theme_bg);
+    --pickfile_btn_border: 1px dashed RGBA(var(--lightGray), 1);
+    --pickfile_btn_hover_bg: RGBA(250, 235, 215, 1);
+    --pickfile_btn_hover_fg: var(--theme_accent);
+    --pickfile_label_fg: RGBA(var(--pureBlack), 1);
+    --pickfile_label_bg: RGBA(var(--verylightGray), 1);
+    --pickfile_shadow: 0 2px 4px RGBA(var(--pureBlack), 0.2);
+    --pickfile_border: 1px solid RGBA(var(--pureBlack), 0.2);
+
+  /* Carousel */
+  --carousel_item_fg: RGBA(var(--neutral_800));
+  --carousel_item_bg: RGBA(var(--neutral_50));
+  --carousel_item_selected_fg: RGBA(var(--neutral_800));
+  --carousel_item_selected_bg: RGBA(var(--green_500), 0.2);
+  --carousel_arrow_border: none;
+  --carousel_arrow_bg: RGBA(var(--neutral_0));
+  --carousel_arrow_fg: RGBA(77, 81, 80);
+  --carousel_timepicker_item_fg: RGBA(var(--neutral_400));
+  --carousel_timepicker_item_selected_fg: RGBA(77, 81, 80);
+  --carousel_timepicker_item_selected_fg_prev_next: RGBA(68, 70, 69);
+
+  /* Error */
+  --page_error_bg: RGBA(var(--neutral_50));
+  --page_error_fg: RGBA(var(--neutral_800));
+  --page_error_border: 1px solid  RGBA(var(--verylightGray2), 1);
+  --page_error_border_radius: 4px;
+  --error_command_active_border: none;
+  --error_title_fg: RGBA(var(--neutral_800));
+  --error_bar_bg: RGBA(var(--neutral_100));
+  --error_bar_fg: RGBA(var(--neutral_800));
+  --error_bar_border: 1px solid rgb(238, 238, 238);
+  --error_bar_icon: var(--error);
+  --warning_bar_icon: RGBA(var(--amber_500));
+  --error_command_bg: transparent;
+  --error_command_fg: RGBA(var(--neutral_800));
+  --error_command_shadow: none;
+  --error_command_border:  1px solid RGBA(var(--green_500));
+  --error_command_hover_shadow: var(--theme_shadow_hover_btn);
+  --error_command_active_shadow: var(--theme_shadow_active);
+  --error_command_active_fg: RGBA(var(--darkGray), 1);
+  --error_command_active_bg: RGBA(var(--verylightGray5), 1);
+  --error_command_hover: RGBA(var(--neutral_300));
+  --error_command_active: RGBA(var(--neutral_300));
+
+  /* Field */
+  --field_image_circle_bg: RGBA(213, 213, 213, 1);
+  --field_image_circle_border: 1px solid rgb(222, 222, 222);
+  --field_image_full_screen_shadow: 1px 1px 4px rgb(var(--darkGray2));
+  --field_image_full_screen_bg: rgb(var(--white));
+  --field_image_full_screen_fg: rgb(90, 90, 90);
+  --field_code_add_btn_bg: RGBA(var(--green_500), 1);
+  --field_code_add_btn_shadow: var(--theme_shadow_btn);
+  --field_code_add_btn_active_shadow: var(--theme_shadow_active);
+  --field_code_add_btn_icon_bg: var(--theme_command_important_fg);
+  --field_code_add_btn_active_icon_bg: RGBA(177, 177, 177, 1);
+  --field_warning_label_fg: RGBA(var(--strongRed), 1);
+  --full-screen-field-bg: rgb(var(--white));
+
+  /* Verifiers */
+  --verifier_error_bg: RGBA(var(--red_700));
+  --verifier_error_icon_bg: RGBA(var(--red_700));
+  --verifier_error_color: RGBA(var(--neutral_50));
+  --verifier_warning_bg: RGBA(var(--amber_500));
+  --verifier_warning_icon_bg: RGBA(var(--amber_500));
+  --verifier_warning_color: RGBA(var(--neutral_800));
+  --verifier_info_bg: RGBA(var(--green_600));
+  --verifier_info_icon_bg: RGBA(var(--green_600));
+  --verifier_info_color: RGBA(var(--neutral_50));
+
+  /* ThemePicker */
+  --picker_bg: RGBA(var(--neutral_0));
+  --picker_item_hover_bg: RGBA(var(--neutral_200));
+  --picker_color: RGBA(var(--neutral_800));
+  --picker_item_bg: var(--theme_bg);
+  --picker_active_shadow: var(--theme_shadow_hover_btn);
+  --picker_button_active_bg: RGBA(var(--verylightGray5), 1);
+  --picker_button_active_color: RGBA(var(--darkGray), 1);
+  --picker_button_active_shadow: var(--theme_shadow_active);
+  --picker_item_selected_border_color: var(--theme_command_fg);
+  --picker_button_shadow: 0px 0px 10px 1px RGBA(var(--neutral_200));
+  --picker_button_hover_shadow: none;
+  --picker_button_hover: RGBA(var(--neutral_200));
+  --picker_fill: RGBA(var(--neutral_400));
+
+  /* SignInPanel */
+  --signIn_text_fg: var(--theme_editor_fg);
+  --signIn_field_bg: RGBA(var(--neutral_0));
+  --signIn_field_focused_bg: RGBA(var(--neutral_200));
+  --signIn_field_focused_fg: RGBA(var(--neutral_950));
+  --signIn_field_focused_shadow: 0 0 0 30px var(--theme_editor_focused_bg) inset;
+
+  --signIn_btn_hover_shadow: 0px 0px 10px 1px RGBA(var(--neutral_200));
+  --signIn_btn_hover_bg:  RGBA(var(--green_600));
+  --signIn_btn_active_shadow: var(--theme_shadow_active);
+  --signIn_btn_active_bg: RGBA(var(--verylightGray5), 1);
+  --signIn_btn_active_color: RGBA(var(--darkGray), 1);
+  --signIn_check_color: RGBA(var(--verydarkGray2), 1);
+  --spinner_wait_color: RGBA(var(--white), 1);
+  --signIn_field_border: 1px solid RGBA(var(--neutral_200));
+  --signIn_field_icon_fg: RGBA(var(--neutral_400));
+  --signIn_field_focused_icon_fg: RGBA(var(--green_500));
+  --signIn_text_shadow: 0 0 0 30px var(--theme_bg) inset;
+  --signIn_check_fg:  RGBA(var(--neutral_800));
+  --signIn_check_check_fg: RGBA(var(--green_500));
+  --signIn_content_fg: RGBA(var(--neutral_800));
+  --signIn_content_border: 1px solid RGBA(var(--neutral_300), 1);
+  --signIn_infolabel_fg: RGBA(var(--neutral_400));
+  --signIn_btn_shadow: RGBA(var(--neutral_600));
+  --signIn_btn_action_bg: RGBA(var(--green_500));
+  --signIn_btn_action_fg: RGBA(var(--neutral_50));
+  --signIn_btn_action_icon_fg: var(--theme_accent);
+  --signIn_btn_version_bg: RGBA(var(--neutral_0));
+  --signIn_btn_version_fg: RGBA(var(--neutral_800));
+  --signIn_btn_version_icon_fg: RGBA(var(--neutral_400));
+  --signIn_clear_icon_color: RGBA(var(--theme_primary_text));
+  --signIn_btn_version_box_shadow: 0px 0px 10px 1px RGBA(var(--neutral_200));
+  --signIn_btn_version_border: none;
+  --signIn_btn_version_hover: RGBA(var(--neutral_200));
+  --signIn_btn_send_bg: RGBA(var(--green_500));
+  --signIn_info_label_caption_fg: rgb(68, 70, 69);
+  --signIn_info_label_text_fg: RGBA(var(--pureBlack));
+
+  /* Signature */
+  --signature_content_border: 1px solid var(--theme_editor_border);
+  --signature_content_bg: RGBA(var(--white), 1);
+  --signature_icon_bg: RGBA(var(--verylightGray7), 1);
+  --signature_icon_color: var(--theme_accent);
+  --signature_icon_shadow: var(--theme_shadow_btn);
+  --signature_icon_active_color: RGBA(177, 177, 177, 1);
+  --signature_icon_active_bg: RGBA(242, 242, 242, 1);
+  --signature_icon_active_shadow: var(--theme_shadow_active);
+  --signature_icon_hover_shadow: var(--theme_shadow_hover_btn);
+  --signature_cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC0SURBVDhP5dAxDgFBGMXxL1QKrcIpJC4gChKVQ7iBZDudI2hQOoHCCbiHG0g2Cir2/2I2mTBmRu0lvw12vzffMlJijw7mWKCB7Gh4gCWezhbZJTpZwxfUBT+VaG1/0Jcs0c3W62MwM6yRLNkgtEEta5M/K1khmljJDSMMYU1dAtGDB3TR1w8ud0zRww5tRONvopPHKNx3OSIZleid34dPSG7gR+/8MfztPwjlDA09MMHVzKwCwT9YkYhzGI8AAAAASUVORK5CYII="),
+  auto;
+
+  /* Label */
+  --label_fg: RGBA(var(--neutral_800));
+  --label_color: RGBA(var(--mostlydesaturateddarkBlue), 1);
+  --label_green_fg: RGBA(var(--strongGreen), 1);
+  --label_red_fg: RGBA(var(--strongRed), 1);
+  --label_warning_fg:RGBA(var(--strongRed), 1);
+  --label_info_fg: RGBA(var(--blue_600), 1);
+  --label_tip_fg: RGBA(var(--white), 1);
+  --label_tip_bg: RGBA(55, 78, 89, 1);
+  --label_tip_border: 1px solid var(--theme_editor_border);
+  --label_info_fg2: RGBA(var(--neutral_800), 1);
+  --label_info_fw: 600;
+
+  /* StopWatch */
+  --stop_watch_bg: var(--theme_editor_disabled_bg);
+  --stop_watch_border: 1px solid var(--theme_editor_disabled_border);
+
+  /* PDF Viewer */
+  --pdf_viewer_bg_start: RGBA(82, 82, 82, 0.99);
+  --pdf_viewer_bg_stop: 69, 69, 69, 0.95;
+  --pdf_viewer_shadow: 5px 3px 5px -1px RGBA(var(--mostlyBlack), 1);
+  --pdf_full_screen_shadow: 1px 1px 4px rgb(var(--darkGray2));
+  --pdf_full_screen_bg: rgb(var(--white));
+  --pdf_full_screen_fg: rgb(90, 90, 90);
+  --pdf_hide_toolbar_bg: rgb(237, 237, 240);
+
+  /* Simple Scheduler */
+  --ss_font: 'ROBOTO', sans-serif;
+  --ss_shortday_fg: rgb(64, 64, 64);
+  --ss_element_bg: rgb(244, 249, 255);
+  --ss_element_fg: var(--primaryText, rgb(0, 0, 0));
+  --ss_label_fg: var(--secondaryText, rgb(64, 64, 64));
+  --ss_label_last_day_fg: rgb(220, 38, 38);
+  --ss_resource_fg: var(--primaryText, rgb(0, 0, 0));
+
+  /* Simple Scheduler with Task List */
+  --ss_tl_btn_bg: RGBA(var(--theme), 1);
+  --ss_tl_btn_fg: RGBA(55, 78, 89, 1);
+  --ss_tl_btn_selected_fg: RGBA(55, 78, 89, 1);
+  --ss_tl_tasks_bg: RGBA(var(--theme), 1);
+  --ss_tl_tasks_fg: RGBA(66, 82, 109, 1);
+  --ss_tl_tasks_shadow: 0 10px 10px RGBA(var(--pureBlack), 0.16);
+  --ss_tl_task_bg: RGBA(var(--white), 1);
+  --ss_tl_task_date_fg: RGBA(177, 181, 195, 1);
+  --ss_tl_task_date_icon_fg: RGBA(var(--verydarkGray), 1);
+  --ss_tl_task_add_bg: RGBA(55, 78, 89, 1);
+  --ss_tl_task_add_fg: RGBA(var(--white), 1);
+  --ss_tl_day_marker_selected: rgb(112, 112, 112);
+
+  /* Radiobutton */
+  --radiobutton_check: RGBA(var(--brand_500));
+  --radiobutton_unchecked: RGBA(var(--neutral_700));
+  --radiobutton_disabled: RGBA(var(--neutral_500));
+  --radiobutton_hover: RGBA(var(--brand_300));
+  --radiobutton_hover_unchecked: RGBA(var(--neutral_400));
+  --radiobutton_focused_icon: RGBA(var(--neutral_600));
+  --radiobutton_focused: RGBA(0, 34, 22);
+  --radiobutton_chips_fg: RGBA(0, 0, 0, 1);
+  --radiobutton_chips_border: RGBA(var(--neutral_400));
+  --radiobutton_chips_checked_bg: RGBA(204, 226, 218, 1);
+  --radiobutton_chips_disabled_bg: RGBA(var(--neutral_100));
+  --radio_split_button_fg: RGBA(0, 0, 0, 1);
+  --radio_split_button_bg: RGBA(230, 231, 231, 1);
+  --radio_split_button_border: RGBA(205, 210, 210, 1);
+  --radio_split_button_checked_fg: RGBA(255, 255, 255, 1);
+  --radio_split_button_checked_bg: RGBA(0, 114, 61, 1);
+  --radio_split_button_disabled_fg: RGBA(191, 194, 194, 1);
+  --radio_split_button_disabled_bg: RGBA(245, 245, 245, 1);
+  --radio_tab_fg: RGBA(var(--neutral_1000));
+  --radio_tab_bg: RGBA(var(--neutral_0));
+  --radio_tab_border_color: RGBA(var(--neutral_0));
+  --radio_tab_border_color_checked: RGBA(0, 114, 61, 1);
+
+  /* ShortCut Window */
+  --shortcut_bg: RGBA(var(--neutral_50));
+  --shortcut_shadow_fg: 0 0 0 1px RGBA(var(--neutral_300));
+  --shortcut_shadow_hover_fg: RGBA(var(--neutral_300));
+  --shortcut_shadow_hover_bg: RGBA(var(--neutral_200));
+  --shortcut_overlay_bg: var(--theme_overlay_bg);
+  --shortcut_window_border: none;
+  --shortcut_title_fg: RGBA(var(--neutral_800));
+  --shortcut_footer_fg: RGBA(var(--neutral_600));
+  --shortcut_cmd_fg: RGBA(var(--neutral_800));
+  --shortcut_cmd_key_fg: RGBA(var(--neutral_800));
+  --shortcut_cmd_key_bg: RGBA(var(--neutral_150));
+  --shortcut_cmd_key_active_fg: RGBA(var(--neutral_800));
+  --shortcut_cmd_key_active_bg: RGBA(var(--neutral_50));
+  --shortcut_cmd_key_active_border: none;
+  --shortcut_close_icon: RGBA(var(--neutral_800), 1);
+
+  /* Slider */
+  --slider_fg: RGBA(var(--pureBlack));
+  --slider_knob: RGBA(var(--brand_500));
+  --slider_active_knob: RGBA(var(--brand_300));
+  --slider_active_knob_shadow: 0 0 0 20px RGBA(var(--brand_20), 0.6);
+  --slider_active_shadow: 0px 0px 10px 1px RGBA(0, 0, 0, 0.25);
+  --slider_disabled_knob: rgb(130, 139, 137);
+  --slider_track_bg: RGBA(var(--neutral_300));
+  --slider_disabled_track_bg: RGBA(var(--neutral_300));
+
+  /* Spinner */
+  --spinner_bg: RGBA(var(--lightGray7), 1);
+  --spinner_fs: 14px;
+  --spinner_header_fc: RGBA(0, 0, 0, 1);
+  --spinner_header_bg: transparent;
+  --spinner_progress_bar_bg: RGBA(var(--lightGreen), 1);
+  --spinner_stop_color: RGBA(97, 165, 140, 1);
+  --spinner_stop_color_next: RGBA(210, 229, 222, 1);
+  --spinner_fill: RGBA(1, 110, 70, 1);
+
+  /* Recovery Panel */
+  --recovery_reset_fg: RGBA(var(--neutral_800), 1);
+  --recovery_response_fg: var(--error);
+  --recovery_field_border: none;
+  --recovery_field_bg: RGBA(212, 212, 212, 1);
+  --recovery_field_icon: RGBA(var(--neutral_400), 1);
+  --recovery_field_focused_border: none;
+  --recovery_field_focused_bg: RGBA(var(--neutral_300));
+  --recovery_field_focused_icon: RGBA(var(--green_500), 1);
+  --recovery_btn_shadow: var(--theme_shadow_btn);
+  --recovery_btn_fg: RGBA(var(--neutral_50), 1);
+  --recovery_btn_bg: RGBA(var(--green_500), 1);
+  --recovery_btn_hover_shadow: none;
+  --recovery_btn_active_shadow: none;
+  --recovery_btn_active_fg: RGBA(var(--neutral_50), 1);
+  --recovery_btn_active_bg: RGBA(var(--green_600), 1);
+  --recovery_btn_hover_bg: RGBA(var(--green_600));
+  --recovery_btn_active_border: inherit;
+  --recovery_btn_login_border: inherit;
+  --recovery_btn_login_bg: transparent;
+  --recovery_btn_go_login_bg: transparent;
+  --recovery_btn_go_login_border: 1px solid RGBA(var(--green_500));
+  --recovery_btn_go_login_color: RGBA(var(--neutral_800));
+  --recovery_btn_go_login_hover: RGBA(var(--neutral_300));
+
+  /* Stack */
+  --stack_label_fg: var(--theme_editor_label_fg);
+  --stack_bg: transparent;
+
+  /* Scheduler */
+  --scheduler_inline_fg: RGBA(var(--neutral_950));
+  --scheduler_grid_fg: RGBA(var(--neutral_300));
+  --scheduler_other_month_bg: RGBA(var(--neutral_150));
+  --scheduler_selected_cell_bg: RGBA(var(--blue_600), 0.1);
+  --scheduler_selected_cell_header_fg: RGBA(var(--neutral_950));
+  --scheduler_selected_cell_more_fg: RGBA(var(--neutral_500));
+  --scheduler_current_date_border_fg: RGBA(var(--blue_600));
+  --scheduler_current_date_border: 1px solid RGBA(28, 103, 168);
+  --scheduler_current_date_header_fg: RGBA(var(--neutral_900));
+  --scheduler_header_cells_fg: RGBA(var(--neutral_800));
+  --scheduler_header_cells_bg: RGBA(var(--neutral_50));
+  --scheduler_month_head_icon_fg: RGBA(var(--neutral_950));
+  --scheduler_month_head_icon_alert_fg: RGBA(var(--red_700));
+  --scheduler_vertical_current_day_border: 1px solid RGBA(var(--green_400));
+  --scheduler_vertical_current_day_border_fg: RGBA(var(--blue_600));
+  --scheduler_vertical_current_day_fg: RGBA(var(--neutral_900));
+  --scheduler_timeline_selected_cell_bg: RGBA(var(--blue_600), 0.2);
+  --scheduler_tooltip_fg: RGBA(var(--neutral_800));
+  --scheduler_tooltip_bg: RGBA(var(--neutral_50));
+  --scheduler_cell_hover_event_border_fg: RGBA(var(--neutral_50));
+  --scheduler_evnet_border_fg: RGBA(var(--neutral_50));
+  --scheduler_work_day_bg: RGBA(var(--neutral_50));
+  --scheduer_date_header_fg: RGBA(var(--neutral_900));
+  --scheduler_bg: RGBA(var(--neutral_50));
+  --scheduler_event_bg: RGBA(var(--blue_600), 0.2);
+  --scheduler_work_cell_hover_bg: RGBA(var(--neutral_100));
+  --scheduler_event_subject_fg: RGBA(var(--neutral_800));
+  --scheduler_resources_cell_bg: RGBA(var(--neutral_50));
+  --scheduler_resources_cell_fg: RGBA(var(--neutral_500));
+  --scheduler_other_month_fc: RGBA(0, 0, 0, 0.87);
+  --scheduler_current_month_fc: RGBA(0, 0, 0, 0.87);
+  --scheduler_selected_border: 0.5px solid rgba(0, 0, 0, 0.12);
+  --scheduler_appointment_color: RGBA(var(--blue_600));
+  --scheduler_appointment_box_shadow: 0px 0px 3px 1px RGBA(var(--blue_700), 0.5);
+  --scheduler_more_color: RGBA(var(--neutral_950));
+  --scheduler_more_color_month: RGBA(var(--neutral_950));
+
+  /* RxDesigner */
+  --rx_designer_icon_fg: RGBA(var(--mostlydesaturateddarkBlue));
+
+  /* ThreadComments */
+  --threadscommends_main_bg: RGBA(var(--neutral_0));
+  --threadscommends_panel_border: 1px solid RGBA(var(--neutral_300));
+  --threadscommends_panel_color: RGBA(var(--neutral_800));
+  --threadscommends_panel_hover_color: RGBA(var(--neutral_800));
+  --threadscommends_panel_bg: RGBA(var(--neutral_0));
+  --threadscommends_panel_hover_bg: rgb(245, 245, 245);
+  --threadscommends_panel_icon_color: RGBA(var(--green_500));
+  --threadscommends_con_bg: rgb(242, 242, 242);
+
+  --comment_c_end_border: 1px solid RGBA(var(--neutral_300));
+  --comment_c_h_author_color: RGBA(var(--neutral_800));
+  --comment_c_h_status_color: RGBA(var(--green_500));
+  --comment_c_h_status_hover: RGBA(250, 250, 250, 1);
+  --comment_c_h_status_cursor: default;
+  --comment_c_h_date_color: RGBA(var(--neutral_600));
+  --comment_c_h_source_color: RGBA(var(--neutral_800));
+  --comment_ball_border: 1px solid RGBA(255, 255, 255);
+  --comment_c_h_source_val_color: RGBA(49, 161, 163, 1);
+  --comment_c_h_draft_color: RGBA(var(--red_600));
+  --comment_c_h_nocomments_color: RGBA(var(--blue_600));
+  --comment_c_btn_hover_shadow: 0 0 0 0.5px RGBA(var(--pureBlack), 0.1), 0px 0px 5px 2px RGBA(var(--pureBlack), 0.1);
+  --comment_c_btn_hover_bg: inherit;
+  --comment_c_btn_icon_color: rgb(94, 134, 152);
+  --comment_c_btn_r_color: rgb(94, 134, 152);
+  --comment_c_btn_r_icon_color: rgb(94, 134, 152);
+  --comment_c_btn_green_color: RGBA(var(--green_500), 1);
+  --comment_c_btn_fg: RGBA(var(--neutral_800));
+  --comment_c_like_icon_color: RGBA(var(--neutral_800));
+  --comment_c_like_icon_ac_color: RGBA(var(--green_500)) !important;
+  --comment_c_like_green_color: RGBA(var(--neutral_800));
+  --comment_c_like_blue_color: RGBA(var(--neutral_800));
+  --comment_fav_icon_color: RGBA(var(--neutral_800));
+  --comment_fav_color: RGBA(50, 169, 98, 1);
+  --comment_fav_icon_ac_color: RGBA(var(--amber_500));
+  --comment_base_text_color: RGBA(var(--neutral_800));
+  --comment_base_link_color: RGBA(37, 99, 235, 1);
+  --comment_base_text_bg: transparent;
+  --comment_text_con_bg: RGBA(var(--neutral_0));
+  --comment_text_con_color: RGBA(var(--neutral_800));
+  --comment_text_con_border: none;
+  --comment_btn_more_icon_color: RGBA(var(--green_500));
+  --comment_btn_more_hover_bg: RGBA(var(--neutral_200));
+  --comment_btn_more_hover_border: 1px solid RGBA(var(--neutral_200));
+  --comment_btn_more_con_border: 1px solid rgba(0, 0, 0, 0.1);
+  --comment_btn_more_con_bg: RGBA(var(--white));
+  --comment_base_show_more_color: RGBA(var(--blue_600));
+  --comment_base_show_more_shadow: inset 1px 0px 0px 0px rgb(213, 213, 213);
+  --comment_val_bg: RGBA(var(--neutral_0));
+  --comment_val_border: 1px solid RGBA(var(--neutral_200));
+  --comment_val_c_h_author_color: RGBA(var(--neutral_800));
+  --comment_file_bg: rgb(236, 249, 255);
+  --comment_file_border: 1px solid RGBA(var(--blue_600), 0.23);
+  --comment_file_color: RGBA(var(--blue_600));
+  --comment_file_icon_color: RGBA(var(--blue_600));
+  --comment_color: RGBA(var(--blue_600));
+
+  --thread_bg: RGBA(var(--white));
+  --thread_border: 1px solid RGBA(var(--neutral_200));
+  --thread_title_color: rgb(0, 0, 0);
+  --thread_footer_bg: RGBA(var(--white));
+  --thread_footer_color: RGBA(var(--mostlyBlack), 1);
+  --thread_footer_border: 1px solid RGBA(var(--neutral_300));
+  --thread_footer_hover_bg: RGBA(var(--neutral_0));
+  --thread_footer_hover_color: rgb(90, 90, 90);
+  --thread_footer_btn_icon_color: RGBA(var(--green_500));
+  --thread_editor_bg: transparent;
+  --thread_modal_bg: RGBA(var(--white), 1);
+  --thread_modal_header_icon_color: var(--question);
+  --thread_modal_text_color: RGBA(var(--mostlydesaturateddarkBlue), 1);;
+  --thread_modal_bts_color: RGBA(var(--white), 1);
+  --thread_modal_bts_fs: 1.1em;
+  --threads_modal_overlay_bg: RGBA(45, 45, 45, 0.5);
+  --threads_modal_con_bg: RGBA(242, 242, 242, 1);
+  --th_chips_default_color: RGBA(64, 64, 64, 1);
+
+  --th_btn_cancel_fg: RGBA(var(--red_600));
+  --th_btn_cancel_bg: RGBA(var(--neutral_0));
+  --th_btn_cancel_hover: RGBA(242, 242, 242, 1);
+  --th_btn_cancel_border: 1px solid RGBA(var(--neutral_300));
+  --th_btn_draft_fg: RGBA(94, 134, 152, 1);
+  --th_btn_draft_bg: RGBA(242, 242, 242, 1);
+  --th_btn_save_fg: RGBA(var(--neutral_50));
+  --th_btn_save_bg: RGBA(var(--green_500));
+  --th_btn_save_hover: RGBA(var(--green_500));
+  --th_btn_save_fs: unset;
+  --th_btn_active_bg: unset;
+  --th_btn_active_border: unset;
+
+  /* Pivot */
+  --pivot_filter_color: var(--theme_primary_text);
+  --pivot_filter_field_bg: rgb(189, 216, 232);
+  --pivot_filter_exp_bg: rgb(193, 217, 199);
+  --pivot_filter_value_bg: rgba(221, 221, 221, 0.5);
+  --pivot_filter_inrange_icon_bg: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KPHRpdGxlPmlucmFuZ2U8L3RpdGxlPgo8cGF0aCBkPSJNIDEyLjQxMTgxOSw1LjY2MDQ3MDggQyAxNC4wMTY0NTksNy40NDMxMzQ2IDE0LjE0Myw5IDE0LjE0Myw5IEggMy44NTcgViA2LjQyOSBIIDIuNTcxIHYgNi40MjkgaCAxLjI4NiB2IC0yLjU3MSBoIDEwLjI4NiBjIDAsMCAwLjEwNDgwNiwxLjIwNzMxNiAtMS43NTgxNDcsMy4zNTMwMTIgMC42MjgzOTQsLTEuMjFlLTQgMS4wODY3NTIsMC4wMDI5IDEuNTAxNzI3LDAgMC43MjkxNTMsLTAuOTAyNjA2IDEuNTMwNjE5LC0xLjg5MTI5IDEuNTMwMDE4LC00LjAyMDM3MjcgLTUuNzNlLTQsLTIuMDI4MTMwNCAtMC42ODM3MjIsLTMuMTcwOTU0NyAtMS41MDMwNTIsLTMuOTU5MTY4NSAwLDAgLTEuMDI1Njc3LDAuMDA0MDMgLTEuNTAxNzI3LDAgeiIgc3R5bGU9ImZpbGw6Izg5ODk4OSI+PC9wYXRoPgo8L3N2Zz4K);
+  --pivot_pivotgrid_bg: RGBA(255, 255, 255, 1);
+  --pivot_border: none;
+  --pivot_border_bottom: 1px solid RGBA(221, 221, 221, 1);
+  --pivot_btn_bg: RGBA(255, 255, 255, 1);
+  --pivot_border_color: RGBA(221, 221, 221, 1);
+  --pivot_hover_bg: RGBA(245, 245, 245, 1);
+  --pivot_focused_border_color: RGBA(221, 221, 221, 1);
+  --pivot_focused_bg: RGBA(255, 255, 255, 1);
+  --pivot_active_bg: RGBA(194, 194, 194, 1);
+  --pivot_active_border_color: RGBA(221, 221, 221, 1);
+  --pivot_active_color: RGBA(51, 51, 51, 1);
+  --pivot_area_description_border: 1px solid RGBA(221, 221, 221, 1);
+  --pivot_bg: RGBA(255, 255, 255, 1);
+  --pivot_scroll_content: RGBA(191, 191, 191, 1);
+  --pivot_scrollbar: transparent;
+  --pivot_box_shadow: 0 6px 12px rgba(0,0,0, 0.175);
+  --pivot_overlay_content_bg: RGBA(255, 255, 255, 1);
+  --pivot_popup_title_color: RGBA(51, 51, 51, 1);
+  --pivot_overlay_content_border: 1px solid RGBA(221, 221, 221, 1);
+  --pivot_close_popup_color: RGBA(51, 51, 51, 1);
+  --pivot_close_button_hover_bg: RGBA(0, 0, 0, 0.4);
+  --pivot_close_popup_color_focused_bg: RGBA(0, 0, 0,.08);
+  --pivot_close_popup_color_border_focused: transparent;
+  --pivot_close_popup_color_active_bg: RGBA(0, 0, 0, 0.8);
+  --pivot_close_popup_color_border_active: transparent;
+  --pivot_close_popup_color_font_active: RGBA(51, 51, 51, 1);
+  --pivot_area_fields_border: 1px solid RGBA(221, 221, 221, 1);
+  --pivot_group_bg: RGBA(221, 221, 221, 0.2);
+  --pivot_drag_border: RGBA(51, 122, 183, 1);
+  --pivot_texteditor_border: 1px solid RGBA(221, 221, 221, 1);
+  --pivot_texteditor_bg: RGBA(0, 0, 0, 0);
+  --pivot_texteditor_border_hover: RGBA(51, 122, 183, 0.4);
+  --pivot_texteditor_border_active: RGBA(51, 122, 183, 0.4);
+  --pivot_clear_button_bg: inherit;
+  --pivot_clear_button_color: RGBA(153, 153, 153, 1);
+  --pivot_texteditor_color: inherit;
+  --pivot_dx_widget_color: RGBA(51, 51, 51, 1);
+  --pivot_treeview_item_color: RGBA(51, 51, 51, 1);
+  --pivot_treeview_item_hover_color: RGBA(51, 51, 51, 1);
+  --pivot_treeview_item_hover_bg: RGBA(0, 0, 0, 0.04);
+  --pivot_checkbox_bg: RGBA(255, 255, 255, 1);
+  --pivot_checkbox_border_color: RGBA(221, 221, 221, 1);
+  --pivot_checkbox_border_color_hover: RGBA(38, 90, 135, 1);
+  --pivot_checkbox_bg_active: RGBA(255, 255, 255, 1);
+  --pivot_checkbox_icon_color_checked: RGBA(51, 122, 183, 1);
+  --pivot_checkbox_bg_checked: RGBA(255, 255, 255, 1);
+  --pivot_list_hover_border_color: RGBA(38, 90, 135, 1);
+  --pivot_checkbox_bg_indeterminate: RGBA(51, 122, 183, 1);
+  --pivot_list_color: RGBA(51, 51, 51, 1);
+  --pivot_list_border: 1px solid RGBA(221, 221, 221, 1);
+  --pivot_loadpanel_bg: RGBA(96, 96, 96, 1);
+  --pivot_loadpanel_border: inherit;
+  --pivot_overlay_color: inherit;
+  --pivot_loadindicator_bg: RGBA(96, 96, 96, 1);
+  --pivot_overlay_bg: RGBA(255, 255, 255, .8);
+  --pivot_filter_bg: RGBA(255, 255, 255, 1);
+  --pivot_treeview_item_selected_bg: RGBA(0, 0, 0, 0.1);
+  --pivot_treeview_item_selected_color: RGBA(51, 51, 51, 1);
+  --pivot_filter_group_bg: RGBA(217, 83, 79, 0.3);
+  --pivot_filter_group_color: RGBA(51, 51, 51, 1);
+  --pivot_filter_group_border: none;
+  --pivot_filter_group_hover_bg: RGBA(217, 83, 79, 0.5);
+  --pivot_filter_group_active_bg: RGBA(217, 83, 79, 1);
+  --pivot_filter_group_active_color: RGBA(255, 255, 255, 1);
+  --pivot_icon_plus_color: RGBA(92, 184, 92, 0.3);
+  --pivot_icon_plus_color_active: RGBA(92, 184, 92, 1);
+  --pivot_icon_plus_bg_active: RGBA(0, 0, 0, 0);
+  --pivot_icon_plus_color_hover: RGBA(92, 184, 92, 0.5);
+  --pivot_icon_plus_bg_hover: RGBA(0, 0, 0, 0);
+  --pivot_treeview_item_focused_bg: RGBA(0, 0, 0, 0);
+  --pivot_icon_remove_color: RGBA(217, 83, 79, 0.3);
+  --pivot_icon_remove_color_hover: RGBA(217, 83, 79, 0.5);
+  --pivot_icon_remove_bg_hover: RGBA(0, 0, 0, 0);
+  --pivot_icon_remove_color_focus: RGBA(217, 83, 79, 1);
+  --pivot_icon_remove_bg_focus: RGBA(0, 0, 0, 0);
+  --pivot_filter_field_bg: RGBA(51, 122, 183, 0.3);
+  --pivot_filter_color: inherit;
+  --pivot_filter_field_bg_hover: RGBA(51, 122, 183, 0.5);
+  --pivot_filter_color_hover: inherit;
+  --pivot_filter_field_bg_active: RGBA(51, 122, 183, 1);
+  --pivot_filter_operation_bg: RGBA(92, 184, 92, 0.3);
+  --pivot_filter_color: RGBA(0, 0, 0, 1);
+  --pivot_filter_operation_bg_hover: RGBA(92, 184, 92, 0.7);
+  --pivot_filter_color_hover: RGBA(0, 0, 0, 1);
+  --pivot_filter_operation_bg_active: RGBA(92, 184, 92, 0.8);
+  --pivot_filter_color_active: RGBA(255, 255, 255, 1);
+  --pivot_filter_value_bg: RGBA(221, 221, 221, 0.5);
+  --pivot_filter_value_color: RGBA(51, 51, 51, 1);
+  --pivot_filter_value_bg_hover: RGBA(221, 221, 221, 0.7);
+  --pivot_filter_value_color_hover: RGBA(51, 51, 51, 1);
+  --pivot_filter_value_bg_active: RGBA(221, 221, 221, 0.5);
+  --pivot_filter_value_color_active: RGBA(0, 0, 0, 1);
+  --pivot_filter_value_color_active: RGBA(0, 0, 0, 1);
+  --pivot_treeview_item_selected_color: RGBA(51, 51, 51, 1);
+  --pivot_treeview_item_selected_bg: RGBA(0, 0, 0, 0.1);
+  --pivot_treeview_item_selected_bg_hover: RGBA(0, 0, 0, 0.04);
+  --pivot_treeview_item_without_checkbox_bg: RGBA(0, 0, 0, 0);
+  --pivot_dropdown_icon_color: RGBA(51, 51, 51, 1);
+  --pivot_dropdown_icon_bg: RGBA(229, 229, 229, 1);
+  --pivot_selectbox_bg: RGBA(255, 255, 255, 1);
+  --pivot_list_hover_bg: RGBA(0, 0, 0, .04);
+  --pivot_dropdown_icon_color_active: RGBA(51, 51, 51, 1);
+  --pivot_dropdown_icon_bg_active: RGBA(179, 179, 179, 1);
+  --pivot_list_selected_bg: RGBA(0, 0, 0, .1);
+  --pivot_list_selected_color: RGBA(51, 51, 51, 1);
+  --pivot_list_selected_icon_color: RGBA(51, 51, 51, 1);
+  --pivot_list_active_bg: RGBA(0, 0, 0, .1);
+  --pivot_list_active_color: RGBA(51, 51, 51, 1);
+  --pivot_list_icon_color_active: RGBA(51, 51, 51, 1);
+  --pivot_list_focused_bg: RGBA(51, 122, 183, 0.7);
+  --pivot_list_focused_color: RGBA(255, 255, 255, 1);
+  --pivot_filter_icon_color: RGBA(137, 137, 137, 1);
+  --pivot_numberbox_spin_icon_color: inherit;
+  --pivot_numberbox_spin_icon_bg: inherit;
+  --pivot_numberbox_spin_icon_bg_hover: RGBA(230, 230, 230, 1);
+  --pivot_numberbox_spin_icon_shadow_hover: 0 0 0 1px transparent inset;
+  --pivot_numberbox_spin_icon_bg_active: RGBA(230, 230, 230, 1);
+  --pivot_numberbox_spin_icon_color_active: inherit;
+  --pivot_calendar_bg: RGBA(255, 255, 255, 1);
+  --pivot_calendar_color: RGBA(153, 153, 153, 1);
+  --pivot_calendar_cell_color: RGBA(51, 51, 51, 1);
+  --pivot_calendar_empty_cell_color: RGBA(176, 176, 176, 1);
+  --pivot_calendar_today_color: RGBA(51, 122, 183, 1);
+  --pivot_calendar_hover_bg: RGBA(51, 122, 183, .24);
+  --pivot_calendar_hover_color: RGBA(51, 51, 51, 1);
+  --pivot_calendar_active_bg: inset 0 -1px 0 1000px rgba(96,96,96,.2);
+  --pivot_calendar_contoured_date_shadow: 0 0 0 2px rgba(51,122,183,.5);
+  --pivot_calendar_selected_bg: transparent;
+  --pivot_calendar_selected_color: RGBA(255, 255, 255, 1);
+  --pivot_btn_outlined_bg: transparent;
+  --pivot_border_outlined_color: RGBA(221, 221, 221, 1);
+  --pivot_calendar_navigator_color: RGBA(51, 122, 183, 1);
+  --pivot_outlined_icon_color: RGBA(51, 122, 183, 1);
+  --pivot_btn_outlined_bg_hover: RGBA(0, 0, 0, 0.04);
+  --pivot_border_outlined_color_hover: RGBA(221, 221, 221, 1);
+  --pivot_btn_outlined_bg_focused: RGBA(0, 0, 0, .08);
+  --pivot_border_outlined_color_focused: RGBA(221, 221, 221, 1);
+  --pivot_btn_outlined_bg_active: RGBA(0, 0, 0, .24);
+  --pivot_border_outlined_color_active: RGBA(221, 221, 221, 1);
+  --pivot_outlined_icon_color_active: RGBA(51, 51, 51, 1);
+  --pivot_btn_bg_hover: RGBA(245, 245, 245, 1);
+  --pivot_filter_btn_fg: RGBA(var(--darkGreen4));
+
+  --pivot_color1: RGBA(82, 82, 82, 1);
+  --pivot_color2: RGBA(51, 51, 51, 1);
+  --pivot_color3: RGBA(51, 51, 51, 1);
+  --pivot_color4: RGBA(221, 221, 221, 0.2);
+  --pivot_color5: RGBA(245, 245, 245, 1);
+  --pivot_color6: RGBA(51, 51, 51, 1);
+  --pivot_color7: RGBA(51, 51, 51, 1);
+  --pivot_color8: RGBA(221, 221, 221, 1);
+  --pivot_color9: RGBA(221, 221, 221, 1);
+  --pivot_color10: RGBA(149, 149, 149, 1);
+  --pivot_color11: RGBA(149, 149, 149, 0.5);
+  --pivot_color12: transparent;
+  --pivot_color13: RGBA(255, 255, 255, 1);
+
+  /* TestRecorder */
+  --recorder_bg: rgb(255 140 0);
+  --recorder_color: var(--theme_command_fg);
+  --recorder_border_fg: 1px solid RGBA(var(--pureBlack));
+  --recorder_active_shadow: var(--theme_shadow_hover_btn);
+  --recorder_button_active_bg: RGBA(var(--verylightGray5), 1);
+  --recorder_button_active_shadow: var(--theme_shadow_active);
+  --recorder_button_shadow: 0 0 0 1px RGBA(var(--pureBlack), 0.1);
+  --recorder_button_hover_shadow: var(--theme_shadow_hover_btn);
+  --recorder_button_active_color: RGBA(255, 42, 42);
+  --recorder_button_disabled_color: RGBA(var(--darkGray));
+  --recorder_stop_box_shadow: 0 0 0 1px RGBA(var(--pureBlack), 0.1), 0 2px 3px RGBA(var(--pureBlack), 0.1);
+  --recorder_stop_bcg: RGBA(var(--verylightGray), 1);
+
+  /* DropZone */
+  --drop_zone_outline_fg: RGBA(var(--green_500));
+  --drop_zone_text_fg: var(--wb_command_color);
+  --drop_zone_bg: RGBA(255, 255, 255);
+
+  /* Fido Window */
+  --mfa_svg_fill: RGBA(var(--neutral_600));
+  --mfa_label_fg: RGBA(var(--neutral_800));
+  --mfa_font_family: "FiraSansLight", Arial;
+
+  /* Kanban */
+  --kanban_default_operator_bg: RGBA(var(--green_500), 1);
+  --kanban_list_fg: rgba(0, 0, 0, 0.87);
+  --kanban_list_bg: rgba(192, 192, 192, 0.4);
+  --kanban_item_bg: RGBA(var(--white), 1);
+  --kanban_item_fg: rgba(0, 0, 0, 0.87);
+  --kanban_item_text_fg: rgba(0, 0, 0, 0.87);
+  --kanban_item_border: 0;
+  --kanban_item_box_shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+
+  /* TimelineClock */
+  --timeline_bg: RGBA(var(--white), 1);
+  --timeline_fg: var(--theme_primary_text);
+  --timeline_hour_circle: RGBA(212, 212, 212, 1);
+  --timeline_area_circle: RGBA(188, 208, 211, 1);
+  --timeline_text_fg: RGBA(34, 34, 34, 1);
+  --timeline_indicator: RGBA(255, 0, 104, 1);
+  --timeline_current_time_circle: RGBA(242, 242, 242, 1);
+
+  /* FolderTabBar */
+  --folder_tab_item_bg: rgb(230, 231, 231);
+  --folder_tab_item_fg: RGBA(var(--pureBlack), 1);
+  --folder_tab_item_ac_bg: rgb(0, 114, 61);
+  --folder_tab_item_ac_fg: RGBA(var(--neutral_0), 1);
+
+  /* WaitingIndicator */
+  --wi_color1: RGBA(var(--green_50));
+  --wi_color2: RGBA(var(--green_200));
+  --wi_color3: RGBA(var(--green_400));
+  --wi_color4: RGBA(var(--green_500));
+  --wi_icon: RGBA(var(--neutral_600));
+  --wi_bg: RGBA(var(--neutral_50));
+  --wi_fg: RGBA(var(--neutral_800));
+
+  /* Skeleton */
+  --skeleton_bg: rgb(235, 235, 235);
+  --skeleton_highlight_bg: rgb(245, 245, 245);
+}

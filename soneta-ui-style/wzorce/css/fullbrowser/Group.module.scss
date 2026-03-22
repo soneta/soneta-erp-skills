@@ -1,0 +1,258 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.include {
+  width: 100%;
+}
+
+.group {
+  position: absolute;
+  border-radius: 12px;
+  background-color: $group_bg;
+  box-shadow: $group_shadow;
+  overflow: hidden;
+  text-rendering: optimizeLegibility;
+
+  .group-title-container {
+    @include partial-row-center-start;
+    @include partial-bottom-gradient-border;
+    background-image: $group_bg_image;
+    background-size: 50% 1px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 25px;
+    margin: 16px;
+    cursor: default;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+
+    &:focus-visible .group-title {
+      @include focus(
+        $outline-offset: 2px,
+        $box-shadow: none,
+      );
+    }
+
+    .group-icon {
+      @include partial-column-center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 24px;
+
+      svg {
+        height: 100%;
+        width: 12px;
+
+        path {
+          fill: $group_icon;
+        }
+      }
+    }
+
+    .group-title {
+      @include partial-ellipsis;
+      display: block;
+      position: relative;
+      color: $group_title_fg;
+      padding-right: 5px;
+      margin: 0;
+      font-family: $tertiaryFont;
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: normal;
+    }
+  }
+
+  .group-content {
+    width: inherit;
+
+    .group-html :global {
+      width: 100%;
+      color: $group_item_fg;
+      overflow-x: auto;
+      white-space: nowrap;
+
+      .group-field {
+        @include partial-row-center-start;
+        width: 100%;
+        height: 20px;
+        min-height: 20px;
+        padding: 0;
+
+        .caption {
+          padding-right: 4px;
+        }
+
+        .value {
+          color: $group_content_fg;
+          font-weight: 500;
+          padding-right: 4px;
+        }
+      }
+
+      .group-table {
+        display: table;
+        width: 100%;
+        padding: 0;
+        overflow: hidden;
+        white-space: nowrap;
+
+        .group-row {
+          display: table-row;
+          height: 20px;
+          overflow: hidden;
+          white-space: nowrap;
+
+          .group-col {
+            display: table-cell;
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: 500;
+            padding-right: 4px;
+          }
+        }
+      }
+
+      .group-more {
+        color: $group_content_fg;
+        font-weight: 600;
+      }
+    }
+
+    &.collapsed {
+      padding: 0 5px;
+    }
+  }
+
+  .group-item {
+    padding: 0 5px;
+    color: $group_item_fg;
+    font-size: $font_size_label;
+    line-height: calc(4 + #{$font_size_label});
+  }
+
+  &.dashboard-item {
+    position: absolute;
+    box-shadow: unset;
+    border: $dashboard_group_border;
+    box-sizing: content-box;
+
+    .group-content {
+      @include positionAbsolute(0);
+      overflow: hidden;
+    }
+
+    .group-title {
+      @include partial-ellipsis;
+    }
+
+    &.design {
+      position: relative;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+  }
+
+  &.expandable {
+    transition: height 0.3s linear 0s;
+
+    .group-title-container {
+      cursor: pointer;
+    }
+  }
+
+
+  //TODO Poniższe style sa jeszcze do sprawdzenia
+  &.modal {
+    :last-child {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.group-p {
+  box-shadow: unset;
+
+  .group-title-container {
+    margin: 5px 7px;
+
+    .group-icon {
+      svg {
+        width: 16px;
+
+        path {
+          fill: $group_icon;
+        }
+      }
+    }
+
+    .group-title {
+      font-size: 10pt;
+      font-family: $primaryFont;
+    }
+  }
+
+  .group-content {
+    .command {
+      @include partial-command;
+      border-radius: 3px;
+      box-shadow: none;
+    }
+  }
+
+  &.dashboard-item {
+    .group-content {
+      @include positionAbsolute(0);
+      overflow: hidden;
+    }
+
+    &.group {
+      border: 0;
+
+      .group-title-container {
+        position: relative;
+        border-bottom: $dashboard_tile_border;
+        background-image: unset;
+        margin: 0 15px;
+        height: 35px;
+
+        ::before {
+          position: absolute;
+          left: -15px;
+          content: "";
+          background-color: $dashboard_cell_grid_bg;
+          width: 2px;
+          height: 20px;
+        }
+
+        .group-title {
+          position: static;
+          color: $dashboard_title_color;
+          font-size: 14px;
+          font-family: $primaryFont;
+          margin-top: 9px;
+          margin-bottom: 5px;
+          text-transform: none;
+        }
+      }
+    }
+  }
+}
+
+.group-bi {
+  @include partial-column-center-start;
+
+  .group-content {
+    @include partial-row-center-start;
+    height: calc(100% - 25px);
+  }
+}

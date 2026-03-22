@@ -1,0 +1,19 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.fn-con-overlay {
+  @include partial-column-center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	z-index: 200001;
+	background-color: $dp_overlay_bg;
+}
+
+.fn-con {
+  overflow: hidden;
+}

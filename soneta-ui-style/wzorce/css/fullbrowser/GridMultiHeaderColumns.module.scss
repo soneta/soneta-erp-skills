@@ -1,0 +1,31 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gh-common {
+  position: absolute;
+  top: 0;
+
+  .title {
+    @include partial-column-center;
+    color: $grid_row_content_fg;
+    border-bottom: $grid_border;
+    border-right: $grid_border;
+    height: $grid_headercolumn_height;
+    width: inherit;
+  }
+
+  .columns {
+    position: absolute;
+    left: 0;
+    height: $grid_headercolumn_height;
+    width: inherit;
+  }
+}
+
+.gh-common-p {
+  .title {
+    border-bottom: $grid_cell_border;
+    border-right: $grid_cell_border;
+  }
+}

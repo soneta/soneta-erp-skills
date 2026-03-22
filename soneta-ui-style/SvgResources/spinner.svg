@@ -1,0 +1,15 @@
+<svg viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="gradMedToTransp" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%"/>
+      <stop offset="40%" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="gradDarkToMed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"/>
+      <stop offset="100%"/>
+    </linearGradient>
+  </defs>
+  <path d="M 80 8 A 72 72 0 0 1 80 152" stroke="url(#gradMedToTransp)"/>
+  <path d="M 80 152 A 72 72 0 0 1 80 8" stroke="url(#gradDarkToMed)"/>
+  <circle/>
+</svg>

@@ -1,0 +1,61 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.command-cube {
+  @include partial-command;
+  @include partial-column-center;
+  width: 90px;
+  height: 90px;
+  margin: 8px;
+  text-decoration: none;
+
+  border-radius: 12px;
+  color: $command_cube_fg;
+  background-color: $command_cube_bg;
+  box-shadow: $command_cube_boxshadow;
+
+  .content {
+    @include partial-column-center;
+    height: 100%;
+
+    .icon {
+      @include partial-column-center;
+      width: 100%;
+      height: calc(100% - 32px);
+
+      svg {
+        width: 30px;
+        height: 30px;
+
+        path {
+          fill: $command_cube_icon_fg;
+        }
+      }
+    }
+
+    .title {
+      width: 100%;
+      height: 32px;
+      padding: 0 4px;
+      overflow: hidden;
+
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 16px;
+      letter-spacing: 0;
+      text-align: center;
+
+      &:not(.center) {
+        @include multilineEllipsis(2);
+      }
+
+      &.center {
+        @include partial-column-center;
+        height: 100%;
+      }
+    }
+  }
+
+}

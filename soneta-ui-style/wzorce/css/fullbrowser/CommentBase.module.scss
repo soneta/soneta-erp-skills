@@ -1,0 +1,685 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./Dialog.module.scss";
+@import "./Command.module.scss";
+
+$icon_size: 32px;
+$date_max_size: 115px;
+
+.order-n-s {
+  @include partial-column-center-start;
+  max-width: calc(100% - $icon_size);
+}
+
+.order-w-e {
+  @include partial-row-start-top;
+  max-width: 100%;
+}
+
+.comment-base {
+  position: relative;
+  min-height: 25px;
+  min-width: 500px;
+  font-size: 12px;
+  font-family: 'Arial';
+
+  &:focus-visible {
+    @include focus($outline-offset: -2px,
+      $box-shadow: none,
+    );
+  }
+
+  .c-he-con {
+    @include partial-row-center-start;
+    justify-content: space-between;
+    height: 32px;
+
+    .c-d {
+      @include partial-row-start-top;
+      margin: 4px 0;
+      height: 100%;
+      max-width: calc(100% - 180px);
+
+      .icon {
+        height: $icon_size;
+        width: $icon_size;
+      }
+
+      &:last-child {
+        max-width: 100%;
+      }
+    }
+
+    .c-b {
+      @include partial-row-center-end;
+      min-width: 180px;
+      margin: 4px 0px 0 0px;
+    }
+
+    .c-h-chips {
+      @include partial-row-center;
+      height: 24px;
+      min-width: 120px;
+      padding: 0 10px;
+      border: 1px solid;
+      border-color: $th_chips_default_color;
+      border-radius: 24px;
+      margin-left: 10px;
+      color: $th_chips_default_color;
+      background-color: transparent;
+    }
+
+    .c-h-author {
+      @include partial-ellipsis;
+      margin: 0 10px 0 5px;
+      color: $comment_c_h_author_color;
+      font-weight: 600;
+      max-width: calc(100% - $date_max_size);
+    }
+
+    .c-h-status {
+      color: $comment_c_h_status_color;
+      font-weight: 600;
+    }
+
+  }
+
+  .c-h-con {
+    @include partial-row-center-start;
+    justify-content: space-between;
+
+    .c-h-con-l {
+      @include partial-row-center-start;
+    }
+  }
+
+  .c-h-date {
+    @include partial-ellipsis;
+    margin-right: 5px;
+    color: $comment_c_h_date_color;
+    max-width: $date_max_size;
+  }
+
+  .c-h-source {
+    @include partial-row-start-top;
+    margin: 0 10px 0 5px;
+    color: $comment_c_h_source_color;
+    font-style: italic;
+
+    .c-h-source-title {
+      margin-right: 10px;
+    }
+
+    .c-h-source-val {
+      color: $comment_c_h_source_val_color;
+    }
+  }
+
+  .c-h-draft {
+    color: $comment_c_h_draft_color;
+  }
+
+  .comment-header {
+    position: relative;
+    height: 32px;
+    width: 32px;
+
+    .status-ball {
+      position: absolute;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      border: $comment_ball_border;
+      top: 20px;
+      left: 20px;
+    }
+  }
+
+  .comment-footer {
+    @include partial-row-center-space-between;
+    height: 24px;
+    width: 100%;
+    margin-top: 5px;
+
+    .f-l {
+      @include partial-row-center-start;
+    }
+
+    .c-h-date {
+      margin-right: 0;
+      text-align: end;
+    }
+  }
+
+  .c-h-nocomments {
+    color: $comment_c_h_nocomments_color;
+    margin-left: 8px;
+  }
+
+  .c-btn {
+    @include partial-row-center-start;
+    width: 100%;
+    height: 32px;
+    border-radius: 2px;
+    margin-right: 10px;
+    padding-left: 20px;
+    color: $comment_c_btn_fg;
+
+    &:hover {
+      box-shadow: $comment_c_btn_hover_shadow;
+      background-color: $comment_c_btn_hover_bg;
+    }
+
+    &:last-child {
+      &:not(:first) {
+        margin-left: 10px;
+      }
+    }
+
+    .icon {
+      @include partial-column-center;
+
+      svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+          fill: $comment_c_btn_icon_color;
+        }
+      }
+    }
+  }
+
+  .c-btn-green {
+    color: $comment_c_btn_green_color;
+  }
+
+  .c-like {
+    @include partial-row-start-top;
+    width: 120px;
+    height: 24px;
+
+    .l-icon {
+      @include partial-column-start;
+      width: 32px;
+      height: 24px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+          fill: $comment_c_like_icon_color;
+        }
+      }
+    }
+
+    .l-icon-ac {
+      svg {
+        path {
+          stroke: $comment_c_like_icon_ac_color;
+          fill: $comment_c_like_icon_ac_color;
+        }
+      }
+    }
+
+    .c-like-green {
+      margin-right: 5px;
+      font-weight: 600;
+      color: $comment_c_like_green_color;
+    }
+
+    .c-like-blue {
+      margin-right: 5px;
+      color: $comment_c_like_blue_color;
+    }
+  }
+
+  .c-fav {
+    @include partial-row-start-top;
+    width: 120px;
+    height: 24px;
+
+    .l-icon {
+      width: 24px;
+      height: 24px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+          fill: $comment_fav_icon_color;
+        }
+      }
+    }
+
+    .l-icon-ac {
+      svg {
+        path {
+          fill: $comment_fav_icon_ac_color;
+        }
+      }
+    }
+
+    .c-fav-txt {
+      margin-right: 5px;
+      font-weight: 400;
+      color: $comment_c_like_blue_color;
+    }
+
+    .c-fav-txt-ac {
+      font-weight: 600;
+      color: $comment_c_like_green_color;
+    }
+  }
+
+  .c-img {
+    width: 32px;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .base-text {
+    width: 100%;
+    min-height: 20px;
+    margin-top: 15px;
+    color: $comment_base_text_color;
+    background-color: $comment_base_text_bg;
+    user-select: text;
+
+    img {
+      max-width: 100%;
+    }
+
+    a {
+      color: $comment_base_link_color;
+
+      &:focus-visible {
+        @include focus();
+      }
+    }
+  }
+
+  .base-text-trimed {
+    max-height: 200px;
+    overflow: hidden;
+  }
+
+  .text-con {
+    @include partial-row-start-top;
+    width: 100%;
+    margin-top: 10px;
+    padding: 2px 0 2px 6px;
+    color: $comment_text_con_color;
+    background-color: $comment_text_con_bg;
+    border-top: $comment_text_con_border;
+  }
+
+  .more-btn {
+    @include partial-row-center;
+    width: 22px;
+    height: 22px;
+    margin: 2px 4px;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+
+      path {
+        fill: $comment_btn_more_icon_color;
+      }
+    }
+
+    &:hover {
+      background-color: $comment_btn_more_hover_bg;
+      border: $comment_btn_more_hover_border;
+    }
+  }
+
+  .more-con {
+    position: absolute;
+    width: 190px;
+    min-height: 32px;
+    max-height: 96px;
+    line-height: 32px;
+    border-radius: 2px;
+    border: $comment_btn_more_con_border;
+    background-color: $comment_btn_more_con_bg;
+  }
+
+  .base-show-more-con {
+    @include partial-row-center-start;
+  }
+
+  .base-show-more {
+    display: none;
+    height: 20px;
+    width: 90px;
+    padding: 0 4px;
+    text-align: center;
+    color: $comment_base_show_more_color;
+    box-shadow: $comment_base_show_more_shadow;
+    margin-left: 5px;
+  }
+}
+
+.comment {
+  @include partial-row-start-top;
+  max-width: 100%;
+  border-radius: 5px;
+  margin-left: 35px;
+  padding: 5px 0 5px 5px;
+  color: $comment_color;
+
+  .comment-header {
+    margin: 5px;
+  }
+
+  .c-av {
+    height: inherit;
+    width: 32px;
+  }
+
+  .comment-con {
+    @include partial-column-center-start;
+    height: 100%;
+    width: calc(100% - 32px);
+    margin-left: 8px;
+
+    .comment-val {
+      width: 100%;
+      height: 100%;
+      background-color: $comment_val_bg;
+      border: $comment_val_border;
+      border-radius: 4px;
+
+      .c-h-author {
+        margin-right: 10px;
+        font-weight: 600;
+        padding: 2px 0 2px 6px;
+        color: $comment_val_c_h_author_color;
+      }
+
+      .text-con {
+        border: unset;
+      }
+
+      .base-text {
+        border: unset;
+        padding: 0 5px;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  &:not(:first-child) {
+    margin-top: 20px;
+  }
+}
+
+.comment-zerom {
+  margin-left: 0px;
+}
+
+.comment-standard {
+  border: $comment_text_con_border;
+}
+
+.comment-raw {
+  width: 100%;
+  min-height: 26px;
+  max-height: 200px;
+}
+
+.comment-file {
+  @include partial-row-center;
+  height: 26px;
+  width: 400px;
+  min-height: unset;
+  padding: 0 2px;
+  border: $comment_file_border;
+  background-color: $comment_file_bg;
+
+  .c-file-txt {
+    width: calc(100% - 16px);
+    height: 26px;
+    padding: 0 5px;
+    line-height: 26px;
+    color: $comment_file_color;
+  }
+
+  .c-file-icon {
+    width: 16px;
+    height: 16px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+
+      path {
+        fill: $comment_file_icon_color;
+      }
+    }
+  }
+}
+
+.th-full-screen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $thread_bg;
+  z-index: 300000;
+  padding: 0 10px;
+
+  .th-full-screen-header {
+    @include partial-column-center-end;
+    width: 100%;
+    height: 48px;
+    gap: 8px;
+  }
+}
+
+.thread {
+  padding: 2px;
+  margin-bottom: 20px;
+  background-color: $thread_bg;
+  border: $thread_border;
+  border-radius: 4px;
+
+  .thread-upper-part {
+    padding: 5px;
+  }
+
+  .th-title {
+    @include partial-column-center-start;
+    height: 42px;
+    margin-left: 20px;
+    font-weight: 600;
+    font-size: 17px;
+    color: $thread_title_color;
+  }
+
+  .thread-footer {
+    @include partial-column-center;
+    height: 75px;
+    padding: 0 8px;
+
+    .thread-footer-i {
+      @include partial-row-center-space-between;
+      height: 32px;
+      width: 100%;
+      padding-left: 8px;
+      font-size: 12px;
+      color: $thread_footer_color;
+      background-color: $thread_footer_bg;
+      border: $thread_footer_border;
+
+      &:hover {
+        color: $thread_footer_hover_color;
+        background-color: $thread_footer_hover_bg;
+      }
+
+      .th-btn-text {
+        @include partial-row-center-start;
+      }
+
+      .th-btn-icon {
+        height: 16px;
+        width: 24px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+
+          path {
+            stroke: $thread_footer_btn_icon_color;
+            stroke-width: 0.5px;
+          }
+        }
+      }
+    }
+  }
+
+  .thread-editor-con {
+    @include partial-column-center-end;
+    min-height: 200px;
+    width: calc(100% - 40px);
+    margin: 20px;
+    padding: 20px;
+    background-color: $thread_editor_bg;
+
+    .thread-field {
+      @include partial-column-center;
+      position: relative;
+    }
+
+    .thread-btns-con {
+      @include partial-row-center-space-between;
+      height: 48px;
+      max-width: 320px;
+      gap: 8px;
+
+      .btn-c,
+      .btn-s,
+      .btn-s-r {
+        @include partial-column-center;
+        width: 100px;
+        height: 32px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-family: $primaryFont;
+        cursor: pointer;
+
+        &:active {
+          background: $th_btn_active_bg;
+          border: $th_btn_active_border;
+        }
+      }
+
+      .btn-c {
+        color: $th_btn_cancel_fg;
+        background-color: $th_btn_cancel_bg;
+        border: $th_btn_cancel_border;
+        margin-right: 10px;
+
+        &:hover {
+          background: $th_btn_cancel_hover;
+        }
+      }
+
+      .btn-s {
+        color: $th_btn_save_fg;
+        background-color: $th_btn_save_bg;
+        font-size: $th_btn_save_fs;
+
+        &:hover {
+          background: $th_btn_save_hover;
+        }
+      }
+
+      .btn-s-r {
+        max-width: 136px;
+        width: 100%;
+        color: $th_btn_draft_fg;
+        background-color: $th_btn_draft_bg;
+        margin-right: 10px;
+
+        &:hover {
+          background: $th_btn_cancel_hover;
+        }
+      }
+    }
+  }
+}
+
+.th-modal-overlay {
+  @extend .modal-overlay;
+  @include partial-column-center;
+}
+
+.th-modal {
+  @extend .modal;
+  height: 400px;
+  width: 600px;
+  background-color: $thread_modal_bg;
+
+  .th-header {
+    @extend .modal-bar;
+
+    .h-icon {
+      @include partial-column-center;
+      float: left;
+      height: inherit;
+      width: 48px;
+
+      svg {
+        height: 24px;
+        width: 24px;
+
+        path {
+          fill: $thread_modal_header_icon_color;
+        }
+      }
+    }
+
+    .h-title {
+      @extend .title;
+
+      span {
+        @include partial-ellipsis;
+      }
+    }
+  }
+
+  .th-txt {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: 10px 0 5px 10px;
+
+    font-size: $font_size_body;
+    line-height: calc(#{$font_size_body} + 4px);
+    color: $thread_modal_text_color;
+    overflow: hidden;
+  }
+
+  .th-btns {
+    @include partial-row-center-end;
+    width: 100%;
+    height: 52px;
+
+    .cmd {
+      @extend .command-modal;
+
+      .title {
+        color: $thread_modal_bts_color;
+        font-size: $thread_modal_bts_fs;
+      }
+    }
+  }
+}

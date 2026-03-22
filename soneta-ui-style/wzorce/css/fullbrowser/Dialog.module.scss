@@ -1,0 +1,179 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./Label.module.scss";
+
+.modal-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: $modal_overlay_bg;
+
+  .modal {
+    @include partial-box-shadow;
+    @include partial-column-start;
+    position: absolute;
+    justify-content: space-between;
+    background: $modal_bg;
+    border-radius: $modal_border_radius;
+    font-family: $tertiaryFont;
+    box-shadow: $modal_shadow;
+    color: $modal_bar_fg;
+    max-height: calc(100vh - 10px);
+    max-width: calc(100vw - 10px);
+
+    .modal-bar {
+      @include partial-row-center-end;
+      flex-direction: row-reverse;
+      width: 100%;
+      padding: 16px;
+      background: $modal_bar_bg;
+      border-bottom: $modal_bar_border;
+      cursor: move;
+      gap: 16px;
+
+      .icon {
+        @include partial-column-center;
+        float: left;
+        height: inherit;
+
+        svg {
+          height: 16px;
+          width: 16px;
+
+          path {
+            fill: $modal_bar_icon;
+          }
+        }
+      }
+
+      .title {
+        @include partial-row-center-start;
+        float: right;
+        text-align: left;
+        width: 100%;
+        height: inherit;
+        padding: 0;
+        font-size: 20px;
+        line-height: 26px;
+        margin: 0;
+        font-weight: lighter;
+        color: $modal_bar_title_fg;
+
+        span {
+          @include partial-ellipsis;
+        }
+      }
+    }
+
+    .modal-sections {
+      @include partial-column-start;
+      position: relative;
+      overflow-y: auto;
+      color: $modal_section_fg;
+      align-items: flex-start;
+      overflow-x: hidden;
+      background: $modal_bg;
+
+      -webkit-user-select: text;
+      -khtml-user-select: text;
+      -moz-user-select: text;
+      -o-user-select: text;
+      user-select: text;
+
+      .section {
+        width: 100%;
+        padding: 4px;
+      }
+
+      &.text-content {
+        padding: 16px;
+
+        .section {
+          padding: 0;
+        }
+      }
+    }
+
+    &.error {
+      z-index: 200000;
+
+      .modal-bar {
+        .icon {
+          svg {
+            path {
+              fill: $modal_command_error_icon !important;
+            }
+          }
+        }
+      }
+    }
+
+    &.info {
+      .modal-bar {
+        .icon {
+          svg {
+            path {
+              fill: $modal_command_info_icon !important;
+            }
+          }
+        }
+      }
+    }
+
+    &.question {
+      .modal-bar {
+        .icon {
+          svg {
+            path {
+              fill: $modal_command_question_icon !important;
+            }
+          }
+        }
+      }
+    }
+
+    &.warning {
+      .modal-bar {
+        .icon {
+          svg {
+            path {
+              fill: $modal_command_warning_icon !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.premium {
+  &.modal-overlay {
+    .scroll-content {
+      background-color: unset;
+    }
+
+    .modal {
+      padding: 0 10px;
+      font-family: unset;
+
+      .modal-bar {
+        .icon {
+          display: none;
+        }
+
+        .title {
+          font-size: 15px;
+          float: unset;
+          width: 100%;
+          height: 25px;
+          padding: 0 0 0 10px;
+          font-weight: unset;
+          border-left: $modal_bar_title_border;
+        }
+      }
+    }
+  }
+}

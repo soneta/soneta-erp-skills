@@ -1,0 +1,190 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$wb_split_content_title_width: calc(100% - 44px) !default;
+$wb_command_height: auto !default;
+$wb_command_content_height: 30px !default;
+$wb_command_content_title_width: calc(100% - 24px) !default;
+$wb_command_content_title_height: auto !default;
+$wb_command_content_icon_width: 24px !default;
+$wb_command_content_icon_height: inherit !default;
+$wb_command_content_icon_svg_width: 16px !default;
+$wb_command_content_icon_svg_height: inherit !default;
+
+.wb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: $wb_bg;
+  box-shadow: $wb_shadow;
+
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border: 1px solid transparent;
+
+  &:focus-visible {
+    @include focus($outline-offset: -1px,
+      $box-shadow: inset 0 0 3px 1px #016E46,
+    );
+  }
+
+  &.wiz {
+    left: 0;
+  }
+
+  .wb-content {
+    position: absolute;
+    left: 0;
+    width: 100%;
+
+    .wb-line {
+      @include partial-row-center-start;
+      @include flexJustifyContent(space-between, justify);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .wb-commands-mainline {
+      @include partial-row-center-start;
+      position: absolute;
+      top: 16px;
+      right: 12px;
+      height: inherit;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      align-content: space-around;
+    }
+
+    .wb-commands-line {
+      @include partial-row-center-end;
+      width: 100%;
+      max-height: 42px;
+      right: 10px;
+    }
+
+    .wb-extra-lines {
+      @include partial-column-center;
+      @include flexAlignItems(flex-end, end);
+      position: absolute;
+      top: 50px;
+      right: 0px;
+      left: 0;
+      width: 100%;
+      min-height: 36px;
+      padding: 5px 12px 0 10px;
+      gap: 8px;
+
+      .wb-extraline {
+        @include partial-row-center-end;
+        @include flexAlignItems(flex-start, start);
+        width: 100%;
+      }
+    }
+
+    .wb-commands-mainline,
+    .wb-extra-lines .wb-extraline {
+      gap: 8px;
+    }
+
+    .wb-header {
+      @include partial-row-center;
+      @include flexJustifyContent(flex-start, start);
+      position: absolute;
+      top: 11px;
+      left: 10px;
+      height: 40px;
+      gap: 8px;
+
+      &:focus-visible {
+        @include focus();
+      }
+
+      .wb-fav-container {
+        @include partial-column-center;
+        height: inherit;
+        width: 26px;
+        padding-bottom: 2px;
+
+        .wb-icon {
+          cursor: pointer;
+          color: $wb_header_icon_color;
+
+          svg {
+            @include partial-column-center;
+            height: inherit;
+            width: 16px;
+
+            path {
+              fill: $wb_header_icon_color;
+            }
+          }
+
+          &.active {
+            color: $wb_header_icon_fav_color;
+
+            svg {
+              path {
+                fill: $wb_header_icon_fav_color;
+              }
+            }
+          }
+        }
+      }
+
+      .wb-nav-form {
+        @include partial-row-center-start;
+        height: inherit;
+        gap: 5px;
+
+        .wb-nav:not(:first-child) {
+          margin-left: 5px;
+        }
+      }
+
+      .wb-text {
+        @include partial-row-center-start;
+        height: inherit;
+        width: calc(100% - 30px);
+        font-family: $wb_header_font_family;
+        font-size: $wb_header_font_size;
+        line-height: calc($wb_header_font_size + 2pt);
+        font-weight: normal;
+        color: $wb_header_color;
+        margin: 0;
+
+        span {
+          @include partial-ellipsis;
+        }
+
+        &.no-fav {
+          left: 10px;
+        }
+      }
+
+      .wb-nav-form + .wb-text {
+        left: 85px;
+        width: calc(100% - 85px);
+      }
+    }
+  }
+
+  .wb-wiz {
+    @include partial-row-center-start;
+    position: absolute;
+    top: 42px;
+    left: 10px;
+    right: 10px;
+    height: 80px;
+  }
+}
+
+.wb-menu {
+  right: 0;
+  border-bottom: none;
+}

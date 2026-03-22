@@ -1,0 +1,43 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.lookup-item {
+  position: relative;
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 8px;
+  font-size: $font_size_label;
+  color: $lookup_item_fg;
+  background: $lookup_item_bg;
+  border-radius: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover,
+  &.hover {
+    color: $lookup_item_hover_fg;
+    background: $lookup_item_hover_bg;
+  }
+
+  &:hover {
+    &.animate {
+      div {
+        @include partial-text-transition-start;
+      }
+    }
+  }
+
+  .blink {
+    @include partial-blink-normal;
+  }
+
+  div {
+    @include partial-ellipsis;
+    padding-right: 16px;
+    height: 32px;
+  }
+}

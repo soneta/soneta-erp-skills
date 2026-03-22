@@ -1,0 +1,160 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.fadeInUp :global {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.verifier {
+  @include partial-ellipsis;
+  @extend .fadeInUp;
+  position: fixed;
+  display: inline-flex;
+  bottom: 0;
+  left: 0;
+  height: $window_top_margin;
+  width: 100%;
+  opacity: 1;
+  z-index: 210000;
+
+  &.error {
+    color: $verifier_error_color;
+    background-color: $verifier_error_bg;
+
+    .verifier-icon {
+      background-color: $verifier_error_icon_bg;
+    }
+
+    path {
+      fill: $verifier_error_color;
+    }
+  }
+
+  &.warning {
+    color: $verifier_warning_color;
+    background-color: $verifier_warning_bg;
+
+    .verifier-icon {
+      background-color: $verifier_warning_icon_bg;
+    }
+
+    path {
+      fill: $verifier_warning_color;
+    }
+  }
+
+  &.info {
+    // wartość 2.4s jest wyliczona jako:
+    // czas ustawiony w komponencie VerifierBar po którym zostanie on ukryty (3s) minus czas trwania animacji (0.6s)
+    @include animateFadeInUpFadeOutDown(5.4s);
+    color: $verifier_info_color;
+    background-color: $verifier_info_bg;
+
+    .verifier-icon {
+      background-color: $verifier_info_icon_bg;
+    }
+
+    path {
+      fill: $verifier_info_color;
+    }
+  }
+
+  &.verifier-hide {
+    display: none;
+  }
+
+  .verifier-icon {
+    @include partial-column-center;
+    float: left;
+    height: inherit;
+    width: $window_top_margin;
+
+    svg {
+      width: 24px;
+    }
+  }
+
+  .verifier-title {
+    @include partial-ellipsis;
+    width: calc(100% - (2 *#{$window_top_margin}));
+    height: inherit;
+    padding: 0 4px;
+    line-height: $window_top_margin;
+    font-size: $font_size_label;
+  }
+
+  .verifier-close {
+    @include partial-column-center;
+    float: right;
+    height: inherit;
+    width: $window_top_margin;
+    cursor: pointer;
+
+    svg {
+      width: 16px;
+    }
+  }
+}
+
+.premium {
+  &.verifier {
+    height: 48px;
+
+    .verifier-icon {
+      @include partial-column-center;
+      float: left;
+      height: 48px;
+      width: 48px;
+      margin-left: 15px;
+
+      svg {
+        width: 28px;
+      }
+    }
+
+    .verifier-title {
+      line-height: 48px;
+      font-size: 11px;
+    }
+
+    .verifier-close {
+      width: 48px;
+    }
+
+    &.error {
+      .verifier-icon {
+        background-color: unset;
+      }
+
+      .verifier-close {
+        background-color: $verifier_error_icon_bg;
+      }
+    }
+
+    &.warning {
+      .verifier-icon {
+        background-color: unset;
+      }
+
+      .verifier-close {
+        background-color: $verifier_warning_icon_bg;
+      }
+    }
+
+    &.info {
+      .verifier-icon {
+        background-color: unset;
+      }
+
+      .verifier-close {
+        background-color: $verifier_info_icon_bg;
+      }
+    }
+  }
+}

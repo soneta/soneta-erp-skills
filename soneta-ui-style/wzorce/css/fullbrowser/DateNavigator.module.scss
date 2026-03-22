@@ -1,0 +1,8 @@
+@import "../common/PredefinedMixins.scss";
+@import "./Variables.scss";
+
+.date-navigator {
+  @include flexDisplay;
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(center, center);
+}

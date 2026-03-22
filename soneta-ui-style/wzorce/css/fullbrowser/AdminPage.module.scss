@@ -1,0 +1,165 @@
+@import "./BasePage.module.scss";
+
+.pageSpecial {
+  @extend .baseContentStyles;
+
+  .p-content {
+    @include partial-row-start-top;
+    justify-content: space-between;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $page_content_bg;
+    font-family: $secondaryFont;
+
+    .adm-server,
+    .adm-counters {
+      @include partial-column-center-start;
+    }
+
+    .adm-server {
+      color: $page_adm_fg;
+      margin: 15px;
+      .adm-info {
+        @include partial-row-center-start;
+        height: 32px;
+
+        .adm-icon {
+          @include partial-column-center;
+          width: 32px;
+          height: 32px;
+          svg {
+            width: 20px;
+            height: 20px;
+            path {
+              fill: $page_adm_icon;
+            }
+          }
+        }
+
+        .adm-title {
+          @include partial-row-center-start;
+          height: inherit;
+          font-size: 10pt;
+          width: 150px;
+        }
+
+        .adm-value {
+          font-size: 10pt;
+          width: 250px;
+          padding-left: 5px;
+        }
+      }
+
+      .locked {
+        color: $page_adm_locked_fg;
+      }
+
+      .adm-counters,
+      .adm-domains {
+        padding-left: 32px;
+        .adm-info {
+          @include partial-row-center-start;
+          height: 24px;
+
+          .adm-icon {
+            @include partial-column-center;
+            width: 24px;
+            height: 24px;
+            svg {
+              width: 16px;
+              height: 16px;
+              path {
+                fill: $page_adm_icon;
+              }
+            }
+          }
+        }
+      }
+
+      .adm-counters {
+        margin-top: 20px;
+        .adm-info {
+          .adm-title {
+            width: 126px;
+          }
+        }
+      }
+
+      .adm-domains {
+        @include partial-row-start-top;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        .adm-domain {
+          border: $page_adm_domain_border;
+          margin: 4px;
+          .adm-info {
+            .adm-icon {
+              path {
+                fill: $page_adm_icon;
+              }
+            }
+            .adm-title {
+              color: $page_adm_domain_title_fg;
+              width: 126px;
+            }
+            &:first-child {
+              background-color: $page_adm_domain_bg;
+
+              .adm-title {
+                font-weight: bold;
+                color: $page_adm_domain_title_fg;
+              }
+              .adm-value {
+                font-weight: bold;
+              }
+            }
+          }
+
+          .adm-counters {
+            padding-left: 24px;
+            .adm-info {
+              .adm-icon {
+                path {
+                  fill: $page_adm_icon;
+                }
+              }
+              .adm-title {
+                width: 102px;
+              }
+              &:first-child {
+                background-color: transparent;
+                .adm-title {
+                  font-weight: normal;
+                  color: $page_adm_domain_title_fg;
+                }
+              }
+            }
+
+            .adm-rq-infos {
+              border: $page_adm_domain_border;
+              margin: 0 24px;
+              .adm-rq {
+                height: 24px;
+                padding: 0 5px;
+              }
+              .adm-rq:nth-child(even) {
+                background-color: $page_adm_domain_even_bg;
+              }
+              .adm-rq:nth-child(odd) {
+                background-color: $page_adm_domain_odd_bg;
+              }
+            }
+          }
+        }
+      }
+
+      .adm-actions {
+        @include partial-row-center;
+        padding: 4px 0;
+      }
+    }
+  }
+}

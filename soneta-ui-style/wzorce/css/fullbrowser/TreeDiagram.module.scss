@@ -1,0 +1,293 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./DiagramGlobal.scss";
+
+.tree-diagram-main {
+  position: absolute;
+  border: $tree_diagram_border;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .tree-diagram-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    .tree-diagram-editor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .tree-diagram-bar {
+      @include partial-row-center-start;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: $tree_diagram_zoom_bg;
+      border-top: $tree_diagram_border;
+    }
+  }
+
+  .task-send-icon {
+    path {
+      fill: $tree_diagram_send_fg;
+      stroke: unset;
+    }
+  }
+
+  .tree-btn-content {
+    @include partial-row-center-start;
+    justify-content: space-between;
+    width: 65%;
+  }
+
+  .tree-con-left {
+    @include partial-row-center-start;
+  }
+
+  .tree-con-right {
+    @include partial-row-center-start;
+  }
+
+  .tree-panel-btn {
+    @include partial-row-center;
+    font-size: 9pt;
+    line-height: 26px;
+    font-weight: 300;
+    width: 32px;
+    height: 24px;
+    padding: 5px;
+    border-radius: 4px;
+    margin-left: 15px;
+    color: $tree_diagram_btn_fg;
+    background-color: $tree_diagram_btn_bg;
+  }
+
+  // .tree-btn-print {
+  //   width: 32px;
+  //   height: 24px;
+  //   min-width: unset;
+  // }
+
+  .print-icon {
+    @include partial-column-center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+
+    svg {
+      width: 14px;
+      height: 14px;
+
+      path {
+        fill: $tree_diagram_btn_fg;
+      }
+    }
+  }
+
+  .tree-minimap-con {
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    padding: 0px;
+    right: 0;
+    left: 100px;
+    bottom: 25px;
+    border: $tree_diagram_minimap_border;
+    box-shadow: $tree_diagram_minimap_shadow;
+    background-color: $tree_diagram_minimap_bg;
+  }
+
+  .tree-sm-con {
+    position: fixed;
+    height: unset;
+    width: 150px;
+    border: $tree_sm_border;
+    background-color: $tree_sm_bg;
+    box-shadow: $tree_diagram_minimap_shadow;
+    .tree-sm-el {
+      width: 100%;
+      height: 32px;
+      line-height: 32px;
+      padding-left: 5px;
+      border-bottom: $tree_sm_el_border;
+      color: $tree_sm_el_fg;
+      background-color: $tree_sm_el_bg;
+
+      &:hover {
+        color: $tree_sm_el_hover_fg;
+        background: $tree_sm_el_hover_bg;
+        border-left: $tree_sm_el_hover_border;
+      }
+    }
+  }
+
+  .tree-diagram-filter-editor {
+    @include partial-row-center-start;
+
+    position: absolute;
+    right: 20px;
+    width: 30%;
+    height: 22px;
+    border: $tree_filter_input_border;
+    background-color: $tree_filter_input_bg;
+
+    input {
+      width: calc(100% - 25px);
+      height: 20px;
+      border: 0;
+      font-size: 9pt;
+      line-height: 9pt;
+      text-align: left;
+      font-family: Arial;
+      box-sizing: border-box;
+      padding: 0 4px 0 2px;
+      background-size: 10px 10px;
+      color: $tree_filter_input_fg;
+      background-color: $tree_filter_input_bg;
+
+      &:focus {
+        color: $tree_filter_input_focus_fg;
+        background-color: transparent;
+        outline: none;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: $tree_filter_input_shadow !important;
+      }
+
+      &::-webkit-input-placeholder {
+        font-size: 0.9em;
+        font-style: italic;
+        color: $tree_filter_input_placeholder_fg;
+      }
+
+      &::-moz-placeholder {
+        font-size: 0.9em;
+        font-style: italic;
+        color: $tree_filter_input_placeholder_fg;
+      }
+
+      &:-moz-placeholder {
+        font-size: 0.9em;
+        font-style: italic;
+        color: $tree_filter_input_placeholder_fg;
+      }
+
+      &:-ms-input-placeholder {
+        font-size: 0.9em;
+        font-style: italic;
+        color: $tree_filter_input_placeholder_fg;
+      }
+    }
+
+    .icon {
+      @include partial-column-center;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      display: none;
+
+      svg {
+        width: 14px;
+        height: 14px;
+
+        path {
+          fill: $tree_filter_input_icon_fg;
+        }
+      }
+    }
+
+    .showIcon {
+      display: block;
+    }
+
+    &:focus-within {
+     .icon {
+      @extend .showIcon;
+      animation-duration: 0.5s;
+      animation-fill-mode: both;
+      animation-name: getInItsFun;
+      animation-timing-function: ease-out;
+      -webkit-animation-duration: 0.5s;
+      -webkit-animation-fill-mode: both;
+      -webkit-animation-name: getInItsFun;
+      -webkit-animation-timing-function: ease-out;
+     }
+    }
+  }
+
+  .tree-tooltip-con {
+    @include partial-column-start-start;
+    position: fixed;
+    display: inline-block;
+    min-width: 50px;
+    min-height: 30px;
+    font-size: 9pt;
+    text-align: center;
+    opacity: 0.95;
+    padding: 4px 6px 4px 6px;
+    z-index: 250000;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+
+    visibility: hidden;
+    color: $tooltip_fg;
+    border: $tooltip_border;
+    background-color: $tooltip_bg;
+
+    .tree-tooltip-caption {
+      font-weight: bold;
+    }
+  }
+}
+
+@keyframes getInItsFun {
+  0% {
+    -webkit-transform: translateX(100%);
+    opacity: 0;
+  }
+  60% {
+    -webkit-transform: translateX(0%);
+    opacity: 0.6;
+  }
+  80% {
+    -webkit-transform: translateX(0%);
+    opacity: 0.8;
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+/* Override sf styles */
+:global {
+  // Node Selection styles
+  .e-adorner-layer {
+    .e-diagram-border {
+      stroke: unset;
+    }
+
+    .e-diagram-selector, .e-diagram-selection-indicator {
+      stroke: unset;
+    }
+  }
+
+  // Resize bals around node
+  .e-diagram-resize-handle.e-disabled {
+    visibility: hidden;
+  }
+}

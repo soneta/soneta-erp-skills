@@ -1,0 +1,10 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./FieldBase.module.scss";
+
+.field-locator {
+  @include flexSelf(1, 1, auto);
+  position: relative;
+  width: 50%;
+}

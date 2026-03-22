@@ -1,0 +1,39 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.nav-bar-c {
+  width: 1px;
+  height: 1px;
+}
+
+.nav-bar-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: transparent;
+}
+
+.popup-nav-menu {
+  width: 600px;
+  height: 100%;
+  font-family: $defaultFont;
+  outline: none;
+  padding: 4px;
+  background-color: $nav_con_bg;
+  box-shadow: $nav_popup_box_shadow;
+  border-radius: 12px;
+
+  .panels {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: calc(100% - 66px);
+    padding: 0 4px 4px 4px;
+
+    background-color: $nav_con_bg;
+  }
+}

@@ -1,0 +1,186 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./DiagramGlobal.scss";
+
+.diagram-palette {
+  height: inherit;
+  border: 1px solid transparent;
+
+  &:focus-visible {
+    @include focus(
+      $outline: none,
+      $border: $focus_border,
+      $box-shadow: none,
+    );
+  }
+}
+
+:global {
+  .diagram-svg-element {
+    *:not(path):not(g):not([fill]) {
+      fill: transparent;
+    }
+  }
+
+  .e-acrdn-header {
+    display: flex;
+    flex-direction: row;
+    padding-left: 8px !important;
+    background-color: $diagram_header_bg !important;
+
+    .e-acrdn-header-icon,
+    .e-toggle-icon {
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+
+    .e-acrdn-header-content {
+      flex-grow: 1;
+      flex-shrink: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .e-diagram {
+    .e-grid-layer {
+      opacity: $diagram_grid_opacity;
+    }
+  }
+
+  .e-accordion .e-acrdn-item.e-select.e-acrdn-item>.e-acrdn-header:hover .e-toggle-icon .e-icons.e-tgl-collapse-icon {
+    color: var(--diagram_icon_expand_hover);
+  }
+}
+
+.diagram-main {
+  position: absolute;
+  border: $diagram_border;
+
+  .diagram-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    .diagram-editor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .diagram-zoom-content {
+      @include partial-row-center;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+      background-color: $group_bg;
+      border-top: $diagram_border;
+    }
+  }
+
+  .diagram-content-dark {
+    text {
+      fill: $diagram_content_fill_dark;
+    }
+
+    path {
+      stroke: $diagram_content_path_dark;
+    }
+
+    pattern[id*="diagram"][id*="pattern"]>path {
+      stroke: RGBA(var(--neutral_700));
+    }
+
+    g[id*="taskTypeService"]>path {
+      fill: none;
+    }
+
+    g[id*="dataobj"]>path {
+      stroke: $diagram_palette_accrdn_sel_bg;
+    }
+
+    g[id*="tarDec"]>path {
+      fill: $diagram_content_fill_dark;
+    }
+
+    g[id*="node"][id*="path"]>path {
+      stroke: $diagram_palette_accrdn_sel_bg;
+      stroke-width: 2px;
+      fill: RGBA(var(--neutral_800));
+    }
+
+    ::-webkit-scrollbar {
+      width: 16px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #323233;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #131111;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #1e1e1e;
+    }
+  }
+
+  .diagram-content-custom-dark {
+    g[id*="native_element"]>g>g>path {
+      fill: RGBA(var(--neutral_300));
+    }
+
+    g[id*="node"][id*="content"]>rect,
+    path {
+      fill: RGBA(var(--neutral_700));
+    }
+  }
+
+  .task-send-icon {
+    path {
+      fill: $diagram_group_icon;
+      stroke: unset;
+    }
+  }
+
+  .panel-btn {
+    @include partial-row-center;
+    font-size: 9pt;
+    line-height: 26px;
+    font-weight: 300;
+    width: 32px;
+    height: 24px;
+    padding: 5px;
+    border-radius: 4px;
+    margin-left: 15px;
+    color: $tree_diagram_btn_fg;
+    background-color: $tree_diagram_btn_bg;
+  }
+
+  .print-icon {
+    @include partial-column-center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+
+    svg {
+      width: 14px;
+      height: 14px;
+
+      path {
+        fill: $tree_diagram_btn_fg;
+      }
+    }
+  }
+
+}

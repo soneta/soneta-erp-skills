@@ -1,0 +1,143 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./BaseScroll.module.scss";
+
+.gscroll-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+
+  > div:first-child {
+    position: absolute;
+    overflow-y: auto;
+  }
+
+  .gscroll-v,
+  .gscroll-h {
+    @include partial-transition;
+    position: absolute;
+    bottom: 2px;
+    z-index: 200;
+    background-color: transparent;
+
+    &:active,
+    &:hover {
+      .gscroll-v-track,
+      .gscroll-h-track {
+        background-color: $scroll_track_bg;
+      }
+    }
+
+    .gscroll-v-thumb,
+    .gscroll-h-thumb {
+      position: absolute;
+      background-color: $scroll_thumb_bg;
+      border-radius: 2px;
+
+      &:hover,
+      &:active {
+        background: $scroll_thumb_hover_bg;
+        border-radius: 4px;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .gscroll-v {
+    top: 2px;
+    right: 2px;
+    width: $size;
+
+    .gscroll-v-track {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: $size;
+
+      .gscroll-v-thumb {
+        cursor: s-resize;
+        top: 0;
+        right: 0;
+        height: 100px;
+        width: $thumb_size;
+      }
+    }
+
+    &.touch {
+      width: $track_hover_size;
+
+      .gscroll-v-track {
+        width: $track_hover_size;
+
+        .gscroll-v-thumb {
+          width: $track_hover_size;
+        }
+      }
+    }
+
+    &:not(.touch) {
+      &:active,
+      &:hover {
+        .gscroll-v-track {
+          width: $track_hover_size;
+
+          .gscroll-v-thumb {
+            width: $track_hover_size;
+          }
+        }
+      }
+    }
+  }
+
+  .gscroll-h {
+    left: 2px;
+    right: 12px;
+    height: $size;
+
+    .gscroll-h-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: $size;
+
+      .gscroll-h-thumb {
+        cursor: w-resize;
+        left: 0;
+        bottom: 0;
+        width: 100px;
+        height: $thumb_size;
+      }
+    }
+
+    &.touch {
+      height: $track_hover_size;
+
+      .gscroll-h-track {
+        height: $track_hover_size;
+
+        .gscroll-h-thumb {
+          height: $track_hover_size;
+        }
+      }
+    }
+
+    &:not(.touch) {
+      &:active,
+      &:hover {
+        .gscroll-h-track {
+          height: $track_hover_size;
+
+          .gscroll-h-thumb {
+            height: $thumb_hover_size;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+
+.hb-bookmarks {
+  @include flexDisplay;
+  @include flexAlignSelf(auto);
+  @include flexOrder(0);
+  @include flexSelf(1, 1, auto);
+  position: absolute;
+}

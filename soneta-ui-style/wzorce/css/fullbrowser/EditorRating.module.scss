@@ -1,0 +1,105 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-rating {
+  @include partial-row-center-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+
+  .content {
+    position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
+    height: inherit;
+    cursor: pointer;
+    background-color: $rating_bg;
+
+    &:not(:checked) {
+      input {
+        position: absolute;
+        top: -9999px;
+        clip: rect(0, 0, 0, 0);
+      }
+
+      label {
+        float: right;
+        width: 1em;
+        height: inherit;
+        padding: 0 0.1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 200%;
+        color: $rating_fg;
+        -webkit-transition: text-shadow 0.3s ease-in 0s;
+        -moz-transition: text-shadow 0.3s ease-in 0s;
+        -o-transition: text-shadow 0.3s ease-in 0s;
+        -ms-transition: text-shadow 0.3s ease-in 0s;
+        transition: all 0.2s ease-in 0s;
+        text-shadow: $rating_star_shadow;
+        -webkit-text-stroke: 1px $rating_fg;
+
+        &:before {
+          content: "\2605";
+        }
+
+        &:hover,
+        &:hover ~ label {
+          color: $rating_hover_fg;
+          text-shadow: $rating_hover_shadow;
+          -webkit-text-stroke: 1px $rating_hover_fg;
+        }
+      }
+    }
+
+    input:checked ~ label {
+      color: $rating_checked_fg;
+      text-shadow: $rating_hover_shadow;
+      -webkit-text-stroke: 1px $rating_checked_fg;
+    }
+
+    input:checked + label:hover,
+    input:checked + label:hover ~ label,
+    input:checked ~ label:hover,
+    input:checked ~ label:hover ~ label,
+    label:hover ~ input:checked ~ label {
+      color: $rating_checked_hover_fg;
+      -webkit-text-stroke: 1px $rating_checked_hover_fg;
+      text-shadow: $rating_hover_shadow;
+    }
+
+    label:active {
+      position: relative;
+      top: 1px;
+      left: 1px;
+    }
+  }
+}
+
+.editor-rating-p {
+  .content {
+    border-radius: 4px;
+
+    &.disabled {
+      border: $input_border_disabled;
+    }
+  }
+
+  &.focused {
+    .content {
+      @include partial-editor-shadow-premium;
+      box-shadow: none;
+      border: $input_focused_border;
+
+      .icon svg path {
+        fill: $input_icon_fg;
+      }
+    }
+  }
+}

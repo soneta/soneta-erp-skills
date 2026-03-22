@@ -1,0 +1,83 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.scheduler-simple-with-task-list {
+  position: absolute;
+  overflow: hidden;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .header-commands {
+    padding: 8px 15px 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .calendar {
+    height: 316px;
+  }
+
+  .tasks-list {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: calc(100% - 316px);
+    border-radius: 12px;
+    background-color: $ss_tl_tasks_bg;
+    border-top: 1px solid $ss_tl_tasks_bg;
+    border-bottom: 1px solid $ss_tl_tasks_bg;
+
+    .task-list-content {
+      width: 100%;
+      height: 100%;
+    }
+
+    .add-task {
+      position: absolute;
+      z-index: 1;
+      width: 42px;
+      height: 42px;
+      top: -25px;
+      right: 36px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $ss_tl_task_add_bg;
+      cursor: pointer;
+      border: none;
+
+      &:focus-visible {
+        @include focus();
+      }
+
+      .add-symbol {
+        font-size: 37px;
+        color: $ss_tl_task_add_fg;
+      }
+    }
+  }
+
+  &.horizontal {
+    display: flex;
+    overflow: unset;
+
+    .calendar {
+      width: 310px;
+
+      .header-commands {
+        padding-top: 2px;
+      }
+    }
+
+    .tasks-list {
+      height: 100%;
+      width: calc(100% - 300px);
+    }
+  }
+}

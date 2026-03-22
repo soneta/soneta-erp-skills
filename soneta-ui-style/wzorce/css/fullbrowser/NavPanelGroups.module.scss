@@ -1,0 +1,19 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.nav-menu-main {
+  @include partial-column-start;
+  height: 100%;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+
+  .nav-bar-title {
+    color: $nav_fg;
+  }
+
+  &.popup {
+    background: $nav_bar_gradient;
+  }
+
+}

@@ -1,0 +1,356 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$pagePanelWidth: 460px;
+$pageFooterHeight: 40px;
+$loginPanelWidth: 620px;
+$loginFooterHeight: 100px;
+
+:global {
+  #container {
+    height: 100%;
+  }
+}
+
+.baseContentStyles {
+  @include partial-row-center-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.regularPageContent {
+  .p-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - #{$loginPanelWidth});
+    bottom: 0;
+    opacity: 0;
+    transition-delay: 1s;
+    transition: opacity 1s linear;
+
+    .i-bg {
+      @include partial-column-center;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: $page_image_filter;
+      background-image: url("/assets/images/loginBg.jpg");
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        display: block;
+        background: $page_image_bg_before;
+        width: 100%;
+        height: 100%;
+        transform: scale(1.1);
+      }
+    }
+
+    .i-content {
+      @include partial-column-start;
+      align-items: flex-start;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      .i-header {
+        @include flexDisplay;
+        @include flexJustifyContent(flex-end, end);
+        @include flexAlignItems(flex-end, end);
+        width: 100%;
+        height: 200px;
+
+        .c-logo {
+          width: 458px;
+          background: $page_header_logo_bg;
+          display: flex;
+          padding: 10px;
+          flex-direction: column;
+          align-items: flex-end;
+
+          .icon {
+            width: 100%;
+            line-height: 0;
+
+            svg {
+              path {
+                &:first-child {
+                  fill: $logo_color_1;
+                }
+
+                &:nth-of-type(2) {
+                  fill: $logo_color_2;
+                }
+
+                &:nth-of-type(3) {
+                  fill: $logo_color_3;
+                }
+
+                &:nth-of-type(4) {
+                  fill: $logo_color_3;
+                }
+              }
+            }
+          }
+
+          .custom-logo {
+            @include partial-column-center-start;
+            height: 70px;
+            padding: 0 5px;
+            background-position: 100% 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 100%;
+          }
+        }
+
+        &.premium {
+          height: 230px;
+
+          .c-logo {
+            width: 366px;
+            padding-right: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  .p-content {
+    @include partial-column-center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: $loginPanelWidth;
+    background-color: $page_content_bg;
+    box-shadow: $page_content_shadow;
+    -webkit-box-shadow: $page_content_shadow;
+    -moz-box-shadow: $page_content_shadow;
+  }
+
+  .p-header {
+    @include flexDisplay;
+    @include flexAlignItems(flex-end, end);
+    width: 100%;
+    height: 200px;
+    padding: 10px 40px;
+    flex-shrink: 0;
+
+    .header-text {
+      margin: 0;
+      font-family: $tertiaryFont;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 35px;
+      color: $page_header_text_fg;
+    }
+
+    .icon {
+      @include partial-column-center-end;
+      padding-right: 40px;
+      height: inherit;
+      align-items: flex-end;
+      cursor: pointer;
+
+      svg {
+        width: 200px;
+        height: inherit;
+
+        path {
+          &:first-child {
+            fill: $logo_color_1;
+          }
+
+          &:nth-of-type(2) {
+            fill: $logo_color_2;
+          }
+
+          &:nth-of-type(3) {
+            fill: $logo_color_3;
+          }
+
+          &:nth-of-type(4) {
+            fill: $logo_color_3;
+          }
+        }
+      }
+    }
+  }
+
+  .p-footer {
+    @include flexDisplay;
+    @include flexAlignItems(flex-start, start);
+    @include flexJustifyContent(flex-end, end);
+    width: 100%;
+    height: $loginFooterHeight;
+    text-align: center;
+    font-size: $font_size_label;
+    color: $page_footer_fg;
+    background-color: transparent;
+    padding: 10px 72px;
+    flex-shrink: 0;
+
+    .f-text {
+      @include flexDisplay;
+      @include flexAlignItems(flex-end, end);
+      font-family: $tertiaryFont;
+      gap: 6px;
+    }
+  }
+
+  .p-content-premium {
+    .p-header {
+      .icon {
+        svg {
+          path {
+            &:nth-of-type(1) {
+              fill: $logo_color_1 !important;
+            }
+
+            &:nth-of-type(2) {
+              fill: $logo_color_2 !important;
+            }
+
+            &:nth-of-type(3) {
+              fill: $logo_color_3;
+            }
+
+            &:nth-of-type(4) {
+              fill: $logo_color_3;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.pageContent {
+  @extend .baseContentStyles;
+  @extend .regularPageContent;
+}
+
+.content {
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+  position: relative;
+}
+
+@media screen and (max-width: 2800px) {
+  .t-prime {
+    font-size: 4.4em;
+  }
+}
+
+@media screen and (max-width: 1800px) {
+  .t-prime {
+    font-size: 4em;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .t-prime {
+    font-size: 3.4em;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .t-prime {
+    font-size: 2.8em;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .t-prime {
+    font-size: 2.4em;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .t-prime {
+    font-size: 1.8em;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .t-prime {
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .t-prime {
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .t-prime {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .regularPageContent {
+    .p-header {
+      height: 150px;
+    }
+
+    .p-footer {
+      height: 80px;
+    }
+
+    .p-info {
+      .i-content {
+        .i-header {
+          height: 150px;
+
+          &.premium {
+            height: 186px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 650px) {
+  .regularPageContent {
+    .p-header {
+      height: 110px;
+    }
+
+    .p-footer {
+      height: 66px;
+    }
+
+    .p-info {
+      .i-content {
+        .i-header {
+          height: 110px;
+
+          &.premium {
+            height: 146px;
+          }
+        }
+      }
+    }
+  }
+}

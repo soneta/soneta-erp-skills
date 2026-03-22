@@ -1,0 +1,109 @@
+.test-flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: inherit;
+  align-items: center;
+}
+
+.test-svg-box {
+  @extend .centerBoxInline;
+  width: 36px;
+  height: 36px;
+  svg {
+    width: 24px;
+    height: 100%;
+  }
+}
+
+.centerBoxInline {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
+
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+}
+
+.test-flex-column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.test-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.test-item {
+  @extend .test-flex-row;
+  align-items: flex-start;
+  width: 400px;
+  min-height: 40px;
+  margin: 4px;
+  line-height: 40px;
+  background-color: rgb(48, 48, 48);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s ease-in 0s;
+  border: 1px solid rgb(75, 75, 75);
+  border-radius: 2px;
+  box-shadow: 1px 1px 5px 0px rgb(29, 29, 29);
+
+  .test-state {
+    @extend .test-svg-box;
+    @extend .test-flex-column;
+    align-items: center;
+  }
+
+  .test-title {
+    @extend .test-ellipsis;
+    @extend .test-flex-column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    height: inherit;
+    width: calc(100% - 36px);
+    padding: 0 5px;
+    font-size: 10pt;
+    color: rgb(133, 133, 133);
+    transition: all 0.2s ease-in 0s;
+  }
+
+  .test-information {
+    width: 100%;
+    margin-bottom: 8px;
+    line-height: 14px;
+    font-size: 12px;
+    color: rgb(133, 133, 133);
+    white-space: pre-line;
+    transition: all 0.2s ease-in 0s;
+  }
+
+  &:hover {
+    box-shadow: 1px 1px 8px 5px rgb(36, 36, 36);
+    border: 1px solid rgb(89, 89, 89);
+
+    .test-title {
+      color: rgb(199, 148, 0);
+    }
+
+    .test-information {
+      color: rgb(177, 0, 0);
+    }
+  }
+
+  &:active {
+    border: 1px solid rgb(75, 75, 75);
+    box-shadow: none;
+  }
+}

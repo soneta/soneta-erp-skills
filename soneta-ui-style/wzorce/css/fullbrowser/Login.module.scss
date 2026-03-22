@@ -1,0 +1,6 @@
+@import './BasePage.module.scss';
+
+.pageLogin {
+  @extend .baseContentStyles;
+  @extend .regularPageContent;
+}

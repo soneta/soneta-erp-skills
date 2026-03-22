@@ -1,0 +1,106 @@
+@import "./BasePage.module.scss";
+
+$error_title_font_size: 13pt;
+
+.errorContent {
+  @include partial-box-shadow;
+  font-family: $tertiaryFont;
+  width: 400px;
+  left: 0;
+  right: 0;
+  margin: 10px;
+  border: $page_error_border;
+  overflow: auto;
+  border-radius: 12px;
+  flex-shrink: 1;
+
+  .error-bar,
+  .warning-bar {
+    @include partial-row-center;
+    flex-direction: row-reverse;
+    width: 100%;
+    padding: 0;
+    height: 50px;
+    background: $error_bar_bg;
+    color: $error_bar_fg;
+    border-bottom: $error_bar_border;
+    cursor: move;
+
+    .icon {
+      @include partial-column-center;
+      float: left;
+      height: inherit;
+      width: 48px;
+
+      svg {
+        height: 24px;
+        width: 24px;
+      }
+    }
+
+    .title {
+      @include partial-row-center-start;
+      float: right;
+      text-align: left;
+      width: calc(100% - 48px);
+      height: inherit;
+      padding: 0 12px 0 0;
+      line-height: calc(#{$error_title_font_size} + 4px);
+      font-weight: lighter;
+      font-size: $error_title_font_size;
+      color: $error_title_fg;
+
+      span {
+        @include partial-ellipsis;
+      }
+    }
+  }
+
+  .error-bar {
+    .icon {
+      svg {
+        path {
+          fill: $error_bar_icon;
+        }
+      }
+    }
+  }
+
+  .warning-bar {
+    .icon {
+      svg {
+        path {
+          fill: $warning_bar_icon;
+        }
+      }
+    }
+  }
+
+  .errorMsg,
+  .cookieMsg,
+  .browserMsg {
+    padding: 20px;
+    width: 100%;
+    overflow-y: auto;
+    color: $page_error_fg;
+
+    span {
+      font-size: $font_size_body;
+      border-top: none !important;
+    }
+  }
+
+  .errorMsg {
+    font-size: $font_size_title;
+  }
+
+  .cookieMsg,
+  .browserMsg {
+    font-size: $font_size_label;
+  }
+
+  .errorCommands {
+    @include partial-column-center;
+    height: 80px;
+  }
+}

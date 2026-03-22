@@ -1,0 +1,29 @@
+@import "./Variables.scss";
+
+svg {
+  path {
+      &:first-child {
+        &.linear {
+          fill: url(#linear) !important;
+        }
+      }
+
+      &:nth-of-type(2) {
+        &.linear {
+          fill: url(#linear) !important;
+        }
+      }
+
+      &:nth-of-type(3) {
+        &.linear {
+          fill: url(#linear) !important;
+        }
+      }
+
+      &:nth-of-type(4) {
+        &.linear {
+          fill: url(#linear) !important;
+        }
+      }
+  }
+}

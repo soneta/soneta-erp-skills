@@ -1,0 +1,62 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.profile-menu {
+  @include flexDisplay;
+  @include flexDirection(column);
+  @include flexAlignItems(flex-start, start);
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 22px;
+  outline: none;
+  z-index: 10100;
+
+  .details {
+    @include partial-column-center;
+    height: 22px;
+    width: 22px;
+    background-color: $profile_menu_bg;
+    padding: 2px;
+    border-radius: 50%;
+    box-shadow: $profile_shadow;
+    z-index: 1;
+    cursor: pointer;
+
+    svg {
+      background-color: $profile_menu_image_bg;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      transform: rotate(180deg);
+
+      path {
+        fill: $profile_menu_icon;
+      }
+    }
+  }
+
+  &.expanded {
+    width: 260px;
+
+    .details svg {
+      transform: rotate(0deg);
+    }
+  }
+
+  .menu-items {
+    @include partial-column-center;
+    position: relative;
+    background-color: $profile_menu_bg;
+    top: -10px;
+    width: inherit;
+    min-height: 90px;
+    border: $profile_menu_border;
+    border-radius: 4px;
+    padding: 10px 0;
+    -webkit-box-shadow: $profile_menu_item_shadow;
+    -moz-box-shadow: $profile_menu_item_shadow;
+    box-shadow: $profile_menu_item_shadow;
+  }
+}

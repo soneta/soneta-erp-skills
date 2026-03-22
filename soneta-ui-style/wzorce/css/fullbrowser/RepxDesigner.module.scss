@@ -1,0 +1,101 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.rx-designer-main :global {
+  position: absolute;
+  .dxrd-toolbox-wrapper {
+    .dxrd-toolbox-item {
+      svg {
+        path {
+          fill: $rx_designer_icon_fg;
+        }
+      }
+    }
+  }
+
+  .dxrd-toolbar-wrapper {
+    svg {
+      path {
+        fill: $rx_designer_icon_fg;
+      }
+    }
+  }
+
+  .dx-placeholder {
+    display: none;
+  }
+
+  .dxrd-image-soneta_business_ui_dxreports_controls_amountlabel,
+  .dxrd-image-soneta_business_ui_dxreports_controls_crosscheckbox,
+  .dxrd-image-soneta_business_ui_dxreports_controls_resourcepicturebox,
+  .dxrd-image-soneta_business_ui_dxreports_controls_shrinkablelabel,
+  .dxrd-image-soneta_business_ui_dxreports_controls_header,
+  .dxrd-image-soneta_business_ui_dxreports_controls_footer,
+  .dxrd-image-soneta_business_ui_dxreports_controls_databasesubreport
+  {
+    //https://tests.christianoliff.com/hex-to-css-filter-generator/
+    // filter: invert(50%) sepia(52%) saturate(248%) hue-rotate(153deg) brightness(90%) contrast(91%);
+    filter: invert(50%) sepia(96%) saturate(1953%) hue-rotate(45deg) brightness(97%) contrast(101%);
+    background-repeat: no-repeat;
+    &:hover {
+      filter: grayscale(100);
+    }
+  }
+
+  .dxrd-image-soneta_business_ui_dxreports_controls_amountlabel {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBkYXRhLWJpbmQ9InN2Z0F0dHJzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmMDAwMCIgZD0iTTguMzc1IDJjLTEuMTI4IDAtMi4yLjM4OC0zLjIxMSAxLjE2Mi0xLjAxMS43NjUtMS43NjQgMS44Ny0yLjI2IDMuMzE0QzIuMzAxIDguMjIzIDIgMTAuMTQgMiAxMi4yMjdhMTYuMDIgMTYuMDIgMCAwIDAgLjYyNyA0LjQ3N2MuMzIxIDEuMDY3LjY5NSAxLjkyIDEuMTIzIDIuNTYzLjU5My44NzggMS4yNzUgMS41NTMgMi4wNDMgMi4wMjVTNy40MjIgMjIgOC4zNzUgMjJjLjgzNiAwIDEuNjA4LS4xODkgMi4zMTgtLjU2Ni43MS0uMzg3IDEuMzQyLS45MDcgMS44OTYtMS41NTkuNTY0LS42NTIgMS4wMTEtMS40ODYgMS4zNDItMi41MDYuNTU0LTEuNjYyLjgzMi0zLjQ1Mi44MzItNS4zNjkgMC0yLjA5Ni0uMzI1LTQuMDI3LS45NzctNS43OTMtLjQ2Ny0xLjI4NC0xLjIwMS0yLjMwNS0yLjIwMy0zLjA2MUMxMC41OTIgMi4zODIgOS41MjMgMiA4LjM3NSAyem0tLjA0NS45NzdjLjU0NSAwIC45MzkuMTUxIDEuMTgyLjQ1My4zNy40NjMuNjA0IDEuMzUyLjcwMSAyLjY2NC4wMzkuNTU3LjA1OSAyLjUxNS4wNTkgNS44NzdsLS4wNTkgNi4wOTJjLS4wNTggMS4xMDUtLjI5MyAxLjkyMi0uNzAxIDIuNDUxLS4yNDMuMzAyLS42MDcuNDUzLTEuMDk0LjQ1My0uNDQ3IDAtLjgwOC0uMTEzLTEuMDgtLjM0cy0uNDgxLS42NzUtLjYyNy0xLjM0NmMtLjE5NS0uOTI1LS4yOTEtMi43NDktLjI5MS01LjQ2OWwuMTg5LTguNzM4Yy4xMjYtLjg0LjM2OS0xLjQyNy43MjktMS43NTguMjQzLS4yMjcuNTc0LS4zNC45OTItLjM0ek0xOS40OTIgMTdhMi40MSAyLjQxIDAgMCAwLTEuNzcuNzM2QTIuNDQgMi40NCAwIDAgMCAxNyAxOS41MDhhMi40NCAyLjQ0IDAgMCAwIC43MjMgMS43NzFjLjQ5MS40OCAxLjA3OS43MjEgMS43Ny43MjFhMi40NCAyLjQ0IDAgMCAwIDEuNzcxLS43MjFjLjQ5MS0uNDkuNzM2LTEuMDgxLjczNi0xLjc3MXMtLjI0Ni0xLjI4MS0uNzM2LTEuNzcxQTIuMzggMi4zOCAwIDAgMCAxOS40OTIgMTd6Ij48L3BhdGg+PC9zdmc+);
+  }
+
+  .dxrd-image-soneta_business_ui_dxreports_controls_resourcepicturebox {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBkYXRhLWJpbmQ9InN2Z0F0dHJzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggY2xhc3M9ImR4ZC1pY29uLWZpbGwiIGZpbGw9IiNmZjAwMDAiIGQ9Ik0yIDJ2MTZoOHYtMkg0di0xLjlMOCAxMGwyIDIgNi02IDQgNHYxaDJWMkgyem02IDJjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAyLTItLjktMi0yIC45LTIgMi0yem0xMi4xIDguNzdsLTEuMDM1IDEuNzk1Yy0uMzQ2LS4wOTYtLjcwNC0uMTY0LTEuMDgtLjE2Mi0uMzg2LjAwMi0uNzUxLjA3NC0xLjEwNC4xNzhsLTEuMDI1LTEuNzc1LTEuNzMyIDEgMS4wMzEgMS43ODdjLS40ODcuNDkzLS44MzIgMS4xMTktMS4wMTIgMS44MTFIMTJ2MmgyLjE0M2EzLjk5IDMuOTkgMCAwIDAgMS4wNjEgMS44NTdMMTQuMTk5IDIzbDEuNzMyIDEgMS4wMTQtMS43NTZjLjM0My4wOTQuNjk5LjE2IDEuMDcyLjE1OC4zNjUtLjAwMi43MTEtLjA2NyAxLjA0Ny0uMTZMMjAuMDggMjRsMS43MzItMS0xLjAxLTEuNzVhMy45OSAzLjk5IDAgMCAwIDEuMDU1LTEuODQ4SDI0di0yaC0yLjE0MWEzLjk5IDMuOTkgMCAwIDAtMS4wNTctMS44NWwxLjAyOS0xLjc4My0xLjczMi0xem0tMi4xMDcgMy42MzNhMiAyIDAgMSAxIC4wMTggNCAyIDIgMCAxIDEtLjAxOC00eiI+PC9wYXRoPjwvc3ZnPg==);
+  }
+
+  .dxrd-image-soneta_business_ui_dxreports_controls_shrinkablelabel {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBkYXRhLWJpbmQ9InN2Z0F0dHJzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggY2xhc3M9ImR4ZC1pY29uLWZpbGwiIGZpbGw9IiNmZjAwMDAiIGQ9Ik0wIDB2NmgyVjJoNFYwSDB6bTE4IDB2Mmg0djRoMlYwaC02em0tNiAzTDYuNjQxIDE2LjI2Yy0uNDggMS4yNzUtLjk2MSAyLjEyNi0xLjI4MSAyLjU1MXMtLjc5OS42NzktMS4zNTkuNzY0VjIwaDQuODAxdi0uNDI2Yy0uOC0uMDg1LTEuMjAxLS4xNjktMS4zNjEtLjI1NC0uMzItLjI1NS0uNDc5LS41OTUtLjQ3OS0xLjAyIDAtLjM0LjE1OC0uNzY2LjMxOC0xLjM2MWwuMTYtLjM0aDYuNGwuMzIuNzY2Yy4yNC41MS4zMi44NTEuMzIuOTM2YS45Ny45NyAwIDAgMSAuMDguNDI0YzAgLjI1NS0uMDguMjU1LS4yNC4zNC0uMzIuMTctLjcyMS4wODYtMS4yODEuMDg2aC0uMjM4VjIwSDIwdi0uNDI2Yy0uNDgtLjA4NS0uNzk5LS4yNTUtMS4wMzktLjUxLS4zMi0uMzQtLjcyMS0xLjE5LTEuMjgxLTIuNDY1TDEyLjI0IDNIMTJ6bS0xLjI3OSA1LjYwOWwyLjM5OCA2LjI5MUg4LjE2bDIuNTYxLTYuMjkxek0wIDE4djZoNnYtMkgydi00SDB6bTIyIDB2NGgtNHYyaDZ2LTZoLTJ6Ij48L3BhdGg+PC9zdmc+Cg==);
+  }
+
+  .dxrd-image-soneta_business_ui_dxreports_controls_crosscheckbox {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBkYXRhLWJpbmQ9InN2Z0F0dHJzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjAiIHk9IjAiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggY2xhc3M9ImR4ZC1pY29uLWZpbGwiIGZpbGw9IiNmZjAwMDAiIGQ9Ik0yIDJ2MjBoMjBWMkgyem0zLjYzNyAyLjIyM0wxMiAxMC41ODZsNi4zNjMtNi4zNjMgMS40MTQgMS40MTRMMTMuNDE0IDEybDYuMzYzIDYuMzYzLTEuNDE0IDEuNDE0TDEyIDEzLjQxNGwtNi4zNjMgNi4zNjMtMS40MTQtMS40MTRMMTAuNTg2IDEyIDQuMjIzIDUuNjM3bDEuNDE0LTEuNDE0eiI+PC9wYXRoPjwvc3ZnPg==);
+  }
+
+  .dxrd-control-content-crossbox {
+    @include partial-column-center;
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid $verydarkGray;
+
+    &.crossbox-checked, &.crossbox-unchecked {
+      width: 100%;
+      height: 100%;
+      svg {
+        top: unset !important;
+        left: unset !important;
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    &.crossbox-checked {
+      svg {
+        path {
+          fill: #000;
+        }
+      }
+    }
+
+    &.crossbox-unchecked {
+      svg {
+        path {
+          fill: transparent;
+        }
+      }
+    }
+  }
+}
+
+:global {
+  .dx-context-menu .dx-menu-item .dx-submenu {
+    position: fixed !important;
+  }
+}

@@ -1,0 +1,143 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.container {
+  position: relative;
+  height: 100%;
+  width: 250px;
+  margin: 0 8px;
+
+  .profile-group {
+    @include partial-row-center-space-between;
+    height: 100%;
+    width: 100%;
+    gap: 8px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 8px;
+    font-family: $headerbar_command_usermenu_font;
+    color: $headerbar_command_usermenu_fg;
+    background-color: $headerbar_command_usermenu_bg;
+    text-align: left;
+    cursor: pointer;
+
+    &:focus-visible {
+      @include focus(
+        $outline: $focus_outline_secondary,
+        $outline-offset: -2px,
+        $box-shadow: none
+      );
+    }
+
+    .avatar {
+      @include flexDisplay;
+      @include flexJustifyContent(center, center);
+      @include flexAlignItems(center, center);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: clip;
+
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position-x: center;
+      background-position-y: top;
+
+      svg {
+        width: 20px;
+        height: 20px;
+
+        path {
+          fill: $headerbar_command_usermenu_fg;
+        }
+      }
+    }
+
+    .profile-info {
+      @include partial-column-center;
+      @include flexAlignItems(normal, normal);
+      width: 100%;
+      max-width: 162px;
+      line-height: 13px;
+      height: 100%;
+      cursor: pointer;
+      flex-shrink: 1;
+      flex-grow: 1;
+
+      .name, .description {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 14px;
+      }
+
+      .name {
+        line-height: 20px;
+      }
+
+      .position {
+        font-size: 11px;
+      }
+
+      .description {
+        font-weight: 300;
+        line-height: 18px;
+      }
+    }
+
+    .s-icon {
+      @include partial-row-center;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      flex-shrink: 0;
+
+      svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+          fill: $headerbar_command_usermenu_fg;
+        }
+      }
+    }
+
+    .icon {
+      width: 21px;
+      height: 21px;
+
+      svg path {
+        fill: $headerbar_icon;
+      }
+    }
+
+    &:hover {
+      color: $headerbar_icon_hover;
+      background-color: $headerbar_command_usermenu_hover_bg;
+
+      svg {
+        path {
+          fill: $headerbar_icon_hover;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 880px) {
+    width: 44px;
+    margin: 0;
+
+    .profile-group {
+      @include flexJustifyContent(center, center);
+      padding: 0;
+
+      .profile-info,
+      .s-icon {
+        display: none;
+      }
+    }
+  }
+}
+

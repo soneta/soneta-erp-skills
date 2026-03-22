@@ -1,0 +1,116 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.design-item {
+  position: absolute;
+  overflow: hidden;
+
+  .design-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    cursor: move;
+
+    .icon-settings,
+    .icon-close,
+    .icon-resize {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      overflow: hidden;
+
+      svg {
+        height: 100%;
+
+        path {
+          fill: $dashboard_design_icon;
+        }
+      }
+    }
+
+    .icon-settings,
+    .icon-close {
+      @include partial-column-center;
+      background-color: $dashboard_design_icon_bg;
+      top: 4px;
+      right: 4px;
+      width: 16px;
+      height: 16px;
+      border: $dashboard_design_icon_border;
+      cursor: pointer;
+
+      svg {
+        width: 10px;
+      }
+    }
+
+    .icon-settings {
+      right: 24px;
+    }
+
+    .icon-resize {
+      bottom: 1px;
+      right: 1px;
+      width: 20px;
+      height: 20px;
+      cursor: nw-resize;
+
+      &:before {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        width: inherit;
+        height: inherit;
+        content: " ";
+        transform: rotate(45deg);
+        background-color: $dashboard_design_icon_bg;
+      }
+
+      svg {
+        position: absolute;
+        bottom: 2px;
+        right: 0px;
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      content: "";
+      background-color: $dashboard_design_overlay_bg;
+      border-radius: 12px;
+    }
+  }
+
+  &.focus {
+    .design-content {
+      -webkit-box-shadow: $dashboard_design_focus_shadow;
+      -moz-box-shadow: $dashboard_design_focus_shadow;
+      box-shadow: $dashboard_design_focus_shadow;
+      border-radius: 8px 8px 0 8px;
+      
+      &::before {
+        content: none;
+      }
+    }
+  }
+}
+
+.design-item-p {
+  .design-content {
+    border-radius: 10px 10px 0 10px;
+
+    &::before {
+      background-color: $dashboard_design_overlay_bg;
+    }
+  }
+}

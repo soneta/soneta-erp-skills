@@ -1,0 +1,19 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./Group.module.scss";
+
+.filter-group {
+  @include flexDisplay;
+  @include flexJustifyContent(space-between, justify);
+  position: absolute;
+  border-radius: 12px;
+  background-color: $group_bg;
+  box-shadow: $group_shadow;
+  overflow: hidden;
+  text-rendering: optimizeLegibility;
+
+  .column {
+    position: relative;
+  }
+}

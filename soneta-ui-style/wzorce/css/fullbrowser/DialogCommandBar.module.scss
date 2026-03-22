@@ -1,0 +1,12 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.modal-buttons {
+  @include partial-row-center-end;
+  width: 100%;
+  background-color: $modal_bar_bg;
+  border-top: $modal_bar_border;
+  gap: 8px;
+  padding: 16px;
+}

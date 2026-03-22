@@ -1,0 +1,153 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.command {
+  @include partial-column-center;
+  height: inherit;
+  width: 44px;
+  height: 44px;
+  margin-right: 1px;
+  border-radius: 8px;
+  background-color: $headerbar_command_bg;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+
+  &:focus-visible {
+    @include focus(
+      $outline: $focus_outline_secondary,
+      $outline-offset: -2px,
+      $box-shadow: none
+    );
+  }
+
+  &.split-command {
+    width: 55px;
+  }
+
+  .timeContent {
+    width: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: inherit;
+
+    .time {
+      width: 39px;
+      text-align: center;
+    }
+
+    .s-icon {
+      border-left: 1px dotted $headerbar_bg;
+      width: 16px;
+      height: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        width: 12px;
+
+        path {
+          fill: $headerbar_fg;
+        }
+      }
+
+      &:hover {
+        background-color: $bookmark_fg;
+      }
+    }
+  }
+
+  .content {
+    width: 28px;
+    height: 28px;
+
+    .icon {
+      @include flexDisplay;
+      @include flexJustifyContent(center, center);
+      @include flexAlignItems(center, center);
+      width: 100%;
+      height: 100%;
+
+      svg {
+        width: 24px;
+        height: 24px;
+
+        path {
+          fill: $headerbar_icon;
+        }
+      }
+    }
+
+    &.split-command {
+      width: 55px;
+      height: inherit;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &:hover,
+  &.hover {
+    background-color: $headerbar_command_hover_bg;
+
+    .content .icon svg path {
+      fill: $headerbar_icon_hover;
+    }
+  }
+}
+
+.command-p {
+  margin-right: 0;
+  background-color: unset;
+
+  &:focus-visible {
+    @include focus(
+      $outline: $focus_outline_secondary,
+      $outline-offset: -3px,
+      $box-shadow: none
+    );
+
+    background-color: transparent;
+
+    .content .icon svg path {
+      fill: $headerbar_icon_focus;
+    }
+  }
+}
+
+.special {
+  background-color: $headerbar_command_special_bg;
+  margin: 0 16px 0 8px;
+
+  .content {
+    width: 16px;
+    height: 16px;
+
+    .icon {
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+
+  .content .icon svg path {
+    stroke: $headerbar_command_special_icon;
+    stroke-width: 3px;
+    fill: $headerbar_command_special_fill;
+  }
+
+  &:hover {
+    background-color: $headerbar_command_special_hover_bg;
+
+    .content .icon svg path {
+      fill: $headerbar_command_special_fill;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.docx-designer-main {
+  .docx-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    visibility: hidden;
+    background-color: transparent;
+  }
+}

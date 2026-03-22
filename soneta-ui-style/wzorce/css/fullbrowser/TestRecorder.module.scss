@@ -1,0 +1,144 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$recorder_height: 32px;
+
+.test-recorder {
+  @include partial-row-center-start;
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  width: auto;
+  height: calc(#{$recorder_height} + 20px);
+  z-index: 1000;
+  border-radius: 4px 0 0 4px;
+  border: $recorder_border_fg;
+  border-right: none;
+  background-color: $recorder_bg;
+
+
+  .btn-content {
+    @include partial-column-center;
+    cursor: pointer;
+  }
+
+  &.open {
+    right: 0;
+  }
+
+  .icon {
+    @include partial-column-center;
+    height: calc(#{$recorder_height} + 20px);
+    width: calc(#{$recorder_height} + 20px);
+    line-height: normal;
+    cursor: pointer;
+    svg {
+      height: $recorder_height;
+      width: $recorder_height;
+    }
+
+    &.small {
+      height: calc(#{$recorder_height} - 12px);
+      svg {
+        width: calc(#{$recorder_height} - 15px);
+        height: calc(#{$recorder_height} - 15px);
+      }
+    }
+  }
+
+  .end-record-desc {
+    height: 20px;
+    margin: 0;
+    text-align: center;
+    color: black;
+  }
+
+  .stop-recording {
+    @include partial-row-center;
+    @include partial-transition;
+    width: calc(#{$recorder_height} + 8px);
+    height: calc(#{$recorder_height} + 8px);
+    font-size: 10pt;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    outline: none;
+    color: $recorder_color;
+    box-shadow: $recorder_stop_box_shadow;
+    background-color: $recorder_stop_bcg;
+    margin: 0 5px 0 5px;
+
+    &.disabled {
+      pointer-events: none;
+      svg {
+        path {
+          fill: $recorder_button_disabled_color;
+        }
+      }
+    }
+
+    &:hover,
+    &:focus {
+      box-shadow: $recorder_button_hover_shadow;
+    }
+
+    &:active {
+      box-shadow: $recorder_button_active_shadow;
+      background-color: $recorder_button_active_bg;
+      color: $recorder_button_active_color;
+    }
+
+    .icon {
+      @include partial-column-center;
+      height: $recorder_height;
+      width: $recorder_height;
+      border-radius: 50%;
+      line-height: normal;
+
+      svg {
+        width: calc(#{$recorder_height} - 10px);
+        height: calc(#{$recorder_height} - 10px);
+      }
+    }
+
+    &.rec {
+      svg {
+        height: $recorder_height;
+        width: $recorder_height;
+        path {
+          fill: $recorder_button_active_color;
+        }
+      }
+    }
+
+    &.disabled {
+      pointer-events: none;
+      svg {
+        path {
+          fill: $recorder_button_disabled_color;
+        }
+      }
+    }
+
+    .title {
+      @include partial-column-center-start;
+      padding: 0 4px;
+      height: inherit;
+      overflow: hidden;
+      color: $recorder_color;
+    }
+  }
+
+  &.active {
+    box-shadow: $recorder_active_shadow;
+  }
+
+  .test-name-input {
+    margin: 0 10px 0 10px;
+    input {
+      outline: 0;
+    }
+  }
+}

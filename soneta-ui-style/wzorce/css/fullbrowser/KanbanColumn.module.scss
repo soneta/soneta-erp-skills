@@ -1,0 +1,56 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.kanban-column :global {
+  .dx-scrollable-content,
+  .dx-scrollview-content {
+    height: 100%;
+  }
+}
+
+.kanban-column {
+  border-radius: 8px;
+  margin: 5px 10px 5px 0;
+  background-color: $kanban_list_bg;
+  vertical-align: top;
+  white-space: normal;
+  display: inline-flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: stretch;
+
+  .column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    .title {
+      color: $kanban_list_fg;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .add-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+
+      &:focus-visible {
+        @include focus();
+      }
+
+      & > div > svg > path {
+        fill: $kanban_list_fg;
+      }
+    }
+  }
+
+
+  .cards-container {
+    min-height: 100%;
+  }
+}

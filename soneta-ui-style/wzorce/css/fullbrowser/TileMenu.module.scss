@@ -1,0 +1,8 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+
+.main-menu {
+  @include partial-column-start-start;
+  outline: none;
+  gap: 8px;
+}

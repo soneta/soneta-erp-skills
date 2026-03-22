@@ -1,0 +1,28 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/SchedulerSimpleButton.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.ss-day-button {
+  &.horizontal-view {
+    &.no-label {
+      min-height: 36px;
+      height: 36px;
+    }
+
+    &.only-label {
+      margin-bottom: 0;
+    }
+
+    .ss-day-content {
+      height: 36px;
+
+      .ss-event {
+        @include flexAlignItems(flex-start, start);
+        padding: 1px 8px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+  }
+}

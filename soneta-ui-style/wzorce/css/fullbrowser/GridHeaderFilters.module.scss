@@ -1,0 +1,53 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gh-filters {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 32px;
+  font-size: 9pt;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+
+  &:focus-visible {
+    @include focus(
+      $box-shadow: none,
+    );
+  }
+
+  .gh-cells {
+    top: 0;
+    height: 100%;
+    font-size: 9pt;
+    background-color: $grid_header_filter_bg;
+    border-top: $grid_border;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    .gh-filter {
+      position: absolute;
+      top: 0;
+      overflow: hidden;
+      background-color: inherit;
+      border-top: $grid_border;
+      border-right: $grid_border;
+
+      input {
+        color: $grid_row_content_fg;
+        height: 100%;
+        width: 100%;
+        border: none;
+        padding: 0 5px;
+        outline: none;
+
+        &:focus {
+          background-color: $grid_filter_focused_bg;
+        }
+      }
+    }
+  }
+}

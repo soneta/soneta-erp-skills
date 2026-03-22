@@ -1,0 +1,28 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$nav_menu_width: 250px;
+
+.popup-simple-menu {
+  @include partial-column-center;
+  z-index: 1001;
+  height: 100%;
+  width: $nav_menu_width;
+  background: $popup_simple_bg;
+  border: $popup_simple_border;
+  border-radius: 12px;
+
+  &:focus-visible {
+    @include focus(
+      $outline-offset: -1px,
+      $box-shadow: none
+    );
+  }
+
+  .popup-column {
+    width: 350px;
+    height: 100%;
+    padding: 8px;
+  }
+}

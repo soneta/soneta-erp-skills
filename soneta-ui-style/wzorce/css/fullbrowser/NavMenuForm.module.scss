@@ -1,0 +1,32 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./PinnOffset.module.scss";
+
+.nav-menu-form {
+  @include partial-column-start;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  font-family: $nav_tree_panel_font;
+  box-shadow: $nav_tree_panel_shadow;
+  border-radius: 12px;
+
+  flex-direction: column;
+  background: $nav_tree_form_panel_bg;
+  width: $nav_form_width;
+
+  &.collapsed {
+    width: $nav_form_collapsed_width;
+  }
+
+  &:not(.collapsed) {
+    @include transition(width, .3s, ease-out, 0s);
+  }
+
+  &.pinned,
+  &.collapsed {
+    z-index: 1000;
+  }
+}

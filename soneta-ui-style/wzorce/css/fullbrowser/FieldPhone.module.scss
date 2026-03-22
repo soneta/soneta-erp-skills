@@ -1,0 +1,9 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./FieldBase.module.scss";
+
+.field-phone {
+  display: inline-flex;
+  height: inherit;
+}

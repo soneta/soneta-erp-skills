@@ -1,0 +1,90 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/SchedulerCalendar.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.tasks-scroll {
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+}
+
+.ss-box-con {
+  font-family: $ss_font;
+
+  .ss-week-desc {
+    .ss-box-week {
+      .ss-scrolable-task-list {
+        height: 100%;
+        left: 0;
+        right: 12px;
+      }
+
+      .ss-week {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  &.ss-res-view {
+    .ss-week-desc {
+      .ss-box-week {
+        .ss-week {
+          margin-bottom: 23px;
+        }
+      }
+    }
+  }
+
+  &.horizontal {
+    .ss-week-desc {
+      .ss-shortdays {
+        gap: .8rem;
+      }
+
+      .ss-box-week {
+        .ss-week {
+          gap: .8rem;
+        }
+      }
+    }
+
+    &.ss-res-view {
+      .ss-week-desc {
+
+        .ss-shortdays {
+          padding-left: calc(165px + .8rem);
+        }
+
+        .ss-box-week {
+
+          .ss-resource-week {
+            @include flexDisplay;
+            @include flexAlignItems(center, center);
+            gap: .8rem;
+            margin-bottom: 20px;
+
+            &.labels {
+              margin-bottom: 10px;
+            }
+
+            .ss-resource-label {
+              @include partial-ellipsis;
+              display: block;
+              width: 165px;
+              flex: 0 0 auto;
+
+              font-weight: 500;
+              line-height: 22px;
+            }
+
+            .ss-week {
+              flex: 1 1 auto;
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

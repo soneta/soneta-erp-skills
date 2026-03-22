@@ -1,0 +1,151 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-html {
+  @include flexDisplay();
+  @include flexDirection(row);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(center, center);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  .btn-fullsize {
+    @include partial-column-center;
+    position: absolute;
+    top: 8px;
+    right: 22px;
+    width: 28px;
+    height: 28px;
+    z-index: 100;
+    cursor: pointer;
+    line-height: 8pt;
+    font-size: 14pt;
+    font-family: $primaryFont;
+    border-radius: 2px;
+    background-color: $ehtml_fullsize_btn_bg;
+    box-shadow: $ehtml_fullsize_btn_shadow;
+
+    &:focus-visible {
+      @include focus(
+        $outline: $focus_outline_tertiary,
+        $outline-offset: 2px,
+        $outline-width: 2px,
+      );
+    }
+
+    &:active {
+      background-color: $ehtml_fullsize_btn_active_bg;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    svg path {
+      fill: $ehtml_fullsize_btn_fg;
+    }
+
+    &:active {
+      box-shadow: $ehtml_fullsize_btn_active_shadow;
+
+      svg path {
+        fill: $ehtml_fullsize_btn_active_fg;
+      }
+    }
+  }
+
+  .content,
+  .editor-fullsize {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      td {
+        border: $ehtml_content_line_color;
+      }
+    }
+
+    hr {
+      border: 0;
+      border-top: $ehtml_content_line_color;
+    }
+  }
+
+  .content {
+    @include partial-sellect-text;
+    position: absolute;
+    height: inherit;
+    color: $ehtml_fg;
+    padding: 0 10px;
+    border: $ehtml_border;
+    border-radius: 8px;
+    background-color: $ehtml_bg;
+    outline: none;
+
+    &:focus-visible {
+      @include focus();
+    }
+
+    .html-scroll-content {
+      padding: 10px 15px;
+    }
+  }
+
+  .editor-fullsize {
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+    color: $ehtml_fg;
+    background-color: $ehtml_bg;
+  }
+
+  .html-scroll-content {
+    @include partial-sellect-text;
+    padding: 10px 20px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &.vertical {
+    @include flexDirection(column);
+    @include flexJustifyContent(flex-end, end);
+
+    .content {
+      @include flexDisplay();
+      @include flexDirection(column);
+      @include flexAlignItems(flex-end, end);
+      @include flexJustifyContent(flex-end, end);
+      position: relative;
+      width: 100%;
+      height: calc(100% - 20px);
+    }
+
+    .btn-fullsize {
+      top: 32px;
+    }
+  }
+}
+
+.editor-html-p {
+  .content {
+    border-radius: 4px;
+  }
+
+  //CHECK: NG => nie mam pojęcia z czym są związane te style
+  .modal-overlay .modal .modal-buttons {
+    border-top: 0;
+    border-bottom: $ehtml_modal_border;
+  }
+}

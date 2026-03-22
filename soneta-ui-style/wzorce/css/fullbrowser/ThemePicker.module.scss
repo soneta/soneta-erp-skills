@@ -1,0 +1,130 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$picker_width: 170px;
+$picker_height: 32px;
+
+.theme-items {
+  .item-active {
+    &.selected :global {
+      -webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      -moz-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      -o-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    }
+  }
+}
+
+.theme-picker {
+  &:focus-visible {
+    @include focus(
+      $outline-offset: 2px,
+      $box-shadow: none,
+    );  
+  }
+
+  .theme-button {
+    @include partial-row-center-start;
+    @include partial-transition;
+    width: $picker_width;
+    height: $picker_height;
+    font-size: 10pt;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    overflow: hidden;
+    outline: none;
+    color: $picker_color;
+    background-color: $picker_bg;
+    box-shadow: $picker_button_shadow;
+    border: $signIn_btn_border;
+
+    &:hover,
+    &:focus {
+      box-shadow: $picker_button_hover_shadow;
+      background-color: $picker_button_hover;
+    }
+
+    &:active {
+      box-shadow: $picker_button_active_shadow;
+      background-color: $picker_button_active_bg;
+      color: $picker_button_active_color;
+    }
+
+    .icon {
+      @include partial-column-center;
+      height: inherit;
+      width: $picker_height;
+      line-height: normal;
+
+      svg {
+        width: 24px;
+        height: inherit;
+        fill: $picker_fill;
+      }
+    }
+
+    .title {
+      @include partial-column-center-start;
+      padding: 0 4px;
+      height: inherit;
+      overflow: hidden;
+      color: $picker_color;
+    }
+  }
+
+  &.active {
+    box-shadow: $picker_active_shadow;
+  }
+}
+
+.theme-items {
+  @include partial-column-center-start;
+  position: absolute;
+  top: $picker_height;
+  width: $picker_width;
+  left: 0px;
+  margin-top: 1px;
+  box-shadow: $picker_button_hover_shadow;
+
+  .item {
+    @include partial-row-center-start;
+    background-color: $picker_item_bg;
+    width: inherit;
+    height: $picker_height;
+    cursor: pointer;
+
+    .item-text {
+      @include partial-column-center-start;
+      width: calc(100% - 20px);
+      height: inherit;
+      color: $picker_color;
+      font-size: 11pt;
+      text-transform: lowercase;
+      padding: 0 5px;
+    }
+
+    &:hover {
+      background-color: $picker_item_hover_bg;
+    }
+  }
+
+  .item-active {
+    width: 16px;
+    height: inherit;
+    margin: 6px;
+
+    &.selected {
+      height: 8px;
+      border-bottom: 2px solid $picker_item_selected_border_color;
+      border-left: 2px solid $picker_item_selected_border_color;
+      -webkit-transform: rotate(-45deg) scale(1);
+      -moz-transform: rotate(-45deg) scale(1);
+      -ms-transform: rotate(-45deg) scale(1);
+      -o-transform: rotate(-45deg) scale(1);
+      transform: rotate(-45deg) scale(1);
+      transform-origin: 40% 40%;
+    }
+  }
+}

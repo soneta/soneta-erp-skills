@@ -1,0 +1,77 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.nav-arrows {
+  @include partial-column-start;
+  position: absolute;
+  bottom: 0;
+  height: $nav_menu_icon_width;
+  padding: 5px 0;
+  background-color: $nav_bar_arrows_bg;
+
+  cursor: pointer;
+
+  .arrow {
+    @include partial-column-center;
+    width: inherit;
+    height: 15px;
+
+    &.ac {
+      .icon svg path {
+        fill: $nav_arrows_active;
+      }
+    }
+
+    &.hover {
+      background-color: var(--nav_item_hover_bg);
+    }
+  }
+
+  .icon {
+    @include partial-column-center;
+    height: inherit;
+    width: $nav_menu_icon_width;
+
+    svg {
+      width: $nav_menu_svg_size;
+      height: inherit;
+
+      path,
+      text {
+        fill: $nav_arrows_icon;
+      }
+    }
+  }
+
+  &.group {
+    left: 8px;
+    bottom: 0;
+    width: $nav_menu_icon_width;
+    background-color: $nav_group_bg;
+
+    &:not(.ex) {
+      width: $nav_menu_icon_width;
+    }
+
+    &.ex {
+      width: $nav_menu_width;
+    }
+  }
+
+  &:not(.group) {
+    width: calc($nav_menu_popup_width - 8px);
+    border-left: $nav_arrows_border;
+    border-top: none;
+    border-left: none;
+    border-bottom-right-radius: 12px;
+
+    &:not(.ex) {
+      left: 40px;
+    }
+
+    &.ex {
+      left: calc($nav_menu_width + 8px);
+    }
+  }
+}

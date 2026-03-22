@@ -1,0 +1,75 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.animationLightSpeedRollLeft :global {
+	animation-duration: 0.5s;
+	animation-fill-mode: both;
+	animation-name: RollXLeft;
+	animation-timing-function: ease-out;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-name: RollXLeft;
+	-webkit-animation-timing-function: ease-out;
+}
+
+.animationLightSpeedRollRight :global {
+	animation-duration: 0.5s;
+	animation-fill-mode: both;
+	animation-name: RollXRight;
+	animation-timing-function: ease-out;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-name: RollXRight;
+	-webkit-animation-timing-function: ease-out;
+}
+
+.box-con {
+  @include flexDisplay;
+  @include flexDirection(row);
+  @include flexWrap(nowrap);
+  @include flexJustifyContent(center, center);
+  @include flexAlignContent(stretch, stretch);
+  margin: 0 auto;
+  padding: 15px 0 12px 0;
+  width: 8 * 36px + 32px;
+
+  .week-no {
+    float: left;
+
+    .week-zero {
+      border-right: none;
+      visibility: hidden;
+    }
+
+    .week {
+      display: block;
+      width: 36px;
+      height: 36px;
+      font-size: 10pt;
+      line-height: 36px;
+      text-align: center;
+      color: $ss_tl_week_fg;
+      border-right: $ss_tl_week_border;
+    }
+  }
+
+  .week-desc {
+    .shortdays {
+      min-width: 252px;
+
+      .shortdays-element {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        color: $ss_tl_shortday_fg;
+      }
+    }
+  }
+
+  &.horizontal {
+    padding: 4px 0 0 0;
+  }
+}

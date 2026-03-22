@@ -1,0 +1,141 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.partial-tile-hover :global {
+  -webkit-animation: $tile_hover_webkit;
+  animation: $tile_hover;
+}
+
+.partial-tile-active :global {
+  -webkit-animation: $tile_hover_active_webkit;
+  animation: $tile_hover_active;
+}
+
+.tile-item,
+.tile-item-small {
+  @include partial-transition;
+  @include partial-column-start;
+  position: absolute;
+  width: 352px;
+  min-height: 80px;
+  height: auto;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: $tile_item_bg;
+  border-left: 4px solid $tile_command_icon;
+  box-shadow: $tile_command_shadow;
+
+  .t-content {
+    @include flexDisplay;
+    @include flexDirection(row);
+    @include flexAlignItems(center, center);
+    width: 100%;
+    height: 100%;
+    min-height: 80px;
+    padding: 10px 16px;
+    gap: 10px;
+
+    .t-icon {
+      @include partial-column-center;
+      height: 20px;
+      width: 20px;
+      flex-shrink: 0;
+
+      svg {
+        height: 20px;
+        width: 20px;
+
+        path {
+          transition: fill 0.2s ease-in 0s;
+          fill: $tile_command_icon;
+        }
+
+        tspan {
+          transition: fill 0.2s ease-in 0s;
+          fill: $tile_command_icon;
+        }
+      }
+    }
+
+    .text-container {
+      @include flexDisplay;
+      @include flexDirection(column);
+      flex-grow: 1;
+      width: 100%;
+
+      .t-title {
+        @include partial-ellipsis;
+        width: 100%;
+        margin: 0;
+        font-family: $tertiaryFont;
+        font-size: 16px;
+        line-height: 28px;
+        color: $tile_color;
+        transition: color 0.2s ease-in 0s;
+      }
+
+      .t-desc {
+        @include partial-column-center-start;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        width: 100%;
+        margin: 0;
+        font-family: $tertiaryFont;
+        font-size: 14px;
+        line-height: 16px;
+        color: $tile_desc_fg;
+        transition: color 0.2s ease-in 0s;
+        overflow: hidden;
+      }
+    }
+
+    .t-icon + .text-container {
+      width: calc(100% - 30px);
+    }
+
+  }
+
+
+  &.ignore-location {
+    position: static;
+    margin: 0;
+  }
+
+  &:hover:not(:active),
+  &:focus:not(:active) {
+    @extend .partial-tile-hover;
+    background: $tile_group_hover_bg;
+  }
+
+  &:focus-visible,
+  &.hover {
+    @include focus(
+      $outline: $focus_outline,
+      $outline-offset: 2px,
+      $outline-width: 2px,
+      $box-shadow: none,
+    );
+  }
+
+  &:active {
+    @extend .partial-tile-active;
+    box-shadow: none;
+    background-color: $tile_active_bg;
+  }
+}
+
+.tile-item-small {
+  min-height: 25px;
+
+  .t-content {
+    min-height: 25px;
+  }
+}
+
+.tile-item-small:not(.ignore-location) {
+  .t-content {
+    height: inherit;
+  }
+}

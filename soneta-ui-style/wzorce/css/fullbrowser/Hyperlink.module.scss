@@ -1,0 +1,44 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.hyperlink {
+  @include partial-column-center-start;
+  font-size: $font_size_label;
+  color: $html_hyperlink_color;
+
+  &:focus-visible {
+    @include focus(
+      $outline-offset: 2px,
+      $box-shadow: none
+    );
+  }
+
+  a {
+    color: $label_fg;
+  }
+
+
+  &.large {
+    font-family: $secondaryFont;
+    line-height: $font_size_special;
+    font-size: 16pt !important;
+  }
+
+  &.bold {
+    font-weight: 600 !important;
+  }
+
+  &.center {
+    align-items: center;
+  }
+
+  &.sign-in { //trzeba przekazać klasę
+    font-family: $tertiaryFont;
+    font-size: 14px;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

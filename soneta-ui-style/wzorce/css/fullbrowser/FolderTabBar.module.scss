@@ -1,0 +1,19 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.folder-tab-bar {
+  position: absolute;
+  display: inline-flex;
+  top: $window_top_margin;
+  width: 100%;
+  z-index: 399;
+  padding: 0 16px 8px 8px;
+  font-family: $tertiaryFont;
+
+  .tabs-container {
+    @include partial-row-center-start;
+    border-radius: 8px;
+    background-color: $folder_tab_item_bg;
+  }
+}

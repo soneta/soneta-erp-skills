@@ -1,0 +1,74 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.wb-wiz {
+  @include partial-row-center-start;
+  position: absolute;
+  top: 46px;
+  left: 16px;
+  right: 16px;
+  height: 36px;
+  font-family: $tertiaryFont;
+
+  .wiz-step {
+    @include partial-row-center-start;
+    width: 210px;
+    gap: 8px;
+
+    .step-cir {
+      @include partial-column-center;
+      @include flexSelf(0, 0, auto);
+      width: 24px;
+      height: 24px;
+      -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+      background-color: $wizard_step;
+
+      .con-icon {
+        height: 21px;
+        width: 21px;
+        padding-right: 3px;
+        padding-top: 2px;
+
+        path {
+          fill: $wizard_step_icon;
+        }
+      }
+
+      &.prev {
+        background-color: $wizard_step_prev;
+      }
+
+      &.active {
+        background-color: transparent;
+        border: 2px solid $wizard_step_active;
+      }
+    }
+
+    .step-desc {
+      @include partial-ellipsis;
+      @include flexSelf(0, 1, auto);
+      margin-left: 2px;
+      font-size: 14px;
+      color: $wizard_step_fg;
+    }
+
+    .step-sep {
+      @include flexSelf(1, 1, auto);
+      min-width: 16px;
+      margin-right: 8px;
+      border-bottom: 2px solid $wizard_step;
+      transform: translateY(-50%);
+
+      &.prev {
+        border-color: $wizard_step_prev;
+      }
+
+      &.active {
+        border-color: $wizard_step_active;
+      }
+    }
+  }
+}

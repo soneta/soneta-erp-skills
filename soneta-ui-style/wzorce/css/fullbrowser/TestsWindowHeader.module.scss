@@ -1,0 +1,136 @@
+.test-flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: inherit;
+  align-items: center;
+}
+
+.test-svg-box {
+  @extend .centerBoxInline;
+  width: 36px;
+  height: 36px;
+  svg {
+    width: 24px;
+    height: 100%;
+  }
+}
+
+.centerBoxInline {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
+
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+}
+
+.test-active {
+  -webkit-box-shadow: inset 2px 2px 30px 0 rgb(201, 201, 201);
+  -moz-box-shadow: inset 2px 2px 30px 0 rgb(201, 201, 201);
+  box-shadow: inset 2px 2px 30px 0 rgb(201, 201, 201);
+}
+
+.test-header {
+  @extend .test-flex-row;
+  width: 100%;
+  height: 48px;
+  margin-bottom: 2px;
+  line-height: 48px;
+  background-color: rgb(80, 80, 80);
+
+  .test-run {
+    @extend .test-flex-row;
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    background-color: rgb(63, 63, 63);
+    margin-bottom: 2px;
+    cursor: pointer;
+
+    .test-state {
+      @extend .test-svg-box;
+    }
+
+    .test-title {
+      width: 88px;
+      height: inherit;
+      padding-left: 10px;
+      font-size: 10pt;
+      color: rgb(251, 188, 5);
+    }
+
+    &:active {
+      @extend .test-active;
+    }
+  }
+
+  .test-search {
+    padding-left: 10px;
+
+    input {
+      height: 24px;
+      width: 220px;
+      padding-left: 2px;
+      padding-right: 2px;
+      border: 1px solid rgb(173, 129, 0);
+      outline: none;
+      color: rgb(173, 129, 0);
+      background-color: rgb(44, 44, 44);
+
+      &::-webkit-input-placeholder {
+        font-size: 8pt;
+        font-style: italic;
+        color: rgb(188, 188, 188);
+      }
+
+      &:-moz-placeholder {
+        /* Firefox 18- */
+        font-size: 8pt;
+        font-style: italic;
+        color: rgb(188, 188, 188);
+      }
+
+      &::-moz-placeholder {
+        /* Firefox 19+ */
+        font-size: 8pt;
+        font-style: italic;
+        color: rgb(188, 188, 188);
+      }
+
+      &:-ms-input-placeholder {
+        font-size: 8pt;
+        font-style: italic;
+        color: rgb(188, 188, 188);
+      }
+
+      &:focus {
+        color: rgb(251, 188, 5);
+        border: 1px solid rgb(251, 188, 5);
+
+        &::-webkit-input-placeholder {
+          color: transparent;
+        }
+
+        &:-moz-placeholder {
+          /* Firefox 18- */
+          color: transparent;
+        }
+
+        &::-moz-placeholder {
+          /* Firefox 19+ */
+          color: transparent;
+        }
+
+        &:-ms-input-placeholder {
+          color: transparent;
+        }
+      }
+    }
+  }
+}

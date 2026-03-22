@@ -1,0 +1,64 @@
+@import "./Variables.scss";
+
+$bookmarks_height: 35px;
+$window_diff_margin: 4px;
+$window_diff_left_margin: 16px;
+$window_scroll_margin: 5px;
+
+.pinned-offset {
+  position: absolute;
+  top: calc($window_top_margin + $bookmarks_height + $window_diff_margin);
+  bottom: 0;
+  left: calc($nav_folder_width + $window_diff_left_margin);
+  right: 0;
+  width: calc(100% - $nav_folder_width - $window_diff_left_margin - $window_scroll_margin);
+}
+
+.unpinned-offset {
+  position: absolute;
+  top: calc($window_top_margin + $bookmarks_height + $window_diff_margin);
+  bottom: 0;
+  left: calc($nav_folder_collapsed_width + $window_diff_left_margin);
+  right: 0;
+  width: calc(100% - $nav_folder_collapsed_width - $window_diff_left_margin - $window_scroll_margin);
+}
+
+.unpinned-offset-wiz {
+  position: absolute;
+  top: calc($window_top_margin + $bookmarks_height + $window_diff_margin);
+  bottom: 0;
+  left: 8px;
+  right: 0;
+  width: calc(100% - $window_diff_left_margin - $window_scroll_margin);
+}
+
+.unpinned-bookmark-offset-wiz {
+  position: absolute;
+  top: $window_top_margin;
+  left: 8px;
+  width: calc(100% - $window_diff_left_margin);
+}
+
+.pinned-bookmark-offset {
+  position: absolute;
+  top: $window_top_margin;
+  left: calc($nav_folder_width + $window_diff_left_margin);
+  width: calc(100% - $nav_folder_width - $window_diff_left_margin);
+}
+
+.unpinned-bookmark-offset {
+  position: absolute;
+  top: $window_top_margin;
+  left: calc($nav_folder_collapsed_width + $window_diff_left_margin);
+  width: calc(100% - $nav_folder_collapsed_width - $window_diff_left_margin);
+}
+
+.offset-intermediate-state {
+  left: $window_diff_left_margin;
+  width: calc(100% - ($window_diff_left_margin * 2));
+}
+
+.bookmark-offset-intermediate-state {
+  left: $window_diff_left_margin;
+  width: calc(100% - $nav_folder_width - $window_diff_left_margin);
+}

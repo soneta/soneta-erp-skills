@@ -1,0 +1,6 @@
+$splash_screen_bg: white;
+$splash_logo: rgb(118, 163, 0);
+$splash_spinner_track: 1.1em solid rgba(118, 163, 0, 0.2);
+$splash_spinner_fill: 1.1em solid rgb(118, 163, 0);
+
+@import '../common/SplashScreen.scss';

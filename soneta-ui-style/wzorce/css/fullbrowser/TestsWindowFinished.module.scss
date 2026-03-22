@@ -1,0 +1,110 @@
+.test-flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: inherit;
+  align-items: center;
+}
+
+.test-svg-box {
+  @extend .centerBoxInline;
+  width: 36px;
+  height: 36px;
+  svg {
+    width: 24px;
+    height: 100%;
+  }
+}
+
+.centerBoxInline {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
+
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+}
+
+.test-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.test-active {
+  -webkit-box-shadow: inset 2px 2px 30px 0 rgb(201, 201, 201);
+  -moz-box-shadow: inset 2px 2px 30px 0 rgb(201, 201, 201);
+  box-shadow: inset 2px 2px 30px 0 rgb(201, 201, 201);
+}
+
+.test-flex-column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.test-finished {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgb(48, 48, 48);
+
+  @extend .test-flex-row;
+
+  .test-state {
+    @extend .test-svg-box;
+  }
+
+  .test-title {
+    @extend .test-ellipsis;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 250px;
+    height: inherit;
+    padding-left: 5px;
+    font-size: 10pt;
+    color: rgb(188, 188, 188);
+  }
+
+  .test-back-all {
+    @extend .test-svg-box;
+  }
+
+  &:active {
+    @extend .test-active;
+  }
+}
+
+.test-finished {
+  height: 48px;
+  line-height: 48px;
+}
+
+.test-finished.failed {
+  height: 72px;
+
+  .test-title {
+    @extend .test-flex-column;
+
+    div {
+      line-height: 10pt;
+    }
+
+    div:first-child {
+      color: rgb(253, 61, 61);
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+}

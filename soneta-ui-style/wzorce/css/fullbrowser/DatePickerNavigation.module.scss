@@ -1,0 +1,19 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/DatePickerNavigation.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.navigation {
+  .container {
+    cursor: pointer;
+
+    &:focus-visible {
+      @include focus(
+        $outline-offset: 4px,
+         $outline-width: 2px,
+        $box-shadow: none,
+        $border-radius: 5px,
+      );
+    }
+  }
+}

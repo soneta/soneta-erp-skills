@@ -1,0 +1,16 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.kanban-diagram {
+  position: absolute;
+  white-space: nowrap;
+  top: 0;
+  right: 0;
+  bottom: 10px;
+  left: 0;
+
+  &:focus-visible {
+    @include focus();
+  }
+}

@@ -1,0 +1,45 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.splitter {
+  @include partial-column-center;
+  position: absolute;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  z-index: 1000;
+  background-color: $splitter_bg;
+
+  .icon {
+    @include partial-column-center;
+    position: absolute;
+    height: 30px;
+    width: 4px;
+    cursor: ew-resize;
+    background-color: $splitter_btn_bg;
+
+    &:focus-visible {
+      @include focus();
+    }
+
+    svg {
+      height: 100%;
+      width: 12px;
+
+      path {
+        fill: $splitter_icon;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: $splitter_hover_bg;
+
+    .icon {
+      path {
+        fill: $splitter_hover_bg;
+      }
+    }
+  }
+}

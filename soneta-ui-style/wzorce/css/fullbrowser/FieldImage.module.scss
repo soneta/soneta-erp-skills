@@ -1,0 +1,88 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./FieldBase.module.scss";
+@import "./Variables.scss";
+
+.field-image,
+.field-image-full-screen {
+  padding: 4px;
+  width: 100%;
+
+  .imgContainer {
+    position: relative;
+    border-radius: 12px;
+
+    img {
+      border-radius: 12px;
+    }
+
+    .fullScreenButton {
+      cursor: pointer;
+      @include fullScreenButton();
+
+      .fullScreenIcon {
+        width: 16px;
+        height: 16px;
+        fill: $field_image_full_screen_fg;
+      }
+    }
+  }
+
+  &.circle {
+    .imgContainer {
+      @include flexDisplay();
+      @include flexJustifyContent(center, center);
+      background-color: $field_image_circle_bg;
+      border: $field_image_circle_border;
+      overflow: hidden;
+      border-radius: 50%;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.field-image {
+  @include partial-column-center;
+  position: absolute;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .imgContainer {
+    @include flexDisplay();
+    @include flexJustifyContent(center, center);
+  }
+
+  .empty-img {
+    height: inherit;
+    width: inherit;
+    border-radius: 12px;
+
+    svg {
+      height: inherit;
+      width: inherit;
+      fill: $grid_emptycontent;
+    }
+  }
+}
+
+.field-image-full-screen {
+  @include partial-column-center;
+  position: fixed;
+  z-index: 99999;
+  background-color: $full-screen-field-bg;
+  .imgContainer {
+    @include partial-column-center;
+    margin: 20px;
+    img {
+      height: 97%;
+    }
+    .fullScreenButton {
+      right: 50px;
+      bottom: 50px;
+    }
+  }
+}

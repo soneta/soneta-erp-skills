@@ -1,0 +1,24 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gb {
+  position: absolute;
+  background: $grid_bar_gradient;
+  box-shadow: $group_shadow;
+  overflow: hidden;
+  text-rendering: optimizeLegibility;
+  border: $grid_bar_border;
+  border-top: $grid_bar_border_top;
+  border-radius: $grid_bar_border_radius;
+
+  .content {
+    @include partial-column-start-start;
+    height: inherit;
+    width: inherit;
+  }
+}
+
+.gb-p {
+  box-shadow: unset;
+}

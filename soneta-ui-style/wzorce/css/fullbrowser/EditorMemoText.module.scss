@@ -1,0 +1,171 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-memo {
+  @include flexDisplay();
+  @include flexDirection(row);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(center, center);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  .tooltipHolder {
+    color: $input_tooltip_fg;
+    line-height: 26px;
+    font-size: $font_size_label;
+    font-weight: 300;
+  }
+
+  .content {
+    position: absolute;
+    height: inherit;
+    background-color: $input_bg;
+    border: $emt_border;
+    border-radius: 8px;
+
+    &:focus-visible {
+      @include focus();
+    }
+
+    textarea {
+      width: 100%;
+      height: inherit;
+      padding: 4px;
+      margin-bottom: $input_margin_bottom;
+      line-height: $memo_line_height;
+      font-family: $defaultFont;
+      font-size: $font_size_input;
+      text-align: left;
+      box-sizing: border-box;
+      color: $input_fg;
+      background-color: transparent;
+      border: none;
+      resize: none;
+      border-radius: 8px;
+
+      &.clearable {
+        @include partial-clearable-memo;
+      }
+
+      &:focus-visible {
+        @include focus;
+      }
+    }
+
+    &.disabled {
+      border: $input_border_disabled;
+
+      textarea {
+        color: $input_disabled_fg;
+        background-color: $input_disabled_bg;
+      }
+    }
+  }
+
+  &.vertical {
+    @include flexDirection(column);
+    @include flexJustifyContent(space-between, space-between);
+
+    .content {
+      @include flexDisplay();
+      @include flexDirection(column);
+      @include flexAlignItems(flex-end, end);
+      @include flexJustifyContent(flex-end, end);
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      margin-top: 4px;
+
+      textarea {
+        padding: 0 4px 0 4px;
+        margin-bottom: 0;
+        background-color: $emt_bg;
+      }
+    }
+
+    .disabled {
+
+      textarea {
+        background-color: $input_disabled_bg;
+
+        &:focus-visible {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  &.focused .content {
+    border: none;
+  }
+
+  textarea:focus,
+  textarea:valid {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.editor-date .input-textRight input {
+  text-align: left;
+}
+
+.editor-memo:not(.warning):not(.error) {
+  &.focused {
+    &:not(.vertical) {
+      .content {
+        @include partial-editor-shadow;
+      }
+    }
+
+    .vertical-border {
+      border: $input_vertical_focused_border;
+    }
+  }
+}
+
+.editor-memo.error {
+  .content {
+    box-shadow: $input_error_shadow;
+  }
+}
+
+.editor-memo.warning {
+  .content {
+    box-shadow: $input_warning_shadow;
+  }
+}
+
+.editor-memo-premium {
+  &:not(.warning):not(.error) {
+    &.focused .content {
+      border: $input_focused_border;
+      border-radius: 4px;
+      box-shadow: none !important;
+
+      .icon svg path {
+        fill: $input_icon_fg;
+      }
+    }
+
+    &:not(.focused) .content {
+      box-shadow: $input_shadow;
+      border: $emt_border;
+      border-radius: 4px;
+    }
+
+    .content.disabled {
+      border: $input_border_disabled;
+    }
+
+    .content textarea {
+      font-size: 10pt;
+    }
+  }
+}

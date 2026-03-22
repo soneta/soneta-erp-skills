@@ -1,0 +1,32 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gh-filter {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  background-color: inherit;
+  border-top: $grid_border;
+  border-right: $grid_border;
+
+  input {
+    color: $grid_row_content_fg;
+    height: 100%;
+    width: 100%;
+    border: none;
+    padding: 0 5px;
+    outline: none;
+    background-color: $grid_filter_bg;
+
+    &:focus {
+      background-color: $grid_filter_focused_bg;
+    }
+  }
+}
+
+.frozen {
+  z-index: 100;
+  border-right-color: $grid_column_frozen_border_color;
+  border-left-color: $grid_column_frozen_border_color;
+}

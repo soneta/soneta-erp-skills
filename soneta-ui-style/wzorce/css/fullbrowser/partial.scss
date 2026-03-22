@@ -1,0 +1,450 @@
+﻿@mixin partial-box-shadow {
+  box-shadow: $theme_shadow;
+  -webkit-box-shadow: $theme_shadow;
+  -moz-box-shadow: $theme_shadow;
+}
+
+@mixin partial-editor-shadow {
+  -moz-box-shadow: 0px 0px 3px 1px $theme_darkprimary_fg;
+  -webkit-box-shadow: 0px 0px 3px 1px $theme_darkprimary_fg;
+  box-shadow: 0px 0px 3px 1px $theme_darkprimary_fg;
+}
+
+@mixin partial-editor-shadow-premium {
+  -webkit-box-shadow: 0px 3px 6px 1px rgba(61, 207, 120, 0.17);
+  -moz-box-shadow: 0px 3px 6px 1px rgba(61, 207, 120, 0.17);
+  box-shadow: 0px 3px 6px 1px rgba(61, 207, 120, 0.17);
+}
+
+@mixin partial-command-title-height {
+  font-size: 10pt;
+  padding-left: 10px;
+  line-height: 48px;
+}
+
+@mixin partial-column-center {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-column-center-start {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(flex-start, start);
+}
+
+@mixin partial-column-start-start {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(flex-start, start);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(flex-start, start);
+}
+
+@mixin partial-column-start-start-wrap {
+  @include flexWrap(wrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(flex-start, start);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(inherit, inherit);
+}
+
+@mixin partial-column-center-end {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(flex-end, end);
+  @include flexAlignContent(flex-start, start);
+}
+
+@mixin partial-column-center-space-between {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(space-between, justify);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-column-start {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(flex-start, start);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-column-start-bottom {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(flex-start, start);
+  @include flexAlignItems(flex-end, end);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-row-center {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-row-center-top {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(center, center);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-row-center-start {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(flex-start, start);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-row-start-top {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(flex-start, start);
+  @include flexAlignItems(flex-start, start);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-row-center-end {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(flex-end, end);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-row-start-wrap {
+  @include flexDisplay();
+  @include flexWrap(wrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(flex-start, end);
+  @include flexAlignItems(flex-start, flex-start);
+  @include flexAlignContent(flex-start, flex-start);
+}
+
+@mixin partial-row-center-space-between {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row);
+  @include flexJustifyContent(space-between, justify);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-field-reverse {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(row-reverse);
+  @include flexJustifyContent(flex-end, end);
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(stretch, stretch);
+}
+
+@mixin partial-unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin partial-sellect-text {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+@mixin partial-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin partial-no-ellipsis {
+  text-overflow: unset;
+  white-space: normal;
+  overflow: hidden;
+}
+
+@mixin partial-blink {
+  position: absolute;
+  display: block;
+  border-radius: 100%;
+  transform: scale(0);
+  -moz-transform: scale(0);
+}
+
+@mixin partial-blink-normal {
+  position: absolute;
+  display: block;
+  border-radius: 100%;
+  transform: scale(0);
+  -moz-transform: scale(0);
+  background: rgba(190, 190, 190, 0.2);
+}
+
+@mixin partial-blink-blue {
+  position: absolute;
+  display: block;
+  border-radius: 100%;
+  transform: scale(0);
+  -moz-transform: scale(0);
+  background: rgba(154, 219, 249, 0.2);
+}
+
+@mixin partial-box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin partial-bottom-gradient-border {
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($theme_gradient_from), to(transparent));
+  background-image: -webkit-linear-gradient(180deg, $theme_gradient_from, transparent), -webkit-linear-gradient(180deg, $theme_gradient_from, transparent);
+  background-image: -moz-linear-gradient(180deg, $theme_gradient_from, transparent), -moz-linear-gradient(180deg, $theme_gradient_from, transparent);
+  background-image: -o-linear-gradient(180deg, $theme_gradient_from, transparent), -o-linear-gradient(180deg, $theme_gradient_from, transparent);
+  background-image: linear-gradient(20deg, $theme_gradient_from, transparent), linear-gradient(90deg, $theme_gradient_from, transparent);
+  -moz-background-size: 100% 1px;
+  background-size: 100% 1px;
+  background-position: 0 100%, 0 100%;
+  background-repeat: no-repeat;
+}
+
+@mixin partial-transition {
+  -webkit-transition: all 0.2s ease-in 0s;
+  -moz-transition: all 0.2s ease-in 0s;
+  -o-transition: all 0.2s ease-in 0s;
+  -ms-transition: all 0.2s ease-in 0s;
+  transition: all 0.2ms ease 0s;
+}
+
+@mixin partial-command($activeExcludeClass: _) {
+  @include partial-transition;
+  position: absolute;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  box-shadow: $command_form_shadow;
+  background-color: $command_form_bg;
+
+  .content {
+    @include partial-row-center-start;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    .icon {
+      @include partial-column-center;
+      @include flexDisplay();
+      float: left;
+      width: 26px;
+      height: 100%;
+
+      svg {
+        width: 20px;
+        height: inherit;
+
+        path {
+          fill: $command_form_fg;
+        }
+      }
+    }
+
+    .title {
+      color: $command_form_fg;
+      float: left;
+      padding-left: 0;
+      font-size: 9pt;
+      width: 100%;
+      text-align: center;
+    }
+
+    .icon + .title {
+      width: calc(100% - 26px);
+      text-align: left;
+      padding-left: 10px;
+    }
+  }
+
+  &:hover:not(.disabled),
+  &.hover:not(.disabled) {
+    box-shadow: $command_shadow;
+    background-color: $command_hover_bg;
+  }
+
+  &:active:not(.disabled):not(.#{$activeExcludeClass}) {
+    box-shadow: $command_shadow_active;
+    background-color: $command_form_active_bg;
+    border: $command_form_active_border;
+
+    .content {
+      .icon {
+        svg {
+          path {
+            fill: $command_form_active_fg;
+          }
+        }
+      }
+
+      .title {
+        color: $command_form_active_fg;
+      }
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+  }
+}
+
+@mixin partial-label {
+  border-bottom: 1px solid $theme_editor_label_border;
+  color: $theme_editor_label_fg;
+  font-size: $font_size_label;
+  font-weight: 300;
+  line-height: $font_size_label;
+  max-height: 100%;
+
+  .phc {
+    @include partial-ellipsis;
+    line-height: 26px;
+  }
+
+  .pht {
+    @include partial-row-center;
+    height: inherit;
+    cursor: help;
+
+    svg {
+      width: 14px;
+      height: 14px;
+
+      path {
+        fill: $input_icon_fg;
+      }
+    }
+  }
+
+  &.multiline {
+    @include partial-multiline;
+  }
+
+  &.disabled {
+    color: $theme_editor_label_disabled_fg;
+  }
+}
+
+@mixin partial-multiline {
+  @include partial-column-start-bottom;
+  @include partial-no-ellipsis;
+  line-height: $font_size_label;
+  padding-bottom: 6px;
+  justify-content: space-around;//
+
+  .phc {
+    @include partial-no-ellipsis;
+    position: unset;
+    line-height: 1.1em;
+  }
+  .pht {
+    height: unset;
+  }
+}
+$partial_clearable_style: str-insert("style='fill:;'", "var(--neutral_400)", 13);
+$partial_clearable_path: str-insert("<path  d='M 6.8496094,0 A 6.8518967,6.8518967 0 0 0 2.0761719,11.765625 L 70.310547,80 2.0761719,148.23438 a 6.8518967,6.8518967 0 1 0 9.6894531,9.68945 L 80,89.689453 148.23438,157.92383 a 6.8518967,6.8518967 0 1 0 9.68945,-9.68945 L 89.689453,80 157.92383,11.765625 A 6.8518967,6.8518967 0 1 0 148.23438,2.0761719 L 80,70.310547 11.765625,2.0761719 A 6.8518967,6.8518967 0 0 0 6.8496094,0 Z'/>", $partial_clearable_style, 7);
+$partial_clearable_data_url: str-insert("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'></svg>", $partial_clearable_path, 88);
+
+@mixin partial-clearable {
+  background-size: 10px 10px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-image: url(quote($partial_clearable_data_url));
+  padding: 0 18px 0 10px !important;
+
+  &.X {
+    transition: background 0.5s;
+  }
+
+  &.onX {
+    cursor: pointer;
+  }
+
+  &::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+@mixin partial-clearable-text {
+  @include partial-clearable;
+  background-position: right -16px center;
+
+  &.X {
+    background-position: right 5px center;
+  }
+}
+
+@mixin partial-clearable-memo {
+  @include partial-clearable;
+  background-position: right -16px top 4px;
+
+  &.X {
+    background-position: right 5px top 5px;
+  }
+}
+
+@mixin partial-text-transition-start {
+  text-overflow: initial;
+  white-space: nowrap;
+  animation: backAndForth 12s linear infinite;
+  -webkit-animation: backAndForth 12s linear infinite;
+}
+
+@mixin partial-text-transition-stop {
+  animation-play-state: paused;
+  white-space: nowrap;
+
+  &:not(:hover) {
+    @include partial-ellipsis;
+  }
+}
+
+@mixin partial-flex-item {
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 0 1 auto;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+}

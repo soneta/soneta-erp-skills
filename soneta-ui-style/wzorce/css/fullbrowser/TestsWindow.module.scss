@@ -1,0 +1,42 @@
+.test-flex-column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.test-window {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  color: rgb(184, 184, 162);
+  background-color: rgb(56, 56, 56);
+
+  .test-items-content {
+    @extend .test-flex-column;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 50px;
+    overflow-y: auto;
+  }
+}
+
+.test-state {
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  box-align: start;
+
+  svg {
+    height: 24px;
+  }
+}
+
+.test-back-all {
+  svg {
+    height: 100%;
+  }
+}

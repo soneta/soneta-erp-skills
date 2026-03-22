@@ -1,0 +1,11 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+
+.row {
+  @include partial-row-start-top;
+  justify-content: flex-start;
+
+  &.main-menu {
+    flex-direction: column;
+  }
+}

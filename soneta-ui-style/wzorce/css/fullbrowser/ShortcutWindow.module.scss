@@ -1,0 +1,83 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$shortcut_title_height: 60px;
+
+.shortcut-overlay {
+  @include partial-column-center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200101;
+  background-color: $shortcut_overlay_bg;
+
+  .shortcut-window {
+    @include partial-box-shadow;
+    @include partial-column-start;
+    justify-content: space-between;
+    min-width: 500px;
+    min-height: 300px;
+    max-width: 100vw;
+    max-height: 100vh;
+    background: $shortcut_bg;
+    border: $shortcut_window_border;
+    border-radius: $modal_border_radius;
+    font-family: $secondaryFont;
+
+    .sh-header {
+      @include partial-row-center-start;
+      justify-content: center;
+      width: 100%;
+      height: $shortcut_title_height;
+
+      .sh-title {
+        @include partial-column-start;
+        justify-content: center;
+        align-items: flex-start;
+        height: inherit;
+        width: calc(100% - #{$shortcut_title_height});
+        padding: 0 20px;
+        font-size: 18pt;
+        font-family: $secondaryFont;
+        color: $shortcut_title_fg;
+      }
+
+      .sh-close {
+        @include partial-column-start;
+        justify-content: center;
+        cursor: pointer;
+        height: $shortcut_title_height;
+        width: $shortcut_title_height;
+
+        .icon {
+          fill: $shortcut_close_icon;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+
+    .sh-footer {
+      @include partial-column-start;
+      justify-content: center;
+      height: $shortcut_title_height;
+      width: inherit;
+      font-size: 9pt;
+      font-family: $secondaryFont;
+      font-style: italic;
+      color: $shortcut_footer_fg;
+    }
+
+    .sh-commands {
+      @include partial-column-center;
+      padding: 0 10px 10px 10px;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      max-height: calc(100vh - (2 * #{$shortcut_title_height}));
+    }
+  }
+}

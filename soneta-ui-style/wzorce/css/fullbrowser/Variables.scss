@@ -1,0 +1,1821 @@
+﻿@import '../common/PredefinedColors.scss';
+
+$defaultFont: var(--defaultFont);
+$primaryFont: var(--primaryFont);
+$secondaryFont: var(--secondaryFont);
+$tertiaryFont: var(--tertiaryFont);
+$OpenSans: var(--OpenSans);
+$OpenSansSemiBold: var(--OpenSansSemiBold);
+$monospaceFont: Consolas, 'Courier New', monospace;
+
+/* GENERAL */
+$focus_outline: var(--focus_outline);
+$focus_outline_secondary: var(--focus_outline_secondary);
+$focus_outline_tertiary: var(--focus_outline_tertiary);
+$focus_outline_quaternary: var(--focus_outline_quaternary);
+$focus_outline_quinary: var(--focus_outline_quinary);
+$focus_box_shadow: var(--focus_box_shadow);
+$focus_box_shadow_inset: var(--focus_box_shadow_inset);
+$focus_border: var(--focus_border);
+$focus_color: var(--focus_color);
+
+$window_top_margin: 60px;
+$window_footer_height: 30px;
+$window_border_top: var(--window_border_top);
+
+$hb_height: $window_top_margin;
+
+$font_size_label: var(--font_size_label);
+$font_size_body: 10pt;
+$font_size_button: 10pt;
+$font_size_input: 9pt;
+$font_size_vertical_input: 14px;
+$font_size_vertical_line_height: 20px;
+$font_size_vertical_label: 12px;
+$font_size_vertical_label_height: 16px;
+$font_size_title: 13pt;
+$font_size_special: 18pt;
+$group_title_font_size: var(--group_title_font_size);
+$grid_headercolumn_height: 32px;
+
+/* FONT SIZE */
+$font_xl: 24px;
+$font_l: 18px;
+$font_m: 16px;
+$font_s: 14px;
+$font_xs: 12px;
+
+/* SPACES */
+$space_2: 2px;
+$space_4: 4px;
+$space_8: 8px;
+$space_16: 16px;
+
+/* FIELD SIZE*/
+$field_height: 60px;
+$field_padding_top: 12px;
+$field_padding_bottom: 4px;
+
+$input_height: 28px;
+$memo_line_height: 22px;
+$input_margin_bottom: 4px;
+
+$label_height: 12px;
+$label_margin_bottom: 4px;
+//
+
+/* NAVMENU SIZE */
+$nav_menu_width: 250px;
+$nav_menu_popup_width: 350px;
+$nav_menu_form_width: 200px;
+$nav_menu_icon_width: 40px;
+$nav_menu_search_panel_height: 66px;
+
+$nav_folder_width: var(--nav_folder_width);
+$nav_folder_collapsed_width: var(--nav_folder_collapsed_width);
+$nav_form_width: var(--nav_form_width);
+$nav_form_collapsed_width: var(--nav_form_collapsed_width);
+$nav_menu_svg_size: 20px;
+$nav_menu_form_search_width: 450px; //Standard only
+$items_border_radius: 4px; //Premium only
+$simple_menu_width: 350px; //Premium only
+$nav_menu_left_col_width: 220px; //Premium only
+$nav_menu_input_border: var(--nav_menu_input_border);
+$nav_menu_input_border_radius: var(--nav_menu_input_border_radius);
+
+$loginFooterHeight: 40px;
+
+$theme: var(--theme);
+$theme_bg: var(--theme_bg);
+$theme_body_bg: var(--theme_body_bg); //Premium only
+$theme_darkprimary_fg: var(--theme_darkprimary_fg);
+$theme_accent: var(--theme_accent);
+$theme_primary_text: var(--theme_primary_text);
+$theme_shadow: var(--theme_shadow);
+$theme_overlay_bg: var(--theme_overlay_bg);
+$theme_gradient_from: var(--theme_gradient_from);
+
+$theme_editor_fg: var(--theme_editor_fg);
+$theme_editor_bg: var(--theme_editor_bg);
+$theme_editor_border: var(--theme_editor_border);
+$theme_editor_common_border: var(--theme_editor_common_border);
+$theme_editor_disabled_fg: var(--theme_editor_disabled_fg);
+$theme_editor_disabled_bg: var(--theme_editor_disabled_bg);
+$theme_editor_disabled_border: var(--theme_editor_disabled_border);
+$theme_editor_focused_bg: var(--theme_editor_focused_bg);
+$theme_editor_fc: var(--theme_editor_fc);
+$theme_editor_label_fg: var(--theme_editor_label_fg);
+$theme_editor_label_disabled_fg: var(--theme_editor_label_disabled_fg);
+$theme_editor_label_border: var(--theme_editor_label_border);
+
+$theme_window_main_bg: var(--theme_window_main_bg);
+
+$theme_shadow_active: var(--theme_shadow_active);
+$theme_shadow_btn: var(--theme_shadow_btn);
+$theme_shadow_hover_btn: var(--theme_shadow_hover_btn);
+
+$theme_command_bg: var(--theme_command_bg);
+$theme_command_bg_hover: var(--theme_command_bg_hover);
+$theme_command_fg: var(--theme_command_fg);
+$theme_command_fg_hover: var(--theme_command_fg_hover);
+$theme_command_important_bg: var(--theme_command_important_bg);
+$theme_command_important_fg: var(--theme_command_important_fg);
+
+/* Logo */
+$logo_color_1: var(--logo_color_1);
+$logo_color_2: var(--logo_color_2);
+$logo_color_3: var(--logo_color_3) !important; //Premium only
+
+/* GENERAL */
+$warning: var(--warning);
+$error: var(--error);
+$info: var(--info);
+$question: var(--question);
+
+/* Loader */
+$loader_bg: var(--loader_bg);
+$loader_color1: var(--loader_color1);
+$loader_color2: var(--loader_color2);
+$loader_color3: var(--loader_color3);
+$loader_color4: var(--loader_color4);
+
+/* PathBar */
+$path_font_family: var(--path_font_family);
+$path_font_size: var(--path_font_size);
+$path_fg: var(--path_fg);
+$path_hover_fg: var(--path_hover_fg);
+$path_separator_border: var(--path_separator_border);
+$path_icon: var(--path_icon);
+$path_active_icon: var(--path_active_icon);
+$path_home: var(--path_home);
+$path_favorites: var(--path_favorites); //Premium only
+$path_cmd: var(--path_cmd); //Premium only
+$path_bg: var(--path_bg); //Premium only
+
+/* WINDOW */
+$window_main_bg: var(--window_main_bg);
+$window_main_menu_bg: var(--window_main_menu_bg);
+$window_bg: var(--window_bg); //Premium only
+
+/* Scroll */
+$scroll_thumb_bg: var(--scroll_thumb_bg);
+$scroll_thumb_hover_bg: var(--scroll_thumb_hover_bg);
+$scroll_track_bg: var(--scroll_track_bg);
+$scroll_content_bg: var(--scroll_content_bg); //Premium only
+$scroll_dashboard_content_bg: var(--scroll_dashboard_content_bg); //Premium only
+
+/* NAVIGATION BAR | GRID BAR */
+$nav_bar_dark: var(--nav_bar_dark);
+$nav_bar_bg: var(--nav_bar_bg);
+$nav_bar_gradient: var(--nav_bar_gradient);
+$nav_bar_arrows_bg: var(--nav_bar_arrows_bg);
+
+$nav_group_bg: var(--nav_group_bg);
+$nav_con_bg: var(--nav_con_bg);
+$nav_con_fg: var(--nav_con_fg);
+$nav_fg: var(--nav_fg);
+$nav_placeholder_fg: var(--nav_placeholder_fg);
+$nav_marked_fg: var(--nav_marked_fg);
+$nav_marked_bg: var(--nav_marked_bg);
+$nav_icon: var(--nav_icon);
+$nav_icon_border: var(--nav_icon_border);
+$nav_marked_icon: var(--nav_marked_icon);
+$nav_item_hover_bg: var(--nav_item_hover_bg);
+$nav_item_hover_fg: var(--nav_item_hover_fg);
+$nav_con_shadow: var(--nav_con_shadow);
+
+$nav_item_disabled_fg: var(--nav_item_disabled_fg);
+$nav_item_disabled_hover_bg: var(--nav_item_disabled_hover_bg);
+$nav_item_disabled_hover_fg: var(--nav_item_disabled_hover_fg);
+
+$nav_arrows_icon: var(--nav_arrows_icon);
+$nav_arrows_active: var(--nav_arrows_active);
+$nav_arrows_border: var(--nav_arrows_border);
+$nav_menu_form_shadow: var(--nav_menu_form_shadow);
+$nav_popup_overlay_bg: var(--nav_popup_overlay_bg);
+$nav_popup_box_shadow: var(--nav_popup_box_shadow);
+
+$nav_tree_font: var(--nav_tree_font);
+$nav_tree_bold_font: var(--nav_tree_bold_font);
+$nav_tree_header_font: var(--nav_tree_header_font);
+$nav_tree_search_font: var(--nav_tree_search_font);
+
+$nav_tree_scrollbar_track: var(--nav_tree_scrollbar_track);
+$nav_tree_scrollbar_thumb: var(--nav_tree_scrollbar_thumb);
+$nav_tree_panel_fg: var(--nav_tree_panel_fg);
+$nav_tree_panel_icon: var(--nav_tree_panel_icon);
+$nav_tree_panel_bg: var(--nav_tree_panel_bg);
+$nav_tree_panel_shadow: var(--nav_tree_panel_shadow);
+$nav_tree_panel_font: var(--nav_tree_panel_font);
+$nav_tree_group_fg: var(--nav_tree_group_fg);
+$nav_tree_group_icon: var(--nav_tree_group_icon);
+$nav_tree_graph: var(--nav_tree_graph);
+$nav_tree_header_bg: var(--nav_tree_header_bg);
+$nav_tree_header_fg: var(--nav_tree_header_fg);
+$nav_tree_header_hover: var(--nav_tree_header_hover);
+$nav_tree_search_fg: var(--nav_tree_search_fg);
+$nav_tree_search_bg: var(--nav_tree_search_bg);
+$nav_tree_search_input_bg: var(--nav_tree_search_input_bg);
+$nav_tree_search_input_placeholder: var(--nav_tree_search_input_placeholder);
+$nav_tree_item_hover: var(--nav_tree_item_hover);
+$nav_tree_item_selected: var(--nav_tree_item_selected);
+$nav_tree_tooltip_bg: var(--nav_tree_tooltip_bg);
+$nav_tree_tooltip_fg: var(--nav_tree_tooltip_fg);
+$nav_tree_scroll_indicator_height: var(--nav_tree_scroll_indicator_height);
+$nav_tree_scroll_indicator_down_bg: var(--nav_tree_scroll_indicator_down_bg);
+$nav_tree_scroll_indicator_up_bg: var(--nav_tree_scroll_indicator_up_bg);
+
+$nav_tree_form_font: var(--nav_tree_form_font);
+$nav_tree_form_bold_font: var(--nav_tree_form_bold_font);
+$nav_tree_form_header_font: var(--nav_tree_form_header_font);
+$nav_tree_form_search_font: var(--nav_tree_form_search_font);
+
+$nav_tree_form_scrollbar_track: var(--nav_tree_form_scrollbar_track);
+$nav_tree_form_scrollbar_thumb: var(--nav_tree_form_scrollbar_thumb);
+$nav_tree_form_panel_fg: var(--nav_tree_form_panel_fg);
+$nav_tree_form_panel_icon: var(--nav_tree_form_panel_icon);
+$nav_tree_form_panel_bg: var(--nav_tree_form_panel_bg);
+$nav_tree_form_group_fg: var(--nav_tree_form_group_fg);
+$nav_tree_form_group_icon: var(--nav_tree_form_group_icon);
+$nav_tree_form_graph: var(--nav_tree_form_graph);
+$nav_tree_form_header_fg: var(--nav_tree_form_header_fg);
+$nav_tree_form_header_bg: var(--nav_tree_form_header_bg);
+$nav_tree_form_header_hover: var(--nav_tree_form_header_hover);
+$nav_tree_form_search_fg: var(--nav_tree_form_search_fg);
+$nav_tree_form_search_bg: var(--nav_tree_form_search_bg);
+$nav_tree_form_search_input_bg: var(--nav_tree_form_search_input_bg);
+$nav_tree_form_search_wrapper_bg: var(--nav_tree_form_search_wrapper_bg);
+$nav_tree_form_item_hover: var(--nav_tree_form_item_hover);
+$nav_tree_form_item_selected: var(--nav_tree_form_item_selected);
+$nav_tree_form_tooltip_bg: var(--nav_tree_form_tooltip_bg);
+$nav_tree_form_tooltip_fg: var(--nav_tree_form_tooltip_fg);
+$nav_tree_form_scroll_indicator_down_bg: var(--nav_tree_form_scroll_indicator_down_bg);
+$nav_tree_form_scroll_indicator_up_bg: var(--nav_tree_form_scroll_indicator_up_bg);
+
+//Premium only -->
+$nav_form_search_fg: var(--nav_form_search_fg);
+$nav_form_search_border: var(--nav_form_search_border);
+$nav_group_fg: var(--nav_group_fg);
+$nav_from_item_active_bg: var(--nav_from_item_active_bg);
+$nav_form_item_fg: var(--nav_form_item_fg);
+$nav_form_item_active_fg: var(--nav_form_item_active_fg);
+$nav_form_hover_fg: var(--nav_form_hover_fg);
+
+$nav_form_search_bg: var(--nav_form_search_bg);
+$nav_search_input_bg: var(--nav_search_input_bg);
+$nav_main_arrows_bg: var(--nav_main_arrows_bg);
+$nav_menu_arrows_bg: var(--nav_menu_arrows_bg);
+$nav_form_border: var(--nav_form_border);
+$nav_form_search_con_border: var(--nav_form_search_con_border);
+$nav_form_input_fg: var(--nav_form_input_fg);
+$nav_form_arrows_bg: var(--nav_form_arrows_bg);
+$nav_tree_favorite_border: var(--nav_tree_favorite_border);
+//<--
+
+/* HeaderBar */
+$headerbar_bg: var(--headerbar_bg);
+$headerbar_fg: var(--headerbar_fg);
+$headerbar_command_bg: var(--headerbar_command_bg);
+$headerbar_command_hover_bg: var(--headerbar_command_hover_bg);
+$headerbar_icon: var(--headerbar_icon);
+$headerbar_icon_hover: var(--headerbar_icon_hover);
+$headerbar_icon_focus: var(--headerbar_icon_focus);
+$headerbar_logo_icon: var(--headerbar_logo_icon);
+$headerbar_logo_icon2: var(--headerbar_logo_icon2);
+$headerbar_command_bell_bg: var(--headerbar_command_bell_bg);
+$headerbar_command_bell_fg: var(--headerbar_command_bell_fg);
+$headerbar_command_special_bg: var(--headerbar_command_special_bg);
+$headerbar_command_special_icon: var(--headerbar_command_special_icon);
+$headerbar_command_special_shadow: var(--headerbar_command_special_shadow);
+$headerbar_command_special_fill: var(--headerbar_command_special_fill);
+$headerbar_command_special_hover_bg: var(--headerbar_command_special_hover_bg);
+$headerbar_command_usermenu_font: var(--headerbar_command_usermenu_font);
+$headerbar_command_usermenu_bg: var(--headerbar_command_usermenu_bg);
+$headerbar_command_usermenu_fg: var(--headerbar_command_usermenu_fg);
+$headerbar_command_split_border: var(--headerbar_command_split_border);
+$headerbar_command_usermenu_hover_bg: var(--headerbar_command_usermenu_hover_bg);
+
+/* GRID */
+$grid_odd_bg: var(--grid_odd_bg);
+$grid_even_bg: var(--grid_even_bg);
+$grid_bar_gradient: var(--grid_bar_gradient);
+$grid_bar_border: var(--grid_bar_border);
+$grid_bar_border_top: var(--grid_bar_border_top);
+$grid_bar_border_radius: var(--grid_bar_border_radius);
+$grid_command_bg: var(--grid_command_bg);
+$grid_bar_command_border_bottom: var(--grid_bar_command_border_bottom);
+$grid_command_icon: var(--grid_command_icon);
+$grid_command_icon_hover: var(--grid_command_icon_hover);
+$grid_special_row_bg: var(--grid_special_row_bg);
+$grid_row_focused_bg: var(--grid_row_focused_bg);
+$grid_row_selected_bg: var(--grid_row_selected_bg);
+$grid_headercolumn_bg: var(--grid_headercolumn_bg);
+$grid_headercolumn_fg: var(--grid_headercolumn_fg);
+$grid_row_content_fg: var(--grid_row_content_fg);
+$grid_row_grouping_fg: var(--grid_row_grouping_fg);
+$grid_row_grouping_fs: var(--grid_row_grouping_fs);
+$grid_row_grouping_fw: var(--grid_row_grouping_fw);
+$grid_row_focused_fg: var(--grid_row_focused_fg);
+$grid_row_sum_icon: var(--grid_row_sum_icon); //Standard only
+$grid_icon: var(--grid_icon); //Standard only
+$grid_tree_icon: var(--grid_tree_icon);
+$grid_row_drag_enter: var(--grid_row_drag_enter);
+$grid_row_check_checked: var(--grid_row_check_checked);
+$grid_row_check_unchecked: var(--grid_row_check_unchecked);
+$grid_emptycontent: var(--grid_emptycontent);
+$grid_header_sort: var(--grid_header_sort);
+$grid_border: var(--grid_border);
+$grid_filter_bg: var(--grid_filter_bg);
+$grid_focused_border: var(--grid_focused_border);
+$grid_filter_focused_bg: var(--grid_filter_focused_bg);
+$grid_column_smartopen_fg: var(--grid_column_smartopen_fg);
+$grid_column_smartopen_even_bg: var(--grid_column_smartopen_even_bg);
+$grid_column_smartopen_odd_bg: var(--grid_column_smartopen_odd_bg);
+$grid_column_frozen_border_color: var(--grid_column_frozen_border_color);
+$grid_column_command_hover_bg: var(--grid_column_command_hover_bg);
+$grid_column_focused_bg: var(--grid_column_focused_bg);
+$grid_column_focused_border: var(--grid_column_focused_border);
+$grid_viewport: var(--grid_viewport);
+$grid_column_focus_fc: var(--grid_column_focus_fc);
+$grid_sum_color_icon: var(--grid_sum_color_icon);
+$grid_row_focused_selected_color: var(--grid_row_focused_selected_color);
+$grid_row_focused_selected_icon_color: var(--grid_row_focused_selected_icon_color);
+$grid_row_dragenter: var(--grid_row_dragenter);
+
+$grid_row_grouping_border_top: var(--grid_row_grouping_border_top);
+$grid_row_grouping_border_bottom: var(--grid_row_grouping_border_bottom);
+$grid_row_grouping_bg: var(--grid_row_grouping_bg); //Standard only
+$grid_row_sumgrouping_border: var(--grid_row_sumgrouping_border); //Standard only
+$grid_gfsum_before_bg: var(--grid_gfsum_before_bg);
+$grid_gfsum_bg: var(--grid_gfsum_bg);
+$grid_gfsum_border: var(--grid_gfsum_border);
+$grid_gfsum_text_fw: var(--grid_gfsum_text_fw);
+$grid_gfsum_color: var(--grid_gfsum_color);
+$grid_row_check: var(--grid_row_check);
+$grid_header_pulse_bg: var(--grid_header_pulse_bg);
+$grid_header_pulse_shadow: var(--grid_header_pulse_shadow);
+$grid_header_filter_bg: var(--grid_header_filter_bg); //Standard only
+$grid_row_icon: var(--grid_row_icon);
+$grid_row_selected_focused_border: var(--grid_row_selected_focused_border);
+$grid_row_frozen_odd_bg: var(--grid_row_frozen_odd_bg);
+$grid_row_frozen_even_bg: var(--grid_row_frozen_even_bg);
+$grid_command_hover_bg: var(--grid_command_hover_bg);
+$grid_bar_special_icon: var(--grid_bar_special_icon);
+$grid_bar_special_icon_border: var(--grid_bar_special_icon_border);
+$grid_bar_special_icon_hover: var(--grid_bar_special_icon_hover);
+$grid_bar_special_icon_hover_bg: var(--grid_bar_special_icon_hover_bg);
+$grid_bar_bg: var(--grid_bar_bg);
+$grid_bar_color: var(--grid_bar_color);
+$grid_cell_fg: var(--grid_cell_fg);
+$grid_cell_ac_fg: var(--grid_cell_ac_fg);
+$grid_cell_highlight_bg: var(--grid_cell_highlight_bg);
+$grid_cell_border: var(--grid_cell_border);
+$grid_cell_boxshadow: var(--grid_cell_boxshadow);
+
+$grid_loc_input_placeholder_fg: var(--grid_loc_input_placeholder_fg);
+$grid_loc_command_border_color: var(--grid_loc_command_border_color);
+
+// Grid Cards
+$grid_cards_bg: var(--grid_cards_bg);
+$grid_cards_color: var(--grid_cards_color);
+$grid_cards_box_shadow: var(--grid_cards_box_shadow);
+$grid_cards_odd_bg: var(--grid_cards_odd_bg);
+$grid_cards_even_bg: var(--grid_cards_even_bg);
+$grid_cards_cmd_bg: var(--grid_cards_cmd_bg);
+$grid_cards_cmd_hover_bg: var(--grid_cards_cmd_hover_bg);
+$grid_cards_cmd_icon: var(--grid_cards_cmd_icon);
+$grid_cards_cmd_hover_icon: var(grid_cards_cmd_hover_icon);
+$grid_cards_cp_bg: var(--grid_cards_cp_bg);
+$grid_cards_column_select_bg: var(--grid_cards_column_select_bg);
+$grid_cards_column_select_open_rect: var(--grid_cards_column_select_open_rect);
+$grid_cards_column_select_open_path: var(--grid_cards_column_select_open_path);
+$grid_cards_column_select_close_rect: var(--grid_cards_column_select_close_rect);
+$grid_card_panel_cmd_bg: var(--grid_card_panel_cmd_bg);
+$grid_card_panel_cmd_hover_bg: var(--grid_card_panel_cmd_hover_bg);
+$grid_card_panel_cmd_icon: var(--grid_card_panel_cmd_icon);
+$grid_card_panel_cmd_hover_icon: var(--grid_card_panel_cmd_hover_icon);
+$grid_card_cap_fw: var(--grid_card_cap_fw);
+$grid_card_val_fw: var(--grid_card_val_fw);
+$grid_card_fc: var(--grid_card_fc);
+
+//Premium only -->
+$grid_filterbar_bg: var(--grid_filterbar_bg);
+$grid_filterbar_input_bg: var(--grid_filterbar_input_bg);
+$grid_filterbar_input_fg: var(--grid_filterbar_input_fg);
+$grid_filterbar_input_focused_fg: var(--grid_filterbar_input_focused_fg);
+$grid_filterbar_input_focused_border: var(--grid_filterbar_input_focused_border);
+$grid_header_line_color: var(--grid_header_line_color);
+$grid_row_special_color: var(--grid_row_special_color);
+$grid_row_special_icon: var(--grid_row_special_icon);
+$grid_footer_cell_bg: var(--grid_footer_cell_bg);
+$grid_eip_content_bg: var(--grid_eip_content_bg);
+$grid_cell_border: var(--grid_cell_border);
+$grid_main_bg: var(--grid_main_bg);
+$grid_filterbar_input_border: var(--grid_filterbar_input_border);
+$grid_eip_bg: var(--grid_eip_bg);
+$grid_row_selected_check_icon: var(--grid_row_selected_check_icon);
+$grid_focused_shadow: var(--grid_focused_shadow);
+$grid_row_sum_bg: var(--grid_row_sum_bg);
+$grid_cards_border: var(--grid_cards_border);
+$grid_cards_row_bg: var(--grid_cards_row_bg);
+//<--
+
+/* FeatureBar */
+$featurebar_bg: var(--featurebar_bg);
+$featurebar_group_bg: var(--featurebar_group_bg);
+$featurebar_features_bg: var(--featurebar_features_bg);
+$featurebar_features_header_bg: var(--featurebar_features_header_bg);
+$featurebar_features_border: var(--featurebar_features_border);
+$featurebar_features_fg: var(--featurebar_features_fg);
+$featurebar_text_hover_fg: var(--featurebar_text_hover_fg);
+$featurebar_item_hover_bg: var(--featurebar_item_hover_bg);
+$featurebar_item_icon: var(--featurebar_item_icon);
+$featurebar_item_hover_icon: var(--featurebar_item_hover_icon);
+$featurebar_item_bg: var(--featurebar_item_bg);
+
+/* GROUP */
+$group_bg: var(--group_bg);
+$group_bg_image: var(--group_bg_image);
+$group_title_fg: var(--group_title_fg);
+$group_item_fg: var(--group_item_fg);
+$group_icon: var(--group_icon);
+$group_content_fg: var(--group_content_fg);
+$group_shadow: var(--group_shadow);
+$group_fw: var(--group_fw);
+
+/* COMMAND */
+$command_shadow: var(--command_shadow);
+$command_shadow_active: var(--command_shadow_active);
+$command_hover_bg: var(--command_hover_bg);
+$command_form_bg: var(--command_form_bg);
+$command_form_fg: var(--command_form_fg);
+$command_form_active_fg: var(--command_form_active_fg);
+$command_form_active_bg: var(--command_form_active_bg);
+$command_form_active_border: var(--command_form_active_border);
+$command_form_shadow: var(--command_form_shadow);
+$command_border: var(--command_border);
+$command_font: var(--command_font);
+$command_icon: var(--command_icon);
+$command_title_fg: var(--command_title_fg);
+$command_timewatch_svg_fg: var(--command_timewatch_svg_fg);
+$command_timewatch_svg_hover_bg: var(--command_timewatch_svg_hover_bg);
+$command_important_fg: var(--command_important_fg);
+$command_important_bg: var(--command_important_bg);
+
+$command_primary_fg: var(--command_primary_fg);
+$command_primary_bg: var(--command_primary_bg);
+$command_primary_border_color: var(--command_primary_border_color);
+$command_primary_hover_fg: var(--command_primary_hover_fg);
+$command_primary_hover_bg: var(--command_primary_hover_bg);
+$command_primary_hover_border_color: var(--command_primary_hover_border_color);
+$command_primary_pressed_fg: var(--command_primary_pressed_fg);
+$command_primary_pressed_bg: var(--command_primary_pressed_bg);
+$command_primary_pressed_border_color: var(--command_primary_pressed_border_color);
+$command_primary_focused_fg: var(--command_primary_focused_fg);
+$command_primary_focused_bg: var(--command_primary_focused_bg);
+$command_primary_focused_border_color: var(--command_primary_focused_border_color);
+$command_primary_selected_fg: var(--command_primary_selected_fg);
+$command_primary_selected_bg: var(--command_primary_selected_bg);
+$command_primary_selected_border_color: var(--command_primary_selected_border_color);
+$command_primary_disabled_fg: var(--command_primary_disabled_fg);
+$command_primary_disabled_bg: var(--command_primary_disabled_bg);
+$command_primary_disabled_border_color: var(--command_primary_disabled_border_color);
+
+$command_secondary_fg: var(--command_secondary_fg);
+$command_secondary_bg: var(--command_secondary_bg);
+$command_secondary_border_color: var(--command_secondary_border_color);
+$command_secondary_hover_fg: var(--command_secondary_hover_fg);
+$command_secondary_hover_bg: var(--command_secondary_hover_bg);
+$command_secondary_hover_border_color: var(--command_secondary_hover_border_color);
+$command_secondary_pressed_fg: var(--command_secondary_pressed_fg);
+$command_secondary_pressed_bg: var(--command_secondary_pressed_bg);
+$command_secondary_pressed_border_color: var(--command_secondary_pressed_border_color);
+$command_secondary_focused_fg: var(--command_secondary_focused_fg);
+$command_secondary_focused_bg: var(--command_secondary_focused_bg);
+$command_secondary_focused_border_color: var(--command_secondary_focused_border_color);
+$command_secondary_selected_fg: var(--command_secondary_selected_fg);
+$command_secondary_selected_bg: var(--command_secondary_selected_bg);
+$command_secondary_selected_border_color: var(--command_secondary_selected_border_color);
+$command_secondary_disabled_fg: var(--command_secondary_disabled_fg);
+$command_secondary_disabled_bg: var(--command_secondary_disabled_bg);
+$command_secondary_disabled_border_color: var(--command_secondary_disabled_border_color);
+
+$command_tertiary_fg: var(--command_tertiary_fg);
+$command_tertiary_bg: var(--command_tertiary_bg);
+$command_tertiary_icon: var(--command_tertiary_icon);
+$command_tertiary_border_color: var(--command_tertiary_border_color);
+$command_tertiary_hover_fg: var(--command_tertiary_hover_fg);
+$command_tertiary_hover_bg: var(--command_tertiary_hover_bg);
+$command_tertiary_hover_icon: var(--command_tertiary_hover_icon);
+$command_tertiary_hover_border_color: var(--command_tertiary_hover_border_color);
+$command_tertiary_pressed_fg: var(--command_tertiary_pressed_fg);
+$command_tertiary_pressed_bg: var(--command_tertiary_pressed_bg);
+$command_tertiary_pressed_icon: var(--command_tertiary_pressed_icon);
+$command_tertiary_pressed_border_color: var(--command_tertiary_pressed_border_color);
+$command_tertiary_focused_fg: var(--command_tertiary_focused_fg);
+$command_tertiary_focused_bg: var(--command_tertiary_focused_bg);
+$command_tertiary_focused_icon: var(--command_tertiary_focused_icon);
+$command_tertiary_focused_border_color: var(--command_tertiary_focused_border_color);
+$command_tertiary_selected_fg: var(--command_tertiary_selected_fg);
+$command_tertiary_selected_bg: var(--command_tertiary_selected_bg);
+$command_tertiary_selected_icon: var(--command_tertiary_selected_icon);
+$command_tertiary_selected_border_color: var(--command_tertiary_selected_border_color);
+$command_tertiary_disabled_fg: var(--command_tertiary_disabled_fg);
+$command_tertiary_disabled_bg: var(--command_tertiary_disabled_bg);
+$command_tertiary_disabled_icon: var(--command_tertiary_disabled_icon);
+$command_tertiary_disabled_border_color: var(--command_tertiary_disabled_border_color);
+
+$command_cube_fg: var(--command_cube_fg);
+$command_cube_bg: var(--command_cube_bg);
+$command_cube_boxshadow: var(--command_cube_boxshadow);
+$command_cube_icon_fg: var(--command_cube_icon_fg);
+
+/* Command Dashboard */
+//Premium only -->
+$command_dashboard_desc_bg: var(--command_dashboard_desc_bg);
+$command_dashboard_border: var(--command_dashboard_border);
+$command_dashboard_active_shadow: var(--command_dashboard_active_shadow);
+$command_dashboard_hover_shadow: var(--command_dashboard_hover_shadow);
+$command_dashboard_hover_border: var(--command_dashboard_hover_border);
+//<--
+
+/* WINDOW BAR BROWSER */
+$wb_bg: var(--wb_bg);
+$wb_shadow: var(--wb_shadow);
+$wb_header_icon_color: var(--wb_header_icon_color);
+$wb_header_icon_fav_color: var(--wb_header_icon_fav_color);
+$wb_header_color: var(--wb_header_color);
+$wb_header_font_family: var(--wb_header_font_family);
+$wb_header_font_size: var(--wb_header_font_size);
+$wb_close_color: var(--wb_close_color);
+$wb_command_bg: var(--wb_command_bg);
+$wb_command_shadow: var(--wb_command_shadow);
+$wb_command_hover_shadow: var(--wb_command_hover_shadow);
+$wb_command_disabled: var(--wb_command_disabled);
+$wb_command_font_family: var(--wb_command_font_family);
+$wb_command_font_size: var(--wb_command_font_size);
+
+/* Page */
+$page_fg: var(--page_fg);
+$page_footer_fg: var(--page_footer_fg);
+$page_info_fg: var(--page_info_fg);
+$page_image_bg_before: var(--page_image_bg_before);
+$page_image_filter: var(--page_image_filter);
+$page_info_text_shadow: var(--page_info_text_shadow);
+$page_content_shadow: var(--page_content_shadow);
+$page_content_bg: var(--page_content_bg);
+$page_adm_fg: var(--page_adm_fg);
+$page_adm_locked_fg: var(--page_adm_locked_fg);
+$page_adm_icon: var(--page_adm_icon);
+$page_header_logo_bg: var(--page_header_logo_bg);
+$page_header_text_fg: var(--page_header_text_fg);
+
+$page_adm_domain_border: var(--page_adm_domain_border);
+$page_adm_domain_bg: var(--page_adm_domain_bg);
+$page_adm_domain_title_fg: var(--page_adm_domain_title_fg);
+$page_adm_domain_even_bg: var(--page_adm_domain_even_bg);
+$page_adm_domain_odd_bg: var(--page_adm_domain_odd_bg);
+
+$page_adm_action_border: var(--page_adm_action_border);
+$page_adm_action_shadow_target_color: var(--page_adm_action_shadow_target_color);
+$page_adm_action_bg: var(--page_adm_action_bg);
+$page_adm_action_fg: var(--page_adm_action_fg);
+$page_adm_action_hover_bg: var(--page_adm_action_hover_bg);
+$page_adm_action_hover_fg: var(--page_adm_action_hover_fg);
+
+/* INPUT EDITOR */
+$input_fg: var(--input_fg);
+$input_bg: var(--input_bg);
+$input_border: var(--input_border);
+$input_disabled_bg: var(--input_disabled_bg);
+$input_border_disabled: var(--input_border_disabled);
+$input_focused_bg: var(--input_focused_bg);
+$input_test_focused_bg: var(--input_test_focused_bg);
+$input_tooltip_fg: var(--input_tooltip_fg);
+$input_text_editor_fg: var(--input_text_editor_fg);
+$input_text_editor_bg: var(--input_text_editor_bg);
+$input_disabled_fg: var(--input_disabled_fg);
+$input_shadow_disabled: var(--input_shadow_disabled);
+$input_icon_fg: var(--input_icon_fg);
+$input_icon_fg_disabled: var(--input_icon_fg_disabled);
+$input_error_shadow: var(--input_error_shadow);
+$input_warning_shadow: var(--input_warning_shadow);
+$input_focused_fg: var(--input_focused_fg);
+$input_autofill_shadow: var(--input_autofill_shadow);
+$input_autofill_focused_shadow: var(--input_autofill_focused_shadow);
+$input_text_asteriks_focus_bg: var(--input_text_asteriks_focus_bg);
+$input_text_asteriks_bg: var(--input_text_asteriks_bg);
+$input_text_asteriks_color: var(--input_text_asteriks_color);
+$input_text_asteriks_border: var(--input_text_asteriks_border);
+$input_vertical_border: var(--input_vertical_border);
+$input_vertical_focused_border: var(--input_vertical_focused_border);
+
+//Premium only -->
+$input_focused_border: var(--input_focused_border);
+$input_shadow: var(--input_shadow);
+$input_disabled_text_shadow: var(--input_disabled_text_shadow);
+//<--
+
+/* RATING EDITOR */
+$rating_bg: var(--rating_bg);
+$rating_fg: var(--rating_fg);
+$rating_star_shadow: var(--rating_star_shadow);
+$rating_hover_fg: var(--rating_hover_fg);
+$rating_checked_fg: var(--rating_checked_fg);
+$rating_checked_hover_fg: var(--rating_checked_hover_fg);
+$rating_hover_shadow: var(--rating_hover_shadow);
+
+/* DatePicker */
+$dp_box_bg: var(--dp_box_bg);
+$dp_element_fg: var(--dp_element_fg);
+$dp_button_fg: var(--dp_button_fg);
+$dp_ym_separator: var(--dp_ym_separator);
+$dp_ym_level_0_fg: var(--dp_ym_level_0_fg);
+$dp_ym_level_1_fg: var(--dp_ym_level_1_fg);
+$dp_ym_level_2_fg: var(--dp_ym_level_2_fg);
+$dp_ym_level_3_fg: var(--dp_ym_level_3_fg);
+$dp_week_fg: var(--dp_week_fg);
+$dp_overlay_bg: var(--dp_overlay_bg);
+$dp_shortday_fg: var(--dp_shortday_fg);
+$dp_day_range: var(--dp_day_range);
+$dp_day_selected_bg: var(--dp_day_selected_bg);
+$dp_day_selected_fg: var(--dp_day_selected_fg);
+$dp_day_today_border_color: var(--dp_day_today_border_color);
+$dp_day_today_fg: var(--dp_day_today_fg);
+$dp_field_border_color: var(--dp_field_border_color);
+$dp_field_border_color_active: var(--dp_field_border_color_active);
+$dp_in_range_bg: var(--dp_in_range_bg);
+$dp_in_range_fg: var(--dp_in_range_fg);
+$dp_font: var(--dp_font);
+$dp_bg: var(--dp_bg);
+$dp_color: var(--dp_color);
+$dp_container_bg: var(--dp_container_bg);
+$dp_navigation_color: var(--dp_navigation_color);
+$dp_border: var(--dp_border);
+$dp_label_fg: var(--dp_label_fg);
+$dp_label_border: var(--dp_label_border);
+$dp_label_shadow: var(--dp_label_shadow);
+$dp_start_color: var(--dp_start_color);
+$dp_scrollbar_track_color: var(--dp_scrollbar_track_color);
+$dp_scrollbar_thumb_bg: var(--dp_scrollbar_thumb_bg);
+$dp_scrollbar_thumb_hover_bg: var(--dp_scrollbar_thumb_hover_bg);
+$dp_day_of_week_fg: var(--dp_day_of_week_fg);
+
+/* DateScopePicker */
+$dsp_font: var(--dsp_font);
+$dsp_command_fg: var(--dsp_command_fg);
+$dsp_command_disabled_fg: var(--dsp_command_disabled_fg);
+$dsp_command_bg: var(--dsp_command_bg);
+$dsp_label_fg: var(--dsp_label_fg);
+$dsp_caption_fg: var(--dsp_caption_fg);
+
+/* TimePicker */
+$tp_bg: var(--tp_bg);
+$tp_sep: var(--tp_sep);
+$tp_color: var(--tp_color);
+$tp_border: var(--tp_border);
+$tp_button_ok_bg: var(--tp_button_ok_bg);
+$tp_button_ok_fg: var(--tp_button_ok_fg);
+$tp_box_shadow: var(--tp_box_shadow);
+$tp_overlay_bg: var(--tp_overlay_bg);
+$tp_mark: var(--tp_mark);
+$tp_focus: var(--tp_focus);
+$tp_icon: var(--tp_icon);
+
+/* ColorPicker */
+$cp_box_bg: var(--cp_box_bg);
+$cp_box_fg: var(--cp_box_fg);
+$cp_overlay_bg: var(--cp_overlay_bg);
+$cp_box_shadow: var(--cp_box_shadow);
+$cp_empty_bg: var(--cp_empty_bg);
+$cp_empty_icon: var(--cp_empty_icon);
+$cp_box_border: var(--cp_box_border);
+$cp_box_fc: var(--cp_box_fc);
+$cp_button_save_bg: var(--cp_button_save_bg);
+$cp_button_box_shadow: var(--cp_button_box_shadow);
+$cp_button_color: var(--cp_button_color);
+$cp_check_mark_bg: var(--cp_check_mark_bg);
+$cp_checkbox_bg: var(--cp_checkbox_bg);
+$cp_checkbox_checked_bg: var(--cp_checkbox_checked_bg);
+$cp_button_understand_bg: var(--cp_button_understand_bg);
+$cp_button_border: var(--cp_button_border);
+$cp_button_save_color: var(--cp_button_save_color);
+$cp_active: var(--cp_active);
+
+/* StatusPicker */
+$status_picker_border: var(--status_picker_border);
+$status_picker_bg: var(--status_picker_bg);
+$status_picker_items_bg: var(--status_picker_items_bg);
+$status_picker_item_hover: var(--status_picker_item_hover);
+$status_picker_cursor: var(--status_picker_cursor);
+$status_picker_item_border: var(--status_picker_item_border);
+$status_picker_item_border_hover: var(--status_picker_item_border_hover);
+$status_picker_item_bg: var(--status_picker_item_bg);
+
+/* Lookup */
+$lookup_auto_bg: var(--lookup_auto_bg);
+$lookup_header_border: var(--lookup_header_border);
+$lookup_item_bg: var(--lookup_item_bg);
+$lookup_item_hover_bg: var(--lookup_item_hover_bg);
+$lookup_item_fg: var(--lookup_item_fg);
+$lookup_auto_border: var(--lookup_auto_border);
+$lookup_item_hover_fg: var(--lookup_item_hover_fg);
+$lookup_editor_icon: var(--lookup_editor_icon);
+
+/* TileMenu */
+$tile_group_fg: var(--tile_group_fg);
+$tile_group_hover_bg: var(--tile_group_hover_bg);
+$tile_item_bg: var(--tile_item_bg);
+$tile_active_fg: var(--tile_active_fg);
+$tile_active_bg: var(--tile_active_bg); //Standard only
+$tile_command_icon: var(--tile_command_icon);
+$tile_command_fg: var(--tile_command_fg);
+$tile_command_shadow: var(--tile_command_shadow);
+$tile_desc_fg: var(--tile_desc_fg);
+$tile_hover: var(--tile_hover);
+$tile_hover_webkit: var(--tile_hover_webkit);
+$tile_hover_active: var(--tile_hover_active);
+$tile_hover_active_webkit: var(--tile_hover_active_webkit);
+$tile_fw: var(--tile_fw);
+$tile_color: var(--tile_color);
+$tile_group_bg_image: var(--tile_group_bg_image);
+
+$svg_icon_main_stop: var(--svg_icon_main_stop);
+$svg_icon_alt_stop: var(--svg_icon_alt_stop);
+
+//Standard only -->
+$tile_group_active_bg: var(--tile_group_active_bg);
+$tile_item_border_fg: var(--tile_item_border_fg);
+$tile_shadow: var(--tile_shadow);
+//<--
+$tile_group_gradient: var(--tile_group_gradient); //Premium only
+$tile_desc_bg: var(--tile_desc_bg); //Premium only
+
+/* Bookmarks */
+$bookmark_font: var(--bookmark_font);
+$bookmark_fg: var(--bookmark_fg);
+$bookmark_shadow: var(--bookmark_shadow);
+$bookmark_bg: var(--bookmark_bg);
+$bookmark_icon: var(--bookmark_icon);
+$bookmark_hover_fg: var(--bookmark_hover_fg);
+$bookmark_hover_bg: var(--bookmark_hover_bg);
+$bookmark_hover_icon: var(--bookmark_hover_icon);
+$bookmark_focused_fg: var(--bookmark_focused_fg);
+$bookmark_focused_bg: var(--bookmark_focused_bg);
+$bookmark_focused_icon: var(--bookmark_focused_icon);
+$bookmark_focused_border_color: var(--bookmark_focused_border_color);
+$bookmark_pressed_fg: var(--bookmark_pressed_fg);
+$bookmark_pressed_bg: var(--bookmark_pressed_bg);
+$bookmark_pressed_icon: var(--bookmark_pressed_icon);
+$bookmark_disabled_bg: var(--bookmark_close_disabled_bg);
+$bookmark_disabled_icon: var(--bookmark_close_disabled_icon);
+
+$bookmark_selected_fg: var(--bookmark_selected_fg);
+$bookmark_selected_bg: var(--bookmark_selected_bg);
+$bookmark_selected_icon: var(--bookmark_selected_icon);
+$bookmark_selected_hover_fg: var(--bookmark_selected_hover_fg);
+$bookmark_selected_hover_bg: var(--bookmark_selected_hover_bg);
+$bookmark_selected_hover_icon: var(--bookmark_selected_hover_icon);
+$bookmark_selected_focused_fg: var(--bookmark_selected_focused_fg);
+$bookmark_selected_focused_bg: var(--bookmark_selected_focused_bg);
+$bookmark_selected_focused_icon: var(--bookmark_selected_focused_icon);
+$bookmark_selected_focused_border_color: var(--bookmark_selected_focused_border_color);
+$bookmark_selected_pressed_fg: var(--bookmark_selected_pressed_fg);
+$bookmark_selected_pressed_bg: var(--bookmark_selected_pressed_bg);
+$bookmark_selected_pressed_icon: var(--bookmark_selected_pressed_icon);
+
+$bookmark_close_hover_bg: var(--bookmark_close_hover_bg);
+$bookmark_close_hover_icon: var(--bookmark_close_hover_icon);
+$bookmark_close_selected_hover_bg: var(--bookmark_close_selected_hover_bg);
+$bookmark_close_selected_hover_icon: var(--bookmark_close_selected_hover_icon);
+
+//Premium only -->
+$bookmark_border_color: var(--bookmark_border_color);
+$bookmark_close_border: var(--bookmark_close_border);
+$bookmark_active_border: var(--bookmark_active_border);
+//<--
+
+/* Modal */
+$modal_bg: var(--modal_bg);
+$modal_border_radius: var(--modal_border_radius);
+$modal_bar_bg: var(--modal_bar_bg);
+$modal_bar_fg: var(--modal_bar_fg);
+$modal_bar_icon: var(--modal_bar_icon);
+$modal_bar_title_fg: var(--modal_bar_title_fg);
+$modal_bar_border: var(--modal_bar_border);
+$modal_section_fg: var(--modal_section_fg);
+$modal_command_bg: var(--modal_command_bg);
+$modal_command_active_bg: var(--modal_command_active_bg);
+$modal_command_fg: var(--modal_command_fg);
+$modal_command_hover_bg: var(--modal_command_hover_bg);
+$modal_command_hover_fg: var(--modal_command_hover_fg);
+$modal_overlay_bg: var(--modal_overlay_bg);
+$modal_command_shadow: var(--modal_command_shadow);
+$modal_command_text_shadow: var(--modal_command_text_shadow);
+$modal_command_hover_shadow: var(--modal_command_hover_shadow);
+$modal_command_font_size: var(--modal_command_font_size);
+$modal_command_active_fg: var(--modal_command_active_fg);
+$modal_command_active_shadow: var(--modal_command_active_shadow);
+$modal_command_active_border: var(--modal_command_active_border);
+$modal_command_icon: var(--modal_command_icon);
+$modal_command_error_icon: var(--modal_command_error_icon);
+$modal_command_info_icon: var(--modal_command_info_icon);
+$modal_command_question_icon: var(--modal_command_question_icon);
+$modal_command_warning_icon: var(--modal_command_warning_icon);
+$modal_bar_title_border: var(--modal_bar_title_border); //Premium only
+$modal_label_fg: var(--modal_label_fg);
+$modal_shadow: var(--modal_shadow);
+
+/* Indicator */
+$indicator_bg: var(--indicator_bg);
+$indicator_fg: var(--indicator_fg);
+$indicator_icon: var(--indicator_icon);
+$indicator_text_fg: var(--indicator_text_fg);
+$indicator_shadow: var(--indicator_shadow);
+$indicator_value_icon: var(--indicator_value_icon);
+$indicator_footer_bg: var(--indicator_footer_bg); //Premium only
+
+/* Checkbox */
+$checkbox_bg: var(--checkbox_bg);
+$checkbox_bg_hover: var(--checkbox_bg_hover);
+$checkbox_border: var(--checkbox_border);
+$checkbox_border_color: var(--checkbox_border_color);
+$checkbox_border_disabled: var(--checkbox_border_disabled);
+$checkbox_border_focused: var(--checkbox_border_focused);
+$checkbox_border_hover: var(--checkbox_border_hover);
+$checkbox_check: var(--checkbox_check);
+$checkbox_disabled_color: var(--checkbox_disabled_color);
+$checkbox_disabled_bg: var(--checkbox_disabled_bg);
+$checkbox_disabled_fg: var(--checkbox_disabled_fg);
+$checkbox_disabled_icon: var(--checkbox_disabled_icon);
+$checkbox_fill_color: var(--checkbox_fill_color);
+$checkbox_focused_bg: var(--checkbox_focused_bg);
+$checkbox_grid_border: var(--checkbox_grid_border);
+
+//Premium only -->
+$checkbox_pipe_off_bg: var(--checkbox_pipe_off_bg);
+$checkbox_pipe_disabled: var(--checkbox_pipe_disabled);
+$checkbox_pipe_on_bg: var(--checkbox_pipe_on_bg);
+$checkbox_pipe_on_checked_bg: var(--checkbox_pipe_on_checked_bg);
+$checkbox_pipe_off_checked_bg: var(--checkbox_pipe_off_checked_bg);
+//<--
+
+/* Chips */
+$chips_fg: var(--chips_fg);
+$chips_icon: var(--chips_icon);
+$chips_border: var(--chips_border);
+
+/* Wizard */
+$wizard_step_fg: var(--wizard_step_fg);
+$wizard_step_icon: var(--wizard_step_icon);
+$wizard_step: var(--wizard_step);
+$wizard_step_active: var(--wizard_step_active);
+$wizard_step_prev: var(--wizard_step_prev);
+
+/* Cookie Box */
+$cookie_link_fg: var(--cookie_link_fg);
+$cookie_path1_color: var(--cookie_path1_color);
+$cookie_path2_color: var(--cookie_path2_color);
+$cookie_path1_fill: var(--cookie_path1_fill);
+$cookie_text_fg: var(--cookie_text_fg);
+$cookie_bg: var(--cookie_bg);
+$cookie_shadow: var(--cookie_shadow);
+$cookie_text_shadow: var(--cookie_text_shadow);
+$cookie_shadow: var(--cookie_shadow);
+$cookie_action_icon_color: var(--cookie_action_icon_color);
+
+/* Dashboard */
+$dashboard_design_icon_bg: var(--dashboard_design_icon_bg);
+$dashboard_bg: var(--dashboard_bg);
+$dashboard_fg: var(--dashboard_fg);
+$dashboard_cell_grid_bg: var(--dashboard_cell_grid_bg);
+$dashboard_item_icon_bg: var(--dashboard_item_icon_bg);
+$dashboard_item_icon_hover_bg: var(--dashboard_item_icon_hover_bg);
+$dashboard_design_icon: var(--dashboard_design_icon);
+$dashboard_design_icon_border: var(--dashboard_design_icon_border);
+$dashboard_item_fg: var(--dashboard_item_fg);
+$dashboard_group_border: var(--dashboard_group_border);
+$dashboard_design_overlay_bg: var(--dashboard_design_overlay_bg);
+$dashboard_design_focus_shadow: var(--dashboard_design_focus_shadow);
+$dashboard_command_split_border: var(--dashboard_command_split_border);
+$dashboard_command_list_bg: var(--dashboard_command_list_bg);
+$dashboard_command_list_icon_bg: var(--dashboard_command_list_icon_bg);
+$dashboard_cell_grid_padding: var(--dashboard_cell_grid_padding);
+
+//Premium only -->
+$dashboard_title_color: var(--dashboard_title_color);
+$dashboard_tile_border: var(--dashboard_tile_border);
+$dashboard_command_hover_border: var(--dashboard_command_hover_border);
+$dashboard_item_label_fg: var(--dashboard_item_label_fg);
+//<--
+
+/* Profile Menu */
+$profile_menu_bg: var(--profile_menu_bg);
+$profile_menu_item_fg: var(--profile_menu_item_fg);
+$profile_group_border: var(--profile_group_border);
+$profile_group_fg: var(--profile_group_fg);
+$profile_group_image_bg: var(--profile_group_image_bg);
+$profile_shadow: var(--profile_shadow);
+$profile_group_icon: var(--profile_group_icon);
+$profile_menu_image_bg: var(--profile_menu_image_bg);
+$profile_menu_icon: var(--profile_menu_icon);
+$profile_menu_border: var(--profile_menu_border);
+$profile_menu_item_shadow: var(--profile_menu_item_shadow);
+$profile_menu_item_hover_fg: var(--profile_menu_item_hover_fg);
+$profile_menu_item_hover_bg: var(--profile_menu_item_hover_bg);
+$profile_menu_separator_bg: var(--profile_menu_separator_bg);
+$profile_menu_item_hover_premium_color: var(--profile_menu_item_hover_premium_color);
+$profile_menu_item_hover_premium_bg: var(--profile_menu_item_hover_premium_bg);
+$profile_menu_item_hover_border_left: var(--profile_menu_item_hover_border_left);
+
+$profile_menu_bg: var(--profile_menu_bg);
+$profile_menu_fg: var(--profile_menu_fg);
+$profile_menu_header_bg: var(--profile_menu_header_bg);
+$profile_menu_header_fg: var(--profile_menu_header_fg);
+$profile_menu_header_item_value: var(--profile_menu_header_item_value);
+$profile_menu_separator_bg: var(--profile_menu_separator_bg);
+$profile_menu_version_fg: var(--profile_menu_version_fg);
+$profile_menu_font: var(--profile_menu_font);
+
+/* Chart */
+$chart_bg: var(--chart_bg);
+$chart_border: var(--chart_border);
+
+/* Gantt */
+$gantt_border: var(--gantt_border);
+$gantt_header_fg: var(--gantt_header_fg);
+$gantt_fg: var(--gantt_fg);
+$gantt_focused_row_bg: var(--gantt_focused_row_bg);
+$gantt_connector_bg: var(--gantt_connector_bg);
+$gantt_connector_hover_bg: var(--gantt_connector_hover_bg);
+$gantt_icon_hover_fg: var(--gantt_icon_hover_fg);
+$gantt_holiday_fg: var(--gantt_holiday_fg);
+$gantt_holiday_bg: var(--gantt_holiday_bg);
+$gantt_holiday_connector_fg: var(--gantt_holiday_connector_fg);
+$gantt_holiday_connector_bg: var(--gantt_holiday_connector_bg);
+$gantt_working_area_bg: var(--gantt_working_area_bg);
+$gantt_not_working_days_bg: var(--gantt_not_working_days_bg);
+
+/* Tooltip */
+$tooltip_bg: var(--tooltip_bg);
+$tooltip_fg: var(--tooltip_fg);
+$tooltip_border: var(--tooltip_border);
+$tooltip_box_shadow: var(--tooltip_box_shadow);
+$tooltip_icon: var(--tooltip_icon);
+
+/* EditorHtml */
+$ehtml_bg: var(--ehtml_bg);
+$ehtml_border: var(--ehtml_border);
+$ehtml_fg: var(--ehtml_fg);
+$ehtml_content_line_color: var(--ehtml_content_line_color);
+$ehtml_fullsize_btn_bg: var(--ehtml_fullsize_btn_bg);
+$ehtml_fullsize_btn_fg: var(--ehtml_fullsize_btn_fg);
+$ehtml_fullsize_btn_shadow: var(--ehtml_fullsize_btn_shadow);
+$ehtml_fullsize_btn_active_bg: var(--ehtml_fullsize_btn_active_bg);
+$ehtml_fullsize_btn_active_fg: var(--ehtml_fullsize_btn_active_fg);
+$ehtml_fullsize_btn_active_shadow: var(--ehtml_fullsize_btn_active_shadow);
+$ehtml_modal_border: var(--ehtml_modal_border); //Premium only
+
+/* EditorMemoText */
+$emt_bg: var(--emt_bg);
+$emt_border: var(--emt_border);
+
+/* Diagram */
+$diagram_palette_accrdn_fg: var(--diagram_palette_accrdn_fg);
+$diagram_palette_accrdn_sel_bg: var(--diagram_palette_accrdn_sel_bg);
+$diagram_palette_accrdn_sel_fg: var(--diagram_palette_accrdn_sel_fg);
+$diagram_palette_bg: var(--diagram_palette_bg);
+$diagram_palette_item_bg_hover: var(--diagram_palette_item_bg_hover);
+$diagram_border: var(--diagram_border);
+$diagram_group_icon: var(--diagram_group_icon);
+$diagram_grid_opacity: var(--diagram_grid_opacity);
+$diagram_header_bg: var(--diagram_header_bg);
+$diagram_icon_expand_hover: var(--diagram_icon_expand_hover);
+$diagram_active_bg: var(--diagram_active_bg);
+$diagram_palette_active_bg: var(--diagram_palette_active_bg);
+$diagram_content_fill_dark: var(--diagram_content_fill_dark);
+$diagram_content_path_dark: var(--diagram_content_path_dark);
+$diagram_palette_item_bg_selected: var(--diagram_palette_item_bg_selected);
+
+/* TreeDiagram */
+$tree_diagram_btn_bg: var(--tree_diagram_btn_bg);
+$tree_diagram_btn_fg: var(--tree_diagram_btn_fg);
+$tree_diagram_minimap_bg: var(--tree_diagram_minimap_bg);
+$tree_diagram_minimap_border: var(--tree_diagram_minimap_border);
+$tree_diagram_minimap_shadow: var(--tree_diagram_minimap_shadow);
+$tree_diagram_border: var(--tree_diagram_border);
+$tree_diagram_zoom_bg: var(--tree_diagram_zoom_bg);
+$tree_diagram_send_fg: var(--tree_diagram_send_fg);
+$tree_sm_bg: var(--tree_sm_bg);
+$tree_sm_border: var(--tree_sm_border);
+$tree_sm_el_border: var(--tree_sm_el_border);
+$tree_sm_el_fg: var(--tree_sm_el_fg);
+$tree_sm_el_bg: var(--tree_sm_el_bg);
+$tree_sm_el_hover_border: var(--tree_sm_el_hover_border);
+$tree_sm_el_hover_fg: var(--tree_sm_el_hover_fg);
+$tree_sm_el_hover_bg: var(--tree_sm_el_hover_bg);
+$tree_filter_input_border: var(--tree_filter_input_border);
+$tree_filter_input_bg: var(--tree_filter_input_bg);
+$tree_filter_input_fg: var(--tree_filter_input_fg);
+$tree_filter_input_focus_fg: var(--tree_filter_input_focus_fg);
+$tree_filter_input_shadow: var(--tree_filter_input_shadow);
+$tree_filter_input_placeholder_fg: var(--tree_filter_input_placeholder_fg);
+$tree_filter_input_icon_fg: var(--tree_filter_input_icon_fg);
+$tree_diagram_bg: var(--tree_diagram_bg);
+$tree_diagram_shape_color: var(--tree_diagram_shape_color);
+$tree_diagram_shape_bg: var(--tree_diagram_shape_bg);
+$tree_diagram_shape_border: var(--tree_diagram_shape_border);
+$tree_diagram_shape_filter_color: var(--tree_diagram_shape_filter_color);
+
+/* Progress */
+$progress_icon: var(--progress_icon);
+$progress_fg: var(--progress_fg);
+$progress_border: var(--progress_border);
+
+/* Progress Bar */
+$progress_bar_circle_bg: var(--progress_bar_circle_bg);
+$progress_bar_background_circle_bg: var(--progress_bar_background_circle_bg);
+$progress_bar_in_percent_fg: var(--progress_bar_in_percent_fg);
+$progress_bar_btn_information_fg: var(--progress_bar_btn_information_fg);
+$progress_bar_information_fg: var(--progress_bar_information_fg);
+$progress_bar_spinner_wrapper_bg: var(--progress_bar_spinner_wrapper_bg);
+$progress_bar_spinner_border: var(--progress_bar_spinner_border);
+
+/* Popup Simple */
+$popup_simple_bg: var(--popup_simple_bg);
+$popup_simple_border: var(--popup_simple_border);
+$popup_simple_item_fg: var(--popup_simple_item_fg);
+$popup_simple_item_bg: var(--popup_simple_item_bg);
+$popup_simple_item_fg_hover: var(--popup_simple_item_fg_hover);
+$popup_simple_item_bg_hover: var(--popup_simple_item_bg_hover);
+
+$popup_simple_item_disabled_fg: var(--popup_simple_item_disabled_fg);
+$popup_simple_item_disabled_hover_bg: var(--popup_simple_item_disabled_hover_bg);
+$popup_simple_item_disabled_hover_fg: var(--popup_simple_item_disabled_hover_fg);
+
+/* Popup */
+$popup_command_bg: var(--popup_command_bg);
+$popup_overlay: var(--popup_overlay);
+
+/* Splitter */
+$splitter_bg: var(--splitter_bg);
+$splitter_btn_bg: var(--splitter_btn_bg);
+$splitter_hover_bg: var(--splitter_hover_bg);
+$splitter_icon: var(--splitter_icon);
+
+/* Html */
+$html_fg: var(--html_fg);
+$html_rss_fg: var(--html_rss_fg);
+$html_hyperlink_fg: var(--html_hyperlink_fg);
+$html_rss_border: var(--html_rss_border);
+$html_rss_date_info_fg: var(--html_rss_date_info_fg);
+$html_rss_desc_fg: var(--html_rss_desc_fg);
+$html_rss_error_fg: var(--html_rss_error_fg);
+$html_hyperlink_color: var(--html_hyperlink_color);
+
+/* RichEdit */
+$rte_fg: var(--rte_fg);
+$rte_bg: var(--rte_bg);
+$rte_border: var(--rte_border);
+$rte_focused_bg: var(--rte_focused_bg);
+$rte_editor_bg: var(--rte_editor_bg);
+$rte_editor_fg: var(--rte_editor_fg);
+$rte_hr: var(--rte_hr);
+$rte_tooltip_bg: var(--rte_tooltip_bg);
+$rte_tooltip_border: var(--rte_tooltip_border);
+$rte_tooltip_shadow: var(--rte_tooltip_shadow);
+$rte_toolbar_bg: var(--rte_toolbar_bg);
+$rte_toolbar_border: var(--rte_toolbar_border);
+$rte_toolbar_item_hover_bg: var(--rte_toolbar_item_hover_bg);
+$rte_tabs_fg: var(--rte_tabs_fg);
+$rte_dropdown_toolbar_border: var(--rte_dropdown_toolbar_border);
+$rte_resizer_border: var(--rte_resizer_border);
+$rte_resizer_bg: var(--rte_resizer_bg);
+$rte_icon: var(--rte_icon);
+$rte_active_border: var(--rte_active_border);
+$rte_focused_border: var(--rte_focused_border); //Premium only
+$rte_dialog_bg: var(--rte_dialog_bg);
+$rte_dialog_font: var(--rte_dialog_font);
+$rte_dialog_border_radius: var(--rte_dialog_border_radius);
+$rte_dialog_header_bg: var(--rte_dialog_header_bg);
+$rte_dialog_header_fg: var(--rte_dialog_header_fg);
+$rte_dialog_header_fontsize: var(--rte_dialog_header_fontsize);
+$rte_dialog_header_border: var(--rte_dialog_header_border);
+$rte_dialog_button_bg: var(--rte_dialog_button_bg);
+$rte_dialog_button_fg: var(--rte_dialog_button_fg);
+$rte_dialog_button_hover_bg: var(--rte_dialog_button_hover_bg);
+$rte_dialog_button_hover_fg: var(--rte_dialog_button_hover_fg);
+$rte_dialog_button_hover_border: var(--rte_dialog_button_hover_border);
+$rte_dialog_content_fg: var(--rte_dialog_content_fg);
+$rte_dialog_content_fontsize: var(--rte_dialog_content_fontsize);
+$rte_dialog_content_tabs_wrapper_bg: var(--rte_dialog_content_tabs_wrapper_bg);
+$rte_dialog_content_tabs_hover_bg: var(--rte_dialog_content_tabs_hover_bg);
+$rte_dialog_input_border_radius: var(--rte_dialog_input_border_radius);
+$rte_dialog_input_focused_border: var(--rte_dialog_input_focused_border);
+$rte_dialog_input_focused_shadow: var(--rte_dialog_input_focused_shadow);
+$rte_dialog_footer_bg: var(--rte_dialog_footer_bg);
+$rte_dialog_footer_border: var(--rte_dialog_footer_border);
+$rte_dialog_footer_button_bg: var(--rte_dialog_footer_button_bg);
+$rte_dialog_footer_button_fg: var(--rte_dialog_footer_button_fg);
+$rte_dialog_footer_button_shadow: var(--rte_dialog_footer_button_shadow);
+$rte_dialog_footer_button_text_shadow: var(--rte_dialog_footer_button_text_shadow);
+$rte_dialog_footer_button_text_transform: var(--rte_dialog_footer_button_text_transform);
+$rte_dialog_footer_button_font_weight: var(--rte_dialog_footer_button_font_weight);
+$rte_dialog_footer_button_hover_bg: var(--rte_dialog_footer_button_hover_bg);
+$rte_dialog_footer_button_hover_fg: var(--rte_dialog_footer_button_hover_fg);
+$rte_dialog_footer_button_hover_shadow: var(--rte_dialog_footer_button_hover_shadow);
+$rte_dialog_resizer_bg: var(--rte_dialog_resizer_bg);
+$rte_dialog_resizer_hover_bg: var(--rte_dialog_resizer_hover_bg);
+$rte_dialog_image_preview_bg: var(--rte_dialog_image_preview_bg);
+$rte_content_bg: var(--rte_content_bg);
+$rte_content_fc: var(--rte_content_fc);
+$rte_status_bg: var(--rte_status_bg);
+$rte_border_color: var(--rte_border_color);
+$rte_status_fc: var(--rte_status_fc);
+$rte_status_button_fc: var(--rte_status_button_fc);
+$rte_status_button_hover: var(--rte_status_button_hover);
+$rte_toolbar_border_right: var(--rte_toolbar_border_right);
+$rte_toolbar_border_color: var(--rte_toolbar_border_color);
+$rte_toolbar_color1: var(--rte_toolbar_color1);
+$rte_toolbar_color2: var(--rte_toolbar_color2);
+$rte_toolbar_color3: var(--rte_toolbar_color3);
+$rte_toolbar_color4: var(--rte_toolbar_color4);
+$rte_toolbar_color5: var(--rte_toolbar_color5);
+$rte_toolbar_color6: var(--rte_toolbar_color6);
+$rte_toolbar_color7: var(--rte_toolbar_color7);
+$rte_table_creator_border: var(--rte_table_creator_border);
+
+/* Pick file popup */
+$pickfile_fg: var(--pickfile_fg);
+$pickfile_bg: var(--pickfile_bg);
+$pickfile_btn_border: var(--pickfile_btn_border);
+$pickfile_btn_hover_bg: var(--pickfile_btn_hover_bg);
+$pickfile_btn_hover_fg: var(--pickfile_btn_hover_fg);
+$pickfile_label_fg: var(--pickfile_label_fg);
+$pickfile_label_bg: var(--pickfile_label_bg);
+$pickfile_shadow: var(--pickfile_shadow);
+$pickfile_border: var(--pickfile_border);
+
+/* Carousel */
+$carousel_item_fg: var(--carousel_item_fg);
+$carousel_item_bg: var(--carousel_item_bg);
+$carousel_item_selected_fg: var(--carousel_item_selected_fg);
+$carousel_item_selected_bg: var(--carousel_item_selected_bg);
+$carousel_arrow_border: var(--carousel_arrow_border);
+$carousel_arrow_bg: var(--carousel_arrow_bg);
+$carousel_arrow_fg: var(--carousel_arrow_fg);
+$carousel_timepicker_item_fg: var(--carousel_timepicker_item_fg);
+$carousel_timepicker_item_selected_fg: var(--carousel_timepicker_item_selected_fg);
+$carousel_timepicker_item_selected_fg_prev_next: var(--carousel_timepicker_item_selected_fg_prev_next);
+
+/* Error */
+$page_error_bg: var(--page_error_bg);
+$page_error_fg: var(--page_error_fg);
+$page_error_border: var(--page_error_border);
+$page_error_border_radius: var(--page_error_border_radius);
+$error_command_active_border: var(--error_command_active_border);
+$error_title_fg: var(--error_title_fg);
+$error_bar_bg: var(--error_bar_bg);
+$error_bar_fg: var(--error_bar_fg);
+$error_bar_border: var(--error_bar_border);
+$error_bar_icon: var(--error_bar_icon);
+$warning_bar_icon: var(--warning_bar_icon);
+$error_command_bg: var(--error_command_bg);
+$error_command_fg: var(--error_command_fg);
+$error_command_shadow: var(--error_command_shadow);
+$error_command_hover_shadow: var(--error_command_hover_shadow);
+$error_command_active_shadow: var(--error_command_active_shadow);
+$error_command_active_fg: var(--error_command_active_fg);
+$error_command_active_bg: var(--error_command_active_bg);
+$error_command_border: var(--error_command_border);
+$error_command_hover: var(--error_command_hover);
+$error_command_active: var(--error_command_active);
+
+/* Field */
+$field_image_circle_bg: var(--field_image_circle_bg);
+$field_image_circle_border: var(--field_image_circle_border);
+$field_image_full_screen_shadow: var(--field_image_full_screen_shadow);
+$field_image_full_screen_bg: var(--field_image_full_screen_bg);
+$field_image_full_screen_fg: var(--field_image_full_screen_fg);
+$field_code_add_btn_bg: var(--field_code_add_btn_bg);
+$field_code_add_btn_shadow: var(--field_code_add_btn_shadow);
+$field_code_add_btn_active_shadow: var(--field_code_add_btn_active_shadow);
+$field_code_add_btn_icon_bg: var(--field_code_add_btn_icon_bg);
+$field_code_add_btn_active_icon_bg: var(--field_code_add_btn_active_icon_bg);
+$field_warning_label_fg: var(--field_warning_label_fg);
+$full-screen-field-bg: var(--full-screen-field-bg);
+
+/* Verifiers */
+$verifier_error_bg: var(--verifier_error_bg);
+$verifier_error_icon_bg: var(--verifier_error_icon_bg);
+$verifier_error_color: var(--verifier_error_color);
+$verifier_warning_bg: var(--verifier_warning_bg);
+$verifier_warning_icon_bg: var(--verifier_warning_icon_bg);
+$verifier_warning_color: var(--verifier_warning_color);
+$verifier_info_bg: var(--verifier_info_bg);
+$verifier_info_icon_bg: var(--verifier_info_icon_bg);
+$verifier_info_color: var(--verifier_info_color);
+
+/* ThemePicker */
+$picker_bg: var(--picker_bg);
+$picker_color: var(--picker_color);
+$picker_item_bg: var(--picker_item_bg);
+$picker_item_hover_bg: var(--picker_item_hover_bg);
+$picker_active_shadow: var(--picker_active_shadow);
+$picker_button_active_bg: var(--picker_button_active_bg);
+$picker_button_active_color: var(--picker_button_active_color);
+$picker_button_active_shadow: var(--picker_button_active_shadow);
+$picker_item_selected_border_color: var(--picker_item_selected_border_color);
+$picker_button_shadow: var(--picker_button_shadow);
+$picker_button_hover_shadow: var(--picker_button_hover_shadow);
+$picker_button_hover: var(--picker_button_hover);
+$picker_fill: var(--picker_fill);
+
+/* SignInPanel */
+$signIn_text_fg: var(--signIn_text_fg);
+$signIn_field_bg: var(--signIn_field_bg);
+$signIn_field_focused_bg: var(--signIn_field_focused_bg);
+$signIn_field_focused_fg: var(--signIn_field_focused_fg);
+$signIn_field_focused_shadow: var(--signIn_field_focused_shadow) !important;
+$signIn_clear_icon_color: var(--signIn_clear_icon_color);
+
+$signIn_btn_hover_shadow: var(--signIn_btn_hover_shadow);
+$signIn_btn_active_shadow: var(--signIn_btn_active_shadow);
+$signIn_btn_active_bg: var(--signIn_btn_active_bg);
+$signIn_btn_active_color: var(--signIn_btn_active_color);
+$signIn_check_color: var(--signIn_check_color);
+$spinner_wait_color: var(--spinner_wait_color);
+$signIn_field_icon_fg: var(--signIn_field_icon_fg);
+$signIn_text_shadow: var(--signIn_text_shadow) !important;
+$signIn_check_fg: var(--signIn_check_fg);
+$signIn_check_check_fg: var(--signIn_check_check_fg);
+$signIn_content_fg: var(--signIn_content_fg);
+$signIn_content_border: var(--signIn_content_border);
+$signIn_infolabel_fg: var(--signIn_infolabel_fg);
+$signIn_btn_shadow: var(--signIn_btn_shadow);
+$signIn_btn_border: var(--signIn_btn_border);
+$signIn_btn_hover_bg: var(--signIn_btn_hover_bg);
+$signIn_btn_action_bg: var(--signIn_btn_action_bg);
+$signIn_btn_action_fg: var(--signIn_btn_action_fg);
+$signIn_btn_action_icon_fg: var(--signIn_btn_action_icon_fg);
+$signIn_btn_version_bg: var(--signIn_btn_version_bg);
+$signIn_btn_version_fg: var(--signIn_btn_version_fg);
+$signIn_btn_version_icon_fg: var(--signIn_btn_version_icon_fg);
+$signIn_btn_version_box_shadow: var(--signIn_btn_version_box_shadow);
+$signIn_btn_version_border: var(--signIn_btn_version_border);
+$signIn_btn_version_hover: var(--signIn_btn_version_hover);
+$signIn_btn_send_bg: var(--signIn_btn_send_bg);
+$signIn_info_label_caption_fg: var(--signIn_info_label_caption_fg);
+$signIn_info_label_text_fg: var(--signIn_info_label_text_fg);
+
+/* Signature */
+$signature_content_border: var(--signature_content_border);
+$signature_content_bg: var(--signature_content_bg);
+$signature_icon_bg: var(--signature_icon_bg);
+$signature_icon_color: var(--signature_icon_color);
+$signature_icon_shadow: var(--signature_icon_shadow);
+$signature_icon_active_color: var(--signature_icon_active_color);
+$signature_icon_active_bg: var(--signature_icon_active_bg);
+$signature_icon_active_shadow: var(--signature_icon_active_shadow);
+$signature_icon_hover_shadow: var(--signature_icon_hover_shadow);
+$signature_cursor: var(--signature_cursor);
+
+/* Label */
+$label_fg: var(--label_fg);
+$label_color: var(--label_color);
+$label_green_fg: var(--label_green_fg);
+$label_red_fg: var(--label_red_fg);
+$label_warning_fg: var(--label_warning_fg);
+$label_info_fg: var(--label_info_fg);
+$label_tip_fg: var(--label_tip_fg);
+$label_tip_bg: var(--label_tip_bg);
+$label_tip_border: var(--label_tip_border);
+$label_info_fg2: var(--label_info_fg2);
+$label_info_fw: var(--label_info_fw);
+
+/* SPINNER */
+$spinner_bg: var(--spinner_bg);
+$spinner_fs: var(--spinner_fs);
+$spinner_progress_bar_bg: var(--spinner_progress_bar_bg);
+$spinner_header_fc: var(--spinner_header_fc);
+$spinner_header_bg: var(--spinner_header_bg);
+$spinner_stop_color: var(--spinner_stop_color);
+$spinner_stop_color_next: var(--spinner_stop_color_next);
+$spinner_fill: var(--spinner_fill);
+
+/* StopWatch */
+$stop_watch_bg: var(--stop_watch_bg);
+$stop_watch_border: var(--stop_watch_border);
+
+/* PDF Viewer */
+$pdf_viewer_bg_start: var(--pdf_viewer_bg_start);
+$pdf_viewer_bg_stop: var(--pdf_viewer_bg_stop);
+$pdf_viewer_shadow: var(--pdf_viewer_shadow);
+$pdf_full_screen_shadow: var(--pdf_full_screen_shadow);
+$pdf_full_screen_bg: var(--pdf_full_screen_bg);
+$pdf_full_screen_fg: var(--pdf_full_screen_fg);
+$pdf_hide_toolbar_bg: var(--pdf_hide_toolbar_bg);
+
+/* Simple Scheduler */
+$ss_font: var(--ss_font);
+$ss_shortday_fg: var(--ss_shortday_fg);
+$ss_element_bg: var(--ss_element_bg);
+$ss_element_fg: var(--ss_element_fg);
+$ss_label_fg: var(--ss_label_fg);
+$ss_label_last_day_fg: var(--ss_label_last_day_fg);
+$ss_resource_fg: var(--ss_resource_fg);
+
+/* Simple Scheduler with Task List */
+$ss_tl_btn_bg: var(--ss_tl_btn_bg);
+$ss_tl_btn_fg: var(--ss_tl_btn_fg);
+$ss_tl_btn_selected_bg: var(--ss_tl_btn_selected_bg);
+$ss_tl_btn_selected_fg: var(--ss_tl_btn_selected_fg);
+$ss_tl_tasks_bg: var(--ss_tl_tasks_bg);
+$ss_tl_tasks_fg: var(--ss_tl_tasks_fg);
+$ss_tl_tasks_shadow: var(--ss_tl_tasks_shadow);
+$ss_tl_task_bg: var(--ss_tl_task_bg);
+$ss_tl_task_date_fg: var(--ss_tl_task_date_fg);
+$ss_tl_task_date_icon_fg: var(--ss_tl_task_date_icon_fg);
+$ss_tl_task_add_bg: var(--ss_tl_task_add_bg);
+$ss_tl_task_add_fg: var(--ss_tl_task_add_fg);
+$ss_tl_day_marker: var(--ss_tl_day_marker);
+$ss_tl_day_marker_selected: var(--ss_tl_day_marker_selected);
+$ss_tl_week_fg: var(--ss_tl_week_fg);
+$ss_tl_week_border: var(--ss_tl_week_border);
+$ss_tl_shortday_fg: var(--ss_tl_shortday_fg);
+
+/* RADIOBUTTON */
+$radiobutton_check: var(--radiobutton_check);
+$radiobutton_unchecked: var(--radiobutton_unchecked);
+$radiobutton_disabled: var(--radiobutton_disabled);
+$radiobutton_hover: var(--radiobutton_hover);
+$radiobutton_hover_unchecked: var(--radiobutton_hover_unchecked);
+$radiobutton_focused_icon: var(--radiobutton_focused_icon);
+$radiobutton_focused: var(--radiobutton_focused);
+
+/* RADIOBUTTON CHIPS */
+$radiobutton_chips_fg: var(--radiobutton_chips_fg);
+$radiobutton_chips_border: var(--radiobutton_chips_border);
+$radiobutton_chips_checked_bg: var(--radiobutton_chips_checked_bg);
+$radiobutton_chips_disabled_bg: var(--radiobutton_chips_disabled_bg);
+
+/* RADIOBUTTON SPLIT */
+$radio_split_button_fg: var(--radio_split_button_fg);
+$radio_split_button_bg: var(--radio_split_button_bg);
+$radio_split_button_border: var(--radio_split_button_border);
+$radio_split_button_checked_fg: var(--radio_split_button_checked_fg);
+$radio_split_button_checked_bg: var(--radio_split_button_checked_bg);
+$radio_split_button_disabled_fg: var(--radio_split_button_disabled_fg);
+$radio_split_button_disabled_bg: var(--radio_split_button_disabled_bg);
+
+/* RADIOBUTTON TAB */
+$radio_tab_fg: var(--radio_tab_fg);
+$radio_tab_bg: var(--radio_tab_bg);
+$radio_tab_border_color: var(--radio_tab_border_color);
+$radio_tab_border_color_checked: var(--radio_tab_border_color_checked);
+
+/* Shortcut Window */
+$shortcut_bg: var(--shortcut_bg);
+$shortcut_shadow_fg: var(--shortcut_shadow_fg);
+$shortcut_shadow_hover_fg: var(--shortcut_shadow_hover_fg);
+$shortcut_shadow_hover_bg: var(--shortcut_shadow_hover_bg);
+$shortcut_overlay_bg: var(--shortcut_overlay_bg);
+$shortcut_window_border: var(--shortcut_window_border);
+$shortcut_title_fg: var(--shortcut_title_fg);
+$shortcut_footer_fg: var(--shortcut_footer_fg);
+$shortcut_cmd_fg: var(--shortcut_cmd_fg);
+$shortcut_cmd_key_fg: var(--shortcut_cmd_key_fg);
+$shortcut_cmd_key_bg: var(--shortcut_cmd_key_bg);
+$shortcut_cmd_key_active_fg: var(--shortcut_cmd_key_active_fg);
+$shortcut_cmd_key_active_bg: var(--shortcut_cmd_key_active_bg);
+$shortcut_cmd_key_active_border: var(--shortcut_cmd_key_active_border);
+$shortcut_close_icon: var(--shortcut_close_icon);
+$shortcut_btn_bg: var(--shortcut_btn_bg); //Premium only
+$shortcut_btn_color: var(--shortcut_btn_color); //Premium only
+
+/* Slider */
+$slider_fg: var(--slider_fg);
+$slider_knob: var(--slider_knob);
+$slider_active_knob: var(--slider_active_knob);
+$slider_active_knob_shadow: var(--slider_active_knob_shadow);
+$slider_active_shadow: var(--slider_active_shadow);
+$slider_disabled_knob: var(--slider_disabled_knob);
+$slider_track_bg: var(--slider_track_bg);
+$slider_disabled_track_bg: var(--slider_disabled_track_bg);
+
+/* Recovery Panel */
+$recovery_reset_fg: var(--recovery_reset_fg);
+$recovery_response_fg: var(--recovery_response_fg);
+$recovery_btn_shadow: var(--recovery_btn_shadow);
+$recovery_btn_fg: var(--recovery_btn_fg);
+$recovery_btn_bg: var(--recovery_btn_bg);
+$recovery_btn_hover_shadow: var(--recovery_btn_hover_shadow);
+$recovery_btn_active_shadow: var(--recovery_btn_active_shadow);
+$recovery_btn_active_fg: var(--recovery_btn_active_fg);
+$recovery_btn_active_bg: var(--recovery_btn_active_bg);
+$recovery_btn_hover_bg: var(--recovery_btn_hover_bg);
+$recovery_btn_active_border: var(--recovery_btn_active_border);
+$recovery_btn_login_border: var(--recovery_btn_login_border);
+$recovery_btn_login_bg: var(--recovery_btn_login_bg);
+$recovery_btn_go_login_bg: var(--recovery_btn_go_login_bg);
+$recovery_btn_go_login_border: var(--recovery_btn_go_login_border);
+$recovery_btn_go_login_color: var(--recovery_btn_go_login_color);
+$recovery_btn_go_login_hover: var(--recovery_btn_go_login_hover);
+
+/* Stack */
+$stack_label_fg: var(--stack_label_fg);
+$stack_bg: var(--stack_bg);
+
+/* Scheduler */
+$scheduler_inline_fg: var(--scheduler_inline_fg);
+$scheduler_grid_fg: var(--scheduler_grid_fg);
+$scheduler_other_month_bg: var(--scheduler_other_month_bg);
+$scheduler_selected_cell_bg: var(--scheduler_selected_cell_bg);
+$scheduler_selected_cell_header_fg: var(--scheduler_selected_cell_header_fg);
+$scheduler_selected_cell_more_fg: var(--scheduler_selected_cell_more_fg);
+$scheduler_current_date_border_fg: var(--scheduler_current_date_border_fg);
+$scheduler_current_date_border: var(--scheduler_current_date_border);
+$scheduler_current_date_header_fg: var(--scheduler_current_date_header_fg);
+$scheduler_header_cells_fg: var(--scheduler_header_cells_fg);
+$scheduler_header_cells_bg: var(--scheduler_header_cells_bg);
+$scheduler_month_head_icon_fg: var(--scheduler_month_head_icon_fg);
+$scheduler_month_head_icon_alert_fg: var(--scheduler_month_head_icon_alert_fg);
+$scheduler_vertical_current_day_border: var(--scheduler_vertical_current_day_border);
+$scheduler_vertical_current_day_border_fg: var(--scheduler_vertical_current_day_border_fg);
+$scheduler_vertical_current_day_fg: var(--scheduler_vertical_current_day_fg);
+$scheduler_evnet_border_fg: var(--scheduler_evnet_border_fg);
+$scheduler_timeline_selected_cell_bg: var(--scheduler_timeline_selected_cell_bg);
+$scheduler_tooltip_fg: var(--scheduler_tooltip_fg);
+$scheduler_tooltip_bg: var(--scheduler_tooltip_bg);
+$scheduler_cell_hover_event_border_fg: var(--scheduler_cell_hover_event_border_fg);
+$scheduler_work_day_bg: var(--scheduler_work_day_bg);
+$scheduer_date_header_fg: var(--scheduer_date_header_fg);
+$scheduler_bg: var(--scheduler_bg);
+$scheduler_event_bg: var(--scheduler_event_bg);
+$scheduler_work_cell_hover_bg: var(--scheduler_work_cell_hover_bg);
+$scheduler_event_subject_fg: var(--scheduler_event_subject_fg);
+$scheduler_resources_cell_bg: var(--scheduler_resources_cell_bg);
+$scheduler_resources_cell_fg: var(--scheduler_resources_cell_fg);
+$scheduler_expand_color: var(--scheduler_expand_color);
+$scheduler_expand_hover_bg: var(--scheduler_expand_hover_bg);
+$scheduler_more_color: var(--scheduler_more_color);
+$scheduler_expand_hover_color: var(--scheduler_expand_hover_color);
+$scheduler_other_month_fc: var(--scheduler_other_month_fc);
+$scheduler_current_month_fc: var(--scheduler_current_month_fc);
+$scheduler_selected_border: var(--scheduler_selected_border);
+$scheduler_more_color_month: var(--scheduler_more_color_month);
+$scheduler_appointment_color: var(--scheduler_appointment_color);
+$scheduler_appointment_box_shadow: var(--scheduler_appointment_box_shadow);
+
+/* RxDesigner */
+$rx_designer_icon_fg: var(--rx_designer_icon_fg);
+
+/* Pivot */
+$pivot_filter_color: var(--pivot_filter_color);
+$pivot_filter_field_bg: var(--pivot_filter_field_bg);
+$pivot_filter_exp_bg: var(--pivot_filter_exp_bg);
+$pivot_filter_value_bg: var(--pivot_filter_value_bg);
+$pivot_filter_inrange_icon_bg: var(--pivot_filter_inrange_icon_bg);
+$pivot_pivotgrid_bg: var(--pivot_pivotgrid_bg);
+$pivot_border: var(--pivot_border);
+$pivot_border_bottom: var(--pivot_border_bottom);
+$pivot_btn_bg: var(--pivot_btn_bg);
+$pivot_border_color: var(--pivot_border_color);
+$pivot_hover_bg: var(--pivot_hover_bg);
+$pivot_focused_border_color: var(--pivot_focused_border_color);
+$pivot_focused_bg: var(--pivot_focused_bg);
+$pivot_active_bg: var(--pivot_active_bg);
+$pivot_active_border_color: var(--pivot_active_border_color);
+$pivot_active_color: var(--pivot_active_color);
+$pivot_area_description_border: var(--pivot_area_description_border);
+$pivot_bg: var(--pivot_bg);
+$pivot_scroll_content: var(--pivot_scroll_content);
+$pivot_scrollbar: var(--pivot_scrollbar);
+$pivot_box_shadow: var(--pivot_box_shadow);
+$pivot_overlay_content_bg: var(--pivot_overlay_content_bg);
+$pivot_popup_title_color: var(--pivot_popup_title_color);
+$pivot_overlay_content_border: var(--pivot_overlay_content_border);
+$pivot_close_popup_color: var(--pivot_close_popup_color);
+$pivot_close_button_hover_bg: var(--pivot_close_button_hover_bg);
+$pivot_close_popup_color_focused_bg: var(--pivot_close_popup_color_focused_bg);
+$pivot_close_popup_color_active_bg: var(--pivot_close_popup_color_active_bg);
+$pivot_close_popup_color_border_focused: var(--pivot_close_popup_color_border_focused);
+$pivot_close_popup_color_border_active: var(--pivot_close_popup_color_border_active);
+$pivot_close_popup_color_font_active: var(--pivot_close_popup_color_font_active);
+$pivot_area_fields_border: var(--pivot_area_fields_border);
+$pivot_group_bg: var(--pivot_group_bg);
+$pivot_drag_border: var(--pivot_drag_border);
+$pivot_texteditor_border: var(--pivot_texteditor_border);
+$pivot_texteditor_bg: var(--pivot_texteditor_bg);
+$pivot_searchbox_color: var(--pivot_searchbox_color);
+$pivot_placeholder_color: var(--pivot_placeholder_color);
+$pivot_texteditor_border_hover: var(--pivot_texteditor_border_hover);
+$pivot_texteditor_border_active: var(--pivot_texteditor_border_active);
+$pivot_clear_button_color: var(--pivot_clear_button_color);
+$pivot_clear_button_bg: var(--pivot_clear_button_bg);
+$pivot_texteditor_color: var(--pivot_texteditor_color);
+$pivot_dx_widget_color: var(--pivot_dx_widget_color);
+$pivot_treeview_item_color: var(--pivot_treeview_item_color);
+$pivot_treeview_item_hover_color: var(--pivot_treeview_item_hover_color);
+$pivot_treeview_item_hover_bg: var(--pivot_treeview_item_hover_bg);
+$pivot_checkbox_bg: var(--pivot_checkbox_bg);
+$pivot_checkbox_border_color: var(--pivot_checkbox_border_color);
+$pivot_checkbox_border_color_hover: var(--pivot_checkbox_border_color_hover);
+$pivot_checkbox_bg_active: var(--pivot_checkbox_bg_active);
+$pivot_checkbox_icon_color_checked: var(--pivot_checkbox_icon_color_checked);
+$pivot_checkbox_bg_checked: var(--pivot_checkbox_bg_checked);
+$pivot_list_hover_border_color: var(--pivot_list_hover_border_color);
+$pivot_checkbox_bg_indeterminate: var(--pivot_checkbox_bg_indeterminate);
+$pivot_list_color: var(--pivot_list_color);
+$pivot_list_border: var(--pivot_list_border);
+$pivot_loadpanel_bg: var(--pivot_loadpanel_bg);
+$pivot_loadpanel_border: var(--pivot_loadpanel_border);
+$pivot_overlay_color: var(--pivot_overlay_color);
+$pivot_loadindicator_bg: var(--pivot_loadindicator_bg);
+$pivot_overlay_bg: var(--pivot_overlay_bg);
+$pivot_filter_bg: var(--pivot_filter_bg);
+$pivot_treeview_item_selected_color: var(--pivot_treeview_item_selected_color);
+$pivot_treeview_item_selected_bg: var(--pivot_treeview_item_selected_bg);
+$pivot_filter_group_bg: var(--pivot_filter_group_bg);
+$pivot_filter_group_color: var(--pivot_filter_group_color);
+$pivot_filter_group_border: var(--pivot_filter_group_border);
+$pivot_filter_group_hover_bg: var(--pivot_filter_group_hover_bg);
+$pivot_filter_group_active_bg: var(--pivot_filter_group_active_bg);
+$pivot_filter_group_active_color: var(--pivot_filter_group_active_color);
+$pivot_icon_plus_color: var(--pivot_icon_plus_color);
+$pivot_icon_plus_color_active: var(--pivot_icon_plus_color_active);
+$pivot_icon_plus_bg_active: var(--pivot_icon_plus_bg_active);
+$pivot_icon_plus_bg_active: var(--pivot_icon_plus_bg_active);
+$pivot_icon_plus_color_hover: var(--pivot_icon_plus_color_hover);
+$pivot_icon_plus_bg_hover: var(--pivot_icon_plus_bg_hover);
+$pivot_treeview_item_focused_bg: var(--pivot_treeview_item_focused_bg);
+$pivot_icon_remove_color: var(--pivot_icon_remove_color);
+$pivot_icon_remove_color_hover: var(--pivot_icon_remove_color_hover);
+$pivot_icon_remove_bg_hover: var(--pivot_icon_remove_bg_hover);
+$pivot_icon_remove_bg_focus: var(--pivot_icon_remove_bg_focus);
+$pivot_icon_remove_color_focus: var(--pivot_icon_remove_color_focus);
+$pivot_filter_field_bg: var(--pivot_filter_field_bg);
+$pivot_filter_color: var(--pivot_filter_color);
+$pivot_filter_field_bg_hover: var(--pivot_filter_field_bg_hover);
+$pivot_filter_color_hover: var(--pivot_filter_color_hover);
+$pivot_filter_field_bg_active: var(--pivot_filter_field_bg_active);
+$pivot_filter_color_active: var(--pivot_filter_color_active);
+$pivot_filter_operation_bg: var(--pivot_filter_operation_bg);
+$pivot_filter_color: var(--pivot_filter_color);
+$pivot_filter_operation_bg_hover: var(--pivot_filter_operation_bg_hover);
+$pivot_filter_color_hover: var(--pivot_filter_color_hover);
+$pivot_filter_operation_bg_active: var(--pivot_filter_operation_bg_active);
+$pivot_filter_color_active: var(--pivot_filter_color_active);
+$pivot_filter_value_bg: var(--pivot_filter_value_bg);
+$pivot_filter_value_color: var(--pivot_filter_value_color);
+$pivot_filter_value_bg_hover: var(--pivot_filter_value_bg_hover);
+$pivot_filter_value_color_hover: var(--pivot_filter_value_color_hover);
+$pivot_filter_value_bg_active: var(--pivot_filter_value_bg_active);
+$pivot_filter_value_color_active: var(--pivot_filter_value_color_active);
+$pivot_treeview_item_selected_color: var(--pivot_treeview_item_selected_color);
+$pivot_treeview_item_selected_bg: var(--pivot_treeview_item_selected_bg);
+$pivot_treeview_item_selected_bg_hover: var(--pivot_treeview_item_selected_bg_hover);
+$pivot_treeview_item_without_checkbox_bg: var(--pivot_treeview_item_without_checkbox_bg);
+$pivot_dropdown_icon_color: var(--pivot_dropdown_icon_color);
+$pivot_dropdown_icon_bg: var(--pivot_dropdown_icon_bg);
+$pivot_selectbox_bg: var(--pivot_selectbox_bg);
+$pivot_list_hover_bg: var(--pivot_list_hover_bg);
+$pivot_dropdown_icon_color_active: var(--pivot_dropdown_icon_color_active);
+$pivot_dropdown_icon_bg_active: var(--pivot_dropdown_icon_bg_active);
+$pivot_list_selected_bg: var(--pivot_list_selected_bg);
+$pivot_list_selected_color: var(--pivot_list_selected_color);
+$pivot_list_selected_icon_color: var(--pivot_list_selected_icon_color);
+$pivot_list_active_bg: var(--pivot_list_active_bg);
+$pivot_list_active_color: var(--pivot_list_active_color);
+$pivot_list_icon_color_active: var(--pivot_list_icon_color_active);
+$pivot_list_focused_bg: var(--pivot_list_focused_bg);
+$pivot_list_focused_color: var(--pivot_list_focused_color);
+$pivot_filter_icon_color: var(--pivot_filter_icon_color);
+$pivot_numberbox_spin_icon_color: var(--pivot_numberbox_spin_icon_color);
+$pivot_numberbox_spin_icon_bg: var(--pivot_numberbox_spin_icon_bg);
+$pivot_numberbox_spin_icon_bg_hover: var(--pivot_numberbox_spin_icon_bg_hover);
+$pivot_numberbox_spin_icon_shadow_hover: var(--pivot_numberbox_spin_icon_shadow_hover);
+$pivot_numberbox_spin_icon_bg_active: var(--pivot_numberbox_spin_icon_bg_active);
+$pivot_numberbox_spin_icon_color_active: var(--pivot_numberbox_spin_icon_color_active);
+$pivot_calendar_bg: var(--pivot_calendar_bg);
+$pivot_calendar_color: var(--pivot_calendar_color);
+$pivot_calendar_cell_color: var(--pivot_calendar_cell_color);
+$pivot_calendar_empty_cell_color: var(--pivot_calendar_empty_cell_color);
+$pivot_calendar_today_color: var(--pivot_calendar_today_color);
+$pivot_calendar_hover_bg: var(--pivot_calendar_hover_bg);
+$pivot_calendar_hover_color: var(--pivot_calendar_hover_color);
+$pivot_calendar_active_bg: var(--pivot_calendar_active_bg);
+$pivot_calendar_contoured_date_shadow: var(--pivot_calendar_contoured_date_shadow);
+$pivot_calendar_selected_bg: var(--pivot_calendar_selected_bg);
+$pivot_calendar_selected_color: var(--pivot_calendar_selected_color);
+$pivot_btn_outlined_bg: var(--pivot_btn_outlined_bg);
+$pivot_border_outlined_color: var(--pivot_border_outlined_color);
+$pivot_calendar_navigator_color: var(--pivot_calendar_navigator_color);
+$pivot_outlined_icon_color: var(--pivot_outlined_icon_color);
+$pivot_btn_outlined_bg_hover: var(--pivot_btn_outlined_bg_hover);
+$pivot_border_outlined_color_hover: var(--pivot_border_outlined_color_hover);
+$pivot_btn_outlined_bg_focused: var(--pivot_btn_outlined_bg_focused);
+$pivot_border_outlined_color_focused: var(--pivot_border_outlined_color_focused);
+$pivot_btn_outlined_bg_active: var(--pivot_btn_outlined_bg_active);
+$pivot_border_outlined_color_active: var(--pivot_border_outlined_color_active);
+$pivot_outlined_icon_color_active: var(--pivot_outlined_icon_color_active);
+$pivot_btn_bg_hover: var(--pivot_btn_bg_hover);
+$pivot_filter_btn_fg: var(--pivot_filter_btn_fg);
+
+$pivot_color1: var(--pivot_color1);
+$pivot_color2: var(--pivot_color2);
+$pivot_color3: var(--pivot_color3);
+$pivot_color4: var(--pivot_color4);
+$pivot_color5: var(--pivot_color5);
+$pivot_color6: var(--pivot_color6);
+$pivot_color7: var(--pivot_color7);
+$pivot_color8: var(--pivot_color8);
+$pivot_color9: var(--pivot_color9);
+$pivot_color10: var(--pivot_color10);
+$pivot_color11: var(--pivot_color11);
+$pivot_color12: var(--pivot_color12);
+$pivot_color13: var(--pivot_color13);
+
+/* DropZone */
+$drop_zone_outline_fg: var(--drop_zone_outline_fg);
+$drop_zone_text_fg: var(--drop_zone_text_fg);
+$drop_zone_bg: var(--drop_zone_bg);
+
+/* ThreadsComments */
+$threadscommends_main_bg: var(--threadscommends_main_bg);
+$threadscommends_panel_border: var(--threadscommends_panel_border);
+$threadscommends_panel_color: var(--threadscommends_panel_color);
+$threadscommends_panel_hover_color: var(--threadscommends_panel_hover_color);
+$threadscommends_panel_bg: var(--threadscommends_panel_bg);
+$threadscommends_panel_hover_bg: var(--threadscommends_panel_hover_bg);
+$threadscommends_panel_icon_color: var(--threadscommends_panel_icon_color);
+$threadscommends_con_bg: var(--threadscommends_con_bg);
+
+$comment_c_end_border: var(--comment_c_end_border);
+$comment_c_h_author_color: var(--comment_c_h_author_color);
+$comment_c_h_status_color: var(--comment_c_h_status_color);
+$comment_c_h_status_hover: var(--comment_c_h_status_hover);
+$comment_c_h_status_cursor: var(--comment_c_h_status_cursor);
+$comment_c_h_date_color: var(--comment_c_h_date_color);
+$comment_c_h_source_color: var(--comment_c_h_source_color);
+$comment_ball_border: var(--comment_ball_border);
+$comment_c_h_source_val_color: var(--comment_c_h_source_val_color);
+$comment_c_h_draft_color: var(--comment_c_h_draft_color);
+$comment_c_h_nocomments_color: var(--comment_c_h_nocomments_color);
+$comment_c_btn_hover_shadow: var(--comment_c_btn_hover_shadow);
+$comment_c_btn_hover_bg: var(--comment_c_btn_hover_bg);
+$comment_c_btn_icon_color: var(--comment_c_btn_icon_color);
+$comment_c_btn_r_color: var(--comment_c_btn_r_color);
+$comment_c_btn_r_icon_color: var(--comment_c_btn_r_icon_color);
+$comment_c_btn_green_color: var(--comment_c_btn_green_color);
+$comment_c_btn_fg: var(--comment_c_btn_fg);
+$comment_c_like_icon_color: var(--comment_c_like_icon_color);
+$comment_c_like_icon_ac_color: var(--comment_c_like_icon_ac_color);
+$comment_c_like_green_color: var(--comment_c_like_green_color);
+$comment_c_like_blue_color: var(--comment_c_like_blue_color);
+$comment_fav_icon_color: var(--comment_fav_icon_color);
+$comment_fav_color: var(--comment_fav_color);
+$comment_fav_icon_ac_color: var(--comment_fav_icon_ac_color);
+$comment_base_text_color: var(--comment_base_text_color);
+$comment_base_text_bg: var(--comment_base_text_bg);
+$comment_base_link_color: var(--comment_base_link_color);
+$comment_text_con_bg: var(--comment_text_con_bg);
+$comment_text_con_color: var(--comment_text_con_color);
+$comment_text_con_border: var(--comment_text_con_border);
+$comment_btn_more_icon_color: var(--comment_btn_more_icon_color);
+$comment_btn_more_hover_bg: var(--comment_btn_more_hover_bg);
+$comment_btn_more_hover_border: var(--comment_btn_more_hover_border);
+$comment_btn_more_con_border: var(--comment_btn_more_con_border);
+$comment_btn_more_con_bg: var(--comment_btn_more_con_bg);
+$comment_base_show_more_color: var(--comment_base_show_more_color);
+$comment_base_show_more_shadow: var(--comment_base_show_more_shadow);
+$comment_val_bg: var(--comment_val_bg);
+$comment_val_border: var(--comment_val_border);
+$comment_val_c_h_author_color: var(--comment_val_c_h_author_color);
+$comment_file_bg: var(--comment_file_bg);
+$comment_file_border: var(--comment_file_border);
+$comment_file_color: var(--comment_file_color);
+$comment_file_icon_color: var(--comment_file_icon_color);
+$comment_color: var(--comment_color);
+$thread_bg: var(--thread_bg);
+$thread_border: var(--thread_border);
+$thread_title_color: var(--thread_title_color);
+$thread_footer_bg: var(--thread_footer_bg);
+$thread_footer_color: var(--thread_footer_color);
+$thread_footer_border: var(--thread_footer_border);
+$thread_footer_hover_bg: var(--thread_footer_hover_bg);
+$thread_footer_hover_color: var(--thread_footer_hover_color);
+$thread_footer_btn_icon_color: var(--thread_footer_btn_icon_color);
+$thread_editor_bg: var(--thread_editor_bg);
+$thread_modal_bg: var(--thread_modal_bg);
+$thread_modal_header_icon_color: var(--thread_modal_header_icon_color);
+$thread_modal_text_color: var(--thread_modal_text_color);
+$thread_modal_bts_color: var(--thread_modal_bts_color);
+$thread_modal_bts_fs: var(--thread_modal_bts_fs);
+
+$threads_modal_overlay_bg: var(--threads_modal_overlay_bg);
+$threads_modal_con_bg: var(--threads_modal_con_bg);
+
+$th_chips_default_color: var(--th_chips_default_color);
+
+$th_btn_cancel_fg: var(--th_btn_cancel_fg);
+$th_btn_cancel_bg: var(--th_btn_cancel_bg);
+$th_btn_cancel_border: var(--th_btn_cancel_border);
+$th_btn_cancel_hover: var(--th_btn_cancel_hover);
+$th_btn_draft_fg: var(--th_btn_draft_fg);
+$th_btn_draft_bg: var(--th_btn_draft_bg);
+$th_btn_save_fg: var(--th_btn_save_fg);
+$th_btn_save_bg: var(--th_btn_save_bg);
+$th_btn_save_hover: var(--th_btn_save_hover);
+$th_btn_save_fs: var(--th_btn_save_fs);
+$th_btn_active_bg: var(--th_btn_active_bg);
+$th_btn_active_border: var(--th_btn_active_border);
+
+/* TestRecorder */
+$recorder_bg: var(--recorder_bg);
+$recorder_color: var(--recorder_color);
+$recorder_shadow: var(--recorder_shadow);
+$recorder_border_fg: var(--recorder_border_fg);
+$recorder_active_shadow: var(--recorder_active_shadow);
+$recorder_button_active_bg: var(--recorder_button_active_bg);
+$recorder_button_active_shadow: var(--recorder_button_active_shadow);
+$recorder_button_shadow: var(--recorder_button_shadow);
+$recorder_button_hover_shadow: var(--recorder_button_hover_shadow);
+$recorder_button_active_color: var(--recorder_button_active_color);
+$recorder_button_disabled_color: var(--recorder_button_disabled_color);
+$recorder_stop_box_shadow : var(--recorder_stop_box_shadow);
+$recorder_stop_bcg : var(--recorder_stop_bcg);
+
+//Premium only
+$popup_nav_search_bg: var(--popup_nav_search_bg);
+$popup_nav_main_bg: var(--popup_nav_main_bg);
+$popup_nav_search_fg: var(--popup_nav_search_fg);
+$popup_nav_icon: var(--popup_nav_icon);
+$popup_nav_marked_icon: var(--popup_nav_marked_icon);
+$popup_nav_fg: var(--popup_nav_fg);
+$popup_nav_con_bg: var(--popup_nav_con_bg);
+$popup_nav_con_fg: var(--popup_nav_con_fg);
+$popup_nav_item_hover_bg: var(--popup_nav_item_hover_bg);
+$popup_nav_item_hover_fg: var(--popup_nav_item_hover_fg);
+$popup_nav_marked_border: var(--popup_nav_marked_border);
+$popup_nav_arrows_border: var(--popup_nav_arrows_border);
+$popup_nav_group_arrows_border: var(--popup_nav_group_arrows_border);
+$popup_nav_arrows_icon: var(--popup_nav_arrows_icon);
+$popup_nav_arrows_hover_bg: var(--popup_nav_arrows_hover_bg);
+$popup_nav_arrows_con_icon: var(--popup_nav_arrows_con_icon);
+
+$splash_logo_first_section: var(--splash_logo_first_section);
+$splash_logo_second_section: var(--splash_logo_second_section);
+$splash_logo_third_section: var(--splash_logo_third_section);
+
+$logoColor1: var(--logoColor1);
+$logoColor2: var(--logoColor2);
+$logoColor3: var(--logoColor3);
+//<--
+
+//Fido Window
+$mfa_svg_fill: var(--mfa_svg_fill);
+$mfa_label_fg: var(--mfa_label_fg);
+$mfa_font_family: var(--mfa_font_family);
+// <--
+
+//Kanban
+$kanban_default_operator_bg: var(--kanban_default_operator_bg);
+$kanban_list_fg: var(--kanban_list_fg);
+$kanban_list_bg: var(--kanban_list_bg);
+$kanban_item_bg: var(--kanban_item_bg);
+$kanban_item_fg: var(--kanban_item_fg);
+$kanban_item_border: var(--kanban_item_border);
+$kanban_item_box_shadow: var(--kanban_item_box_shadow);
+$kanban_item_text_fg: var(--kanban_item_text_fg);
+
+//TimelineClock
+$timeline_bg: var(--timeline_bg);
+$timeline_fg: var(--timeline_fg);
+$timeline_hour_circle: var(--timeline_hour_circle);
+$timeline_area_circle: var(--timeline_area_circle);
+$timeline_text_fg: var(--timeline_text_fg);
+$timeline_indicator: var(--timeline_indicator);
+$timeline_current_time_circle: var(--timeline_current_time_circle);
+
+// FolderTabBar
+$folder_tab_item_bg: var(--folder_tab_item_bg);
+$folder_tab_item_fg: var(--folder_tab_item_fg);
+$folder_tab_item_ac_bg: var(--folder_tab_item_ac_bg);
+$folder_tab_item_ac_fg: var(--folder_tab_item_ac_fg);
+
+//CircularIndicator
+$circular_indicator_bg: var(--timeline_bg);
+$circular_indicator_fg: var(--timeline_fg);
+
+/* WaitingIndicator */
+$wi_color1: var(--wi_color1);
+$wi_color2: var(--wi_color2);
+$wi_color3: var(--wi_color3);
+$wi_color4: var(--wi_color4);
+$wi_icon: var(--wi_icon);
+$wi_bg: var(--wi_bg);
+$wi_shadow: var(--wi_shadow);
+$wi_fg: var(--wi_fg);
+$wi_text_size: var(--modal_bar_title_font);
+// <--

@@ -1,0 +1,36 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.hb-top {
+  @include partial-flex-item;
+  @include flexAlignItems(center, center);
+  display: inline-flex;
+  right: 0;
+  height: inherit;
+  padding: 8px 0;
+
+  &:focus-visible {
+    @include focus(
+      $outline: $focus_outline_secondary,
+      $outline-offset: -2px,
+      $box-shadow: none
+    );
+  }
+
+  .hb-btn:hover {
+    box-shadow: $headerbar_command_special_shadow;
+  }
+}
+
+.hb-top-p {
+  background-color: $headerbar_command_bg;
+
+  &:focus-visible {
+    @include focus(
+      $outline: $focus_outline_secondary,
+      $outline-offset: -3px,
+      $box-shadow: none
+    );
+  }
+}

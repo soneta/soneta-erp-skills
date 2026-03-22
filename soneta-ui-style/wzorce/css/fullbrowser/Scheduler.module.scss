@@ -1,0 +1,506 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.scheduler {
+	:global {
+		.e-schedule {
+			background-color: $scheduler_bg;
+			border: 1px solid $scheduler_grid_fg;
+
+			&:focus-visible {
+				@include focus();
+			}
+
+			.e-month-view {
+				.e-date-header-wrap {
+					table td {
+						border-color: $scheduler_grid_fg;
+					}
+				}
+
+				.e-work-cells {
+					background-color: $scheduler_work_day_bg;
+					border-color: $scheduler_grid_fg;
+					color: $scheduer_date_header_fg;
+
+					&.e-work-days {
+						background-color: $scheduler_work_day_bg;
+					}
+
+					&:not(.e-work-days) {
+						.e-appointment-wrapper {
+							.e-appointment {
+								border: 1px solid $scheduler_work_day_bg;
+							}
+						}
+					}
+
+					.e-date-header {
+						font-size: 8pt;
+						font-family: "FiraSansLight", Arial;
+						width: 100%;
+						margin: 0 0 2px 0;
+						padding: 3px 3px 2px;
+						text-align: left;
+						border-radius: 0;
+
+						.e-date-header-con {
+							display: -ms-flexbox;
+							display: -webkit-flex;
+							display: flex;
+							-webkit-flex-direction: row;
+							-ms-flex-direction: row;
+							flex-direction: row;
+							-webkit-flex-wrap: nowrap;
+							-ms-flex-wrap: nowrap;
+							flex-wrap: nowrap;
+							-webkit-justify-content: space-between;
+							-ms-flex-pack: justify;
+							justify-content: space-between;
+							-webkit-align-content: center;
+							-ms-flex-line-pack: center;
+							align-content: center;
+							-webkit-align-items: center;
+							-ms-flex-align: center;
+							align-items: center;
+
+							svg {
+								width: 10px;
+								height: 10px;
+								fill: $scheduler_month_head_icon_fg;
+							}
+
+							&.alert svg {
+								fill: $scheduler_month_head_icon_alert_fg;
+							}
+						}
+
+					}
+
+					.e-appointment-wrapper {
+						.e-appointment {
+							border-radius: 2px;
+							border: 1px solid $scheduler_evnet_border_fg;
+							background-color: $scheduler_event_bg;
+							color: $scheduler_event_subject_fg;
+
+							.e-appointment-details {
+								.e-time {
+									display: none;
+									font-size: 10px;
+									font-family: "FiraSans", Arial;
+								}
+
+								.e-subject {
+									font-size: 12px;
+									font-family: "FiraSans", Arial;
+								}
+
+								.e-inline-subject {
+									color: $scheduler_inline_fg;
+								}
+							}
+						}
+
+						.e-more-indicator {
+							&:hover {
+								cursor: auto;
+							}
+
+							&:focus {
+								text-decoration: none;
+							}
+						}
+					}
+
+					&.e-other-month {
+						background-color: $scheduler_other_month_bg;
+						color: $scheduler_other_month_fc;
+
+						.e-appointment {
+							border: 1px solid $scheduler_other_month_bg;
+						}
+					}
+
+					&.e-selected-cell:not(.e-other-month) {
+						background-color: $scheduler_selected_cell_bg !important;
+						border: $scheduler_selected_border;
+
+						.e-date-header {
+							color: $scheduler_selected_cell_header_fg;
+						}
+
+						.e-more-indicator {
+							color: $scheduler_selected_cell_more_fg;
+						}
+
+						.e-appointment {
+							border: 1px solid $scheduler_selected_cell_bg;
+						}
+
+						&:hover {
+							.e-appointment {
+								border: 1px solid $scheduler_selected_cell_bg !important;
+							}
+						}
+					}
+
+					&:hover {
+						background-color: $scheduler_work_cell_hover_bg;
+
+						.e-appointment-wrapper {
+							.e-appointment {
+								border: 1px solid $scheduler_cell_hover_event_border_fg;
+							}
+						}
+					}
+				}
+
+				.e-current-date {
+					border: $scheduler_current_date_border !important;
+
+					.e-date-header {
+						background-color: transparent;
+						color: $scheduler_current_date_header_fg;
+					}
+				}
+
+				.e-schedule-table {
+					.e-header-cells {
+						color: $scheduler_header_cells_fg;
+						background-color: $scheduler_header_cells_bg;
+					}
+				}
+
+				.e-schedule-table {
+					.e-date-header {
+						cursor: auto;
+						font-family: "FiraSans";
+
+						&:hover {
+							text-decoration: none;
+						}
+					}
+				}
+			}
+
+			.e-vertical-view {
+				table td {
+					border-color: $scheduler_grid_fg !important;
+
+					&:not(.e-time-cells) {
+						&.e-time-slots {
+							border-bottom: transparent !important;
+						}
+					}
+				}
+
+				.e-left-indent {
+					.e-header-cells {
+						background-color: $scheduler_work_day_bg;
+					}
+
+					.e-all-day-cells {
+						background-color: $scheduler_work_day_bg;
+					}
+				}
+
+				.e-date-header-container {
+					.e-header-row {
+						.e-header-cells {
+							background-color: $scheduler_work_day_bg;
+
+							.e-header-date {
+								cursor: auto;
+								color: $scheduler_header_cells_fg;
+
+								&:hover {
+									text-decoration: none;
+								}
+							}
+
+							.e-header-day {
+								color: $scheduler_header_cells_fg;
+							}
+
+							&.e-current-day {
+								border: $scheduler_vertical_current_day_border !important;
+								color: $scheduler_vertical_current_day_fg;
+
+								.e-header-date {
+									font-size: 18px;
+									font-family: "FiraSans", Arial;
+									font-weight: 600;
+								}
+
+								.e-header-day {
+									font-size: 15px;
+									font-family: "FiraSans", Arial;
+									font-weight: 600;
+								}
+							}
+						}
+					}
+
+					.e-all-day-row {
+						.e-all-day-cells {
+							background-color: $scheduler_work_day_bg;
+						}
+					}
+
+					.e-all-day-appointment-wrapper {
+						.e-all-day-appointment {
+							border: 1px solid $scheduler_evnet_border_fg;
+							background-color: $scheduler_event_bg;
+
+							.e-subject {
+								font-size: 12px;
+								font-family: "FiraSans", Arial;
+								color: $scheduler_event_subject_fg;
+							}
+
+							.e-time {
+								font-size: 10px;
+								font-family: "FiraSans", Arial;
+								color: $scheduler_event_subject_fg;
+							}
+						}
+					}
+				}
+
+				.e-time-cells-wrap {
+					.e-current-time {
+						display: none;
+					}
+
+					.e-time-slots {
+						color: $scheduler_event_subject_fg;
+						background-color: $scheduler_work_day_bg;
+					}
+				}
+
+				.e-content-wrap {
+					.e-appointment-wrapper {
+						.e-appointment {
+							border: 1px solid $scheduler_evnet_border_fg;
+							background-color: $scheduler_event_bg;
+
+							.e-time {
+								font-size: 10px;
+								font-family: "FiraSans", Arial;
+								color: $scheduler_event_subject_fg;
+							}
+
+							.e-subject {
+								font-size: 12px;
+								font-family: "FiraSans", Arial;
+								color: $scheduler_event_subject_fg;
+							}
+						}
+					}
+
+					.e-work-cells {
+						background-color: $scheduler_work_day_bg;
+
+						&.e-work-hours {
+							background-color: $scheduler_work_day_bg;
+						}
+
+						&.e-selected-cell {
+							background-color: $scheduler_selected_cell_bg !important;
+						}
+
+						&:hover {
+							background-color: $scheduler_work_cell_hover_bg;
+						}
+					}
+				}
+
+				.e-alternate-cells {
+					border-bottom-style: none;
+				}
+
+				.e-hide-childs {
+					span {
+						display: block;
+					}
+				}
+			}
+
+			.e-timeline-view,
+			.e-timeline-month-view {
+				.e-resource-left-td {
+					background-color: $scheduler_header_cells_bg;
+					border-color: $scheduler_grid_fg;
+				}
+
+				.e-date-header-container {
+					.e-date-header-wrap {
+						table {
+							td {
+								border-color: $scheduler_grid_fg;
+							}
+
+							.e-header-cells {
+								background-color: $scheduler_header_cells_bg;
+								color: $scheduler_header_cells_fg;
+								padding: 0;
+
+								span {
+									padding-left: 4px;
+								}
+
+								&.e-current-day {
+									span {
+										@include flexDisplay();
+										@include flexAlignItems(center, center);
+										width: 100%;
+										border: 1px solid $scheduler_vertical_current_day_border_fg;
+										height: 100%;
+									}
+								}
+							}
+
+							.e-time-slots {
+								color: $scheduler_header_cells_fg;
+								background-color: $scheduler_header_cells_bg;
+							}
+						}
+
+						.e-current-time {
+							display: none;
+						}
+					}
+				}
+
+				.e-resource-column-wrap {
+					.e-resource-cells {
+						background-color: $scheduler_resources_cell_bg;
+						border-color: $scheduler_grid_fg;
+
+						.e-resource-text {
+							color: $scheduler_resources_cell_fg;
+						}
+					}
+				}
+
+				.e-content-wrap {
+					.e-schedule-table {
+						tbody {
+							.e-selected-cell {
+								background-color: $scheduler_timeline_selected_cell_bg !important;
+							}
+
+							.e-work-cells {
+								background-color: $scheduler_work_day_bg;
+								border-color: $scheduler_grid_fg;
+
+								&:hover {
+									background-color: $scheduler_work_cell_hover_bg;
+								}
+							}
+
+							.e-alternate-cells {
+								border-left-style: none;
+							}
+						}
+					}
+
+					.e-event-table {
+						.e-appointment {
+							border: 1px solid $scheduler_evnet_border_fg;
+							background-color: $scheduler_event_bg;
+
+							.e-appointment-details {
+								.e-subject {
+									font-size: 12px;
+									font-family: "FiraSans", Arial;
+									padding-bottom: 2px;
+									color: $scheduler_event_subject_fg;
+								}
+
+								.e-time {
+									font-size: 10px;
+									font-family: "FiraSans", Arial;
+									color: $scheduler_event_subject_fg;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.e-schedule .e-appointment .e-right-icon::before {
+			color: $scheduler_appointment_color;
+		}
+
+		.e-schedule .e-appointment .e-left-icon::before {
+			color: $scheduler_appointment_color;
+		}
+
+		.e-schedule .e-vertical-view .e-day-wrapper .e-appointment.e-appointment-border,
+		.e-schedule .e-vertical-view .e-day-wrapper .e-appointment:focus {
+			box-shadow: $scheduler_appointment_box_shadow;
+		}
+	}
+}
+
+.tooltip-wrap {
+	background-color: $scheduler_tooltip_bg;
+
+	.name,
+	.date,
+	.time {
+		font-size: 12px;
+		font-family: "FiraSans", Arial;
+		color: $scheduler_tooltip_fg;
+	}
+}
+
+:global {
+	.e-tooltip-wrap.e-popup {
+		background-color: $scheduler_tooltip_bg;
+		opacity: 1;
+
+		.e-tip-content {
+			.e-subject {
+				font-size: 12px;
+				font-family: "FiraSans", Arial;
+				color: $scheduler_tooltip_fg;
+			}
+
+			.e-details {
+				font-size: 12px;
+				font-family: "FiraSans", Arial;
+				color: $scheduler_tooltip_fg;
+
+			}
+
+			.e-all-day {
+				font-size: 12px;
+				font-family: "FiraSans", Arial;
+				color: $scheduler_tooltip_fg;
+			}
+		}
+	}
+}
+
+.e-appointment-expand-dark {
+	color: $scheduler_expand_color !important;
+
+	&:hover,
+	&:focus {
+		background-color: $scheduler_expand_hover_bg !important;
+		color: $scheduler_expand_color !important;
+	}
+}
+
+.e-more-indicator-dark {
+	color: $scheduler_more_color !important;
+}
+
+.e-more-indicator-dark-month {
+	color: $scheduler_more_color_month !important;
+}

@@ -1,0 +1,82 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$status_picker_width: 180px;
+$status_picker_height: 24px;
+
+.status-picker {
+  @include partial-row-center-start;
+  width: $status_picker_width;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .caption {
+    height: inherit;
+    width: 40px;
+    margin-right: 5px;
+    color: $picker_color;
+    border-bottom: 1px solid var(--theme_editor_label_border);
+  }
+
+  .status-button {
+    @include partial-row-center-start;
+    width: calc($status_picker_width - 57px);
+    height: $status_picker_height;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: $picker_button_shadow;
+    background-color: $status_picker_bg;
+
+    .title {
+      @include partial-column-center-start;
+      padding: 0 4px;
+      height: inherit;
+      font-family: "FiraSans";
+      color: $picker_color;
+    }
+  }
+
+  &.active {
+    box-shadow: $picker_active_shadow;
+  }
+}
+
+.status-items {
+  @include partial-column-center-start;
+  position: absolute;
+  left: 0px;
+  top: $status_picker_height;
+  margin-top: 1px;
+  width: $status_picker_width;
+  box-shadow: $picker_button_hover_shadow;
+  border: $status_picker_border;
+  background-color: $status_picker_items_bg;
+
+  .item {
+    @include partial-row-center-start;
+    width: inherit;
+    height: $status_picker_height;
+    background-color: $status_picker_item_bg;
+    border-left: $status_picker_item_border;
+    
+    &:hover {
+      background-color: $status_picker_item_hover;
+      cursor: $status_picker_cursor;
+      border-left: $status_picker_item_border_hover;
+    }
+
+    .item-text {
+      @include partial-column-center-start;
+      width: calc(100% - 20px);
+      height: inherit;
+      font-size: 13px;
+      font-family: "FiraSans";
+      padding: 0 5px;
+      color: $picker_color;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.groupitem {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .content {
+    @include partial-row-center-start;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: inherit;
+
+    .icon {
+      @include partial-column-center;
+      display: flex;
+      float: left;
+      width: 22px;
+      height: inherit;
+
+      svg {
+        width: 20px;
+        height: inherit;
+
+        path {
+          fill: $dashboard_item_icon_bg;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    .content {
+      .icon {
+        svg {
+          path {
+            fill: $dashboard_item_icon_hover_bg;
+          }
+        }
+      }
+    }
+  }
+}
+
+.groupitem-p {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+}

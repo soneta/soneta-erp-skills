@@ -1,0 +1,44 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-code {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.btn-add {
+  @include partial-column-center;
+  position: absolute;
+  top: 1px;
+  right: 15px;
+  width: 28px;
+  height: 28px;
+  z-index: 100;
+  cursor: pointer;
+  line-height: 8pt;
+  font-size: 14pt;
+  font-family: $primaryFont;
+  border-radius: 2px;
+  background-color: $field_code_add_btn_bg;
+  box-shadow: $field_code_add_btn_shadow;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  svg path {
+    fill: $field_code_add_btn_icon_bg;
+  }
+
+  &:active {
+    box-shadow: $field_code_add_btn_active_shadow;
+    svg path {
+      fill: $field_code_add_btn_active_icon_bg;
+    }
+  }
+}

@@ -1,0 +1,127 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.nav-item {
+  @include partial-row-center-start;
+  height: $nav_menu_icon_width;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+
+  &.hover {
+    background-color: $nav_item_hover_bg;
+
+    .nav-item-cap {
+      color: $nav_item_hover_fg;
+    }
+
+    &.disabled {
+      background-color: $nav_item_disabled_hover_bg;
+
+      .nav-item-cap {
+        color: $nav_item_disabled_hover_fg;
+      }
+    }
+  }
+
+
+  .nav-item-cap {
+    @include partial-ellipsis;
+    padding: 0 10px;
+    color: $nav_con_fg;
+  }
+
+  &.disabled {
+    cursor: auto;
+
+    .nav-item-cap {
+      color: $nav_item_disabled_fg;
+    }
+  }
+}
+
+.nav-gr {
+  display: inline-flex;
+  cursor: pointer;
+  height: $nav_menu_icon_width;
+  width: $nav_menu_icon_width;
+  color: $nav_fg;
+  background-color: $nav_group_bg;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  font-weight: 500;
+
+  &.hover {
+    background-color: $nav_item_hover_bg;
+  }
+
+  &.marked, &.ac {
+    color: $nav_marked_fg;
+    background-color: $nav_marked_bg;
+
+    .icon {
+      svg path,
+      svg text {
+        fill: $nav_marked_icon;
+      }
+    }
+  }
+
+  &:not(.ex) {
+    @include partial-row-center;
+  }
+
+  &.ex {
+    @include partial-row-center-start;
+    width: $nav_menu_width;
+
+    &.popup {
+      margin-left: 8px;
+      width: calc($nav_menu_width - 8px);
+    }
+  }
+
+  &.ex span {
+    @include partial-column-center-start;
+    height: $nav_menu_icon_width;
+    width: 140px;
+  }
+
+  .icon {
+    @include partial-column-center;
+    height: $nav_menu_icon_width;
+    width: $nav_menu_icon_width;
+
+    svg {
+      width: $nav_menu_svg_size;
+      height: inherit;
+
+      path,
+      text {
+        fill: $nav_icon;
+      }
+    }
+  }
+
+  &:not(.popup) {
+    &.nav-gr-extra {
+      border-top: 1px dashed $nav_con_bg;
+      margin-top: $nav_menu_icon_width;
+    }
+  }
+
+  &.popup {
+    .text {
+      @include partial-ellipsis;
+    }
+
+    &.no-icon {
+      padding-left: 20px;
+    }
+  }
+}
+

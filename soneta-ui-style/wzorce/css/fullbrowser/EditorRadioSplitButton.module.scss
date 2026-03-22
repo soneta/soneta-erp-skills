@@ -1,0 +1,87 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-radio-split-btn {
+  @include partial-column-center;
+  width: 100%;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+
+  &.horizontal {
+    height: 100%;
+  }
+
+  &:not(.horizontal) {
+    height: 32px;
+  }
+
+  input {
+    display: none;
+    pointer-events: none;
+  }
+
+  .split {
+    @include partial-ellipsis;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    width: 100%;
+    text-align: center;
+
+    &:focus-visible {
+      @include focus($outline-offset: -2px,
+        $box-shadow: none,
+        $outline-width: 2px,
+        $border-radius: inherit,
+      );
+    }
+
+    &.horizontal {
+      height: 100%;
+    }
+
+    &:not(.checked) {
+      border: 1px solid $radio_split_button_border;
+      color: $radio_split_button_fg;
+      background-color: $radio_split_button_bg;
+    }
+
+    &.checked {
+      border: 1px solid $radio_split_button_checked_bg;
+      color: $radio_split_button_checked_fg;
+      background-color: $radio_split_button_checked_bg;
+
+      &:focus-within {
+        outline: none;
+      }
+
+      &:focus-visible {
+        @include focus($outline: 2px solid #000,
+          $outline-offset: -2px,
+          $box-shadow: none,
+          $outline-width: 2px,
+          $border-radius: inherit,
+        );
+      }
+
+    }
+
+    &.disabled {
+      border: 1px solid $radio_split_button_disabled_bg;
+      background-color: $radio_split_button_disabled_bg;
+      color: $radio_split_button_disabled_fg;
+      cursor: auto;
+
+      &:focus-visible {
+        @include focus($outline-offset: -2px,
+          $box-shadow: none,
+          $outline-width: 2px,
+          $border-radius: inherit,
+        );
+      }
+    }
+  }
+}

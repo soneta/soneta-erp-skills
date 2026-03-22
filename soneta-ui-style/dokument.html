@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ewidencja dokumentów — enova365</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Lato:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand_500: #016E46;
+    --brand_600: #015436;
+    --brand_700: #01422A;
+    --brand_300: #02BB77;
+    --brand_200: #02E391;
+    --theme_bg: rgb(230,231,231);
+    --sidebar_bg: #003320;
+    --sidebar_hover: rgba(255,255,255,0.08);
+    --sidebar_selected: rgba(255,255,255,0.12);
+    --surface: #FFFFFF;
+    --text_primary: #212121;
+    --text_secondary: #757575;
+    --text_label: #616161;
+    --border_light: #E0E0E0;
+    --border_input: #BDBDBD;
+    --row_hover: rgba(0,0,0,0.04);
+    --row_selected: rgba(46,125,50,0.08);
+    --success: #2E7D32;
+    --danger: #C62828;
+    --warning: #F57C00;
+    --info: #1976D2;
+    --disabled: #A3A3A3;
+    --section_bg: #F5F5F5;
+    --shadow_subtle: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow_standard: 0 2px 8px rgba(0,0,0,0.15);
+    --shadow_modal: 0 4px 20px rgba(0,0,0,0.25);
+    --header_shadow: 0 2px 4px rgba(0,0,0,0.1);
+    --tile_shadow: 0px 0px 10px 1px rgba(229,229,229,1);
+    --font_primary: 'Roboto', Arial, sans-serif;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: var(--font_primary);
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text_primary);
+    background: var(--theme_bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ========== HEADER ========== */
+  .header {
+    height: 52px;
+    background: var(--brand_500);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    box-shadow: var(--header_shadow);
+    z-index: 100;
+    flex-shrink: 0;
+    gap: 16px;
+  }
+  .header-logo svg { height: 22px; width: auto; display: block; }
+  .header-search {
+    background: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px 6px 32px;
+    font-size: 13px;
+    width: 260px;
+    color: var(--text_primary);
+    position: relative;
+  }
+  .header-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .header-search-wrap svg {
+    position: absolute;
+    left: 8px;
+    width: 14px;
+    height: 14px;
+    fill: var(--text_secondary);
+    pointer-events: none;
+  }
+  .header-spacer { flex: 1; }
+  .header-timer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 13px;
+  }
+  .header-timer .play-btn {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .header-timer .play-btn:hover { background: rgba(255,255,255,0.25); }
+  .header-timer .play-btn svg { width: 12px; height: 12px; fill: #fff; }
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-icon {
+    width: 32px; height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .header-icon:hover { background: rgba(255,255,255,0.15); }
+  .header-icon svg { width: 20px; height: 20px; fill: #fff; }
+  .header-icon .badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background: var(--danger);
+    border-radius: 50%;
+    border: 1.5px solid var(--brand_500);
+  }
+  .header-avatar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+  .header-avatar .avatar-circle {
+    width: 34px; height: 34px;
+    background: var(--brand_700);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .header-avatar-info { color: #fff; }
+  .header-avatar-info .name { font-size: 13px; font-weight: 500; }
+  .header-avatar-info .role { font-size: 11px; opacity: 0.8; }
+
+  /* ========== MAIN LAYOUT ========== */
+  .main-wrap {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ========== SIDEBAR ========== */
+  .sidebar {
+    width: 250px;
+    background: var(--sidebar_bg);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-radius: 0 10px 10px 0;
+    margin: 5px 0 5px 5px;
+    overflow: hidden;
+  }
+  .sidebar-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--brand_500);
+    font-size: 12px;
+  }
+  .sidebar-controls span {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  .sidebar-controls span:hover { opacity: 1; }
+  .sidebar-search {
+    padding: 8px 12px;
+  }
+  .sidebar-search input {
+    width: 100%;
+    background: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px 6px 30px;
+    font-size: 13px;
+    color: var(--text_primary);
+  }
+  .sidebar-search-wrap {
+    position: relative;
+  }
+  .sidebar-search-wrap svg {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 13px;
+    height: 13px;
+    fill: var(--text_secondary);
+  }
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.15s;
+    gap: 10px;
+    user-select: none;
+  }
+  .nav-item:hover { background: var(--sidebar_hover); }
+  .nav-item.active { background: var(--sidebar_selected); font-weight: 600; }
+  .nav-item svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+  .nav-item .chevron { margin-left: auto; font-size: 10px; opacity: 0.6; transition: transform 0.2s; }
+  .nav-item.open .chevron { transform: rotate(90deg); }
+  .nav-children { display: none; }
+  .nav-item.open + .nav-children { display: block; }
+  .nav-children .nav-item { padding-left: 42px; font-size: 13px; }
+  .nav-children .nav-children .nav-item { padding-left: 58px; }
+  .nav-separator { height: 1px; background: rgba(255,255,255,0.1); margin: 6px 12px; }
+
+  /* ========== CONTENT AREA ========== */
+  .content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 5px 5px 5px 5px;
+    background: var(--surface);
+    border-radius: 10px;
+  }
+
+  /* ========== BREADCRUMB ========== */
+  .breadcrumb {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 12px;
+    color: var(--text_secondary);
+    border-bottom: 1px solid var(--border_light);
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .breadcrumb svg { width: 14px; height: 14px; fill: var(--text_secondary); }
+  .breadcrumb a { color: var(--text_secondary); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--brand_500); text-decoration: underline; }
+  .breadcrumb .sep { margin: 0 2px; }
+  .breadcrumb .current { color: var(--text_primary); font-weight: 500; }
+
+  /* ========== TOOLBAR ========== */
+  .toolbar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 6px;
+    border-bottom: 1px solid var(--border_light);
+    flex-shrink: 0;
+  }
+  .toolbar-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 16px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font_primary);
+  }
+  .btn svg { width: 14px; height: 14px; }
+  .btn-primary { background: var(--success); color: #fff; }
+  .btn-primary:hover { background: #256d29; }
+  .btn-secondary { background: transparent; color: var(--text_primary); border: 1px solid var(--border_input); }
+  .btn-secondary:hover { background: var(--section_bg); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-danger:hover { background: #a72222; }
+  .btn-outline-green { background: transparent; color: var(--success); border: 1px solid var(--success); }
+  .btn-outline-green:hover { background: rgba(46,125,50,0.06); }
+  .btn-icon {
+    background: transparent;
+    border: none;
+    width: 32px; height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-icon:hover { background: var(--row_hover); }
+  .btn-icon svg { width: 16px; height: 16px; fill: var(--text_label); }
+  .btn-pill {
+    background: var(--success);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-family: var(--font_primary);
+    transition: background 0.2s;
+  }
+  .btn-pill:hover { background: #256d29; }
+  .btn-pill svg { width: 12px; height: 12px; fill: #fff; }
+  .toolbar-spacer { flex: 1; }
+
+  /* ========== TABS ========== */
+  .tabs {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-bottom: 1px solid var(--border_light);
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+  .tab {
+    padding: 10px 18px;
+    font-size: 13px;
+    color: var(--text_secondary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-weight: 400;
+    transition: all 0.15s;
+  }
+  .tab:hover { color: var(--text_primary); background: var(--row_hover); }
+  .tab.active { color: var(--brand_500); border-bottom-color: var(--brand_500); font-weight: 600; }
+
+  /* ========== SCROLLABLE CONTENT ========== */
+  .scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+  }
+  .scroll-content::-webkit-scrollbar { width: 8px; }
+  .scroll-content::-webkit-scrollbar-track { background: transparent; }
+  .scroll-content::-webkit-scrollbar-thumb { background: #BDBDBD; border-radius: 4px; }
+  .scroll-content::-webkit-scrollbar-thumb:hover { background: #999; }
+
+  /* ========== TILES SECTION ========== */
+  .tiles-section {
+    padding: 20px 20px 10px;
+  }
+  .tiles-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text_secondary);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  .tiles-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tile {
+    width: 340px;
+    min-height: 78px;
+    background: var(--surface);
+    border-radius: 12px;
+    box-shadow: var(--tile_shadow);
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+    border-left: 4px solid;
+  }
+  .tile:hover { background: var(--section_bg); }
+  .tile-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tile-icon svg { width: 18px; height: 18px; fill: #fff; }
+  .tile-text { flex: 1; min-width: 0; }
+  .tile-title { font-size: 15px; font-weight: 600; color: #000; line-height: 24px; }
+  .tile-desc { font-size: 13px; color: rgb(68,70,69); line-height: 16px; }
+  .tile-badge {
+    background: var(--brand_500);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ========== SUMMARY CARDS ========== */
+  .summary-section {
+    padding: 10px 20px 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .summary-card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 260px;
+    background: var(--surface);
+    border-radius: 10px;
+    box-shadow: var(--shadow_subtle);
+    padding: 16px;
+    border-top: 3px solid;
+  }
+  .summary-card-value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .summary-card-label {
+    font-size: 12px;
+    color: var(--text_secondary);
+    margin-top: 4px;
+  }
+  .summary-card-change {
+    font-size: 11px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .change-up { color: var(--success); }
+  .change-down { color: var(--danger); }
+
+  /* ========== TABLE ========== */
+  .table-section {
+    padding: 0 20px 20px;
+  }
+  .table-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .table-title { font-size: 15px; font-weight: 600; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text_label);
+    background: var(--section_bg);
+    border-bottom: 1px solid var(--border_light);
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid #F0F0F0; transition: background 0.1s; }
+  tbody tr:hover { background: var(--row_hover); }
+  tbody tr.selected { background: var(--row_selected); }
+  tbody td { padding: 6px 12px; height: 34px; vertical-align: middle; }
+  .status-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .status-zatwierdzony { background: #E8F5E9; color: #2E7D32; }
+  .status-roboczy { background: #E3F2FD; color: #1565C0; }
+  .status-anulowany { background: #FFEBEE; color: #C62828; }
+  .status-oczekujacy { background: #FFF3E0; color: #E65100; }
+  .status-wyslany { background: #F3E5F5; color: #6A1B9A; }
+  .table-actions { display: flex; gap: 4px; }
+
+  /* ========== ARTICLES ========== */
+  .articles-section {
+    padding: 0 20px 20px;
+  }
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .article-card {
+    background: var(--surface);
+    border-radius: 8px;
+    box-shadow: var(--shadow_subtle);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .article-card:hover { box-shadow: var(--shadow_standard); transform: translateY(-1px); }
+  .article-card-img {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+  }
+  .article-card-body { padding: 14px 16px; }
+  .article-card-tag {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .article-card-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+  .article-card-excerpt { font-size: 12px; color: var(--text_secondary); line-height: 1.5; }
+  .article-card-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border_light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text_secondary);
+  }
+
+  /* ========== FEEDBACK SECTION ========== */
+  .feedback-section {
+    padding: 0 20px 20px;
+  }
+  .feedback-card {
+    background: var(--surface);
+    border-radius: 8px;
+    box-shadow: var(--shadow_subtle);
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .feedback-left { flex: 1; min-width: 260px; }
+  .feedback-left h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .feedback-left p { font-size: 13px; color: var(--text_secondary); margin-bottom: 14px; }
+  .feedback-stars { display: flex; gap: 4px; margin-bottom: 12px; }
+  .feedback-stars .star {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 22px;
+    color: #E0E0E0;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .feedback-stars .star.active,
+  .feedback-stars .star:hover { color: #F9A825; }
+  .feedback-textarea {
+    width: 100%;
+    border: 1px solid var(--border_input);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: var(--font_primary);
+    resize: vertical;
+    min-height: 70px;
+    transition: border-color 0.2s;
+  }
+  .feedback-textarea:focus { border-color: var(--brand_500); outline: none; box-shadow: inset 0 0 3px 1px rgba(1,110,70,0.2); }
+  .feedback-right {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .feedback-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .feedback-stat-bar {
+    flex: 1;
+    height: 6px;
+    background: #EEEEEE;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .feedback-stat-bar-fill { height: 100%; border-radius: 3px; background: var(--brand_500); }
+  .feedback-stat-label { width: 16px; text-align: center; font-weight: 500; }
+  .feedback-stat-count { width: 30px; text-align: right; font-size: 12px; color: var(--text_secondary); }
+
+  /* ========== EMAIL SECTION ========== */
+  .email-section {
+    padding: 0 20px 20px;
+  }
+  .email-card {
+    background: var(--surface);
+    border-radius: 8px;
+    box-shadow: var(--shadow_subtle);
+    padding: 20px;
+  }
+  .email-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .email-card h3 svg { width: 18px; height: 18px; fill: var(--brand_500); }
+  .email-form { display: flex; flex-direction: column; gap: 10px; max-width: 600px; }
+  .email-row { display: flex; gap: 10px; }
+  .email-row .form-group { flex: 1; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--text_label);
+    margin-bottom: 3px;
+  }
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--border_input);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 13px;
+    font-family: var(--font_primary);
+    color: var(--text_primary);
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus { border-color: var(--brand_500); outline: none; box-shadow: inset 0 0 3px 1px rgba(1,110,70,0.2); }
+  .form-group textarea {
+    width: 100%;
+    border: 1px solid var(--border_input);
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 13px;
+    font-family: var(--font_primary);
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.2s;
+  }
+  .form-group textarea:focus { border-color: var(--brand_500); outline: none; box-shadow: inset 0 0 3px 1px rgba(1,110,70,0.2); }
+  .email-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border_light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text_secondary);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+  .footer a { color: var(--brand_500); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-links { display: flex; gap: 16px; }
+
+  /* ========== STATUS BAR ========== */
+  .status-bar {
+    height: 26px;
+    background: var(--section_bg);
+    border-top: 1px solid var(--border_light);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 11px;
+    color: var(--text_secondary);
+    gap: 20px;
+    flex-shrink: 0;
+  }
+  .status-bar .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    margin-right: 4px;
+    display: inline-block;
+  }
+
+  /* ========== NOTIFICATION TOAST ========== */
+  .toast {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    background: var(--surface);
+    border-radius: 8px;
+    box-shadow: var(--shadow_modal);
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 360px;
+    border-left: 4px solid var(--success);
+    z-index: 200;
+    animation: toastIn 0.3s ease;
+  }
+  .toast-icon { font-size: 18px; line-height: 1; }
+  .toast-body .toast-title { font-size: 13px; font-weight: 600; }
+  .toast-body .toast-msg { font-size: 12px; color: var(--text_secondary); margin-top: 2px; }
+  .toast-close {
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text_secondary);
+    line-height: 1;
+  }
+  .toast-close:hover { color: var(--text_primary); }
+  @keyframes toastIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* ========== SECTION DIVIDER ========== */
+  .section-divider {
+    height: 1px;
+    background: var(--border_light);
+    margin: 0 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="header">
+  <div class="header-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 33.5" fill="#FFFFFF">
+      <path d="m 69.703393,0.0704112 c -9.228957,0 -16.720282,7.50596 -16.720282,16.6635688 0,9.22395 7.491325,16.72811 16.720282,16.72811 9.238971,0 16.739849,-7.50416 16.739849,-16.72811 0,-9.1576088 -7.500878,-16.6635688 -16.739849,-16.6635688 z m 83.456717,4.588349 c -2.77507,0 -5.40472,0.903275 -6.7378,1.803264 l 1.00921,3.205586 c 0.97009,-0.648393 2.88037,-1.478599 4.79175,-1.478599 2.59357,0 3.74539,1.334963 3.74539,2.9571958 0,2.306927 -2.59154,3.240791 -4.61182,3.240791 l -2.01644,0 0,3.242746 2.01644,0 c 2.70497,0 5.33352,1.189373 5.33352,3.964444 0,1.838782 -1.33153,3.747346 -4.71744,3.747346 -2.23432,0 -4.43298,-0.900693 -5.33547,-1.441438 l -1.00725,3.350316 c 1.25924,0.828641 3.7109,1.623329 6.55982,1.623329 5.79798,0 9.1141,-3.134706 9.1141,-7.097663 -0.0363,-3.17437 -2.30895,-5.299328 -5.15162,-5.840072 l 0,-0.06846 c 2.87897,-1.010141 4.32237,-3.026667 4.32237,-5.47629 0,-3.0642188 -2.44931,-5.7325028 -7.31476,-5.7325028 z m 25.16745,0.06063 c -0.36941,0.01361 -0.7928,0.04928 -1.2791,0.121255 -3.34961,0.251596 -6.19853,1.403808 -8.32396,3.457886 -2.44962,2.3056738 -4.07202,5.9455308 -4.07202,10.4479798 0,5.80299 3.13698,10.127224 8.82857,10.127224 4.9731,0 8.2516,-3.893015 8.2516,-8.359164 0,-4.757801 -3.13447,-7.639425 -7.17002,-7.639425 -2.34323,0 -4.10652,0.93621 -5.26311,2.266792 l -0.10565,0 c 0.57454,-3.23946 2.91777,-6.2304528 7.85457,-6.8062458 0.86494,-0.1089 1.58515,-0.144574 2.23355,-0.109526 l 0,-3.495047 c -0.27038,-0.01752 -0.58503,-0.02535 -0.95446,-0.01177 z m 8.80705,0.336402 -1.50989,11.8170508 c 0.89999,-0.107648 1.8718,-0.21514 3.20364,-0.21514 4.65015,0 6.63021,1.764618 6.63021,4.467089 0,2.775071 -2.48318,4.251949 -5.07925,4.251949 -2.12543,0 -4.14398,-0.684851 -5.15162,-1.224344 l -0.90163,3.352273 c 1.22418,0.683441 3.49566,1.367117 6.23318,1.367117 5.72789,0 9.44074,-3.638761 9.44074,-8.10491 0,-2.846419 -1.29788,-4.829853 -3.06281,-5.947642 -1.54713,-1.043937 -3.64181,-1.511848 -5.69339,-1.511848 -0.68469,0 -1.15338,0.03552 -1.65658,0.105621 l 0.68455,-4.6822278 9.00653,0 0,-3.674981 -12.14368,0 z M 65.318455,7.0878862 c 0.325448,0 0.803527,0.164758 1.390585,0.488954 l 12.660011,7.6550708 c 0.529479,0.331707 0.899669,0.868697 0.899669,1.502069 0,0.649644 -0.37019,1.241396 -0.899669,1.556831 l -13.137238,7.942576 c -0.284131,0.153962 -0.58791,0.207318 -0.913358,0.207318 -0.962575,0 -1.777848,-0.809239 -1.777848,-1.76806 l 0,-15.8186548 c 0,-0.960072 0.815273,-1.766104 1.777848,-1.766104 z M 173.15444,16.117898 c 2.59482,0 4.07396,1.910207 4.07396,4.648978 0,2.808868 -1.47798,4.789798 -3.74735,4.789798 -2.91902,0 -4.35803,-2.520501 -4.43188,-5.62102 0,-0.610841 0.10853,-1.04253 0.28751,-1.404278 0.68469,-1.405686 2.16048,-2.413478 3.81776,-2.413478 z"/>
+      <path d="m 93.110622,4.2793312 c -0.165228,0.01252 -0.335693,0.06204 -0.490906,0.127128 l -0.385301,0.160378 c -0.705972,0.441858 -1.058798,1.32268 -0.809705,2.133797 l 8.96351,21.1443468 c 0.53073,0.644637 1.62991,1.049102 2.8203,1.036585 1.18788,0 2.27555,-0.413617 2.79877,-1.06201 l 8.54888,-21.2988578 c 0.14895,-0.82864 -0.31465,-1.716582 -1.13829,-2.045785 l -0.33053,-0.132996 c -0.0901,-0.02128 -0.19574,-0.05007 -0.29338,-0.06259 l -0.50264,0 c -0.51195,0.07385 -0.96696,0.339921 -1.26737,0.784283 L 103.19286,25.200715 94.96865,5.2220352 c -0.307924,-0.525723 -0.833958,-0.868852 -1.41601,-0.942704 l -0.442018,0 z M 9.1258461,4.3634322 C 2.9848908,4.3634322 0,7.7820452 0,14.850528 l 0,2.963063 c 0,7.537879 5.0918548,10.473406 11.167721,10.473406 l 4.748725,0 c 0.853676,-0.08011 1.533908,-0.741804 1.656577,-1.584214 l 0,-0.547629 C 17.455361,25.336527 16.81135,24.674523 15.992722,24.563119 l -4.825001,0 c -2.7250024,0 -7.2801813,-0.0091 -7.4203734,-6.002405 l 12.4155314,0 c 1.036427,0 1.865851,-0.818862 1.865851,-1.867806 l 0,-1.84238 c 0,-7.1673688 -2.83578,-10.4870958 -8.9028839,-10.4870958 z m 19.7948329,0 c -1.028917,0 -1.869761,0.826372 -1.869761,1.867805 l 0,20.2955218 c 0.04631,0.906248 0.734683,1.642576 1.609638,1.760238 l 0.522203,0 c 0.837403,-0.100138 1.49933,-0.76981 1.605727,-1.595948 l 0,-18.5998278 3.813845,0 c 3.234453,0 7.535765,0.44311 7.535765,6.7593068 l 0,12.016545 c 0.182752,0.779824 0.876286,1.386127 1.70743,1.419924 l 0.277726,0 c 0.8712,-0.0388 1.591175,-0.683755 1.742633,-1.541186 l 0,-11.895283 c 0,-7.3576308 -5.001182,-10.4870958 -11.263554,-10.4870958 l -5.681652,0 z m 92.134671,0 c -0.89749,0.142696 -1.56661,0.913836 -1.56661,1.832601 l 0,0.05281 c 0,0.925024 0.66912,1.682161 1.56661,1.842382 l 6.42094,0 c 2.9353,0 4.82595,0.387173 5.16141,5.1574908 l -4.67832,0 c -2.20428,0 -8.94004,-7.9e-5 -8.94004,7.430152 0,5.620238 3.92611,7.608133 7.29325,7.608133 l 8.23594,0 c 1.02641,0 1.86782,-0.831614 1.86782,-1.858027 l 0,-11.578443 c 0,-7.3576298 -2.67017,-10.4870948 -8.94006,-10.4870948 l -6.42094,0 z M 9.1258461,8.0912212 c 2.8326499,0 5.1770499,0.505617 5.1770499,6.7417038 l -10.5672835,0 c 0,-6.2310798 2.5525766,-6.7417038 5.3902336,-6.7417038 z m 118.8335339,8.8970148 4.71548,0 0,7.574883 -6.36227,0 c -1.62599,0 -3.55568,-0.676088 -3.55568,-3.884255 0,-2.499692 0.78765,-3.690628 5.20247,-3.690628 z"/>
+    </svg>
+  </div>
+
+  <div class="header-search-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M62.284.031C27.879.031 0 28.013 0 62.534s27.872 62.534 62.284 62.534c15.633 0 29.938-5.8 40.877-15.345l48.345 48.815a4.958 4.958 0 0 0 7.032 0 4.996 4.996 0 0 0 0-7.063l-48.408-48.877c9.031-10.847 14.469-24.825 14.469-40.064C124.592 28.013 96.681.03 62.284.03zm0 9.938c28.95 0 52.44 23.521 52.44 52.565 0 29.044-23.498 52.596-52.44 52.596-28.942 0-52.409-23.552-52.409-52.596 0-29.044 23.46-52.565 52.409-52.565z"/></svg>
+    <input type="text" class="header-search" placeholder="Szukaj w enova365...">
+  </div>
+
+  <div class="header-spacer"></div>
+
+  <div class="header-timer">
+    <div class="play-btn">
+      <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+    </div>
+    <span>00:00</span>
+  </div>
+
+  <div class="header-icons">
+    <div class="header-icon" title="Szukaj">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M62.284.031C27.879.031 0 28.013 0 62.534s27.872 62.534 62.284 62.534c15.633 0 29.938-5.8 40.877-15.345l48.345 48.815a4.958 4.958 0 0 0 7.032 0 4.996 4.996 0 0 0 0-7.063l-48.408-48.877c9.031-10.847 14.469-24.825 14.469-40.064C124.592 28.013 96.681.03 62.284.03zm0 9.938c28.95 0 52.44 23.521 52.44 52.565 0 29.044-23.498 52.596-52.44 52.596-28.942 0-52.409-23.552-52.409-52.596 0-29.044 23.46-52.565 52.409-52.565z"/></svg>
+    </div>
+    <div class="header-icon" title="Ustawienia">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M80 60c-11.028 0-20 8.972-20 20 0 11.03 8.972 20 20 20 11.03 0 20-8.97 20-20 0-11.028-8.973-20-20-20zm.067 50.05c-16.605 0-30.115-13.483-30.115-30.05 0-16.565 13.51-30.048 30.115-30.048 16.605 0 30.115 13.483 30.115 30.048 0 16.567-13.51 30.05-30.115 30.05zm69.938-34.745c-.425-.305-1.225-.725-2.24-.96l-18.54-4.63-1.72-5.255a50.97 50.97 0 0 0-2.987-7.143l-2.51-4.932 9.794-16.333c.625-1 .918-1.895 1.005-2.422l-6.577-6.567c-.635.2-1.357.46-1.705.697l-16.46 10.498-5.117-2.648a49.28 49.28 0 0 0-7.515-3.155l-5.45-1.762-4.12-18.613c-.19-.995-.723-1.797-1.088-2.085h-9c-.305.425-.723 1.225-.955 2.238L70.217 30.64l-5.327 1.69a49.317 49.317 0 0 0-8.148 3.423L51.6 38.468 35.137 27.975c-.672-.455-1.392-.712-2.044-.712l-6.558 6.382c.087.518.36 1.372.905 2.245l10.228 17.04-2.433 4.898c-1.135 2.31-2.035 4.477-2.735 6.624l-1.717 5.26-18.358 4.59c-1.155.263-1.99.693-2.425 1V84.6a.05.05 0 0 1 .023-.005c.167 0 .99.585 1.675.71l18.862 4.177 1.733 5.513c.704 2.245 1.667 4.585 2.94 7.152l2.432 4.9-10.12 16.863c-.627 1.005-.917 1.9-1.005 2.425l6.575 6.573c.638-.205 1.355-.463 1.7-.7l16.768-10.688 5.137 2.71a49.832 49.832 0 0 0 8.11 3.41l5.315 1.692 4.56 18.246c.265 1.155.69 1.99 1 2.425H85c-.067-.103.575-.975.707-1.698l4.2-18.97 5.445-1.76a49.942 49.942 0 0 0 7.613-3.195l5.117-2.658L124.2 131.99c.675.46 1.397.715 2.045.715l6.563-6.378c-.088-.52-.363-1.377-.908-2.252l-9.898-16.483 2.526-4.94c1.362-2.665 2.402-5.165 3.174-7.645l1.728-5.522 18.482-4.103c1.118-.207 1.988-.852 2.173-1.202l-.08-8.875z"/></svg>
+    </div>
+    <div class="header-icon" title="Powiadomienia">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M141.014 111.3c-5.848-7.112-13.855-17.183-13.855-27.458v-32.72C127.16 22.934 106.077 0 79.136 0 52.191 0 31.274 22.934 31.274 51.122v32.72c0 10.102-8.689 19.65-14.198 27.058-4.956 6.657-8.866 11.915-6.226 17.172 2.323 4.624 8.138 5.218 12.943 5.218h28.711C52.512 148.042 64.475 160 79.23 160c14.757 0 26.72-11.958 26.727-26.71h29.386c3.056 0 10.202 0 12.662-5.198 2.483-5.264-1.49-10.102-6.99-16.791z"/></svg>
+      <span class="badge"></span>
+    </div>
+  </div>
+
+  <div class="header-avatar">
+    <div class="avatar-circle">AK</div>
+    <div class="header-avatar-info">
+      <div class="name">Anna Kowalska</div>
+      <div class="role">Administrator</div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== MAIN ===================== -->
+<div class="main-wrap">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <div class="sidebar-controls">
+      <span title="Zwiń menu">&#9664; Zwiń</span>
+      <span title="Odepnij">&#128204; Odepnij</span>
+    </div>
+    <div class="sidebar-search">
+      <div class="sidebar-search-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M62.284.031C27.879.031 0 28.013 0 62.534s27.872 62.534 62.284 62.534c15.633 0 29.938-5.8 40.877-15.345l48.345 48.815a4.958 4.958 0 0 0 7.032 0 4.996 4.996 0 0 0 0-7.063l-48.408-48.877c9.031-10.847 14.469-24.825 14.469-40.064C124.592 28.013 96.681.03 62.284.03zm0 9.938c28.95 0 52.44 23.521 52.44 52.565 0 29.044-23.498 52.596-52.44 52.596-28.942 0-52.409-23.552-52.409-52.596 0-29.044 23.46-52.565 52.409-52.565z"/></svg>
+        <input type="text" placeholder="Wyszukaj w menu...">
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M80.194 0a4.957 4.957 0 0 0-3.593 1.531L1.38 80.22c-1.906 1.996-1.826 5.15.157 7.062 1.99 1.913 5.15 1.878 7.063-.125l6.687-7V155c0 2.764 2.218 5 4.969 5h34.812c2.745 0 4.994-2.243 5-5l.157-49.969h39.718V155c0 2.764 2.212 5 4.97 5h34.812c2.757 0 4.974-2.243 4.968-5V80.094l6.72 7.062a4.944 4.944 0 0 0 3.593 1.531 4.904 4.904 0 0 0 3.437-1.406 4.999 4.999 0 0 0 .157-7.062L83.788 1.53A4.957 4.957 0 0 0 80.194 0z"/></svg>
+        <span>Pulpit</span>
+      </div>
+
+      <div class="nav-separator"></div>
+
+      <div class="nav-item active open" onclick="this.classList.toggle('open')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M119.856 14.146v25.857h26.198zm30.288 125.849h-34.492v-10.003h34.492V50H110V10.003H56.518C56.518 4.484 60.928 0 66.374 0h53.482L160 39.997v89.989c0 5.532-4.41 10.009-9.856 10.009zM10.334 20C4.887 20 .5 24.475.5 30v120c0 5.525 4.388 10 9.833 10h84.834c5.445 0 9.833-4.475 9.833-10V60L65.583 20zm0 10H55.75v40h39.417v80H10.333zm55.25 4.167L91.083 60h-25.5z"/></svg>
+        <span>Ewidencja dokumentów</span>
+        <span class="chevron">&#9654;</span>
+      </div>
+      <div class="nav-children">
+        <div class="nav-item active">
+          <span>Wszystkie dokumenty</span>
+        </div>
+        <div class="nav-item" onclick="this.classList.toggle('open')">
+          <span>Faktury</span>
+          <span class="chevron">&#9654;</span>
+        </div>
+        <div class="nav-children">
+          <div class="nav-item"><span>Faktury sprzedaży</span></div>
+          <div class="nav-item"><span>Faktury zakupu</span></div>
+          <div class="nav-item"><span>Korekty</span></div>
+        </div>
+        <div class="nav-item"><span>Zamówienia</span></div>
+        <div class="nav-item"><span>Dokumenty magazynowe</span></div>
+        <div class="nav-item"><span>Noty korygujące</span></div>
+        <div class="nav-item"><span>Dokumenty wewnętrzne</span></div>
+      </div>
+
+      <div class="nav-separator"></div>
+
+      <div class="nav-item" onclick="this.classList.toggle('open')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M150.003 50.033H75.025L60.03 30H10.045C4.524 30 .047 34.476.047 39.997v30.03H0v9.997h.047v69.979c0 5.52 4.477 9.997 9.998 9.997h139.958c5.52 0 9.997-4.476 9.997-9.997V60.03c0-5.521-4.476-9.997-9.997-9.997z"/></svg>
+        <span>Archiwum</span>
+        <span class="chevron">&#9654;</span>
+      </div>
+      <div class="nav-children">
+        <div class="nav-item"><span>Archiwum 2025</span></div>
+        <div class="nav-item"><span>Archiwum 2024</span></div>
+        <div class="nav-item"><span>Archiwum 2023</span></div>
+      </div>
+
+      <div class="nav-item" onclick="this.classList.toggle('open')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M80 60c-11.028 0-20 8.972-20 20 0 11.03 8.972 20 20 20 11.03 0 20-8.97 20-20 0-11.028-8.973-20-20-20zm.067 50.05c-16.605 0-30.115-13.483-30.115-30.05 0-16.565 13.51-30.048 30.115-30.048 16.605 0 30.115 13.483 30.115 30.048 0 16.567-13.51 30.05-30.115 30.05z"/></svg>
+        <span>Konfiguracja</span>
+        <span class="chevron">&#9654;</span>
+      </div>
+      <div class="nav-children">
+        <div class="nav-item"><span>Typy dokumentów</span></div>
+        <div class="nav-item"><span>Statusy</span></div>
+        <div class="nav-item"><span>Szablony</span></div>
+        <div class="nav-item"><span>Uprawnienia</span></div>
+      </div>
+
+      <div class="nav-separator"></div>
+
+      <div class="nav-item">
+        <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><path d="M145 30c-8.284 0-15 6.716-15 15 0 2.315.532 4.511 1.469 6.469l-10 10A14.96 14.96 0 0 0 115 60c-3.792 0-7.234 1.43-9.875 3.75L84.781 52.469C84.914 51.665 85 50.84 85 50c0-8.284-6.716-15-15-15-8.284 0-15 6.716-15 15 0 4.565 2.065 8.624 5.281 11.375l-14.875 38.656c-.136-.003-.268-.031-.406-.031-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15 0-4.565-2.065-8.624-5.281-11.375l14.875-38.656c.136.003.268.031.406.031 3.808 0 7.261-1.444 9.906-3.781L100.22 72.5A15.096 15.096 0 0 0 100 75c0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15a14.96 14.96 0 0 0-1.469-6.469l10-10A14.96 14.96 0 0 0 145 60c8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15zM14.937 0a5 5 0 0 0-3.468 1.469l-10 10A5 5 0 1 0 8.53 18.53L10 17.063V145a5 5 0 0 0 5 5h127.938l-1.47 1.469a5 5 0 1 0 7.063 7.062l10-10a5 5 0 0 0 0-7.062l-10-10a5 5 0 0 0-3.594-1.531 5 5 0 0 0-3.468 8.593l1.469 1.469H20V17.062l1.469 1.47a5 5 0 1 0 7.062-7.063l-10-10A5 5 0 0 0 14.938 0z"/></svg>
+        <span>Raporty</span>
+      </div>
+      <div class="nav-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M141.57359,105.11236 105.12246,87.691299c11.68921-9.196515 14.86378-27.269835 14.86378-37.402984l0-21.093032C119.98624 15.228172 98.647318 0 80.007023 0 61.371718 0 39.984608 15.230668 39.984608 29.195283l0 21.093032c0 9.213997 3.256214 27.854296 15.065315 37.323056L18.429721 105.11272c0 0-8.429721 3.75653-8.429721 8.43972l0 38.00785c0 4.6582 3.78151 8.43972 8.429721 8.43971l123.143869-3.6e-4c4.65321-1e-5 8.43472-3.78151 8.43472-8.43971l0-38.00785c0-4.96543-8.43472-8.43972-8.43472-8.43972z"/></svg>
+        <span>Kontrahenci</span>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ========== CONTENT ========== -->
+  <main class="content-area">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="#" title="Pulpit">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M80.194 0a4.957 4.957 0 0 0-3.593 1.531L1.38 80.22c-1.906 1.996-1.826 5.15.157 7.062 1.99 1.913 5.15 1.878 7.063-.125l6.687-7V155c0 2.764 2.218 5 4.969 5h34.812c2.745 0 4.994-2.243 5-5l.157-49.969h39.718V155c0 2.764 2.212 5 4.97 5h34.812c2.757 0 4.974-2.243 4.968-5V80.094l6.72 7.062a4.944 4.944 0 0 0 3.593 1.531 4.904 4.904 0 0 0 3.437-1.406 4.999 4.999 0 0 0 .157-7.062L83.788 1.53A4.957 4.957 0 0 0 80.194 0z"/></svg>
+      </a>
+      <span class="sep">&gt;</span>
+      <a href="#">Ewidencja dokumentów</a>
+      <span class="sep">&gt;</span>
+      <span class="current">Wszystkie dokumenty</span>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <span class="toolbar-title">Ewidencja dokumentów</span>
+      <button class="btn btn-primary" title="Nowy dokument">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="#fff"><path d="M115 70c-24.794 0-45 20.206-45 45s20.206 45 45 45 45-20.206 45-45-20.206-45-45-45zm.009 9.938c-2.618.032-4.97 2.444-4.938 5.062v14.929h-15.07c-2.642-.038-5.072 2.358-5.072 5s2.43 5.037 5.071 5h15.072V135c-.038 2.642 2.358 5.071 5 5.071 2.641 0 5.037-2.43 5-5.071v-15.071H135c2.642.037 5.072-2.358 5.072-5s-2.43-5.038-5.072-5h-14.928V95c.033-2.66-2.403-5.096-5.063-5.063zM120 60V40L80.583 0H9.833C4.388 0 0 4.475 0 10v140c0 5.525 4.388 10 9.833 10H70v-10H9.833V10H70.75v40h39.417v10zM80.583 14.167L106.083 40h-25.5z"/></svg>
+        Nowy dokument
+      </button>
+      <button class="btn btn-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="currentColor" style="width:14px;height:14px"><path d="M123.337 59.889h4.937c2.725 0 4.93 2.238 4.93 5.003s-2.211 5.003-4.93 5.003h-4.937c-2.725 0-4.93-2.238-4.93-5.003s2.205-5.003 4.93-5.003zM29.632 0v39.776H11.008C4.943 39.776 0 44.786 0 50.94v67.866c0 6.159 4.95 11.162 11.008 11.162H29.6V160H130v-30.033h18.992c6.065 0 11.008-5.003 11.008-11.162V50.94c0-6.16-4.95-11.163-11.008-11.163H130V0z"/></svg>
+        Drukuj
+      </button>
+      <button class="btn-pill" title="Rozwiń filtry">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M5 0A5 5 0 0 0 .914 7.883L60 91.586V155a5 5 0 0 0 5 5h30a5 5 0 0 0 5-5V91.586l59.086-83.703A5 5 0 0 0 155 0H5z"/></svg>
+        Filtry
+      </button>
+      <div class="toolbar-spacer"></div>
+      <button class="btn-icon" title="Odśwież"><svg viewBox="0 0 24 24" fill="var(--text_label)"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button>
+      <button class="btn-icon" title="Eksportuj"><svg viewBox="0 0 24 24" fill="var(--text_label)"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active">Wszystkie</div>
+      <div class="tab">Faktury</div>
+      <div class="tab">Zamówienia</div>
+      <div class="tab">Magazynowe</div>
+      <div class="tab">Wewnętrzne</div>
+      <div class="tab">Korekty</div>
+    </div>
+
+    <!-- Scrollable content -->
+    <div class="scroll-content">
+
+      <!-- ===== TILES ===== -->
+      <div class="tiles-section">
+        <div class="tiles-section-title">Szybki dostęp</div>
+        <div class="tiles-grid">
+          <div class="tile" style="border-left-color: #1976D2;">
+            <div class="tile-icon" style="background: #1976D2;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M 30 0 C 24.477 0 20 4.477 20 10 L 20 150 C 20 155.522 24.477 160 30 160 L 130 160 C 135.522 160 140 155.522 140 150 L 140 45 L 95 0 L 30 0 z M 30 10 L 80 10 L 80 59.998047 L 130 59.998047 L 130 150 L 30 150 L 30 10 z M 90 10 L 90.859375 10 L 130 49.142578 L 130 49.998047 L 90 49.998047 L 90 10 z"/></svg>
+            </div>
+            <div class="tile-text">
+              <div class="tile-title">Nowa faktura sprzedaży</div>
+              <div class="tile-desc">Utwórz nowy dokument sprzedaży</div>
+            </div>
+            <span class="tile-badge">+</span>
+          </div>
+
+          <div class="tile" style="border-left-color: #F57C00;">
+            <div class="tile-icon" style="background: #F57C00;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M 30 0 C 24.477 0 20 4.477 20 10 L 20 150 C 20 155.522 24.477 160 30 160 L 130 160 C 135.522 160 140 155.522 140 150 L 140 45 L 95 0 L 30 0 z M 30 10 L 80 10 L 80 59.998047 L 130 59.998047 L 130 150 L 30 150 L 30 10 z M 90 10 L 90.859375 10 L 130 49.142578 L 130 49.998047 L 90 49.998047 L 90 10 z"/></svg>
+            </div>
+            <div class="tile-text">
+              <div class="tile-title">Nowe zamówienie</div>
+              <div class="tile-desc">Utwórz nowe zamówienie od odbiorcy</div>
+            </div>
+          </div>
+
+          <div class="tile" style="border-left-color: #2E7D32;">
+            <div class="tile-icon" style="background: #2E7D32;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M150.003 50.033H75.025L60.03 30H10.045C4.524 30 .047 34.476.047 39.997v30.03H0v9.997h.047v69.979c0 5.52 4.477 9.997 9.998 9.997h139.958c5.52 0 9.997-4.476 9.997-9.997V60.03c0-5.521-4.476-9.997-9.997-9.997z"/></svg>
+            </div>
+            <div class="tile-text">
+              <div class="tile-title">Dokumenty magazynowe</div>
+              <div class="tile-desc">Przyjęcia, wydania i przesunięcia</div>
+            </div>
+          </div>
+
+          <div class="tile" style="border-left-color: #6A1B9A;">
+            <div class="tile-icon" style="background: #6A1B9A;">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><path d="M145 30c-8.284 0-15 6.716-15 15 0 2.315.532 4.511 1.469 6.469l-10 10A14.96 14.96 0 0 0 115 60c-3.792 0-7.234 1.43-9.875 3.75L84.781 52.469C84.914 51.665 85 50.84 85 50c0-8.284-6.716-15-15-15-8.284 0-15 6.716-15 15 0 4.565 2.065 8.624 5.281 11.375l-14.875 38.656c-.136-.003-.268-.031-.406-.031-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15 0-4.565-2.065-8.624-5.281-11.375l14.875-38.656c.136.003.268.031.406.031 3.808 0 7.261-1.444 9.906-3.781L100.22 72.5A15.096 15.096 0 0 0 100 75c0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15a14.96 14.96 0 0 0-1.469-6.469l10-10A14.96 14.96 0 0 0 145 60c8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15z"/></svg>
+            </div>
+            <div class="tile-text">
+              <div class="tile-title">Raporty i analizy</div>
+              <div class="tile-desc">Zestawienia, statystyki dokumentów</div>
+            </div>
+          </div>
+
+          <div class="tile" style="border-left-color: #00838F;">
+            <div class="tile-icon" style="background: #00838F;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><path d="M10 0C4.478 0 0 4.478 0 10v140c0 5.522 4.478 10 10 10h130c5.522 0 9.99-4.478 10-10V18.167L129.167 0zm0 10h30v35c0 5.522 4.478 10 10 10h60c5.522 0 10-4.478 10-10V10h5.083L140 22.25V150h-10V80c0-5.522-4.478-10-10-10H30c-5.523 0-10 4.478-10 10v70H10zm75 5.583h15V45H85zM30 80h90v70H30z"/></svg>
+            </div>
+            <div class="tile-text">
+              <div class="tile-title">Szablony dokumentów</div>
+              <div class="tile-desc">Zarządzaj szablonami i wzorcami</div>
+            </div>
+          </div>
+
+          <div class="tile" style="border-left-color: #C62828;">
+            <div class="tile-icon" style="background: #C62828;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div class="tile-text">
+              <div class="tile-title">Wyślij e-mailem</div>
+              <div class="tile-desc">Wysyłka dokumentów do kontrahentów</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SUMMARY CARDS ===== -->
+      <div class="tiles-section">
+        <div class="tiles-section-title">Podsumowanie</div>
+      </div>
+      <div class="summary-section">
+        <div class="summary-card" style="border-top-color: #2E7D32;">
+          <div class="summary-card-value" style="color: #2E7D32;">1 247</div>
+          <div class="summary-card-label">Dokumenty ogółem</div>
+          <div class="summary-card-change change-up">&#9650; +12% vs. poprzedni miesiąc</div>
+        </div>
+        <div class="summary-card" style="border-top-color: #1976D2;">
+          <div class="summary-card-value" style="color: #1976D2;">438</div>
+          <div class="summary-card-label">Faktury sprzedaży</div>
+          <div class="summary-card-change change-up">&#9650; +8% vs. poprzedni miesiąc</div>
+        </div>
+        <div class="summary-card" style="border-top-color: #F57C00;">
+          <div class="summary-card-value" style="color: #F57C00;">56</div>
+          <div class="summary-card-label">Oczekujące na zatwierdzenie</div>
+          <div class="summary-card-change change-down">&#9660; -3 od wczoraj</div>
+        </div>
+        <div class="summary-card" style="border-top-color: #C62828;">
+          <div class="summary-card-value" style="color: #C62828;">12</div>
+          <div class="summary-card-label">Dokumenty anulowane</div>
+          <div class="summary-card-change change-down">&#9660; -2% vs. poprzedni miesiąc</div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ===== TABLE ===== -->
+      <div class="table-section" style="padding-top: 20px;">
+        <div class="table-header-row">
+          <span class="table-title">Ostatnie dokumenty</span>
+          <button class="btn btn-outline-green" style="font-size:12px; padding: 4px 12px;">Zobacz wszystkie</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:30px;"><input type="checkbox"></th>
+              <th>Numer</th>
+              <th>Typ</th>
+              <th>Kontrahent</th>
+              <th>Data wystawienia</th>
+              <th>Kwota netto</th>
+              <th>Status</th>
+              <th style="width:80px;">Akcje</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:500;">FS/2026/03/0142</td>
+              <td>Faktura sprzedaży</td>
+              <td>ABC Logistyka Sp. z o.o.</td>
+              <td>2026-03-21</td>
+              <td style="text-align:right; font-weight:500;">12 450,00 PLN</td>
+              <td><span class="status-badge status-zatwierdzony">Zatwierdzony</span></td>
+              <td class="table-actions">
+                <button class="btn-icon" title="Edytuj"><svg viewBox="0 0 24 24" fill="var(--text_label)" style="width:14px;height:14px"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+                <button class="btn-icon" title="Usuń"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="var(--text_label)" style="width:14px;height:14px"><path d="M109.426 139.088c3.045 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.466-5.445-5.518-5.445-3.046 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.465 5.445 5.518 5.445zm-29.423 0c3.046 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.465-5.445-5.518-5.445-3.045 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.466 5.445 5.518 5.445z"/></svg></button>
+              </td>
+            </tr>
+            <tr class="selected">
+              <td><input type="checkbox" checked></td>
+              <td style="font-weight:500;">FS/2026/03/0141</td>
+              <td>Faktura sprzedaży</td>
+              <td>TechNova Solutions S.A.</td>
+              <td>2026-03-20</td>
+              <td style="text-align:right; font-weight:500;">8 920,00 PLN</td>
+              <td><span class="status-badge status-roboczy">Roboczy</span></td>
+              <td class="table-actions">
+                <button class="btn-icon" title="Edytuj"><svg viewBox="0 0 24 24" fill="var(--text_label)" style="width:14px;height:14px"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+                <button class="btn-icon" title="Usuń"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="var(--text_label)" style="width:14px;height:14px"><path d="M109.426 139.088c3.045 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.466-5.445-5.518-5.445-3.046 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.465 5.445 5.518 5.445zm-29.423 0c3.046 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.465-5.445-5.518-5.445-3.045 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.466 5.445 5.518 5.445z"/></svg></button>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:500;">ZAM/2026/03/0098</td>
+              <td>Zamówienie</td>
+              <td>Kowalski & Partnerzy</td>
+              <td>2026-03-19</td>
+              <td style="text-align:right; font-weight:500;">3 150,00 PLN</td>
+              <td><span class="status-badge status-oczekujacy">Oczekujący</span></td>
+              <td class="table-actions">
+                <button class="btn-icon" title="Edytuj"><svg viewBox="0 0 24 24" fill="var(--text_label)" style="width:14px;height:14px"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+                <button class="btn-icon" title="Usuń"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="var(--text_label)" style="width:14px;height:14px"><path d="M109.426 139.088c3.045 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.466-5.445-5.518-5.445-3.046 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.465 5.445 5.518 5.445zm-29.423 0c3.046 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.465-5.445-5.518-5.445-3.045 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.466 5.445 5.518 5.445z"/></svg></button>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:500;">FZ/2026/03/0067</td>
+              <td>Faktura zakupu</td>
+              <td>GlobalTrade Sp. z o.o.</td>
+              <td>2026-03-18</td>
+              <td style="text-align:right; font-weight:500;">27 800,00 PLN</td>
+              <td><span class="status-badge status-zatwierdzony">Zatwierdzony</span></td>
+              <td class="table-actions">
+                <button class="btn-icon" title="Edytuj"><svg viewBox="0 0 24 24" fill="var(--text_label)" style="width:14px;height:14px"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+                <button class="btn-icon" title="Usuń"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="var(--text_label)" style="width:14px;height:14px"><path d="M109.426 139.088c3.045 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.466-5.445-5.518-5.445-3.046 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.465 5.445 5.518 5.445zm-29.423 0c3.046 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.465-5.445-5.518-5.445-3.045 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.466 5.445 5.518 5.445z"/></svg></button>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:500;">KOR/2026/03/0015</td>
+              <td>Korekta</td>
+              <td>Sunrise Media Sp.j.</td>
+              <td>2026-03-17</td>
+              <td style="text-align:right; font-weight:500; color: var(--danger);">-1 200,00 PLN</td>
+              <td><span class="status-badge status-anulowany">Anulowany</span></td>
+              <td class="table-actions">
+                <button class="btn-icon" title="Edytuj"><svg viewBox="0 0 24 24" fill="var(--text_label)" style="width:14px;height:14px"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+                <button class="btn-icon" title="Usuń"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="var(--text_label)" style="width:14px;height:14px"><path d="M109.426 139.088c3.045 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.466-5.445-5.518-5.445-3.046 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.465 5.445 5.518 5.445zm-29.423 0c3.046 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.465-5.445-5.518-5.445-3.045 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.466 5.445 5.518 5.445z"/></svg></button>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td style="font-weight:500;">WZ/2026/03/0033</td>
+              <td>Wydanie zewnętrzne</td>
+              <td>MegaBud Konstrukcje S.A.</td>
+              <td>2026-03-16</td>
+              <td style="text-align:right; font-weight:500;">5 670,00 PLN</td>
+              <td><span class="status-badge status-wyslany">Wysłany</span></td>
+              <td class="table-actions">
+                <button class="btn-icon" title="Edytuj"><svg viewBox="0 0 24 24" fill="var(--text_label)" style="width:14px;height:14px"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+                <button class="btn-icon" title="Usuń"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="var(--text_label)" style="width:14px;height:14px"><path d="M109.426 139.088c3.045 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.466-5.445-5.518-5.445-3.046 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.465 5.445 5.518 5.445zm-29.423 0c3.046 0 5.518-2.44 5.518-5.445V66.622c0-3.006-2.465-5.445-5.518-5.445-3.045 0-5.518 2.44-5.518 5.445v67.021c0 3.006 2.466 5.445 5.518 5.445z"/></svg></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ===== ARTICLES ===== -->
+      <div class="articles-section" style="padding-top: 20px;">
+        <div class="table-header-row">
+          <span class="table-title">Artykuły i porady</span>
+          <button class="btn btn-outline-green" style="font-size:12px; padding: 4px 12px;">Więcej artykułów</button>
+        </div>
+        <div class="articles-grid">
+          <div class="article-card">
+            <div class="article-card-img" style="background: linear-gradient(135deg, #E8F5E9, #C8E6C9);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="#2E7D32" style="width:48px;height:48px;opacity:0.6"><path d="M 30 0 C 24.477 0 20 4.477 20 10 L 20 150 C 20 155.522 24.477 160 30 160 L 130 160 C 135.522 160 140 155.522 140 150 L 140 45 L 95 0 L 30 0 z M 30 10 L 80 10 L 80 59.998047 L 130 59.998047 L 130 150 L 30 150 L 30 10 z M 90 10 L 90.859375 10 L 130 49.142578 L 130 49.998047 L 90 49.998047 L 90 10 z"/></svg>
+            </div>
+            <div class="article-card-body">
+              <div class="article-card-tag" style="color: #2E7D32;">Poradnik</div>
+              <div class="article-card-title">Jak prawidłowo wystawiać faktury korygujące</div>
+              <div class="article-card-excerpt">Praktyczny przewodnik po zasadach wystawiania korekt faktur zgodnie z obowiązującymi przepisami podatkowymi na rok 2026.</div>
+            </div>
+            <div class="article-card-footer">
+              <span>15 mar 2026</span>
+              <span>5 min czytania</span>
+            </div>
+          </div>
+
+          <div class="article-card">
+            <div class="article-card-img" style="background: linear-gradient(135deg, #E3F2FD, #BBDEFB);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="#1565C0" style="width:48px;height:48px;opacity:0.6"><path d="M150.003 50.033H75.025L60.03 30H10.045C4.524 30 .047 34.476.047 39.997v30.03H0v9.997h.047v69.979c0 5.52 4.477 9.997 9.998 9.997h139.958c5.52 0 9.997-4.476 9.997-9.997V60.03c0-5.521-4.476-9.997-9.997-9.997z"/></svg>
+            </div>
+            <div class="article-card-body">
+              <div class="article-card-tag" style="color: #1565C0;">Nowości</div>
+              <div class="article-card-title">Nowe funkcje archiwizacji dokumentów w enova365</div>
+              <div class="article-card-excerpt">Poznaj automatyczne reguły archiwizacji i nowy silnik wyszukiwania pełnotekstowego w module ewidencji dokumentów.</div>
+            </div>
+            <div class="article-card-footer">
+              <span>10 mar 2026</span>
+              <span>3 min czytania</span>
+            </div>
+          </div>
+
+          <div class="article-card">
+            <div class="article-card-img" style="background: linear-gradient(135deg, #FFF3E0, #FFE0B2);">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" fill="#E65100" style="width:48px;height:48px;opacity:0.6"><path d="M145 30c-8.284 0-15 6.716-15 15 0 2.315.532 4.511 1.469 6.469l-10 10A14.96 14.96 0 0 0 115 60c-3.792 0-7.234 1.43-9.875 3.75L84.781 52.469C84.914 51.665 85 50.84 85 50c0-8.284-6.716-15-15-15-8.284 0-15 6.716-15 15 0 4.565 2.065 8.624 5.281 11.375l-14.875 38.656c-.136-.003-.268-.031-.406-.031-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15 0-4.565-2.065-8.624-5.281-11.375l14.875-38.656c.136.003.268.031.406.031 3.808 0 7.261-1.444 9.906-3.781L100.22 72.5A15.096 15.096 0 0 0 100 75c0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15a14.96 14.96 0 0 0-1.469-6.469l10-10A14.96 14.96 0 0 0 145 60c8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15z"/></svg>
+            </div>
+            <div class="article-card-body">
+              <div class="article-card-tag" style="color: #E65100;">Analiza</div>
+              <div class="article-card-title">Raportowanie dokumentów — najlepsze praktyki</div>
+              <div class="article-card-excerpt">Dowiedz się jak efektywnie tworzyć raporty i analizy dokumentów sprzedażowych z wykorzystaniem modułu BI.</div>
+            </div>
+            <div class="article-card-footer">
+              <span>5 mar 2026</span>
+              <span>7 min czytania</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ===== FEEDBACK ===== -->
+      <div class="feedback-section" style="padding-top: 20px;">
+        <div class="table-header-row" style="margin-bottom: 12px;">
+          <span class="table-title">Oceń moduł Ewidencji dokumentów</span>
+        </div>
+        <div class="feedback-card">
+          <div class="feedback-left">
+            <h3>Twoja opinia jest dla nas ważna</h3>
+            <p>Pomóż nam udoskonalić moduł ewidencji dokumentów. Oceń swoje doświadczenia i podziel się sugestiami.</p>
+            <div class="feedback-stars">
+              <span class="star">&#9733;</span>
+              <span class="star">&#9733;</span>
+              <span class="star">&#9733;</span>
+              <span class="star active">&#9733;</span>
+              <span class="star active">&#9733;</span>
+            </div>
+            <textarea class="feedback-textarea" placeholder="Opisz swoje doświadczenia lub sugestie dotyczące usprawnień..."></textarea>
+            <div style="margin-top: 10px; display:flex; gap:8px;">
+              <button class="btn btn-primary">Wyślij opinię</button>
+              <button class="btn btn-secondary">Pomiń</button>
+            </div>
+          </div>
+          <div class="feedback-right">
+            <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Oceny użytkowników</div>
+            <div class="feedback-stat">
+              <span class="feedback-stat-label">5</span>
+              <div class="feedback-stat-bar"><div class="feedback-stat-bar-fill" style="width: 62%;"></div></div>
+              <span class="feedback-stat-count">124</span>
+            </div>
+            <div class="feedback-stat">
+              <span class="feedback-stat-label">4</span>
+              <div class="feedback-stat-bar"><div class="feedback-stat-bar-fill" style="width: 25%;"></div></div>
+              <span class="feedback-stat-count">50</span>
+            </div>
+            <div class="feedback-stat">
+              <span class="feedback-stat-label">3</span>
+              <div class="feedback-stat-bar"><div class="feedback-stat-bar-fill" style="width: 8%;"></div></div>
+              <span class="feedback-stat-count">16</span>
+            </div>
+            <div class="feedback-stat">
+              <span class="feedback-stat-label">2</span>
+              <div class="feedback-stat-bar"><div class="feedback-stat-bar-fill" style="width: 3%;"></div></div>
+              <span class="feedback-stat-count">6</span>
+            </div>
+            <div class="feedback-stat">
+              <span class="feedback-stat-label">1</span>
+              <div class="feedback-stat-bar"><div class="feedback-stat-bar-fill" style="width: 2%;"></div></div>
+              <span class="feedback-stat-count">4</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text_secondary); margin-top: 4px;">Średnia: <strong style="color: var(--text_primary);">4.4</strong> / 5 (200 ocen)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ===== EMAIL ===== -->
+      <div class="email-section" style="padding-top: 20px;">
+        <div class="email-card">
+          <h3>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Wyślij dokument e-mailem
+          </h3>
+          <div class="email-form">
+            <div class="email-row">
+              <div class="form-group">
+                <label>Adresat</label>
+                <input type="email" placeholder="adres@firma.pl" value="kontakt@abc-logistyka.pl">
+              </div>
+              <div class="form-group">
+                <label>DW (opcjonalnie)</label>
+                <input type="email" placeholder="kopia@firma.pl">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Temat</label>
+              <input type="text" value="Faktura FS/2026/03/0142 — ABC Logistyka Sp. z o.o.">
+            </div>
+            <div class="form-group">
+              <label>Dokument</label>
+              <select>
+                <option>FS/2026/03/0142 — Faktura sprzedaży</option>
+                <option>FS/2026/03/0141 — Faktura sprzedaży</option>
+                <option>ZAM/2026/03/0098 — Zamówienie</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Treść wiadomości</label>
+              <textarea placeholder="Treść wiadomości e-mail...">Szanowni Państwo,
+
+W załączeniu przesyłamy fakturę FS/2026/03/0142.
+
+Z poważaniem,
+Anna Kowalska
+enova365 — Ewidencja dokumentów</textarea>
+            </div>
+            <div class="email-actions">
+              <button class="btn btn-primary">
+                <svg viewBox="0 0 24 24" fill="#fff" style="width:14px;height:14px"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                Wyślij e-mail
+              </button>
+              <button class="btn btn-secondary">Załącz plik</button>
+              <button class="btn btn-secondary">Podgląd PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FOOTER ===== -->
+      <div class="footer">
+        <div>
+          <span>enova365 &copy; 2026 by <strong>Soneta</strong> &reg;</span>
+          &nbsp;&middot;&nbsp;
+          <span>Wersja 2026.3.1</span>
+        </div>
+        <div class="footer-links">
+          <a href="#">Pomoc</a>
+          <a href="#">Regulamin</a>
+          <a href="#">Polityka prywatności</a>
+          <a href="#">Kontakt z supportem</a>
+        </div>
+      </div>
+
+    </div><!-- /scroll-content -->
+  </main>
+</div><!-- /main-wrap -->
+
+<!-- ===== STATUS BAR ===== -->
+<div class="status-bar">
+  <span><span class="dot"></span>Połączono z bazą: PRODUKCJA</span>
+  <span>Użytkownik: Anna Kowalska</span>
+  <span>Sesja: 2h 14min</span>
+  <span style="margin-left:auto;">enova365 v2026.3.1 | Soneta Sp. z o.o.</span>
+</div>
+
+<!-- ===== TOAST NOTIFICATION ===== -->
+<div class="toast" id="toast">
+  <span class="toast-icon" style="color: var(--success);">&#10003;</span>
+  <div class="toast-body">
+    <div class="toast-title">Dokument zapisany</div>
+    <div class="toast-msg">Faktura FS/2026/03/0142 została pomyślnie zatwierdzona.</div>
+  </div>
+  <span class="toast-close" onclick="document.getElementById('toast').style.display='none'">&times;</span>
+</div>
+
+<script>
+  // Simple interactive stars
+  document.querySelectorAll('.feedback-stars .star').forEach((star, i, stars) => {
+    star.addEventListener('click', () => {
+      stars.forEach((s, j) => {
+        s.classList.toggle('active', j >= i);
+      });
+    });
+    star.addEventListener('mouseenter', () => {
+      stars.forEach((s, j) => {
+        s.style.color = j >= i ? '#F9A825' : '#E0E0E0';
+      });
+    });
+  });
+  document.querySelector('.feedback-stars').addEventListener('mouseleave', () => {
+    document.querySelectorAll('.feedback-stars .star').forEach(s => {
+      s.style.color = '';
+    });
+  });
+
+  // Auto-hide toast after 5s
+  setTimeout(() => {
+    const t = document.getElementById('toast');
+    if (t) t.style.opacity = '0';
+    setTimeout(() => { if (t) t.style.display = 'none'; }, 300);
+  }, 5000);
+
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

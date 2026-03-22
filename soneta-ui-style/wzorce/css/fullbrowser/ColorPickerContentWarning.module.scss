@@ -1,0 +1,93 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.cp-overlay {
+  @include flexDisplay();
+  @include flexAlignItems(center, center);
+  @include flexJustifyContent(center, center);
+  background-color: $cp_overlay_bg;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: 200002;
+}
+
+.cp-box {
+  width: 100%;
+  max-width: 316px;
+  padding: 16px;
+  height: 180px;
+  background-color: var(--cp_box_bg);
+  border: var(--cp_box_border);
+  overflow: hidden;
+  color: $cp_box_fc;
+  font-size: 16px;
+  border-radius: 12px;
+
+  .cp-title {
+    @include flexDisplay();
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    word-wrap: break-word;
+    margin-bottom: 16px;
+  }
+
+  .cp-title-icon {
+    @include flexDisplay();
+    @include flexAlignItems(center, center);
+    @include flexJustifyContent(center, center);
+
+    svg {
+      width: 20px;
+      height: 20px;
+
+      &>path {
+        fill: RGBA(249, 115, 22);
+      }
+    }
+  }
+
+  .cp-title-text {
+    margin-left: 8px;
+  }
+
+  .cp-info-text {
+    color: inherit;
+    margin-bottom: 8px;
+  }
+
+  .cp-container-button {
+    @include flexDisplay();
+    @include flexAlignItems(center, center);
+    @include flexJustifyContent(flex-end, flex-end);
+    width: 100%;
+
+    .cp-button {
+      @include flexDisplay();
+      @include flexAlignItems(center, center);
+      @include flexJustifyContent(center, center);
+      border-radius: 6px;
+      background-color: $cp_button_understand_bg;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: $cp_box_fg;
+      width: 87px;
+      height: 32px;
+      cursor: pointer;
+
+      &:focus-visible {
+        @include focus(
+          $box-shadow: none,
+          $outline_offset: 3px,
+          $outline_width: 2px,
+        );
+      }
+    }
+  }
+}

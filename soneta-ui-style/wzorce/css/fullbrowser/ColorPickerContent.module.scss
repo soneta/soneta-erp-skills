@@ -1,0 +1,257 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.cp-overlay {
+  @include partial-column-center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: 200001;
+  background-color: $cp_overlay_bg;
+}
+
+.cp-box {
+  width: 100%;
+  max-width: 330px;
+  height: auto;
+  background-color: $cp_box_bg;
+  border: $cp_box_border;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 12px;
+
+  .active {
+    outline: $cp_active;
+    outline-offset: 2px;
+  }
+
+  .cp-color {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    margin: 0 0 10px;
+    cursor: pointer;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      path {
+        fill: #000000;
+      }
+    }
+
+    &:focus, &:focus-visible {
+      @include focus($box-shadow: none,
+        $outline_offset: 3px,
+        $outline_width: 2px,
+      );
+    }
+  }
+
+  .cp-color-frame {
+    border: $cp_button_border;
+  }
+
+  .cp-color-current {
+    margin: 0;
+    cursor: default;
+    border: $cp_button_border;
+  }
+
+  .cp-color-sel-l, .cp-color-sel-d {
+    @include flexDisplay();
+    @include flexAlignItems(center, center);
+    @include flexJustifyContent(center, center);
+  }
+
+  .cp-color-sel-d {
+    &::after {
+      content: "";
+      position: relative;
+      left: 6px;
+      top: 2px;
+      width: 16px;
+      height: 6px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg);
+      transform-origin: left bottom;
+    }
+  }
+
+  .cp-color-sel-l {
+    &::after {
+      content: "";
+      position: relative;
+      left: 6px;
+      top: 2px;
+      width: 16px;
+      height: 6px;
+      border-left: 2px solid #000;
+      border-bottom: 2px solid #000;
+      transform: rotate(-45deg);
+      transform-origin: left bottom;
+    }
+  }
+
+  .cp-color-empty {
+    background: $cp_empty_bg;
+  }
+
+  .cp-settings-container {
+    @include flexDisplay();
+    @include flexAlignItems(center, center);
+    @include flexJustifyContent(space-between, space-between);
+    color: $cp_box_fc;
+    gap: 10px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    position: relative;
+
+    .cp-prev-box {
+      @include flexDisplay();
+      @include flexAlignItems(center, center);
+      @include flexJustifyContent(center, center);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      margin: 0px;
+      background: transparent;
+      border: $cp_button_border;
+      box-shadow: $cp_button_box_shadow;
+    }
+
+    .cp-default-button {
+      @include flexDisplay();
+      @include flexAlignItems(center, center);
+      @include flexJustifyContent(center, center);
+      width: auto;
+      padding-left: 6px;
+      padding-right: 6px;
+      height: 32px;
+      border-radius: 8px;
+      border: $cp_button_border;
+      box-shadow: $cp_button_box_shadow;
+      font-size: 16px;
+      font-weight: 400;
+      cursor: pointer;
+
+      &:focus-visible {
+        @include focus(
+          $box-shadow: none,
+          $outline_offset: 2px,
+          $outline_width: 2px,
+        );
+      }
+    }
+
+    .cp-theme-button {
+      @include flexDisplay();
+      @include flexAlignItems(center, center);
+      @include flexJustifyContent(center, center);
+      border: $cp_button_border;
+      box-shadow: $cp_button_box_shadow;
+      border-radius: 8px;
+      width: 108px;
+      height: 32px;
+      cursor: pointer;
+
+      &:focus, &:focus-visible {
+        @include focus(
+          $box-shadow: none,
+          $outline_offset: 2px,
+          $outline_width: 2px,
+        );
+      }
+
+      input {
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+      }
+
+      .cp-prev-box-svg {
+        @include flexDisplay();
+        @include flexAlignItems(center, center);
+        @include flexJustifyContent(center, center);
+        width: 16px;
+        height: 16px;
+
+        .cp-theme-icon {
+          width: 16px;
+          height: 16px;
+          margin: 0;
+        }
+      }
+
+      .cp-theme-text {
+        font-size: 16px;
+        margin-left: 8px;
+      }
+    }
+
+    .cp-theme-button-container {
+      @include flexDisplay();
+      @include flexDirection(row-reverse);
+      @include flexAlignItems(flex-end, end);
+    }
+
+    .cp-input {
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+  }
+
+  .cp-colors-container {
+    @include flexDisplay();
+    @include flexAlignItems(flex-start, start);
+    @include flexJustifyContent(space-between, space-between);
+    .cp-column {
+      @include flexDisplay();
+      @include flexDirection(column);
+      @include flexJustifyContent(flex-start, start);
+    }
+  }
+
+  .cp-buttons-container {
+    @include flexDisplay();
+    @include flexJustifyContent(flex-end, flex-end);
+    width: 100%;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: $cp_button_color;
+
+    .cp-button {
+      @include flexDisplay();
+      @include flexAlignItems(center, center);
+      @include flexJustifyContent(center, center);
+      width: 66px;
+      height: 32px;
+      border-radius: 8px;
+      border: $cp_button_border;
+      box-shadow: $cp_button_box_shadow;
+      cursor: pointer;
+
+      &:focus-visible {
+        @include focus(
+          $box-shadow: none,
+          $outline_offset: 2px,
+          $outline_width: 2px,
+        );
+      }
+    }
+
+    .cp-button-save {
+      background-color: $cp_button_save_bg;
+      color: $cp_button_save_color;
+      border: none;
+    }
+  }
+}

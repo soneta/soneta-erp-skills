@@ -1,0 +1,40 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gh-filter {
+  @include partial-column-center;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  background-color: $grid_filterbar_bg;
+  border-top: $grid_cell_border;
+
+  input {
+    @include partial-row-center-start;
+    align-items: flex-end;
+    min-height: inherit;
+    height: calc(100% - 5px);
+    width: calc(100% - 5px);
+    padding: 0 5px;
+    outline: none;
+    border-radius: 4px;
+    border: $grid_filterbar_input_border;
+    color: $grid_filterbar_input_fg;
+    background-color: $grid_filterbar_input_bg;
+    font-size: 9pt;
+    font-family: "SourceSans", Arial;
+
+    &:focus {
+      border: $grid_filterbar_input_focused_border;
+      color: $grid_filterbar_input_focused_fg;
+      background-color: $grid_filter_focused_bg;
+    }
+  }
+}
+
+.frozen {
+  z-index: 100;
+  border-right-color: $grid_column_frozen_border_color;
+  border-left-color: $grid_column_frozen_border_color;
+}

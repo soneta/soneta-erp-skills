@@ -1,0 +1,72 @@
+@import '../common/PredefinedMixins.scss';
+@import './partial.scss';
+@import './Variables.scss';
+
+.wb-nav {
+  @include partial-transition;
+  cursor: pointer;
+  border-radius: 8px;
+  color: $command_secondary_fg;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  width: 32px;
+  height: auto;
+  border: none;
+  box-shadow: none;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .content {
+    @include partial-column-center;
+    width: inherit;
+    height: 30px;
+
+    .icon {
+      @include partial-column-center;
+      width: inherit;
+      height: inherit;
+
+      svg {
+        width: 16px;
+        height: inherit;
+
+        path {
+          fill: $command_secondary_fg;
+        }
+      }
+    }
+  }
+
+  &:hover:not(.disabled),
+  &.hover:not(.disabled):not(:focus-visible) {
+    color: $command_secondary_hover_fg;
+    background-color: $command_secondary_hover_bg;
+    box-shadow: $command_shadow;
+
+    .content {
+      .icon svg path {
+        fill: $command_secondary_hover_fg;
+      }
+    }
+  }
+
+  &:active {
+    background-color: $command_form_active_bg;
+    color: $command_form_active_fg;
+    box-shadow: $command_shadow;
+
+    .content {
+      .icon svg path {
+        fill: $command_form_active_fg;
+      }
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+}

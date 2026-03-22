@@ -1,0 +1,30 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.cp {
+  @include partial-row-center-space-between;
+  position: absolute;
+  background-color: $grid_cards_cp_bg;
+  border-radius: 12px;
+
+  &:focus-visible {
+    @include focus(
+      $outline-offset: -1px,
+      $box-shadow: none,
+    );
+  }
+}
+
+.cp-btns {
+  @include partial-row-center-start;
+  height: inherit;
+  gap: 8px;
+}
+
+.cp-select {
+  @include partial-row-center-end;
+  width: 32px;
+  height: inherit;
+  margin-left: 10px;
+}

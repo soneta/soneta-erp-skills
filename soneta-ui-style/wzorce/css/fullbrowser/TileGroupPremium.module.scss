@@ -1,0 +1,43 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.tile-group {
+  @include partial-column-start-start;
+  padding: 30px 10px 0 10px;
+  width: 100%; //FEATURE_IE11
+
+  .title-group {
+    width: 100%;
+    margin: 0;
+    padding-bottom: 4px;
+    font-family: $secondaryFont;
+    font-size: 13pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $tile_group_fg;
+
+    &:after {
+      @include gradientBorder($tile_group_gradient, 1px);
+      content: "";
+      display: inline-block;
+      position: relative;
+      vertical-align: middle;
+      margin-left: 5px;
+      width: 80%;
+    }
+  }
+
+  &:first-child {
+    padding: 10px 10px 0 10px;
+  }
+}
+
+.tile-content {
+  @include partial-row-center-start;
+  @include flexWrap(wrap);
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  width: 100%; //FEATURE_IE11
+}

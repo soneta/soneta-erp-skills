@@ -1,0 +1,93 @@
+@import "./Variables.scss";
+
+.timeline-clock {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+  svg {
+    background: $timeline_bg;
+    .hour-circle {
+      stroke: $timeline_hour_circle;
+    }
+
+    .area-circle {
+      stroke: $timeline_area_circle;
+      fill: none;
+    }
+
+    .area-path {
+      stroke-linecap: butt;
+      fill: none;
+      opacity: 0.94;
+    }
+
+    .tick-line {
+      stroke: $timeline_text_fg;
+      stroke-linecap: round;
+    }
+
+    .indicator-tick {
+      stroke: $timeline_indicator;
+      stroke-linecap: round;
+    }
+
+    .start-area {
+      opacity: 0.2;
+    }
+
+    .current-time-circle {
+      stroke: $timeline_current_time_circle;
+      fill: none;
+    }
+
+    .current-time {
+      fill: $timeline_text_fg;
+      font-size: 16pt;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+  }
+
+  .ti-legend-vertical, .ti-legend-horizontal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 9pt;
+    color: $timeline_text_fg;
+    width: 100%;
+    height: auto;
+    .li-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 26px;
+      .li-item-color {
+        width: 7px;
+        height: 10px;
+        border-radius: 3px;
+      }
+      .li-item-t1 {
+        width: 40px;
+        height: auto;
+        text-align: center
+      }
+      .li-item-t2 {
+        width: 200px;
+        height: auto;
+        text-align: left;
+        padding: 0 4px;
+      }
+    }
+  }
+
+  .ti-legend-vertical {
+    padding: 10px 0;
+  }
+
+  .ti-legend-horizontal {
+    padding: 0 10px;
+  }
+}

@@ -1,0 +1,8 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/DatePickerYearMonthContent.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.tp-overlay-screen {
+  background-color: $theme_overlay_bg;
+}

@@ -1,0 +1,18 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.grid-locator {
+  @include partial-row-center-start;
+  @include flexJustifyContent(space-between, space-between);
+  position: absolute;
+  outline: 0;
+  margin: 0;
+  gap: 8px;
+  max-width: 70%;
+
+  .field-locator-container {
+    @include flexDisplay;
+    width: 100%;
+  }
+}

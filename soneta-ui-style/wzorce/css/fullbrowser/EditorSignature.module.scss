@@ -1,0 +1,113 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-signature {
+  @include partial-row-center-start;
+  @include flexAlignItems(flex-start, start);
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  .content {
+    position: absolute;
+    top: 0;
+    margin-left: 5px;
+    height: inherit;
+    cursor: crosshair;
+    border: $signature_content_border;
+    border-radius: 8px;
+    background-color: $signature_content_bg;
+
+    .signature {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: calc(100% - 2px);
+      height: calc(100% - 2px);
+      cursor: $signature_cursor;
+
+      &:focus-visible {
+        @include focus;
+      }
+    }
+
+    .icon {
+      @include partial-transition;
+      @include partial-column-center;
+      top: 5px;
+      right: 5px;
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      background-color: $signature_icon_bg;
+      border-radius: 2px;
+      box-shadow: $signature_icon_shadow;
+      cursor: pointer;
+      z-index: 100;
+
+      &:focus-visible {
+        @include focus();
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+          fill: $signature_icon_color;
+        }
+      }
+
+      &:hover {
+        box-shadow: $signature_icon_hover_shadow;
+      }
+
+      &:active {
+        box-shadow: $signature_icon_active_shadow;
+        background-color: $signature_icon_active_bg;
+
+        svg {
+          path {
+            fill: $signature_icon_active_color;
+          }
+        }
+      }
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+
+      .icon {
+        box-shadow: $signature_icon_active_shadow;
+        background-color: $signature_icon_active_bg;
+
+        svg {
+          path {
+            fill: $signature_icon_active_color;
+          }
+        }
+      }
+    }
+  }
+
+  &.vertical {
+    @include flexDirection(column);
+    @include flexJustifyContent(flex-end, end);
+    .content {
+      @include flexDisplay();
+      @include flexDirection(column);
+      @include flexAlignItems(flex-end, end);
+      @include flexJustifyContent(flex-end, end);
+      position: relative;
+      width: 100%;
+      height: calc(100% - 20px);
+      margin: 0;
+    }
+  }
+
+}

@@ -1,0 +1,127 @@
+@import '../common/PredefinedMixins.scss';
+@import './partial.scss';
+@import './Variables.scss';
+
+.bounceIn :global {
+  animation-name: bounceIn;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  -webkit-animation-name: bounceIn;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+}
+
+.cookieBox {
+  @include partial-transition;
+  @include partial-row-center-start;
+  position: absolute;
+  min-width: 170px;
+  width: calc(100% - 30px);
+  max-width: 532px;
+  bottom: 10px;
+  left: 10px;
+  border-radius: 12px;
+  background-color: $cookie_bg;
+  box-shadow: $cookie_shadow;
+  margin: 5px 0 5px 5px;
+  padding: 16px;
+  gap: 16px;
+  z-index: 10;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .cookie-icon {
+    @include partial-column-center;
+    height: inherit;
+    width: 84px;
+
+    &:focus-visible {
+      @include focus();
+    }
+
+    svg {
+      width: 72px;
+      height: 100%;
+
+      :global(.st0) {
+        stroke: $cookie_path1_color;
+      }
+
+      :global(.st1) {
+        fill: $cookie_path2_color;
+      }
+    }
+  }
+
+  .actions {
+    @include partial-column-center-start;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
+
+    .icon {
+      @include partial-column-center;
+      height: inherit;
+      width: 30px;
+      cursor: pointer;
+
+      svg {
+        width: 12px;
+        height: 100%;
+
+        path {
+          fill: $cookie_action_icon_color;
+        }
+      }
+    }
+  }
+
+  .link {
+    display: block;
+    color: $cookie_link_fg;
+    font-weight: bold;
+
+    &:focus-visible {
+      @include focus();
+    }
+  }
+
+  .content {
+    @include partial-column-center-start;
+    font-size: 13px;
+    font-family: $tertiaryFont;
+    text-align: left;
+
+    .text {
+      width: 100%;
+      margin: 8px 0;
+      color: $cookie_text_fg;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .link {
+      cursor: pointer;
+      color: $cookie_link_fg;
+      font-size: 16px;
+      line-height: 22px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  &.visible {
+    @include flexDisplay;
+    @extend .bounceIn;
+  }
+}

@@ -1,0 +1,25 @@
+@import "../common/PredefinedMixins.scss";
+@import './partial.scss';
+@import './Variables.scss';
+
+.editor-date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: inherit;
+  height: 100%;
+  width: 100%;
+
+  &:focus-visible {
+    @include focus();
+  }
+}
+
+.vertical {
+  @include flexDisplay();
+  @include flexWrap(nowrap);
+  @include flexDirection(column);
+  @include flexJustifyContent(flex-end, flex-end);
+  @include flexAlignItems(flex-start, flex-start);
+  @include flexAlignContent(stretch, stretch);
+}

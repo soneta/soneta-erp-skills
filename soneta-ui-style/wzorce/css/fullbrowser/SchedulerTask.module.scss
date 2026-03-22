@@ -1,0 +1,65 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.task {
+  display: block;
+  position: relative;
+  margin: 4px 20px;
+  padding: 0;
+  border-radius: 8px;
+  color: $ss_tl_tasks_fg;
+  background-color: $ss_tl_task_bg;
+  box-shadow: $ss_tl_tasks_shadow;
+  width: calc(100% - 40px);
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .task-content {
+    padding: 12px 15px;
+  }
+
+  &:first-of-type {
+    margin-top: 20px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 20px;
+  }
+
+  .task-name {
+    font-weight: bold;
+  }
+
+  .task-header {
+    @include partial-ellipsis;
+    margin-right: 15px;
+  }
+
+  .task-date {
+    color: $ss_tl_task_date_fg;
+  }
+
+  .icons {
+    position: absolute;
+    top: 0;
+    right: 3px;
+
+    .icon-close {
+      width: 24px;
+      padding: 5px 8px;
+      border-radius: 8px;
+
+      &:focus-visible {
+        @include focus();
+      }
+
+      path {
+        fill: $ss_tl_task_date_icon_fg;
+      }
+    }
+  }
+}

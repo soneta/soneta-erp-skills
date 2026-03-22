@@ -1,0 +1,79 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.kanban-card {
+  color: $kanban_item_fg;
+  position: relative;
+  background-color: $kanban_item_bg;
+  box-sizing: border-box;
+  width: 230px;
+  padding: 10px 20px;
+  margin: 10px;
+  border: $kanban_item_border;
+  box-shadow: $kanban_item_box_shadow;
+  height: 130px;
+
+  &:not(.readonly) {
+    cursor: pointer;
+  }
+
+  .card-subject {
+    padding-bottom: 10px;
+    font-size: 14px;
+    max-height: 45px;
+
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+  }
+
+  .card-content {
+    @include partial-ellipsis;
+    display: block;
+
+    .card-contractor, .card-operator, .card-priority {
+      @include partial-ellipsis;
+      opacity: 0.8;
+      font-size: 12px;
+      color: $kanban_item_text_fg;
+      & > strong {
+        color: $kanban_item_fg;
+      }
+
+      img {
+        height: 64px;
+      }
+    }
+
+    .card-operator, .card-priority {
+      padding-right: 24px;
+    }
+
+    .card-avatar {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .card-operator-color {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    width: 5px;
+    border-radius: 2px;
+    background: $kanban_default_operator_bg;
+  }
+}

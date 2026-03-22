@@ -1,0 +1,365 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.gc-text, .gc-check, .gc-select, .gc-image, .gc-color, .gc-icon, .gc-command, .gc-color-status {
+  @include partial-unselectable;
+  @include partial-ellipsis;
+  position: absolute;
+  height: 100%;
+  overflow: hidden;
+  background-color: inherit;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: 0;
+
+  &.gc-so {
+    cursor: pointer;
+
+    &.right {
+      .text {
+        left: unset;
+        right: 16px;
+        padding-right: 2px;
+      }
+    }
+
+    .text {
+      @include partial-ellipsis;
+      position: relative;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    &:not(.gc-sel) {
+      color: $grid_column_smartopen_fg;
+    }
+  }
+  &.cp-empty-bcg {
+    background: $cp_empty_bg;
+
+    .icon {
+      svg path {
+        fill: $cp_empty_icon !important;
+      }
+    }
+  }
+
+  .empty-img {
+    @include partial-column-center;
+    width: auto;
+    height: 100%;
+    svg {
+      fill: $grid_emptycontent;
+      height: 80%;
+      width: 80%;
+    }
+  }
+}
+
+.gc-cell-highlight {
+  background: $grid_cell_highlight_bg !important;
+}
+
+.gc-text, .gc-check, .gc-select, .gc-color, .gc-color-status {
+  min-height: $grid_headercolumn_height;
+}
+
+.gc-check, .gc-select, .gc-color-status {
+  @include partial-row-center-start;
+}
+
+.gc-image, .gc-icon, .gc-command {
+  @include partial-row-center;
+}
+
+.gc-color-status {
+  font-size: 9pt;
+}
+
+.gc-text {
+  @include partial-row-center-start;
+  line-height: $grid_headercolumn_height;
+  text-decoration: inherit;
+  font-size: 9pt;
+  padding: 0 5px;
+
+  &.right {
+    @include partial-row-center-end;
+    text-align: right;
+  }
+
+  .tree-state {
+    @include partial-row-center-end;
+    position: relative;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    padding-right: 10px;
+
+    .tree-lev-bar {
+      @include flexKeepSizeDisplay();
+      height: inherit;
+      width: 32px;
+      opacity: 1;
+
+      span {
+        width: 1px;
+        height: 100%;
+        top: 0;
+        margin-left: 10px;
+        //border-left: 1px solid $nav_tree_graph;
+      }
+
+      &.tree-lev-bar-short {
+        span {
+          height: 50%;
+        }
+      }
+    }
+
+    .icon {
+      @include partial-column-center;
+      height: inherit;
+      width: 32px;
+      svg {
+        width: 16px;
+        height: 100%;
+
+        path {
+          fill: $grid_tree_icon;
+        }
+      }
+    }
+  }
+
+  .tree-state-noicon {
+    .icon {
+      &::after {
+        position: absolute;
+        content: "";
+        right: 10px;
+        width: 44px;
+        height: calc(100% - 32px);
+        //border-bottom: 1px solid $nav_tree_graph;
+      }
+    }
+  }
+
+  .tree-state-zero {
+    .tree-lev-bar {
+      span {
+        display: none;
+      }
+    }
+    .icon {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+
+  flex: 1;
+
+  &, & > * {
+    @include partial-ellipsis;
+  }
+}
+
+.gc-rounded {
+  border: 1px solid $grid_odd_bg;
+  border-radius: 8px;
+}
+
+.gc-color {
+  line-height: $grid_headercolumn_height;
+  font-size: 10pt;
+  padding: 0 5px;
+}
+
+.gc-select {
+  background-color: $grid_headercolumn_bg;
+}
+
+.gc-check {
+  cursor: default;
+}
+
+.gc-command {
+  &>* {
+    display: none;
+  }
+
+  &.gr-foc:hover {
+    cursor: pointer;
+    background-color: $grid_column_command_hover_bg;
+  }
+}
+
+.gc-command-tooltip {
+  @include partial-column-start-start;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 4px 6px 4px 6px;
+  min-width: 50px;
+  min-height: 30px;
+  text-align: center;
+  font-size: 9pt;
+  z-index: 250000;
+  opacity: 0.95;
+  border: $tooltip_border;
+  color: $tooltip_fg;
+  background-color: $tooltip_bg;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+
+// FROZEN
+.gc-text, .gc-check, .gc-image, .gc-icon {
+  &.frozen {
+    z-index: 100;
+
+    &.gc-odd {
+      &:not(.gr-foc) {
+        &:not(.gc-sel) {
+          background-color: $grid_row_frozen_odd_bg !important;
+        }
+      }
+    }
+    &.gc-even {
+      &:not(.gr-foc) {
+        &:not(.gc-sel) {
+          background-color: $grid_row_frozen_even_bg !important;
+        }
+      }
+    }
+  }
+}
+
+// FROZEN
+.gc-text, .gc-check, .gc-image, .gc-icon {
+  &.gc-cell-sel {
+    border: $grid_cell_border;
+    box-shadow: $grid_cell_boxshadow;
+    background: $grid_cell_highlight_bg;
+  }
+}
+
+// FOCUSED
+.gr-foc {
+  &.gc-command {
+    &>* {
+      display: flex;
+    }
+  }
+
+  &:not(.gc-eip) {
+    svg path {
+      fill: $grid_row_focused_fg !important;
+    }
+  }
+}
+
+.gf-sum {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  background-color: $grid_gfsum_bg;
+  border-top: $grid_gfsum_border;
+
+  .text {
+    @include partial-ellipsis;
+    position: absolute;
+    left: 0;
+    height: inherit;
+    width: 100%;
+    line-height: $grid_headercolumn_height;
+    color: $grid_gfsum_color;
+    font-size: 9pt;
+    padding: 0 4px;
+    font-weight: $grid_gfsum_text_fw;
+
+    &.right {
+      text-align: right;
+    }
+
+    &:before {
+      position: absolute;
+      content: " ";
+      left: 1px;
+      top: 1px;
+      right: 1px;
+      bottom: 1px;
+      background-color: $grid_gfsum_before_bg;
+    }
+  }
+
+  .icon {
+    @include partial-column-center;
+    float: left;
+    height: inherit;
+    width: $grid_headercolumn_height;
+
+    svg {
+      width: 16px;
+
+      path {
+        fill: $grid_row_sum_icon;
+      }
+    }
+  }
+}
+
+.gf-all {
+  position: absolute;
+  left: 0;
+  height: inherit;
+  width: 100%;
+  background-color: $grid_headercolumn_bg;
+  border-right: $grid_border;
+}
+
+.gf-sum-empty {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  background-color: inherit;
+}
+
+.frozen {
+  z-index: 100;
+  border-right-color: $grid_column_frozen_border_color;
+  border-left-color: $grid_column_frozen_border_color;
+}
+
+.gc-foc:not(.gc-sel) {
+  border: $grid_column_focused_border;
+  border-top: 0;
+  border-bottom: 0;
+  color: $grid_column_focus_fc !important;
+
+  &:not(.gc-eip) {
+    background-color: $grid_column_focused_bg;
+    svg path {
+      fill: $grid_column_focus_fc !important;
+    }
+  }
+}
+
+.grid-sum-all {
+  .icon {
+    svg {
+      path {
+        fill: $grid_sum_color_icon;
+      }
+    }
+  }
+}

@@ -1,0 +1,117 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-radiobutton {
+  @include partial-row-center-start;
+  @include flexAlignItems(center, center);
+  @include flexAlignContent(center, center);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  font-size: $font_size_label;
+  -webkit-tap-highlight-color: transparent;
+
+  .content {
+    @include flexDisplay();
+    @include flexAlignItems(center, center);
+    @include flexAlignContent(center, center);
+    @include flexJustifyContent(flex-start, start);
+    position: absolute;
+    right: 0;
+    height: inherit;
+    cursor: pointer;
+    background-color: transparent;
+
+    &:focus-visible {
+      @include focus();
+    }
+
+    input {
+      display: none;
+      pointer-events: none;
+    }
+
+    .radio-checked {
+      path {
+        fill: $radiobutton_check;
+      }
+
+      &:hover {
+        path {
+          fill: $radiobutton_hover;
+        }
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .radio-unchecked {
+      path {
+        fill: $radiobutton_unchecked;
+      }
+
+      &:hover {
+        path {
+          fill: $radiobutton_hover_unchecked;
+        }
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .radio-readonly-checked {
+      path {
+        fill: $radiobutton_disabled;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .radio-readonly-unchecked {
+      path {
+        fill: $radiobutton_disabled;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+  }
+
+  &.right {
+    @include flexDirection(row-reverse);
+    .content {
+      @include flexJustifyContent(center, center);
+      position: relative;
+    }
+  }
+
+  &.vertical {
+    .content {
+      @include flexDisplay();
+      @include flexAlignItems(center, center);
+      @include flexJustifyContent(center, center);
+    }
+  }
+
+  &.focused {
+    .icon {
+      svg {
+        .radio-circle {
+          fill: $radiobutton_focused_icon;
+        }
+      }
+    }
+  }
+}

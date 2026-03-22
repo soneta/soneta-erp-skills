@@ -1,0 +1,251 @@
+@import "../../Themes/common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.button {
+  @include partial-transition;
+  text-align: center;
+  width: 170px;
+  cursor: pointer;
+  border-radius: 2px;
+  overflow: hidden;
+  outline: none;
+
+  .title {
+    @include partial-column-center-start;
+    height: inherit;
+    overflow: hidden;
+  }
+
+  &.waiting {
+    @include partial-column-center;
+    cursor: default;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  &.sign-in {
+    box-shadow: $signIn_btn_shadow;
+    border: $signIn_btn_border;
+
+    &:focus-visible {
+      @include focus(
+        $outline: $focus_outline_quaternary,
+        $outline_offset: 2px
+      );
+    }
+
+    &:hover:not(.waiting),
+    &:focus:not(.waiting) {
+      box-shadow: $signIn_btn_hover_shadow;
+      background-color: $signIn_btn_hover_bg;
+    }
+
+    &:active:not(.waiting) {
+      box-shadow: $signIn_btn_active_shadow;
+      background-color: $signIn_btn_active_bg;
+      color: $signIn_btn_active_color;
+    }
+  }
+
+  &.sign-in-dark {
+
+    &:hover:not(.waiting),
+    &:focus:not(.waiting) {
+      background-color: $signIn_btn_hover_bg;
+    }
+  }
+
+  &.action {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12pt;
+    background-color: $signIn_btn_action_bg;
+    color: $signIn_btn_action_fg;
+
+    .icon {
+      position: relative;
+      top: unset;
+      left: unset;
+      width: 30px;
+      height: 30px;
+      display: none;
+
+      svg {
+        rect {
+          fill: $signIn_btn_action_icon_fg;
+        }
+      }
+    }
+
+    .title {
+      padding: 0 1px;
+      align-items: center;
+      text-align: center;
+    }
+
+    &.waiting {
+      .icon {
+        display: block;
+      }
+    }
+  }
+
+  &.versions {
+    @include partial-row-center-start;
+    height: 32px;
+    font-size: 10pt;
+    background-color: $signIn_btn_version_bg;
+    color: $signIn_btn_version_fg;
+    box-shadow: $signIn_btn_version_box_shadow;
+    border: $signIn_btn_version_border;
+
+    &:focus-visible {
+      @include focus(
+        $outline-offset: 2px,
+        $box-shadow: none,
+      );
+    }
+
+    &:hover:not(.waiting),
+    &:focus:not(.waiting) {
+      box-shadow: var(--picker_button_hover_shadow);
+      background-color: $signIn_btn_version_hover;
+    }
+
+    .icon+.title {
+      width: calc(100% - 32px);
+    }
+
+    .icon {
+      @include partial-column-center;
+      height: inherit;
+      width: 32px;
+      line-height: normal;
+
+      svg {
+        width: 16px;
+        height: inherit;
+
+        path {
+          fill: $signIn_btn_version_icon_fg;
+        }
+      }
+    }
+
+    .title {
+      @include partial-column-center-start;
+      padding: 0 4px;
+      height: inherit;
+      overflow: hidden;
+    }
+  }
+
+  &.recovery {
+    box-shadow: $recovery_btn_shadow;
+    background-color: $recovery_btn_login_bg;
+    color: $recovery_btn_fg;
+    border: none;
+
+    &:focus-visible {
+      @include focus(
+        $outline: $focus_outline_quinary,
+        $outline_offset: 2px
+      );
+    }
+
+    &:hover:not(.waiting),
+    &:focus:not(.waiting) {
+      box-shadow: $recovery_btn_hover_shadow;
+      background-color: $recovery_btn_hover_bg;
+    }
+
+    &:active:not(.waiting) {
+      box-shadow: $recovery_btn_active_shadow;
+      background-color: $recovery_btn_active_bg;
+      color: $recovery_btn_active_fg;
+      border: $recovery_btn_active_border;
+    }
+  }
+
+  &.btnSend {
+    background-color: $signIn_btn_send_bg;
+  }
+
+  &.btnGoLogin {
+    background: $recovery_btn_go_login_bg;
+    border: $recovery_btn_go_login_border;
+    color: $recovery_btn_go_login_color;
+
+    &:focus-visible {
+      @include focus(
+        $outline_offset: 2px
+      );
+    }
+
+    &:hover:not(.waiting),
+    &:focus:not(.waiting) {
+      background-color: $recovery_btn_go_login_hover;
+    }
+
+    &:active:not(.waiting) {
+      background-color: $recovery_btn_active_bg;
+    }
+  }
+
+  &.error {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12pt;
+    width: 250px;
+    background-color: $error_command_bg;
+    color: $error_command_fg;
+    box-shadow: $error_command_shadow;
+    border: $error_command_border;
+
+    .title {
+      @include partial-column-center;
+    }
+
+    &:hover:not(.waiting),
+    &:focus:not(.waiting) {
+      box-shadow: $recovery_btn_hover_shadow;
+      background-color: $error_command_hover;
+    }
+
+    &:active:not(.waiting) {
+      box-shadow: $recovery_btn_active_shadow;
+      background-color: $error_command_active;
+      color: $recovery_btn_active_fg;
+      border: $error_command_active_border;
+    }
+  }
+}
+
+.adm-action {
+  @include partial-column-center;
+  @include boxShadow($page_adm_action_shadow_target_color);
+  cursor: pointer;
+  font-size: 8pt;
+  width: 60px;
+  border: $page_adm_action_border;
+  border-radius: 2px;
+  margin: 2px 4px;
+  padding: 2px;
+  background-color: $page_adm_action_bg;
+  color: $page_adm_action_fg;
+
+  &:hover {
+    background-color: $page_adm_action_hover_bg;
+    color: $page_adm_action_hover_fg;
+  }
+
+  &:active {
+    @include boxShadow();
+    background-color: $recovery_btn_active_bg;
+    color: $recovery_btn_active_fg;
+    border: $error_command_active_border;
+  }
+}

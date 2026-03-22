@@ -1,0 +1,116 @@
+﻿@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.profile-group {
+  @include partial-row-center-start;
+  @include flexAlignItems(stretch, stretch);
+  border-top: $profile_group_border;
+  border-bottom: $profile_group_border;
+  justify-content: space-between;
+  width: 100%;
+  height: 82px;
+  flex-shrink: 0;
+
+  &:focus-visible {
+    @include focus();
+  }
+
+  .profile-info {
+    @include partial-column-center-start;
+    color: $profile_group_fg;
+    font-family: $defaultFont;
+    width: inherit;
+    padding: 4px 10px;
+    opacity: 1;
+    @include transition(opacity, .5s, ease-out, 0s);
+
+    .name,
+    .position {
+      @include partial-column-start;
+      @include flexAlignItems(flex-start, start);
+      width: inherit;
+      height: 20px;
+      padding: 0 2px;
+    }
+
+    .name {
+      font-size: 10pt;
+      font-weight: bold;
+    }
+
+    .position {
+      font-size: 9pt;
+    }
+  }
+
+  .profile-image {
+    @include partial-column-center;
+    padding: 0 8px;
+
+    .image-content {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      transition: width .2s, height .2s;
+
+      .avatar-ico,
+      .avatar-img {
+        @include partial-column-center;
+        width: inherit;
+        height: inherit;
+        background-color: $profile_group_image_bg;
+        border-radius: 50%;
+        // box-shadow: $profile_shadow;
+      }
+
+      .avatar-ico {
+        svg {
+          width: 40px;
+          height: 100%;
+
+          path {
+            fill: $profile_group_icon;
+          }
+        }
+      }
+
+      .avatar-img {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+
+  &.collapsed {
+    @include partial-column-center;
+    border-top: unset;
+
+    .profile-info {
+      opacity: 0;
+      height: 0;
+      padding: 0;
+      @include transition(opacity, 0s, ease-out, 0s);
+    }
+
+    .profile-image {
+
+      .image-content {
+        cursor: pointer;
+
+        .avatar-ico,
+        .avatar-img {
+          box-shadow: none;
+        }
+
+        .avatar-ico {
+          svg {
+            width: 20px;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}

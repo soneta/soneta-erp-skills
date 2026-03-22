@@ -1,0 +1,230 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+@import "./BaseScroll.module.scss";
+
+.scroll-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  touch-action: none;
+
+  > div:first-child {
+    position: absolute;
+    overflow-y: auto;
+  }
+
+  .scroll-v,
+  .scroll-h,
+  .scroll-h-mobile {
+    @include partial-transition;
+    position: absolute;
+    bottom: 2px;
+    z-index: 200;
+    background-color: transparent;
+
+    &:active,
+    &:hover {
+      .scroll-v-track,
+      .scroll-h-track {
+        background-color: $scroll_track_bg;
+      }
+    }
+
+    .scroll-v-thumb,
+    .scroll-h-thumb {
+      position: absolute;
+      background-color: $scroll_thumb_bg;
+      border-radius: 2px;
+
+      &:hover,
+      &:active {
+        background-color: $scroll_thumb_hover_bg;
+        border-radius: 4px;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .scroll-v {
+    top: 2px;
+    right: 2px;
+    width: $size;
+
+    .scroll-v-track {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: $size;
+
+      .scroll-v-thumb {
+        cursor: s-resize;
+        top: 0;
+        right: 0;
+        height: 100px;
+        width: $thumb_size;
+      }
+    }
+
+    &.touch {
+      width: $track_hover_size;
+
+      .scroll-v-track {
+        width: $track_hover_size;
+
+        .scroll-v-thumb {
+          width: $track_hover_size;
+        }
+      }
+    }
+
+    &:not(.touch) {
+      &:active,
+      &:hover {
+        .scroll-v-track {
+          width: $track_hover_size;
+
+          .scroll-v-thumb {
+            width: $track_hover_size;
+          }
+        }
+      }
+    }
+  }
+
+  .scroll-h {
+    left: 2px;
+    right: 12px;
+    height: $size;
+
+    .scroll-h-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: $size;
+
+      .scroll-h-thumb {
+        cursor: w-resize;
+        left: 0;
+        bottom: 0;
+        width: 100px;
+        height: $thumb_size;
+      }
+    }
+
+    &.touch {
+      height: $track_hover_size;
+
+      .scroll-h-track {
+        height: $track_hover_size;
+
+        .scroll-h-thumb {
+          height: $track_hover_size;
+        }
+      }
+    }
+
+    &:not(.touch) {
+      &:active,
+      &:hover {
+        .scroll-h-track {
+          height: $track_hover_size;
+
+          .scroll-h-thumb {
+            height: $thumb_hover_size;
+          }
+        }
+      }
+    }
+  }
+
+  &.popup-window {
+    .scroll-v,
+    .scroll-h {
+      z-index: 100001;
+    }
+  }
+
+  &.dashboard {
+    background-color: $dashboard_bg;
+  }
+
+  &.simple-scheduler {
+    left: 0;
+  }
+
+  &.lookup {
+    @include partial-box-shadow;
+    position: fixed;
+    cursor: pointer;
+    width: 100%;
+    overflow: hidden;
+    z-index: 200002;
+    background: $lookup_auto_bg;
+    border: $lookup_auto_border;
+    border-radius: 12px;
+  }
+
+  &.left-offset-nav-expanded {
+    left: calc($nav_form_width + 8px);
+  }
+
+  &.left-offset-nav-collapsed {
+    left: calc($nav_form_collapsed_width + 8px);
+  }
+
+  &.legend-scroll-v, &.legend-scroll-h {
+    position: relative !important;
+  }
+
+  &.legend-scroll-v {
+    width: 100%;
+  }
+
+  &.legend-scroll-h {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.scroll-content-premium {
+  background-color: $scroll_content_bg;
+
+  &.dashboard {
+    background-color: $scroll_dashboard_content_bg;
+  }
+
+  &.transparent {
+    background-color: transparent;
+  }
+
+  &.left-offset-nav-expanded {
+    left: calc($nav_form_width + 8px);
+  }
+
+  &.left-offset-nav-collapsed {
+    left: calc($nav_form_collapsed_width + 8px);
+  }
+
+  &.legend-scroll-v, &.legend-scroll-h {
+    position: relative !important;
+  }
+
+  &.legend-scroll-v {
+    width: 100%;
+  }
+
+  &.legend-scroll-h {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,14 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/DatePickerHeader.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.container {
+  &:focus-visible {
+    outline: none;
+  }
+  
+  .field {
+    border: none;
+  }
+}

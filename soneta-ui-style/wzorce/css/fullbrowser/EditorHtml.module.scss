@@ -1,0 +1,32 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-html {
+  .content {
+    @include partial-sellect-text;
+    color: $html_fg;
+    height: inherit;
+    outline: none;
+
+    .html-scroll-content {
+      padding: 0 20px 0 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+      &:focus-visible {
+        @include focus(
+          $outline-offset: -2px,
+          $box-shadow: $focus_box_shadow_inset
+        );
+      }
+    }
+
+    .html-content {
+      &:focus-visible {
+        @include focus();
+      }
+    }
+  }
+}

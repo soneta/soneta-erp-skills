@@ -1,0 +1,161 @@
+@import '../../Themes/common/PredefinedMixins.scss';
+@import "./partial.scss";
+@import "./Variables.scss";
+
+$indicator_caption_height: 18px;
+
+$indicator_header_height: 32px;
+$indicator_content_height: 40px;
+$indicator_content_small_height: 24px;
+
+.swing-in-top-fwd :global {
+	-webkit-animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) 0.5s both;
+	animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) 0.5s both;
+}
+
+.indicator {
+  position: absolute;
+  overflow: hidden;
+  border: none;
+  border-radius: 12px;
+  color: $indicator_fg;
+  background-color: $indicator_bg;
+  box-shadow: $indicator_shadow;
+
+  .ind-container {
+    @include partial-column-start;
+    justify-content: space-around;
+    width: inherit;
+    height: 100%;
+
+    border: 1px solid;
+    border-radius: 12px;
+
+    .ind-header {
+      width: 100%;
+      height: $indicator_header_height;
+      line-height: $indicator_caption_height;
+      font-size: 10px;
+      cursor: inherit;
+
+      .ind-icon {
+        @include partial-row-center;
+        width: 32px;
+        height: 100%;
+        float: left;
+
+        svg {
+          width: 18px;
+          height: 100%;
+
+          path {
+            fill: $indicator_icon;
+          }
+        }
+      }
+
+      .ind-time {
+        @include partial-row-center;
+        @include partial-ellipsis;
+        justify-content: end;
+        width: calc(100% - 64px);
+        height: 100%;
+        line-height: inherit;
+        padding: 4px 0 4px 4px;
+        float: left;
+      }
+
+      .ind-time-icon {
+        @include partial-row-center;
+        width: 32px;
+        padding-left: 6px;
+        height: 100%;
+        float: left;
+        fill: $indicator_icon;
+
+        svg {
+          width: 14px;
+          height: inherit;
+        }
+      }
+    }
+
+    .ind-content {
+      @include flexDisplay();
+      @include flexWrap(nowrap);
+      @include flexDirection(row);
+      @include flexJustifyContent(flex-start, start);
+      @include flexAlignItems(center, center);
+      @include flexAlignContent(stretch, stretch);
+      width: 100%;
+      height: $indicator_content_height;
+      line-height: 40px;
+
+      .ind-value {
+        @include partial-ellipsis;
+        @extend .swing-in-top-fwd;
+        height: inherit;
+        font-size: 18px;
+        line-height: inherit;
+        text-align: center;
+        margin: 0 8px;
+        cursor: default;
+        float: left;
+      }
+
+      .ind-unit {
+        @include partial-ellipsis;
+        overflow: hidden;
+        min-width: 40px;
+        height: 100%;
+        padding: 0px 4px 4px 0;
+        font-size: 18px;
+        line-height: inherit;
+        float: right;
+      }
+    }
+
+    .ind-content-small {
+      @include flexJustifyContent(center, center);
+      height: $indicator_content_small_height;
+      line-height: 28px;
+    }
+
+    .ind-footer {
+      @include partial-row-center-start;
+      bottom: 0;
+      width: 100%;
+      min-height: 30px;
+      flex-grow: 1;
+
+      .ind-caption {
+        @include flexDisplay();
+        @include flexWrap(nowrap);
+        @include flexDirection(row);
+        @include flexJustifyContent(flex-start, start);
+        @include flexAlignItems(flex-start, start);
+        @include flexAlignContent(center, center);
+        width: 100%;
+        height: round(down, 100%, 20px);
+        font-size: 14px;
+        line-height: 20px;
+        padding: 0 8px;
+        cursor: default;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+      }
+
+      .ind-caption-small {
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.indicator .blink {
+  @include partial-blink-normal;
+}

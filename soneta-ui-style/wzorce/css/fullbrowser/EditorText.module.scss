@@ -1,0 +1,561 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.editor-text,
+.date-text {
+  @include partial-row-center-start;
+  @include flexAlignItems(center, center);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+
+  &:focus-within .content {
+    @include focus();
+  }
+
+  .content {
+    @include partial-row-center-start;
+    position: absolute;
+    height: inherit;
+    border: $theme_editor_common_border;
+    background-color: $input_bg;
+    border-radius: 8px;
+
+    input {
+      background-color: $input_text_editor_bg;
+      border: 0;
+      box-sizing: border-box;
+      color: $input_text_editor_fg;
+      font-family: $defaultFont;
+      font-size: $font_size_input;
+      font-weight: 500;
+      line-height: $font_size_input;
+      outline: none;
+      padding: 0 2px 0 4px;
+      height: 100%;
+      width: 100%;
+      text-align: left;
+      border-radius: 8px;
+
+      ::-ms-clear {
+        display: none;
+      }
+
+      &:disabled {
+        color: $input_disabled_fg;
+        background-color: $input_disabled_bg;
+      }
+
+      &:focus {
+        color: $input_focused_fg;
+        background-color: transparent;
+        outline: none;
+      }
+
+      &.clearable {
+        @include partial-clearable-text;
+      }
+    }
+
+    .icon {
+      @include partial-column-center;
+      height: $input_height;
+      width: 24px;
+      cursor: pointer;
+
+      &:focus-visible {
+        @include focus();
+      }
+
+      svg {
+        height: 16px;
+        width: 16px;
+
+        path {
+          fill: $input_icon_fg;
+        }
+      }
+
+      &.disabled {
+        svg {
+          path {
+            fill: $input_icon_fg_disabled;
+          }
+        }
+      }
+    }
+
+    &.disabled {
+      background-color: $input_disabled_bg;
+      border: $input_border_disabled;
+    }
+  }
+
+  &.vertical {
+    top: unset;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+
+    .content {
+      @include flexDisplay();
+      @include flexWrap(nowrap);
+      @include flexDirection(row);
+      @include flexJustifyContent(center, center);
+      @include flexAlignItems(center, center);
+      @include flexAlignContent(stretch, stretch);
+
+      right: 0;
+      height: calc(100% - 8px);
+      width: calc(100% - 4px);
+      padding: 0;
+
+      input {
+        background-color: unset;
+        font-family: $tertiaryFont;
+        font-size: $font_size_vertical_input;
+        height: inherit;
+        line-height: $font_size_vertical_line_height;
+        padding: 0 4px 0 14px;
+
+        &:disabled {
+          color: $input_disabled_fg;
+          background-color: $input_disabled_bg;
+        }
+      }
+
+      &.disabled {
+        background-color: $input_disabled_bg;
+        border: unset;
+      }
+    }
+  }
+
+  .vertical-border {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border: $input_vertical_border;
+    border-radius: 12px;
+
+    &.active {
+      border: $input_vertical_focused_border;
+    }
+
+    &.disabled {
+      background-color: $input_disabled_bg;
+    }
+  }
+
+  &.locator {
+    position: relative;
+
+    .content {
+      position: relative;
+      border-left: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      width: 100%;
+      border-color: $grid_loc_command_border_color;
+
+      input {
+        padding-left: 16px !important;
+        font-family: $tertiaryFont;
+        font-size: 14px;
+        line-height: 20px;
+
+        &::-webkit-input-placeholder {
+          color: $grid_loc_input_placeholder_fg;
+        }
+
+        &::-moz-placeholder {
+          color: $grid_loc_input_placeholder_fg;
+        }
+
+        &:-moz-placeholder {
+          color: $grid_loc_input_placeholder_fg;
+        }
+
+        &:-ms-input-placeholder {
+          color: $grid_loc_input_placeholder_fg;
+        }
+      }
+    }
+
+    &.premium {
+      &:not(.vertical),
+      &.vertical {
+        .content {
+          border-left: none;
+          border-color: $grid_loc_command_border_color;
+          border-radius: 0 8px 8px 0;
+        }
+      }
+    }
+  }
+
+  &.lookup {
+    .icon {
+      height: 100%;
+
+      svg {
+        width: 16px;
+
+        path {
+          fill: $lookup_editor_icon;
+        }
+      }
+    }
+  }
+
+  &.multiline-label {
+    .content {
+      bottom: 0;
+      height: 26px;
+    }
+  }
+
+  &.empty-bg {
+    .content {
+      background: $cp_empty_bg;
+
+      .icon {
+        svg path {
+          fill: $cp_empty_icon !important;
+        }
+      }
+    }
+  }
+
+  &.focused {
+    &:not(.grid) {
+      &:not(.premium) {
+        background-color: $input_focused_bg;
+      }
+    }
+
+    &:not(.vertical) {
+      .content {
+        @include partial-editor-shadow;
+        border: none;
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+          -webkit-box-shadow: $input_autofill_focused_shadow !important;
+        }
+      }
+    }
+
+    .vertical-border {
+      border: $input_vertical_focused_border;
+    }
+
+    .content {
+      .icon {
+        color: $input_focused_fg;
+        background-color: transparent;
+
+        svg path {
+          fill: $input_focused_fg;
+        }
+      }
+    }
+  }
+
+  &.color-picker {
+    .content {
+      input {
+        background-color: inherit;
+        &:disabled {
+          background-color: inherit;
+        }
+      }
+    }
+  }
+
+  &.color-picker {
+    .content {
+      input {
+        background-color: inherit;
+        &:disabled {
+          background-color: inherit;
+        }
+      }
+    }
+  }
+
+  &.color-picker-d {
+    .content {
+      .icon {
+        svg {
+          path {
+            fill: white;
+          }
+        }
+      }
+    }
+  }
+
+
+  &.grid:not(.color-picker) {
+    .content {
+      border: none;
+
+      input {
+        padding: 0 5px;
+        font-size: 10pt;
+      }
+    }
+
+    &.focused {
+      .content {
+        box-shadow: none;
+      }
+    }
+  }
+
+  &.dashboard {
+    .content {
+      top: unset;
+      left: unset;
+    }
+  }
+
+  &.warning {
+    .content {
+      box-shadow: $input_warning_shadow;
+    }
+  }
+
+  &.error {
+    .content {
+      box-shadow: $input_error_shadow;
+    }
+  }
+
+  &.input-textRight {
+    .content {
+      input {
+        text-align: right;
+      }
+    }
+  }
+
+  &.editor-date {
+    &.input-textRight {
+      .content {
+        input {
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .tooltipHolder {
+    color: $input_tooltip_fg;
+    line-height: 26px;
+    font-size: $font_size_label;
+    font-weight: 300;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    display: block;
+  }
+
+  input:focus,
+  input:valid {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &.premium {
+    &:not(.vertical) {
+      .content {
+        box-shadow: $input_shadow;
+        border: $input_border;
+        border-radius: 4px;
+
+        &.disabled {
+          border: $input_border_disabled;
+        }
+
+        input {
+          &:disabled {
+            text-shadow: $input_disabled_text_shadow;
+          }
+        }
+
+        .icon {
+          width: 22px;
+          padding-left: 5px;
+        }
+      }
+    }
+
+    .con-adv input {
+      padding: 0 2px 0 10px;
+    }
+
+    &.focused {
+      .content {
+        @include partial-editor-shadow-premium;
+        box-shadow: none;
+        border: $input_focused_border;
+        background-color: $input_focused_bg;
+
+        .icon svg path {
+          fill: $input_icon_fg;
+        }
+      }
+    }
+
+    &.grid.focused {
+      background-color: $grid_eip_bg;
+
+      .content {
+        background-color: $grid_eip_content_bg;
+        border: none;
+      }
+    }
+  }
+}
+
+.cp-editor {
+  @include partial-row-center-start;
+  height: 26px;
+  width: 100%;
+
+  .content {
+    position: relative;
+    height: inherit;
+    line-height: 26px;
+    padding: 0;
+    border: none;
+
+    input {
+      width: 65px;
+      height: 20px;
+      padding: 0 5px;
+      border: none;
+      outline: none;
+      line-height: 20px;
+      font-size: 9pt;
+      text-align: right;
+    }
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.date-text {
+  position: relative;
+  height: inherit;
+  width: calc(100% - 40px);
+
+  .content {
+    position: relative;
+    display: inline-flex;
+    top: 0;
+    left: 0;
+    height: inherit;
+    width: 100%;
+    padding: 0;
+    align-items: center;
+
+    input {
+      width: inherit;
+      height: calc(100% - 2px);
+      border: none;
+      outline: none;
+      line-height: inherit;
+      font-size: 12pt;
+      background-color: transparent;
+      color: $signIn_text_fg;
+
+      &.clearable {
+        @include partial-clearable-text;
+      }
+
+      &.clearable-dark {
+        @include partial-clearable-text;
+        $color: "rgb(163, 163, 163, 1)";
+        $style: "style='fill: #{$color};'";
+        $path: "<path d='M 6.8496094,0 A 6.8518967,6.8518967 0 0 0 2.0761719,11.765625 L 70.310547,80 2.0761719,148.23438 a 6.8518967,6.8518967 0 1 0 9.6894531,9.68945 L 80,89.689453 148.23438,157.92383 a 6.8518967,6.8518967 0 1 0 9.68945,-9.68945 L 89.689453,80 157.92383,11.765625 A 6.8518967,6.8518967 0 1 0 148.23438,2.0761719 L 80,70.310547 11.765625,2.0761719 A 6.8518967,6.8518967 0 0 0 6.8496094,0 Z' #{$style} />";
+        $data-url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'>#{$path}</svg>";
+        background-image: url($data-url);
+      }
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: $signIn_text_shadow;
+    }
+
+    .icon {
+      @include partial-column-center;
+      position: relative;
+      width: 40px;
+      height: 100%;
+
+      svg {
+        height: 20px;
+        width: 20px;
+
+        path {
+          fill: $signIn_field_icon_fg;
+        }
+      }
+    }
+  }
+
+  &.vertical {
+    .content {
+      padding-left: 20px;
+      margin-top: 3px;
+      input {
+        font-size: 18px;
+        &.clearable {
+          padding: 0 18px 0 0 !important;
+        }
+      }
+    }
+  }
+
+  &.focused {
+    .content {
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: $signIn_field_focused_shadow;
+      }
+    }
+  }
+}
+
+.editor-readonly {
+  .content {
+    background-color: $input_disabled_bg;
+  }
+}

@@ -1,0 +1,10 @@
+@import "../common/PredefinedMixins.scss";
+@import "../mobilebrowser/DatePickerContent.module.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.overlay {
+  .container {
+    font-family: $dp_font;
+  }
+}

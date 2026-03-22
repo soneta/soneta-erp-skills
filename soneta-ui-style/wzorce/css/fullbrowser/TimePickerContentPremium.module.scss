@@ -1,0 +1,86 @@
+@import "../common/PredefinedMixins.scss";
+@import "./partial.scss";
+@import "./Variables.scss";
+
+.tp-overlay-screen {
+  @include partial-column-center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: 200001;
+  background-color: $tp_overlay_bg;
+}
+
+.tp-container {
+  @include partial-unselectable;
+  @include partial-box-shadow;
+  @include partial-column-center-space-between;
+  align-items: center;
+  min-width: 250px;
+  padding: 16px;
+  background-color: $tp_bg;
+  border-radius: 12px;
+}
+
+.tp-car {
+  @include partial-row-center-space-between;
+  height: 300px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  .tp-sep {
+    color: $tp_sep;
+    font-size: 24px;
+    z-index: 1;
+  }
+}
+
+.tp-buttons {
+  @include partial-row-center;
+  justify-content: space-around;
+  bottom: 0;
+  width: 100%;
+  height: 48px;
+  cursor: pointer;
+  line-height: 32px;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: inherit;
+  border-radius: 12px;
+
+  .tp-button {
+    @include partial-row-center;
+    width: 25%;
+    height: 48px;
+    line-height: 48px;
+    margin: 0% 4%;
+    text-align: center;
+    color: $tp_button_ok_fg;
+
+    &:focus-visible {
+      @include focus(
+        $outline-offset: -7px,
+        $outline-width: 2px,
+        $box-shadow: none,
+        $border-radius: 12px,
+      );
+    }
+
+    .icon-con {
+      width: 24px;
+      height: 48px;
+
+      svg {
+        width: 24px;
+        height: 48px;
+
+        path {
+          fill: $tp_icon;
+        }
+      }
+    }
+  }
+}
