@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "soneta-addon-webapi-create", "soneta-addon-webapi-create", "{4417E407-F584-399A-DDD4-1244D291E187}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{87DDD8EF-E24A-5267-B43B-42193612830A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDumper", "nowy-dodatek-enova365\scripts\ApiDumper\ApiDumper.csproj", "{4771C791-E8D3-9CF4-0235-5A7333F717BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4771C791-E8D3-9CF4-0235-5A7333F717BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4771C791-E8D3-9CF4-0235-5A7333F717BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4771C791-E8D3-9CF4-0235-5A7333F717BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4771C791-E8D3-9CF4-0235-5A7333F717BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87DDD8EF-E24A-5267-B43B-42193612830A} = {4417E407-F584-399A-DDD4-1244D291E187}
+		{4771C791-E8D3-9CF4-0235-5A7333F717BB} = {87DDD8EF-E24A-5267-B43B-42193612830A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E8899F7-2408-4A86-B98C-41BE18F7A0B5}
+	EndGlobalSection
+EndGlobal
