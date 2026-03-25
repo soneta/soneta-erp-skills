@@ -68,6 +68,20 @@ System projektowy (design system) Soneta / enova365 do budowania aplikacji webow
 
 **Kiedy używać:** projektowanie stron/aplikacji w stylu enova365, dashboardy, formularze, strony logowania, panele administracyjne.
 
+### 6. soneta-mcp-ui-guide
+
+Obsługa programów Soneta (enova365, Triva) przez narzędzia MCP `soneta_ui`.
+
+**Zakres:**
+- Nawigacja po modułach i folderach programu (Handel, Kadry, Księgowość, CRM, itp.)
+- Przeglądanie list z filtrowaniem i stronicowaniem
+- Otwieranie formularzy i przełączanie zakładek
+- Edycja danych na formularzach (pola oznaczone jako `edytowany`)
+- Dodawanie nowych obiektów
+- Mapa ~100 najczęściej używanych folderów programu
+
+**Kiedy używać:** odczyt/edycja danych w enova365 lub Triva przez MCP — kontrahenci, faktury, pracownicy, towary, stany magazynowe, przelewy, deklaracje.
+
 ## Powiązania między skillami
 
 Skille są zaprojektowane do współpracy:
@@ -77,6 +91,7 @@ Skille są zaprojektowane do współpracy:
 3. **soneta-programming-basics** → pokazuje jak pracować z wygenerowanymi klasami C#
 4. **soneta-form-xml** → tworzy formularze UI dla obiektów
 5. **soneta-ui-style** → styluje interfejs webowy zgodnie z design systemem enova365
+6. **soneta-mcp-ui-guide** → obsługuje dane w działającej instancji enova365/Triva przez MCP
 
 ## Instalacja
 
