@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 	  <SonetaPackageVersion>2506.1.3</SonetaPackageVersion>
-	  <SonetaTargetFramework>net8</SonetaTargetFramework>
+	  <SonetaTargetFramework>net10.0</SonetaTargetFramework>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	</PropertyGroup>
