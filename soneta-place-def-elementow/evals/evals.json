@@ -1,0 +1,23 @@
+{
+  "skill_name": "soneta-place-def-elementow",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Napisz algorytm C# dla edytora algorytmu w enova365 — nowy element wynagrodzenia typu Dodatek o nazwie 'Premia uznaniowa'. Podstawa to kwota z parametru dodatku pracownika, bez żadnych mnożników. Element powinien mieć poprawne sygnatury metod _Param i _Wylicz.",
+      "expected_output": "Poprawny kod C# z metodami Premia_Uznaniowa_Param i Premia_Uznaniowa_Wylicz, używający WypElementDodatek w sygnaturze, pobierający kwotę z Element.DodHistoria.Podstawa (lub .Kwota), ustawiający Składnik.Podstawa1, Czas i Dni z normy",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Potrzebuję algorytmu C# dla elementu wynagrodzenia typu Dodatek w enova365, który oblicza premię jako 15% od wynagrodzenia zasadniczego nominalnego, z pomniejszeniem proporcjonalnym za nieobecności chorobowe. Napisz kompletny kod do edytora algorytmu.",
+      "expected_output": "Kod C# z _Param pobierającym ZasadniczeNominalne, ustawiającym Procent, obsługującym pomniejszenie za nieobecności chorobowe (przez Czasy.Nieobecnosci lub iterację po OkresNieobecności), poprawna formuła _Wylicz = Podstawa1 * Procent z korektą",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Utwórz w enova365 przez MCP nową definicję elementu wynagrodzenia — dodatek stażowy zależny od lat pracy w firmie. Opisz krok po kroku jakie operacje MCP wykonać i jaki algorytm wybrać.",
+      "expected_output": "Krokowa instrukcja MCP: navigate_to_folder, add_subobject z gridID, update_field_value na zakładce Ogólne, switch_form_page na algorytm z wyborem Kreatora, ustawienie podstawy=ZasadniczeNominalne i mnożnika=ZależnyOdStażuPracy, konfiguracja deklaracji, accept_subform, save_form",
+      "files": []
+    }
+  ]
+}
