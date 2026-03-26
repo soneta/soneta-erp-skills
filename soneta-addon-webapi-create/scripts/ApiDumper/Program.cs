@@ -30,7 +30,8 @@ namespace ApiDumper
                 AppDomain.CurrentDomain.AssemblyResolve += (sender, resolveArgs) =>
                 {
                     string assemblyName = new AssemblyName(resolveArgs.Name).Name + ".dll";
-                    string directoryPath = Path.GetDirectoryName(assemblyPath);
+                    string? directoryPath = Path.GetDirectoryName(assemblyPath);
+                    if (directoryPath == null) return null;
                     string assemblyFile = Path.Combine(directoryPath, assemblyName);
                     if (File.Exists(assemblyFile))
                     {
