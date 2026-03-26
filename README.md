@@ -68,15 +68,27 @@ System projektowy (design system) Soneta / enova365 do budowania aplikacji webow
 
 **Kiedy używać:** projektowanie stron/aplikacji w stylu enova365, dashboardy, formularze, strony logowania, panele administracyjne.
 
-### 6. soneta-addon-webapi-create
+### 6. soneta-dll-inspector
 
-Szybkie tworzenie nowych projektów dodatków WebAPI/DynamicAPI.
+Narzędzie do inspekcji publicznego API bibliotek Sonety z DLL-ek.
 
 **Zakres:**
-- Inicjalizacja projektu (Soneta.Sdk, .NET 8)
-- Inspekcja metadanych bibliotek Soneta (ApiDumper)
-- Implementacja interfejsów i kontrolerów API
+- Lista publicznych typów z dowolnej biblioteki Soneta
+- Szczegóły konkretnej klasy (właściwości, metody) bez szumu z System.Object
+- Wyszukiwanie typów i członków po nazwie
+- Wielopoziomowy drill-down oszczędzający kontekst AI
+
+**Kiedy używać:** przed implementacją dowolnego dodatku enova365 — AI potrzebuje poznać nazwy klas, metod, właściwości z DLL-ek Sonety.
+
+### 7. soneta-addon-webapi-create
+
+Tworzenie nowych projektów dodatków WebAPI/DynamicAPI.
+
+**Zakres:**
+- Inicjalizacja projektu (Soneta.Sdk, szablony .csproj, nuget.config, Directory.Build.props)
+- Implementacja interfejsów i kontrolerów DynamicAPI
 - Sprawdzone wzorce dostępu do modułów i tabel
+- Integracja z `soneta-dll-inspector` do inspekcji API
 
 **Kiedy używać:** tworzenie nowego projektu dodatku z endpointami WebAPI/DynamicAPI, praca z modułami enova365 przez API.
 
@@ -89,7 +101,8 @@ Skille są zaprojektowane do współpracy:
 3. **soneta-programming-basics** → pokazuje jak pracować z wygenerowanymi klasami C#
 4. **soneta-form-xml** → tworzy formularze UI dla obiektów
 5. **soneta-ui-style** → styluje interfejs webowy zgodnie z design systemem enova365
-6. **soneta-addon-webapi-create** → wystawia funkcjonalność przez nowoczesne WebAPI
+6. **soneta-dll-inspector** → inspekcja API bibliotek Sonety (używany przez inne skille)
+7. **soneta-addon-webapi-create** → wystawia funkcjonalność przez nowoczesne WebAPI
 
 ## Instalacja
 
