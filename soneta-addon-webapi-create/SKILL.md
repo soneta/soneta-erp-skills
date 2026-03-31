@@ -47,10 +47,9 @@ Używać **pełnych nazw typów** (z namespace) w atrybutach:
 ### Sesja i transakcja
 
 ```csharp
-using (var workSession = _session.Login.CreateSession(false, false))
-using (var transaction = workSession.Logout(true))
-{
-    // Logika...
-    transaction.Commit();
-}
+using var workSession = session.Login.CreateSession(readOnly: false, config: false);
+using var transaction = workSession.Logout(true);
+
+// Logika...
+transaction.Commit();
 ```

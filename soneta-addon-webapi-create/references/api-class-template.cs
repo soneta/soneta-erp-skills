@@ -8,25 +8,16 @@ using YOUR_NAMESPACE.Interfaces;
 [assembly: Service(typeof(YOUR_NAMESPACE.Interfaces.IYourApi), typeof(YOUR_NAMESPACE.YourApi), ServiceScope.Session)]
 [assembly: DynamicApiController(typeof(YOUR_NAMESPACE.Interfaces.IYourApi), typeof(YOUR_NAMESPACE.YourApi))]
 
-namespace YOUR_NAMESPACE
+namespace YOUR_NAMESPACE;
+
+public class YourApi(Session session) : IYourApi
 {
-    public class YourApi : IYourApi
+    // Example method using Session and WorkSession
+    public string GetSomething(string param)
     {
-        private readonly Session _session;
+        using var workSession = session.Login.CreateSession(readOnly: true, config: false);
 
-        public YourApi(Session session)
-        {
-            _session = session;
-        }
-
-        // Example method using Session and WorkSession
-        public string GetSomething(string param)
-        {
-            using (var workSession = _session.Login.CreateSession(true, false))
-            {
-                // Your logic here
-                return $"Result for {param}";
-            }
-        }
+        // Your logic here
+        return $"Result for {param}";
     }
 }
