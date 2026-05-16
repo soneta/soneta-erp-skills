@@ -226,21 +226,21 @@ public void AktualizujCeny(Login login, string nazwaCeny, decimal procentPodwyzk
     using (var session = login.CreateSession(false, false, "AktualizacjaCen"))
     {
         var tm = session.GetTowary();
-        
-        foreach (Towar t in tm.Towary.WgKodu)
+
+        // Jedna transakcja dla całej pętli - szybciej i atomowo
+        using (var transaction = session.Logout(editMode: true))
         {
-            // Transakcja biznesowa - WYMAGANA dla każdej zmiany!
-            using (var transaction = session.Logout(editMode: true))
+            foreach (Towar t in tm.Towary.WgKodu)
             {
                 var cena = t.Ceny[nazwaCeny];
                 if (cena != null)
                 {
                     cena.Netto = new DoubleCy(cena.Netto.Value * (1 + procentPodwyzki / 100));
                 }
-                transaction.Commit();
             }
+            transaction.Commit();
         }
-        
+
         session.Save();  // Zapisuje wszystkie zmiany do bazy
     }
 }
@@ -273,7 +273,7 @@ public void UsunTowar(Login login, string kod)
 
 ## Praca z kontekstem
 
-Przykłady Workera z `[Context]`, klasy parametrów dziedziczącej z `ContextBase`, akcji w menu Czynności i współdzielenia wartości przez Context - patrz [context.md](context.md).
+Przykłady klasy parametrów dziedziczącej z `ContextBase` i współdzielenia wartości przez Context - patrz [context.md](context.md). Przykłady Workera z `[Context]` i akcji w menu Czynności - patrz [worker-extender.md](worker-extender.md).
 
 ## Praca z GuidedRow
 
@@ -440,7 +440,8 @@ public void BezpiecznaOperacja(Login login)
         {
             // Logowanie błędu
             Console.WriteLine($"Błąd: {ex.Message}");
-            // Zmiany nie zostały zatwierdzone (brak Commit lub Save)
+            // Wyjątek przed Commit() = automatyczny rollback transakcji
+            // Wyjątek z session.Save() = transakcja zatwierdzona w sesji, ale brak zapisu do bazy
             // Sesja zostanie automatycznie zwolniona przez using
         }
     }

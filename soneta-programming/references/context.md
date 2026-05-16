@@ -1,4 +1,4 @@
-# Klasa Context
+# Klasa Context (kontekst)
 
 Dokumentacja klasy Context odpowiedzialnej za komunikację między warstwą logiki biznesowej a interfejsem graficznym.
 
@@ -8,23 +8,25 @@ Context to **kontener par klucz-wartość**, gdzie:
 - **Klucz** = typ (Type)
 - **Wartość** = obiekt tego typu (object)
 
-Kontekst jest stale aktualizowany podczas pracy z programem i przechowuje informacje o aktualnym stanie interfejsu.
+Context jest stale aktualizowany podczas pracy z programem i przechowuje informacje o aktualnym stanie interfejsu.
 
-## Zawartość kontekstu
+## Zawartość context
 
 Przykładowa zawartość przy otwartej liście kontrahentów:
 
-| Typ | Opis |
-|-----|------|
+| Typ | Opis                                   |
+|-----|----------------------------------------|
 | `SelectedCounter` | Liczba zaznaczonych wierszy na gridzie |
-| `Kontrahent[]` | Kolekcja zaznaczonych kontrahentów |
-| `UILocation` | Aktywny element interfejsu |
-| `INavigatorContext` | Kontekst grida (zaznaczenia, focus) |
-| `View` | Źródło danych grida |
-| `Params` | Klasa parametrów filtrów |
-| `Login` | Zalogowany użytkownik |
+| `Kontrahent[]` | Kolekcja zaznaczonych kontrahentów     |
+| `UILocation` | Aktywny element interfejsu             |
+| `INavigatorContext` | Context grida (zaznaczenia, focus)     |
+| `View` | Źródło danych grida                    |
+| `Params` | Klasa parametrów filtrów               |
+| `Session` | Gdy aktywny widok z danymi |
+| `Login` | Zalogowany użytkownik                  |
+| `[ViewInfo]+Params` | Klasa parametrów widoku |
 
-## Odczyt z kontekstu
+## Odczyt z context
 
 ### Metody GetOrDefault i GetRequired (zalecane)
 
@@ -39,16 +41,16 @@ public void Action(Context context)
 }
 ```
 
-### Przez indeksator
+### Przez indeksator - gdy typ określony wartością `Type`
 
 ```csharp
 public void Action(Context cx)
 {
-    // Rzuca wyjątek gdy brak obiektu w kontekście
+    // Rzuca wyjątek gdy brak obiektu w context
     Kontrahent knt = (Kontrahent)cx[typeof(Kontrahent)];
     
     // Bez wyjątku - drugi parametr
-    Kontrahent knt2 = (Kontrahent)cx[typeof(Kontrahent), false];
+    Kontrahent? knt2 = (Kontrahent?)cx[typeof(Kontrahent), false];
 }
 ```
 
@@ -58,7 +60,7 @@ public void Action(Context cx)
 public void Action(Context cx)
 {
     // Zwraca true jeśli znaleziono, false jeśli nie
-    if (cx.Get(out DokumentHandlowy dokument))
+    if (cx.Get(out DokumentHandlowy? dokument))
     {
         // dokument znaleziony
     }
@@ -69,7 +71,7 @@ public void Action(Context cx)
 }
 ```
 
-## Zapis do kontekstu
+## Ustawienie wartości do context
 
 ```csharp
 public void Action(Context cx)
@@ -84,135 +86,134 @@ public void Action(Context cx)
 }
 ```
 
-## Zastosowania
+## Klasa parametrów (np filtrów) - dziedziczy z `ContextBase`
 
-### 1. Filtry na listach głównych
-
-Klasy parametrów filtrów dziedziczą z `ContextBase` i są automatycznie w kontekście.
+Klasy parametrów filtrów dziedziczą z `ContextBase`
 
 ```csharp
 // Definicja klasy parametrów (w ViewInfo)
 public class TowaryParams(Context context) : ContextBase(context)
 {
+    [Translate]
     public Magazyn? Magazyn
     {
         get => Context.GetOrDefault<Magazyn>(); 
         set => Context.Set(value);
     }
     
+    [Translate]
     public TypTowaru Typ {
         get => Context.GetOrDefault<TypTowaru>(); 
         set => Context.Set(value);
     }
 
     [Accessor(AutoChange = true)]
+    [Caption("Szukaj")]
     public string SearchString { get; set; }
 }
 ```
 
+* Każde property klasy parametrów dziedziczy z `ContextBase` wymaga kontroli tłumaczenia za pomocą jednego z 
+  atrybutu: `[Translate]`, `[TranslateIgnore]`, `[Caption("Tytuł")]`
+* Bindowanie we viewform.xml wewnątrz `FilterPanel` nie wymaga użycia `Context.` (np `TowaryParams`), ponieważ 
+  `Context` jest dostępne bezpośrednio wewnątrz `FilterPanel`
+* Bindowanie w pageform.xml wymaga użycia `Context.` (np `Context.TowaryParams`)
+* Gdy property nie używa context -> stosuj `[Accessor(AutoChange = true)]` - zamiennie w kodzie set property można 
+  również użyć `Session.InvokeChanged()` lub `Context.InvokeChanged()`
+
 ```xml
 <!-- Bindowanie w viewform.xml -->
-<Field CaptionHtml="Magazyn" EditValue="{TowaryParams.Magazyn}"/>
-<Field CaptionHtml="Typ" EditValue="{TowaryParams.Typ}"/>
-<Field CaptionHtml="Szukaj" EditValue="{TowaryParams.SearchString}"/>
+<Flow Name="FilterPanel">
+    <Field CaptionHtml="Magazyn" EditValue="{TowaryParams.Magazyn}"/>
+    <Field CaptionHtml="Typ" EditValue="{TowaryParams.Typ}"/>
+    <Field CaptionHtml="Szukaj" EditValue="{TowaryParams.SearchString}"/>
+</Flow>
 ```
 
-Wartości filtrów są dostępne przez kontekst dla:
+```xml
+<!-- Bindowanie w pageform.xml -->
+<Page>
+    <Group CaptionHtml="Parametry">
+        <Field CaptionHtml="Magazyn" EditValue="{Context.TowaryParams.Magazyn}"/>
+        <Field CaptionHtml="Typ" EditValue="{Context.TowaryParams.Typ}"/>
+        <Field CaptionHtml="Szukaj" EditValue="{Context.TowaryParams.SearchString}"/>
+    </Group>
+</Page>
+```
+
+Wartości filtrów są dostępne przez context do:
 - Widoków (filtrowanie danych)
-- Workerów (właściwości wyliczane)
-- Wydruków
+- Obiektów worker (właściwości wyliczane, akcje)
+- Obiektów extender (właściwości wyliczane)
+- Tworzenia obiektów
 
-### 2. Wartości domyślne nowych obiektów
+## Tworzenie obiektów
 
-Kontekst używany do inicjalizacji nowych obiektów wartościami z filtrów. Uzupełniane są właściwości zaznaczone atrybutem `[Context]`, który oznacza próbę odczytania wartości do ustawienia property z kontekstu.
+Context może tworzyć obiekty worker, extender, i inne obiekty, które mogą być używane w aplikacji.
+Do utworzenia obiektu użyj metody `Context.CreateObject<ObjectType>()`.
 
-```
-Lista faktur:
-  Filtr Magazyn: "Sklep"
-  Filtr Kontrahent: "Drynda"
-        ↓
-Nowy dokument:
-  Magazyn: "Sklep" (z kontekstu - property z [Context])
-  Kontrahent: "Drynda" (z kontekstu - property z [Context])
-```
+* Parametry konstruktora są wypełniane automatycznie przez context, jeśli są dostępne w kontekście.
+* Property oznaczone przez `[Context]` wypełniane są automatycznie przez context wg typu kontekstu.
+* Atrybut `[Context(Required=false)]` oznacza, że property nie jest wymagana do tworzenia obiektu.
+* Atrybut `[Context<ParamType>("propertyName")]` lub `[Context(typeof(ParamType), "propertyName")]` pozwala na 
+  wypełnienie property z obiektu parametru ze wskazanego property.
 
-### 3. Wydruki
-
-Wydruki mają dostęp do obiektów z kontekstu jako źródła danych.
+### Przykład tworzenia obiektu `Osoba` z parametrów
 
 ```csharp
-// W kodzie wydruku
-Context cx = ...;
-if (cx.Get(out Kontrahent[] kontrahenci))
+public class OsobaParams(Context context) : ContextBase(context)
 {
-    // kontrahenci[] = zaznaczone na liście
-}
-```
-
-### 4. Workery - atrybut [Context]
-
-Workery mogą pobierać parametry z kontekstu automatycznie.
-
-```csharp
-public class MojWorker
-{
-    [Context]  // Pobierane z kontekstu
-    public Magazyn Magazyn { get; set; }
+    [Translate]
+    [Accessor(AutoChange = true)]     
+    public string Nazwisko { get; set; }
     
-    [Context]  // Jeśli brak w kontekście - okno parametrów
+    [Translate]
+    [Accessor(AutoChange = true)]     
+    public string Imie { get; set; }
+    
+    [Translate]
+    public Operator Operator {
+        get => Context.GetOrDefault<Operator>(); 
+        set => Context.Set(value);
+    }
+}
+
+// Operator na podstawie wartości Operator z context
+public class Osoba(Operator oper) 
+{
+    // Inicjowane na podstawie Nazwisko z obiektu parametru
+    [Context<OsobaParams>(nameof(OsobaParams.Nazwisko))]
+    public string Nazwisko { get; set; }
+
+    // Inicjowane na podstawie Imie z obiektu parametru
+    [Context<OsobaParams>(nameof(OsobaParams.Imie))]
+    public string Imie { get; set; }
+
+    // Jeżeli brak obiektu Kontrahent w context to property jest ignorowane
+    [Context(Required=false)]
     public Kontrahent Kontrahent { get; set; }
 }
-```
 
-### 5. Właściwości wyliczane zależne od filtrów
-
-```csharp
-// Worker wyliczający stan magazynowy
-public class StanMagazynu : IWorker
+public class OsobaFactory 
 {
-    public object Compute(Context cx, object source)
+    public static Osoba Create(Context context)
     {
-        Towar towar = source as Towar;
-        
-        // Pobranie magazynu z kontekstu (z filtra)
-        if (cx.Get(out Magazyn magazyn))
-        {
-            return towar.GetStan(magazyn);
-        }
-        return towar.GetStanCalkowity();
+        return context.CreateObject<Osoba>();
     }
 }
 ```
 
-## Klasa ContextBase
+## Obiekty Worker i Extender
 
-Bazowa klasa dla obiektów automatycznie umieszczanych w kontekście.
+Worker i Extender to dwa mechanizmy rozszerzania modelu o logikę UI - dodatkowe properties wyliczane, akcje w menu Czynności,
+pola na formularzu. Oba pobierają parametry z context przez atrybut `[Context]`.
 
-```csharp
-public class MojaKlasaParametrow(Context context) : ContextBase(context)
-{
-    [Accessor(AutoChange = true)]
-    public Date DataOd { get; set; }
-
-    [Accessor(AutoChange = true)]
-    public Date DataDo { get; set; }
-
-    public Kontrahent Kontrahent { 
-        get => Context.GetOrDefault<Kontrahent>();
-        set => Context.Set(value); 
-    }
-}
-```
-
-Obiekty dziedziczące z `ContextBase` i nie tylko:
-- Są automatycznie dodawane do kontekstu
-- Wywoływane jest zdarzenie `OnChanged` przy zmianie właściwości
-- Obsługują bindowanie do kontrolek UI
-- Właściwości połączone z UI (formularze, parametry) mogą być zadeklarowane z `[Accessor(AutoChange = true)]`, dzięki czemu Accessor automatycznie uruchomi mechanizm powiadamiania o zmianach i nie będzie konieczne wywołanie `Session.InvokeChanged()` lub `Context.InvokeChanged()`
+Pełna dokumentacja (rejestracja, deklaracja, bindowanie w form.xml, akcje, przykłady) - 
+patrz [worker-extender.md](worker-extender.md).
 
 ## Interfejs INavigatorContext
 
-Dostępny w kontekście gdy aktywna jest lista (grid).
+Dostępny w context gdy aktywna jest lista (grid).
 
 ```csharp
 public void Action(Context cx)
@@ -233,7 +234,7 @@ public void Action(Context cx)
 
 ## Kolekcje zaznaczonych obiektów
 
-W kontekście znajdują się tablice zaznaczonych obiektów.
+W context znajdują się tablice zaznaczonych obiektów.
 
 ```csharp
 public void Action(Context cx)
@@ -260,7 +261,7 @@ public void Action(Context cx)
 ```csharp
 public void Action(Context cx)
 {
-    // Dostęp do sesji przez kontekst
+    // Dostęp do sesji przez context
     Session session = cx.Session;
     
     // Dostęp do modułu przez sesję
@@ -268,94 +269,12 @@ public void Action(Context cx)
 }
 ```
 
-## Pełny przykład - Worker z kontekstem
-
-```csharp
-[assembly: Worker<TowarExtender, Towar>]
-
-namespace Soneta.Towary;
-
-public class TowarExtenderParams(Context context) : ContextBase(context)
-{
-    [Accessor(AutoChange = true)]
-    [Caption("Magazyn filtrowania")]
-    public Magazyn MagazynFiltra { get; set; }
-}
-
-public class TowarExtender
-{
-    [Context]
-    public TowarExtenderParams Params { get; set; }
-
-    [Context]
-    public Towar Towar { get; set; }
-
-    public decimal StanWMagazynie => 
-        Params.MagazynFiltra != null
-            ? PoliczStanMagazynu(Towar, Params.MagazynFiltra) 
-            : PoliczStanMagazynu(Towar);
-
-    private decimal PoliczStanMagazynu(Towar towar, Magazyn magazyn)
-    {
-        // Wyliczyć stan we wskazanym magazynie
-        return 0;
-    }
-
-    private decimal PoliczStanMagazynu(Towar towar)
-    {
-        // Wyliczyć stan w całej firmie
-        return 0;
-    }
-}
-```
-
-## Akcja workera w menu Czynności
-
-Worker może udostępniać akcję uruchamianą z menu - zaznaczone obiekty trafiają do property opisanej `[Context]`:
-
-```csharp
-[assembly: Worker<WyslijEmailWorker, Kontrahent>]
-
-public class WyslijEmailWorker
-{
-    [Context]
-    public Kontrahent[] Kontrahenci { get; set; }
-
-    [Context]
-    public Context Context { get; set; }
-
-    [Action("Wyślij email")]
-    public void Execute()
-    {
-        foreach (var k in Kontrahenci)
-        {
-            if (!string.IsNullOrEmpty(k.Email))
-                WyslijEmail(k.Email);
-        }
-    }
-
-    private void WyslijEmail(string email) { /* ... */ }
-}
-```
-
 ## Dobre praktyki
 
 1. **Używaj Get<T>, GetOrDefault<T>, GetRequired<T>** zamiast indeksatora - bezpieczniejsze
-2. **Sprawdzaj obecność** obiektów w kontekście przed użyciem
+2. **Sprawdzaj obecność** obiektów w context przed użyciem
 3. **Dziedzicz z ContextBase** dla własnych klas parametrów i pamiętaj o konstruktorze `(Context context)`
-4. **Używaj [Context]** w workerach dla parametrów z kontekstu
-5. **Stosuj `[Accessor(AutoChange = true)]`** lub `InvokeChanged()` dla powiadamiania UI o zmianach
-
-## Typowe typy w kontekście
-
-| Typ | Kiedy dostępny |
-|-----|----------------|
-| `Login` | Zawsze po zalogowaniu |
-| `Database` | Zawsze po zalogowaniu |
-| `LicencjaProgramu` | Zawsze po zalogowaniu |
-| `Session` | Gdy aktywny widok z danymi |
-| `View` | Gdy aktywna lista |
-| `INavigatorContext` | Gdy aktywna lista |
-| `[Obiekt][]` | Zaznaczenia na liście |
-| `[ViewInfo]+Params` | Klasa parametrów widoku |
-| `UILocation` | Lokalizacja w UI |
+4. **Stosuj `[Accessor(AutoChange = true)]`** lub `InvokeChanged()` dla powiadamiania UI o zmianach jeżeli wartość 
+   property nie jest przechowywana w context
+5. **Używaj `[Translate]`, `[TranslateIgnore]`, `[Caption("Tytuł")]`** dla property klas parametrów (ContextBase)
+6. **Worker / Extender** - rozszerzanie modelu o logikę UI, patrz [worker-extender.md](worker-extender.md)
