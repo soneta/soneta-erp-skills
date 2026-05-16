@@ -87,7 +87,7 @@ Plan projektu generowany jest jako dokument Markdown z następującą strukturą
 
 Po zatwierdzeniu planu projektu:
 1. **enova365-business-xml** - generowanie pliku business.xml na podstawie modelu danych
-2. **soneta-programming-basics** - implementacja workerów i logiki biznesowej
+2. **soneta-programming** - implementacja workerów i logiki biznesowej
 
 ## Szczegółowa dokumentacja
 

@@ -22,9 +22,7 @@ Przykładowa zawartość przy otwartej liście kontrahentów:
 | `INavigatorContext` | Kontekst grida (zaznaczenia, focus) |
 | `View` | Źródło danych grida |
 | `Params` | Klasa parametrów filtrów |
-| `LicencjaProgramu` | Informacje o licencji |
 | `Login` | Zalogowany użytkownik |
-| `MsSqlDatabase` | Baza danych |
 
 ## Odczyt z kontekstu
 
@@ -41,7 +39,7 @@ public void Action(Context context)
 }
 ```
 
-### Przez indeksator (rzuca wyjątek gdy brak)
+### Przez indeksator
 
 ```csharp
 public void Action(Context cx)
@@ -76,7 +74,7 @@ public void Action(Context cx)
 ```csharp
 public void Action(Context cx)
 {
-    // Przez indeksator
+    // Przez indeksator z określeniem typu 
     Kontrahent knt = ...;
     cx[typeof(Kontrahent)] = knt;
     

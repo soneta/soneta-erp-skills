@@ -325,4 +325,4 @@ Po zakończeniu wszystkich etapów wygeneruj dokument TODO z kolejnymi krokami:
 Po zatwierdzeniu planu projektu:
 1. **soneta-business-xml** — generowanie pliku business.xml na podstawie modelu danych z Etapu 3
 2. **soneta-form-xml** — generowanie formularzy i widoków UI na podstawie sekcji 3.4 i 3.5
-3. **soneta-programming-basics** — implementacja logiki biznesowej, workerów
+3. **soneta-programming** — implementacja logiki biznesowej, workerów

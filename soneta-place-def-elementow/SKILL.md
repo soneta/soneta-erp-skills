@@ -143,31 +143,46 @@ update_field_value(["_Tekst=public void Nazwa_Param(...) {\\n    ...\\n}\\n\\npu
 
 ## Wskazówki przy tworzeniu nowych algorytmów
 
-1. **Wybierz wzorzec** — większość nowych elementów pasuje do jednego z istniejących wzorców. Przeczytaj `references/wzorce-algorytmiczne.md` i zacznij od skopiowania najbliższego wzorca.
+1. **`Element` to parametr metody** — w kodzie algorytmu `Element` nie jest zmienną globalną ani polem klasy — jest **pierwszym parametrem** każdej metody (`_Param`, `_Wylicz`, `_Wartość1h` itd.). 
+   Metoda musi zawsze zawierać te parametry.
+   Typ tego parametru musi odpowiadać rodzajowi definiowanego elementu:
+   - Etat → `Soneta.Place.WypElementEtat Element`
+   - Dodatek → `Soneta.Place.WypElementDodatek Element`
+   - Dodatek automatyczny → `Soneta.Place.WypElementDodatekAutomatyczny Element`
+   - Nieobecność → `Soneta.Place.WypElementNieobecnosc Element`
+   - Nadgodziny → `Soneta.Place.WypElementNadgodziny Element`
+   - Umowa → `Soneta.Place.WypElementUmowa Element`
 
-2. **Źródło kwoty** — zdecyduj skąd pochodzi podstawa:
+   Przykład: jeśli algorytm odwołuje się do `Element.DodHistoria.Podstawa`, a definicja jest rodzaju **Dodatek**, to sygnatura metody musi wyglądać:
+   ```csharp
+   public void MojDodatek_Param(WypElementDodatek Element, WypSkladnik Składnik) { ... }
+   ```
+
+2. **Wybierz wzorzec** — większość nowych elementów pasuje do jednego z istniejących wzorców. Przeczytaj `references/wzorce-algorytmiczne.md` i zacznij od skopiowania najbliższego wzorca.
+
+3. **Źródło kwoty** — zdecyduj skąd pochodzi podstawa:
    - Kwota z parametrów pracownika → `Element.DodHistoria.Podstawa` (Wzorzec A)
    - Kwota z konfiguracji programu → `module.Config.Zasiłki.*[Date]` (Wzorzec B)
    - Kwota stała z definicji → `Element.Definicja.Algorytm.KreatorAlgorytmu.Podstawa` (Wzorzec C)
    - Procent od zasadniczego → `ZasadniczeNominalne(Date)` + `Element.DodHistoria.Procent` (Wzorzec D)
 
-3. **Czas i dni** — prawie wszystkie algorytmy ustawiają czas i dni z normy:
+4. **Czas i dni** — prawie wszystkie algorytmy ustawiają czas i dni z normy:
    ```csharp
    CzasDni cd = Element.Pracownik.Czasy.Norma(Składnik.Okres);
    Składnik.Czas = cd.Czas;
    Składnik.Dni = cd.Dni;
    ```
 
-4. **Pomniejszenie za nieobecności** — użyj kreatora algorytmu z konfiguracją korekt lub ręcznie: `Element.Pracownik.Czasy.Nieobecnosci(Składnik.Okres).Dni`
+5. **Pomniejszenie za nieobecności** — użyj kreatora algorytmu z konfiguracją korekt lub ręcznie: `Element.Pracownik.Czasy.Nieobecnosci(Składnik.Okres).Dni`
 
-5. **Proporcjonalność do okresu** — gdy okres składnika jest krótszy niż pełny okres naliczania, przelicz proporcjonalnie (jak w Premii procentowej — Wzorzec D).
+6. **Proporcjonalność do okresu** — gdy okres składnika jest krótszy niż pełny okres naliczania, przelicz proporcjonalnie (jak w Premii procentowej — Wzorzec D).
 
-6. **Zasiłki** — zawsze używaj `new PodstawaZasiłku(Element)` i `WyliczPodstawęZasiłkuZaDzień(...)` — nie obliczaj podstawy zasiłku ręcznie.
+7. **Zasiłki** — zawsze używaj `new PodstawaZasiłku(Element)` i `WyliczPodstawęZasiłkuZaDzień(...)` — nie obliczaj podstawy zasiłku ręcznie.
 
-7. **Urlopy okolicznościowe** — używaj `new NaliczanieOkolicznosciowy(Element, Składnik).NaliczPodstawy()` — automatycznie ustawi Podstawa1 (za godziny) i Podstawa2 (za dni).
+8. **Urlopy okolicznościowe** — używaj `new NaliczanieOkolicznosciowy(Element, Składnik).NaliczPodstawy()` — automatycznie ustawi Podstawa1 (za godziny) i Podstawa2 (za dni).
 
-8. **Ekwiwalenty i odprawy** — używaj `new NaliczanieEkwiwalent(Element, Składnik).NaliczPodstawy()`.
+9. **Ekwiwalenty i odprawy** — używaj `new NaliczanieEkwiwalent(Element, Składnik).NaliczPodstawy()`.
 
-9. **Element.DodHistoria.Podstawa vs Element.DodHistoria.Kwota** — w rzeczywistych algorytmach kreatorowych kwota pobierana jest z `Element.DodHistoria.Podstawa` (nie `.Kwota`). Pole `.Kwota` występuje w dokumentacji, ale `.Podstawa` jest częściej stosowane w generowanym kodzie.
+10. **Element.DodHistoria.Podstawa vs Element.DodHistoria.Kwota** — w rzeczywistych algorytmach kreatorowych kwota pobierana jest z `Element.DodHistoria.Podstawa` (nie `.Kwota`). Pole `.Kwota` występuje w dokumentacji, ale `.Podstawa` jest częściej stosowane w generowanym kodzie.
 
-10. **Dodatkowe metody** — jeśli element ma odbiorców płatności (potrącenia, alimenty), zdefiniuj metody `_Odbiorca` i `_RachunekOdbiorcy`. Jeśli okres naliczania wymaga podziału, zdefiniuj `_CięcieOkresu`. Jeśli element wpływa na podstawy urlopów/zasiłków — przeczytaj `references/metody-sterujace-naliczaniem.md`.
+11. **Dodatkowe metody** — jeśli element ma odbiorców płatności (potrącenia, alimenty), zdefiniuj metody `_Odbiorca` i `_RachunekOdbiorcy`. Jeśli okres naliczania wymaga podziału, zdefiniuj `_CięcieOkresu`. Jeśli element wpływa na podstawy urlopów/zasiłków — przeczytaj `references/metody-sterujace-naliczaniem.md`.

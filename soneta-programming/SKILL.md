@@ -1,5 +1,5 @@
 ---
-name: soneta-programming-basics
+name: soneta-programming
 description: >
   Fundamentalne klasy ORM platformy enova365/Soneta Enterprise. Obejmuje mapowanie 
   obiektowo-relacyjne (Row, Table, Module), zarządzanie sesją (Session), logowanie 
@@ -11,27 +11,19 @@ description: >
 
 # Soneta Programming Basics - Podstawowe klasy ORM
 
-Skill zawiera dokumentację fundamentalnych klas logiki biznesowej platformy enova365/Soneta Enterprise. Klasy te stanowią podstawę mapowania obiektowo-relacyjnego (ORM) i są niezbędne do tworzenia dodatków.
+Skill zawiera dokumentację fundamentalnych klas logiki biznesowej platformy enova365/Soneta Enterprise. Klasy te 
+stanowią podstawę mapowania obiektowo-relacyjnego (ORM) i są niezbędne do tworzenia kodu i dodatków.
 
 ## Architektura warstw
 
 ```
-┌─────────────────────────────────────────────────────┐
-│              Interfejs graficzny (UI)               │
-├─────────────────────────────────────────────────────┤
-│                    Context                          │  ← Komunikacja UI ↔ logika
-├─────────────────────────────────────────────────────┤
-│              Logika biznesowa                       │
-│  ┌─────────────────────────────────────────────┐   │
-│  │ BusApplication (Singleton)                   │   │
-│  │  └── Database (konfiguracja bazy)            │   │
-│  │       └── Login (uwierzytelnienie)           │   │
-│  │            └── Session (zarządzanie danymi)  │   │
-│  │                 └── Module → Table → Row     │   │
-│  └─────────────────────────────────────────────┘   │
-├─────────────────────────────────────────────────────┤
-│              Baza danych SQL                        │
-└─────────────────────────────────────────────────────┘
+BusApplication.Instance (singleton) - multihreaded 
+  └── Database
+       └── Login
+            └── Session - singlethreaded
+                 └── Module
+                      └── Table
+                           └── Row
 ```
 
 ## 3 poziomy logiki biznesowej
@@ -69,8 +61,6 @@ Module (abstrakcyjna)
 - `Context`
 - oraz wszystkie klasy pochodne
 
-Każdy wątek powinien tworzyć własną sesję.
-
 ### Obiekty multi-threaded (można współdzielić)
 - `BusApplication`
 - `Database`
@@ -85,10 +75,6 @@ Session to kluczowa klasa do zarządzania danymi. **Każda operacja na danych wy
 ```csharp
 // Przez Login
 Session session = login.CreateSession(readOnly: false, config: false, name: "MojaSesja");
-
-// Parametry konstruktora:
-// readOnly: true = tylko odczyt, false = edycja
-// config: true = dane konfiguracyjne (cache), false = dane operacyjne (aktualne)
 ```
 
 ### Typy sesji
@@ -151,6 +137,7 @@ Zmiany wykonywane są w trybie **optimistic-lock**:
 - Sesja konfiguracyjna używa cache'a (optymalizacja odczytów)
 - Sesja operacyjna zawsze czyta z bazy (aktualność danych)
 - **Nie mieszaj obiektów z różnych sesji** - użyj `session.Get(obiekt)` aby doczytać obiekt w bieżącej sesji
+- ID identyfikuje obiekt w tabeli, może powtarzać się w różnych tabelach
 
 ## Klasa Module
 
@@ -258,10 +245,163 @@ public static TowaryModule GetTowary(this Session session)
 ```csharp
 // Extension method (prostsze)
 var tm = session.GetTowary();
+var tm = context.Session.GetTowary();
+var tm = towar.Session.GetTowary();
 
-// GetInstance (gdy mamy ISessionable, np. Row lub Context)
-var tm = TowaryModule.GetInstance(context);
-var tm = TowaryModule.GetInstance(towar);  // towar implementuje ISessionable
+// GetInstance (gdy mamy ISessionable, ale property Session jest niedostępne)
+var tm = TowaryModule.GetInstance(sessionable);
+```
+
+## Kod biznesowy vs UI
+
+Kod biznesowy realizuje operacje logiki biznesowej (jak backend).
+Kod UI (fronend) jest odpowiedzialny za prezentację danych i interakcję z użytkownikiem.
+Kod biznesowy może być umieszczony w tej samej klasie z kodem UI.
+Kod UI to np:
+- obiekty `View`, `ViewInfo`, extender
+- metody sterujące `IsReadOnlyXxx`, `IsVisibleXxxx`, `GetListXxx`, `IsEnabledXxx`, `GetNameXxx`, `GetAppearanceXxx`
+
+### Ważne zasady do stosowania w kodzie biznesowym
+
+- Nie używaj żadnych obiektów kodu UI, w szczególności `View` - zamiast tego możesz użyć `SubTable[condition]`
+- Nie należy stosować warunków na prawa dostępu (np `if (Table.AccessRight == AccessRights.Denied) {...}`)
+
+## Serwisy
+
+Pozwalają tworzyć obiekty (komponenty), których czas życia będzie zależał od scope:
+- App (BusApplication.Instance)
+- Database
+- Login
+- Session (default - nie trzeba określać w deklaracji)
+
+Umieszczając deklarację interface serwisu w assembly wspólnym, pozwalają na udostępnianie serwisów między modułami, 
+nawet gdy nie ma odpowiedniej referencji.
+
+* **Tylko serwisy scope Session są single-threded, pozostałe są multi-threaded.**
+* Serwis może być `IDisposable`.
+* Dla serwisów App, Database, Login nie przechowuj obiektów sesyjnych.
+* `[RequireOwnService]` tylko dla serwisów, które nie mogą być nadpisywane.
+
+### Przykład deklaracji
+
+```csharp
+[assembly: Service<MyNamespace.IRegistry, MyNamespace.Registry>(ServiceScope.Login)]
+
+namespace MyNamespace;
+
+[RequireServiceScope(ServiceScope.Login)]
+public interface IRegistry {
+    void Method();
+}
+
+internal sealed class Registry : IRegistry {
+    public void Method() {}
+}
+```
+
+### Odczytanie serwisu w kodzie
+
+```csharp
+IRegistry registerRequired = login.GetRequiredService<IRegistry>();
+IRegistry? registerOptional = login.GetService<IRegistry>();
+
+foreach (IRegistry registers in login.GetServices<IRegistry>())
+{
+    
+}
+```
+
+### Użycie serwisu w worker lub extender - obiekt tworzony przez Context.CreareObject()
+
+```csharp
+// Rozwiązanie lepsze
+class MyWorker1(IRegistry registry) {
+}
+
+class MyWorker2 {
+    [Context]
+    private IRegistry Registry { get; set; }
+}
+```
+
+## Metadane modułów, tabel, kluczy, pól, itp
+
+Dostęp do metadanych obiektów biznesowych dostępny przez metody `static` klasy `ApplicationInfo`.
+Odczytanie informacji o tabli `TableInfo info = ApplicationInfo.GetTableInfo(nazwaTabeli)`. Istnieje tylko jedna 
+referencja obiektu TableInfo dla tabeli. Można używać `ReferenceEquals`, `Dictionary`, itp.
+Odczytanie wszystkich tabel `ApplicationInfo.GetTablesInfo()`, a np tabel dla modułu `ApplicationInfo.GetModuleInfo
+(moduleName).TableInfos`.
+
+### Wykorzystuj `TableInfo` do weryfikacji tabeli
+
+```csharp
+Row row1 = ...;
+Row row2 = ...;
+if (row1.Table.TableInfo==row2.Table.TableInfo) {
+    // Ta sama tabela, nawet gdy różne sesje
+}
+```
+
+## Tłumaczenie i formatowanie napisów, tekstów i string
+
+Biblioteka obsługuje słowniki tłumaczące napisy w aplikacji Soneta. 
+* Tłumaczone napisy muszą używać metody typu string-extender `"napis dotłumaczenia".Translate()`.
+* Tłumaczenie tekstów formatowanych przez `"napis {0} z wartością {1}".TranslateFormat(arg0, arg1)`.
+* Gdy string ma być zignorowany przez tłumacza, MUSISZ zaznaczyć do metodą `"nie tłumaczymy".TranslateIgnore()`,inaczej błąd kompilacji. 
+* Jeżeli w metodzie lub klasie jest więcej napisów do zignorowania użyj atrybutu `[TranslateIgnore]`.
+* Parametr metody jest ignorowany przez tłumacza, użyj atrybutu `[TranslateIgnore]` na parametrze.
+
+## Log zmian i obserwowalność
+
+Używaj standardowy narzędzi do logowania `ILogger<T>`. Użyj `[TranslateIgnore]` w metodzie wywołującej log.
+Używaj `logger.IsEnable(LogLevel)` kiedy parametry wymagają dodatkowych operacji.
+
+### Użycie `ILogger` oraz exception log
+
+```csharp
+class Test 
+{
+    private readonly logger = BusApplication.Instance.GetRequiredService<ILogger<Test>>();
+    
+    public  decimal Kwota;
+    
+    [TranslateIgnore]
+    public void Metoda() 
+    { 
+        try {
+            logger.LogInformation("Wywołanie metody {nazwa}", nameof(Validate));
+            if (kwota<0) 
+                logger.LogWarning("Kwota {kwota} nie może być ujemna w metodzie '{metoda}'", Kwota, nameof(Validate));
+        }
+        catch (Exception ex) {
+            
+            // Sposób na wrzucenie exception do trace
+            ex.Log<Test>();
+            
+            throw;
+        }
+    }
+}
+```
+
+### Śledzenie czasu wykonania z obsługą exception
+
+```csharp
+class Test {
+    private static readonly ActSource actSource = new(nameof(Test), ActSource.TraceLevel.Default);
+
+    public void Action() {
+        using var activity = actSource.Start();
+        
+        try {
+            // Algorytm do śledzenia
+        }
+        catch (Exception ex) {
+            activity.AddExceptionWithError(ex);
+            throw;
+        }
+    }
+}
 ```
 
 ## Szczegółowa dokumentacja
@@ -276,7 +416,7 @@ var tm = TowaryModule.GetInstance(towar);  // towar implementuje ISessionable
 ### Odczyt danych
 
 ```csharp
-using (var session = login.CreateSession(true, false, "Odczyt"))
+using (var session = login.CreateSession(readOnly: true, config: false, name: "Odczyt"))
 {
     var tm = session.GetTowary();  // Extension method
     foreach (Towar t in tm.Towary.WgKodu)
@@ -289,7 +429,7 @@ using (var session = login.CreateSession(true, false, "Odczyt"))
 ### Tworzenie nowego obiektu
 
 ```csharp
-using (var session = login.CreateSession(false, false, "Dodawanie"))
+using (var session = login.CreateSession(readOnly: false, config: false, name: "Dodawanie"))
 {
     var tm = session.GetTowary();
     
@@ -309,7 +449,7 @@ using (var session = login.CreateSession(false, false, "Dodawanie"))
 ### Modyfikacja istniejącego obiektu
 
 ```csharp
-using (var session = login.CreateSession(false, false, "Edycja"))
+using (var session = login.CreateSession(readOnly: false, config: false, name: "Edycja"))
 {
     var tm = session.GetTowary();
     var towar = tm.Towary.WgKodu["STARY001"];

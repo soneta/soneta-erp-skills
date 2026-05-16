@@ -1,10 +1,16 @@
 # Soneta / enova365 AI Skills
 
-Zestaw skills dla asystentów AI (Claude, Cursor, Windsurf, itp.) wspierających programowanie i projektowanie z platformą **enova365/Soneta Enterprise**.
+Zestaw skills dla asystentów AI (Claude, Cursor, Windsurf, itp.) wspierających programowanie, projektowanie i konfigurację platformy **enova365 / Soneta Enterprise / Triva**.
 
 ## Dostępne skille
 
-### 1. soneta-programming-basics
+### 0. soneta-erp (meta-skill)
+
+Mapa i przewodnik po pozostałych skillach. Pomaga wybrać właściwy skill w zależności od warstwy zadania (dane, UI, logika, płace).
+
+**Kiedy używać:** rozpoczynasz nowe zadanie dla enova365/Soneta/Triva i nie wiesz, który skill zastosować; zadanie obejmuje wiele warstw platformy i potrzebna jest koordynacja między skillami.
+
+### 1. soneta-programming
 
 Fundamentalne klasy ORM platformy enova365/Soneta Enterprise.
 
@@ -68,36 +74,36 @@ System projektowy (design system) Soneta / enova365 do budowania aplikacji webow
 
 **Kiedy używać:** projektowanie stron/aplikacji w stylu enova365, dashboardy, formularze, strony logowania, panele administracyjne.
 
-### 6. soneta-mcp-ui-guide
+### 6. soneta-place-def-elementow
 
-Obsługa programów Soneta (enova365, Triva) przez narzędzia MCP `soneta_ui`.
+Tworzenie i konfiguracja definicji elementów wynagrodzenia w enova365 (moduł Płace).
 
 **Zakres:**
-- Nawigacja po modułach i folderach programu (Handel, Kadry, Księgowość, CRM, itp.)
-- Przeglądanie list z filtrowaniem i stronicowaniem
-- Otwieranie formularzy i przełączanie zakładek
-- Edycja danych na formularzach (pola oznaczone jako `edytowany`)
-- Dodawanie nowych obiektów
-- Mapa ~100 najczęściej używanych folderów programu
+- Algorytmy naliczania: kreator, edytor C# (`_Param`, `_Wylicz`, `_Wartość1h`), algorytmy wbudowane
+- 12 wzorców dla Dodatków, 5 dla Nieobecności, 5 dla Dodatków automatycznych (z analizy ~247 definicji)
+- Receptury kodu C#: iterowanie po elementach, staż pracy, wymiar etatu, czas pracy, wskaźniki, cechy pracownika
+- Konfiguracja zakładek: Ogólne, Deklaracje (PIT/ZUS), Nieobecności, Algorytm
+- Metody sterujące naliczaniem (`_PodstawaUrlopu`, `_PodstawaZasiłku`)
 
-**Kiedy używać:** odczyt/edycja danych w enova365 lub Triva przez MCP — kontrahenci, faktury, pracownicy, towary, stany magazynowe, przelewy, deklaracje.
+**Kiedy używać:** tworzenie/modyfikacja definicji elementu wynagrodzenia, pisanie algorytmów płacowych (premia procentowa, dodatek stażowy, zasiłek chorobowy, ekwiwalent za urlop).
 
 ## Powiązania między skillami
 
 Skille są zaprojektowane do współpracy:
 
-1. **soneta-addon-planning** → planuje strukturę nowego dodatku
-2. **soneta-business-xml** → definiuje obiekty biznesowe w XML
-3. **soneta-programming-basics** → pokazuje jak pracować z wygenerowanymi klasami C#
-4. **soneta-form-xml** → tworzy formularze UI dla obiektów
-5. **soneta-ui-style** → styluje interfejs webowy zgodnie z design systemem enova365
-6. **soneta-mcp-ui-guide** → obsługuje dane w działającej instancji enova365/Triva przez MCP
+1. **soneta-erp** → wskazuje właściwy skill dla danego zadania
+2. **soneta-addon-planning** → planuje strukturę nowego dodatku
+3. **soneta-business-xml** → definiuje obiekty biznesowe w XML
+4. **soneta-programming** → pokazuje jak pracować z wygenerowanymi klasami C#
+5. **soneta-form-xml** → tworzy formularze UI dla obiektów
+6. **soneta-ui-style** → styluje interfejs webowy zgodnie z design systemem enova365
+7. **soneta-place-def-elementow** → konfiguruje warstwę płacową (definicje elementów wynagrodzenia)
 
 ## Instalacja
 
 ### Claude Code
 
-Skopiuj folder ze skillem do `~/.claude/skills/`.
+Skopiuj foldery skilli do `~/.claude/skills/`.
 
 ### Cursor / Windsurf / inne IDE
 

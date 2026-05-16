@@ -5,14 +5,14 @@ Dokumentacja klas zarządzających połączeniem z bazą danych i sesjami w plat
 ## Hierarchia obiektów
 
 ```
-BusApplication (Singleton)
+BusApplication.Instance (Singleton)
     └── Database[] (kolekcja baz danych)
          └── Login (uwierzytelniony użytkownik)
               └── Session[] (sesje robocze)
                    └── Module → Table → Row
 ```
 
-## BusApplication
+## Klasa BusApplication
 
 Singleton reprezentujący instancję aplikacji ERP. Tworzony podczas inicjalizacji systemu.
 
@@ -40,7 +40,7 @@ foreach (Database db in BusApplication.Instance)
 | `Is365` | `bool` | `true` = wersja HTML, `false` = wersja okienkowa |
 | `this[string]` | `Database` | Indeksator - baza po nazwie |
 
-## Database
+## Klasa Database
 
 Abstrakcyjna klasa reprezentująca bazę danych. Konkretne implementacje dla wspieranych silników:
 
@@ -84,9 +84,9 @@ Login login = db.Login(new LoginParameters
 });
 ```
 
-## Login
+## Klasa Login
 
-Obiekt reprezentujący zalogowanego użytkownika. Zarządza sesjami.
+Obiekt reprezentujący zalogowanego użytkownika. Zarządza sesjami. IDisposable.
 
 ### Tworzenie
 
@@ -109,7 +109,7 @@ Login login = db.Login(new LoginParameters
 // var ent = login.Entitle;  // unikać!
 
 // ZALECANE: Użyj w konkretnej sesji
-using (var session = login.CreateSession(true, false, "Odczyt"))
+using (var session = login.CreateSession(readOnly: true, config: false, name: "Odczyt"))
 {
     var op = session.AuthorizationInfo.Operator;
     Console.WriteLine($"Zalogowany: {op.Name} - {op.FullName}");
@@ -153,20 +153,20 @@ var opisDlaSzt = login.ExecuteConfig(configSession =>
 ### Sygnatury CreateSession
 
 ```csharp
-public Session CreateSession(bool readOnly, bool config, string name)
+public Session CreateSession(bool readOnly, bool config, string name) // rekomendowana
 public Session CreateSession(bool readOnly, bool config)
 public Session CreateSession()  // readOnly=false, config=false
 ```
 
-## Session
+## Klasa Session
 
-Fundamentalna klasa do zarządzania danymi. **Każda operacja na danych wymaga sesji.**
+Fundamentalna klasa do zarządzania danymi. **Każda operacja na danych wymaga sesji.** IDisposable.
 
 ### Tworzenie
 
 ```csharp
 // ZAWSZE używaj using lub wywołuj Dispose()
-using (var session = login.CreateSession(false, false, "MojaSesja"))
+using (var session = login.CreateSession(readOnly: false, config: false, name: "MojaSesja"))
 {
     // operacje na danych
     session.Save();
@@ -218,8 +218,8 @@ session.Save();
 
 ```csharp
 // Normalne zjawisko - wiele sesji może współistnieć
-using (var session1 = login.CreateSession(true, false, "Lista1"))
-using (var session2 = login.CreateSession(true, false, "Lista2"))
+using (var session1 = login.CreateSession(readOnly: true, config: false, name: "Lista1"))
+using (var session2 = login.CreateSession(readOnly: true, config: false, name: "Lista2"))
 {
     // Obie sesje mogą odczytywać te same dane
     var tm1 = session1.GetTowary();
@@ -232,7 +232,7 @@ using (var session2 = login.CreateSession(true, false, "Lista2"))
 **WAŻNE:** Każda zmiana obiektu biznesowego MUSI być w transakcji!
 
 ```csharp
-using (var session = login.CreateSession(false, false, "Edycja"))
+using (var session = login.CreateSession(readOnly: false, config: false, name: "Edycja"))
 {
     var tm = session.GetTowary();
     var towar = tm.Towary.WgKodu["KOD001"];
@@ -254,7 +254,7 @@ using (var session = login.CreateSession(false, false, "Edycja"))
 ### Logout(editMode: false) - transakcja tylko do odczytu
 
 ```csharp
-using (var session = login.CreateSession(false, false, "Przeglad"))
+using (var session = login.CreateSession(readOnly: false, config: false, name: "Przeglad"))
 {
     var tm = session.GetTowary();
     var towar = tm.Towary.WgKodu["KOD001"];
@@ -305,7 +305,7 @@ Login login = db.Login(new LoginParameters
 });
 
 // 4. Utworzenie sesji (zawsze z nazwą!)
-using (var session = login.CreateSession(false, false, "Import"))
+using (var session = login.CreateSession(readOnly: false, config: false, name: "Import"))
 {
     // 5. Pobranie modułu (extension method)
     var tm = session.GetTowary();
@@ -342,7 +342,7 @@ using (var session = login.CreateSession(false, false, "Import"))
 Login sharedLogin = db.Login(new LoginParameters { UserName = "admin", UserPassword = "haslo" });
 
 Parallel.ForEach(items, item => {
-    using (var session = sharedLogin.CreateSession(false, false, "Watek"))
+    using (var session = sharedLogin.CreateSession(readOnly: false, config: false, name: "Watek"))
     {
         var tm = session.GetTowary();
         using (var transaction = session.Logout(editMode: true))
@@ -354,13 +354,3 @@ Parallel.ForEach(items, item => {
     }
 });
 ```
-
-## Sesja bez interfejsu graficznego
-
-Sesja działa w warstwie logiki biznesowej - **nie wymaga UI**.
-
-Przykłady użycia bez interfejsu:
-- **Harmonogram Zadań** - usługa Windows wykonująca operacje bazodanowe
-- **Importy danych** - procesy wsadowe
-- **Testy jednostkowe** - automatyczne testy logiki
-- **API REST** - obsługa żądań HTTP
