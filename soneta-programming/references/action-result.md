@@ -4,6 +4,20 @@ Akcje (metody worker, akcje extender, handlery Command, callbacki) zwracają **a
 sterujący tym, co stanie się w UI po wykonaniu logiki biznesowej. Typ zwróconego obiektu decyduje
 o sposobie obsługi.
 
+## Spis treści
+
+- [Najważniejsza zasada](#najważniejsza-zasada)
+- [Wartości specjalne](#wartości-specjalne) - `null`, `string`, `bool`
+- [Sterowanie aktualnym formularzem](#sterowanie-aktualnym-formularzem) - close, refresh
+- [Okna informacyjne i pytania do użytkownika](#okna-informacyjne-i-pytania-do-użytkownika) - MessageBox, potwierdzenia
+- [Otwieranie obiektów i okien](#otwieranie-obiektów-i-okien) - edycja, podgląd
+- [Nawigacja po programie](#nawigacja-po-programie) - listy, foldery, URL
+- [Pliki i strumienie](#pliki-i-strumienie) - pobieranie plików, podgląd
+- [Raporty](#raporty) - generowanie i parametry raportów
+- [Dialogi parametrów](#dialogi-parametrów) - kreatory, dialog z ContextBase
+- [Operacje klienta i bezpieczeństwo](#operacje-klienta-i-bezpieczeństwo)
+- [Tabela szybkiego wyboru](#tabela-szybkiego-wyboru) - mapa typ → efekt UI
+
 ## Najważniejsza zasada
 
 **Nie wywołuj sam UI z poziomu worker/extender.** Zamiast pokazywać MessageBox, otwierać formularz

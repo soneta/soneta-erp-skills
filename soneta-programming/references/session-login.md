@@ -288,6 +288,23 @@ using (var session = login.CreateSession(readOnly: false, config: false, name: "
 | `transaction.CommitUI()` | Zatwierdza + odświeża UI |
 | `transaction.Dispose()` | Bez Commit = rollback (także zagnieżdżonych zmian) |
 
+### Commit() vs CommitUI()
+
+- `Commit()` - używaj w **kodzie biznesowym** (worker bez interakcji UI, kod uruchamiany w tle, testy, kod konsolowy).
+- `CommitUI()` - używaj w **kodzie UI** (worker uruchamiany z menu Czynności, extender, Command). Dodatkowo wymusza odświeżenie powiązanych widoków.
+
+```csharp
+[Action("Aktualizuj")]
+public void Execute()
+{
+    using (var transaction = Towar.Session.Logout(editMode: true))
+    {
+        Towar.Nazwa = NowaNazwa;
+        transaction.CommitUI();   // UI - odśwież listę / formularz
+    }
+}
+```
+
 ## Kompletny przykład
 
 ```csharp

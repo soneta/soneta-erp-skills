@@ -2,6 +2,19 @@
 
 Praktyczne przykłady użycia podstawowych klas logiki biznesowej enova365/Soneta.
 
+## Spis treści
+
+- [Ważne zasady](#ważne-zasady) - thread-safety, transakcje, mieszanie sesji
+- [Dostęp do danych](#dostęp-do-danych) - iteracja po kluczach, wyszukiwanie, filtrowanie
+- [Tworzenie obiektów](#tworzenie-obiektów) - AddRow, walidacja, AddingRow
+- [Modyfikacja obiektów](#modyfikacja-obiektów)
+- [Usuwanie obiektów](#usuwanie-obiektów)
+- [Praca z kontekstem](#praca-z-kontekstem) → szczegółowo w [context.md](context.md)
+- [Praca z GuidedRow](#praca-z-guidedrow) → szczegółowo w [datapack-guidedrow.md](datapack-guidedrow.md)
+- [Dane konfiguracyjne vs operacyjne](#dane-konfiguracyjne-vs-operacyjne) - `ExecuteConfig`
+- [Pełny przykład - import towarów](#pełny-przykład---import-towarów)
+- [Obsługa błędów](#obsługa-błędów) - try/catch wokół transakcji
+
 ## Ważne zasady
 
 ### Thread-safety
@@ -260,178 +273,11 @@ public void UsunTowar(Login login, string kod)
 
 ## Praca z kontekstem
 
-### Worker wyliczający właściwość
-
-```csharp
-// Rejestracja workera na poziomie assembly
-[assembly: Worker<TowarWorker, Towar>]
-
-public class TowarWorker
-{
-    [Context]
-    public Magazyn MagazynFiltra { get; set; }
-    
-    [Context]
-    public Towar Towar { get; set; }
-    
-    public decimal StanMagazynowy
-    {
-        get
-        {
-            if (MagazynFiltra != null)
-            {
-                return PoliczStan(Towar, MagazynFiltra);
-            }
-            return PoliczStanCalkowity(Towar);
-        }
-    }
-    
-    private decimal PoliczStan(Towar towar, Magazyn magazyn)
-    {
-        // Implementacja...
-        return 0;
-    }
-    
-    private decimal PoliczStanCalkowity(Towar towar)
-    {
-        // Implementacja...
-        return 0;
-    }
-}
-```
-
-### Akcja workera w menu Czynności
-
-```csharp
-// Rejestracja workera na poziomie assembly
-[assembly: Worker<WyslijEmailWorker, Kontrahent>]
-
-public class WyslijEmailWorker
-{
-    [Context]
-    public Kontrahent[] Kontrahenci { get; set; }
-    
-    [Context]
-    public Context Context { get; set; }
-    
-    [Action("Wyślij email")]
-    public void Execute()
-    {
-        foreach (var k in Kontrahenci)
-        {
-            if (!string.IsNullOrEmpty(k.Email))
-            {
-                WyslijEmail(k.Email);
-            }
-        }
-    }
-    
-    private void WyslijEmail(string email)
-    {
-        // Implementacja...
-    }
-}
-```
-
-### Klasa parametrów (ContextBase)
-
-Klasa `ContextBase` jest przeznaczona do budowania klas parametrów, nie workerów:
-
-```csharp
-public class FiltryTowarow(Context context) : ContextBase(context)
-{
-    public Magazyn Magazyn { get; set; }
-    
-    [Caption("Typ towaru")]  // Etykieta w UI, gdy inna niż nazwa property
-    public TypTowaru? Typ { get; set; }
-    
-    public bool TylkoAktywne { get; set; } = true;
-}
-```
-
-**Uwaga:** W klasach parametrów atrybut `[Context]` nie jest wymagany.
-
-**Współdzielenie wartości przez Context** - wartości parametrów można przechowywać w obiekcie Context, co pozwala na współdzielenie między różnymi klasami parametrów:
-
-```csharp
-public class FiltryTowarow(Context context) : ContextBase(context)
-{
-    public Magazyn Magazyn
-    {
-        get => Context.GetOrDefault<Magazyn>();
-        set => Context.Set(value);
-    }
-    
-    [Caption("Typ towaru")]
-    public TypTowaru? Typ
-    {
-        get => Context.GetOrDefault<TypTowaru?>();
-        set => Context.Set(value);
-    }
-}
-```
+Przykłady Workera z `[Context]`, klasy parametrów dziedziczącej z `ContextBase`, akcji w menu Czynności i współdzielenia wartości przez Context - patrz [context.md](context.md).
 
 ## Praca z GuidedRow
 
-### Dostęp do historii zmian
-
-```csharp
-public void PokazHistorie(Session session, Kontrahent kontrahent)
-{
-    var bm = session.GetBusiness();
-    
-    Console.WriteLine($"Historia zmian dla: {kontrahent.Nazwa}");
-    
-    foreach (ChangeInfo ci in bm.ChangeInfos[kontrahent])
-    {
-        Console.WriteLine($"  {ci.Time}: {ci.Operator}");
-    }
-    
-    // Skróty
-    Console.WriteLine($"Utworzono: {kontrahent.FirstChangeInfo?.Time}");
-    Console.WriteLine($"Ostatnia zmiana: {kontrahent.LastChangeInfo?.Time}");
-}
-```
-
-### Praca z załącznikami
-
-```csharp
-public void DodajZalacznik(Login login, Towar towar, byte[] plik, string nazwa)
-{
-    using (var session = login.CreateSession(false, false, "DodawanieZalacznika"))
-    {
-        // Doczytaj towar w bieżącej sesji
-        var towarInSession = session.Get(towar);
-        
-        using (var transaction = session.Logout(editMode: true))
-        {
-            var attachment = new Attachment(towarInSession, AttachmentType.Attachments);
-            towarInSession.Module.Business.Attachments.AddRow(attachment);
-
-            attachment.Name = nazwa;
-            attachment.RawData = plik;
-            
-            transaction.Commit();
-        }
-        session.Save();
-    }
-}
-
-public void WyswietlZalaczniki(Towar towar)
-{
-    foreach (Attachment att in towar.Attachments)
-    {
-        Console.WriteLine($"- {att.Name} ({att.RawData.Length} bajtów)");
-    }
-
-    // Domyślne zdjęcie
-    using var defaultImage = towar.DefaultImage;
-    if (defaultImage != null)
-    {
-        Console.WriteLine($"Zdjęcie główne: {defaultImage.FileName}");
-    }
-}
-```
+Przykłady dostępu do historii zmian (`ChangeInfos`) i pracy z załącznikami (dodawanie z transakcją, odczyt, `DefaultImage`) - patrz [datapack-guidedrow.md](datapack-guidedrow.md).
 
 ## Dane konfiguracyjne vs operacyjne
 

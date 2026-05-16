@@ -309,6 +309,35 @@ public class TowarExtender
 }
 ```
 
+## Akcja workera w menu Czynności
+
+Worker może udostępniać akcję uruchamianą z menu - zaznaczone obiekty trafiają do property opisanej `[Context]`:
+
+```csharp
+[assembly: Worker<WyslijEmailWorker, Kontrahent>]
+
+public class WyslijEmailWorker
+{
+    [Context]
+    public Kontrahent[] Kontrahenci { get; set; }
+
+    [Context]
+    public Context Context { get; set; }
+
+    [Action("Wyślij email")]
+    public void Execute()
+    {
+        foreach (var k in Kontrahenci)
+        {
+            if (!string.IsNullOrEmpty(k.Email))
+                WyslijEmail(k.Email);
+        }
+    }
+
+    private void WyslijEmail(string email) { /* ... */ }
+}
+```
+
 ## Dobre praktyki
 
 1. **Używaj Get<T>, GetOrDefault<T>, GetRequired<T>** zamiast indeksatora - bezpieczniejsze

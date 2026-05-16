@@ -19,20 +19,7 @@ Faktura bez pozycji nie jest kompletną fakturą - wszystkie te obiekty stanowi�
 
 ## Hierarchia klas Row i Table
 
-```
-Row (abstrakcyjna)                    Table (abstrakcyjna)
- │  └── ID: int                        └── GuidedTable (indeksator po Guid)
- │  └── State: RowState                     └── ExportedTable
- │
- └── GuidedRow
-      │  └── Guid: System.Guid
-      │  └── Attachments
-      │  └── FirstChangeInfo, LastChangeInfo
-      │  └── Note
-      │
-      └── ExportedRow
-           └── Exported: bool
-```
+Hierarchię ogólną opisuje [SKILL.md](../SKILL.md#hierarchia-głównych-klas). W skrócie: `Row → GuidedRow → ExportedRow` (po stronie wierszy) oraz `Table → GuidedTable → ExportedTable` (po stronie tabel). Szczegóły właściwości - sekcje poniżej.
 
 ## Atrybut guided w business.xml
 
@@ -128,6 +115,31 @@ foreach (Attachment att in row.Attachments)
 
 // Domyślne zdjęcie
 Attachment img = row.DefaultImage;
+```
+
+### Dodawanie załącznika z transakcją
+
+```csharp
+public void DodajZalacznik(Login login, Towar towar, byte[] plik, string nazwa)
+{
+    using (var session = login.CreateSession(false, false, "DodawanieZalacznika"))
+    {
+        // Doczytaj towar w bieżącej sesji (mieszanie obiektów z różnych sesji jest błędem)
+        var towarInSession = session.Get(towar);
+
+        using (var transaction = session.Logout(editMode: true))
+        {
+            var attachment = new Attachment(towarInSession, AttachmentType.Attachments);
+            towarInSession.Module.Business.Attachments.AddRow(attachment);
+
+            attachment.Name = nazwa;
+            attachment.RawData = plik;
+
+            transaction.Commit();
+        }
+        session.Save();
+    }
+}
 ```
 
 ## ExportedRow
