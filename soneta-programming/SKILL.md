@@ -410,6 +410,8 @@ class Test {
 - **[references/datapack-guidedrow.md](references/datapack-guidedrow.md)** - Paczki danych, GuidedRow, ExportedRow, synchronizacja
 - **[references/context.md](references/context.md)** - Klasa Context, komunikacja UI ↔ logika
 - **[references/examples.md](references/examples.md)** - Przykłady kodu i wzorce użycia
+- **[references/action-result.md](references/action-result.md)** - Action result zwracane przez worker/extender/Command 
+  (typy obsługiwane przez ResultHandler) i własne handlery
 
 ## Szybki start - wzorce kodu
 
