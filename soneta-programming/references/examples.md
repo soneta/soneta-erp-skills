@@ -273,7 +273,7 @@ public void UsunTowar(Login login, string kod)
 
 ## Praca z kontekstem
 
-Przykłady klasy parametrów dziedziczącej z `ContextBase` i współdzielenia wartości przez Context - patrz [context.md](context.md). Przykłady Workera z `[Context]` i akcji w menu Czynności - patrz [worker-extender.md](worker-extender.md).
+Przykłady klasy parametrów dziedziczącej z `ContextBase` - patrz [contextbase.md](contextbase.md). Współdzielenie wartości przez Context - patrz [context.md](context.md). Przykłady Workera z `[Context]` i akcji w menu Czynności - patrz [worker-extender.md](worker-extender.md).
 
 ## Praca z GuidedRow
 

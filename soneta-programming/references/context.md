@@ -86,66 +86,13 @@ public void Action(Context cx)
 }
 ```
 
-## Klasa parametrów (np filtrów) - dziedziczy z `ContextBase`
+## Klasy parametrów (ContextBase)
 
-Klasy parametrów filtrów dziedziczą z `ContextBase`
+Klasy parametrów filtrów widoków, parametrów raportów i akcji dziedziczą z `ContextBase` -
+są mostem między UI a logiką (właściwości czytane/zapisywane przez context, trwałość
+przez `LoadProperty` / `SaveProperty`, powiadamianie UI przez `InvokeChanged`).
 
-```csharp
-// Definicja klasy parametrów (w ViewInfo)
-public class TowaryParams(Context context) : ContextBase(context)
-{
-    [Translate]
-    public Magazyn? Magazyn
-    {
-        get => Context.GetOrDefault<Magazyn>(); 
-        set => Context.Set(value);
-    }
-    
-    [Translate]
-    public TypTowaru Typ {
-        get => Context.GetOrDefault<TypTowaru>(); 
-        set => Context.Set(value);
-    }
-
-    [Accessor(AutoChange = true)]
-    [Caption("Szukaj")]
-    public string SearchString { get; set; }
-}
-```
-
-* Każde property klasy parametrów dziedziczy z `ContextBase` wymaga kontroli tłumaczenia za pomocą jednego z 
-  atrybutu: `[Translate]`, `[TranslateIgnore]`, `[Caption("Tytuł")]`
-* Bindowanie we viewform.xml wewnątrz `FilterPanel` nie wymaga użycia `Context.` (np `TowaryParams`), ponieważ 
-  `Context` jest dostępne bezpośrednio wewnątrz `FilterPanel`
-* Bindowanie w pageform.xml wymaga użycia `Context.` (np `Context.TowaryParams`)
-* Gdy property nie używa context -> stosuj `[Accessor(AutoChange = true)]` - zamiennie w kodzie set property można 
-  również użyć `Session.InvokeChanged()` lub `Context.InvokeChanged()`
-
-```xml
-<!-- Bindowanie w viewform.xml -->
-<Flow Name="FilterPanel">
-    <Field CaptionHtml="Magazyn" EditValue="{TowaryParams.Magazyn}"/>
-    <Field CaptionHtml="Typ" EditValue="{TowaryParams.Typ}"/>
-    <Field CaptionHtml="Szukaj" EditValue="{TowaryParams.SearchString}"/>
-</Flow>
-```
-
-```xml
-<!-- Bindowanie w pageform.xml -->
-<Page>
-    <Group CaptionHtml="Parametry">
-        <Field CaptionHtml="Magazyn" EditValue="{Context.TowaryParams.Magazyn}"/>
-        <Field CaptionHtml="Typ" EditValue="{Context.TowaryParams.Typ}"/>
-        <Field CaptionHtml="Szukaj" EditValue="{Context.TowaryParams.SearchString}"/>
-    </Group>
-</Page>
-```
-
-Wartości filtrów są dostępne przez context do:
-- Widoków (filtrowanie danych)
-- Obiektów worker (właściwości wyliczane, akcje)
-- Obiektów extender (właściwości wyliczane)
-- Tworzenia obiektów
+Pełna dokumentacja - patrz [contextbase.md](contextbase.md).
 
 ## Tworzenie obiektów
 
@@ -273,8 +220,6 @@ public void Action(Context cx)
 
 1. **Używaj Get<T>, GetOrDefault<T>, GetRequired<T>** zamiast indeksatora - bezpieczniejsze
 2. **Sprawdzaj obecność** obiektów w context przed użyciem
-3. **Dziedzicz z ContextBase** dla własnych klas parametrów i pamiętaj o konstruktorze `(Context context)`
-4. **Stosuj `[Accessor(AutoChange = true)]`** lub `InvokeChanged()` dla powiadamiania UI o zmianach jeżeli wartość 
-   property nie jest przechowywana w context
-5. **Używaj `[Translate]`, `[TranslateIgnore]`, `[Caption("Tytuł")]`** dla property klas parametrów (ContextBase)
-6. **Worker / Extender** - rozszerzanie modelu o logikę UI, patrz [worker-extender.md](worker-extender.md)
+3. **Klasy parametrów (ContextBase)** - trwałość filtrów, `InvokeChanged`, dziedziczenie `Load`/`Save`,
+   patrz [contextbase.md](contextbase.md)
+4. **Worker / Extender** - rozszerzanie modelu o logikę UI, patrz [worker-extender.md](worker-extender.md)

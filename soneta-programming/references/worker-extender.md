@@ -280,6 +280,6 @@ public class StanTowaruWorker
 ## Dobre praktyki
 
 1. **Używaj [Context]** w obiektach worker i extender dla parametrów inicjowanych z context
-2. **Dziedzicz z ContextBase** dla własnych klas parametrów (patrz [context.md](context.md))
+2. **Dziedzicz z ContextBase** dla własnych klas parametrów (patrz [contextbase.md](contextbase.md))
 3. **Metody Action zwracają [action result](./action-result.md)** - nie wywołuj UI bezpośrednio
 4. **`CommitUI()` zamiast `Commit()`** - w workerach/extenderach uruchamianych z UI używaj `CommitUI()`

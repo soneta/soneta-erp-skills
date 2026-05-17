@@ -23,6 +23,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Sesje, transakcje, Login, Database, BusApplication, optimistic locking | [references/session-login.md](references/session-login.md) |
 | Paczki danych, Datapack, GuidedRow, ExportedRow, synchronizacja, blokady | [references/datapack-guidedrow.md](references/datapack-guidedrow.md) |
 | Klasa Context - dane z UI, zaznaczenia, parametry workera | [references/context.md](references/context.md) |
+| Klasy parametrów (ContextBase) - filtry, trwałość, InvokeChanged | [references/contextbase.md](references/contextbase.md) |
 | Obiekty Worker i Extender - rozszerzenia modelu, akcje w menu Czynności | [references/worker-extender.md](references/worker-extender.md) |
 | Serwisy biznesowe (App / Database / Login / Session scope) | [references/services.md](references/services.md) |
 | Tłumaczenia (Translate, TranslateIgnore), ILogger, ActSource | [references/translations-logging.md](references/translations-logging.md) |
