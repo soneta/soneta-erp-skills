@@ -29,6 +29,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Tłumaczenia (Translate, TranslateIgnore), ILogger, ActSource | [references/translations-logging.md](references/translations-logging.md) |
 | Action result zwracany przez worker / extender / Command - raporty, dialogi, nawigacja | [references/action-result.md](references/action-result.md) |
 | RowCondition - serwerowe warunki LINQ, filtrowanie SubTable / View / Query | [references/rowcondition.md](references/rowcondition.md) |
+| ViewInfo - definicja widoków list (folderów), CreateView, klasa Params, powiązanie z viewform.xml | [references/viewinfo.md](references/viewinfo.md) |
 | Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów) | [references/examples.md](references/examples.md) |
 
 ## Architektura warstw
@@ -234,6 +235,8 @@ Kod UI to np.:
 
 - Nie używaj żadnych obiektów kodu UI, w szczególności `View` - zamiast tego możesz użyć `SubTable[condition]`.
 - Nie należy stosować warunków na prawa dostępu (np. `if (Table.AccessRight == AccessRights.Denied) {...}`).
+
+Szczegóły konstruowania ViewInfo (atrybut `FolderView`, eventy `CreateView`/`InitContext`, klasa `Params`, powiązanie z `viewform.xml`) opisuje [references/viewinfo.md](references/viewinfo.md).
 
 ## Metadane modułów, tabel, kluczy, pól
 
