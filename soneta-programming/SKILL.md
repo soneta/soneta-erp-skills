@@ -30,6 +30,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Action result zwracany przez worker / extender / Command - raporty, dialogi, nawigacja | [references/action-result.md](references/action-result.md) |
 | RowCondition - serwerowe warunki LINQ, filtrowanie SubTable / View / Query | [references/rowcondition.md](references/rowcondition.md) |
 | ViewInfo - definicja widoków list (folderów), CreateView, klasa Params, powiązanie z viewform.xml | [references/viewinfo.md](references/viewinfo.md) |
+| Cechy (Features) - tabela Features, typy cech, dostęp typowany/nietypowany, bindowanie w form.xml | [references/features.md](references/features.md) |
 | Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów) | [references/examples.md](references/examples.md) |
 
 ## Architektura warstw

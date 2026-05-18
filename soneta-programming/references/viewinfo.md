@@ -222,8 +222,25 @@ if (pars.TylkoPodgląd) {
 
 Reguły wyboru:
 - **`AddExpression`** — gdy filtr da się wyrazić jako LINQ na właściwościach kolumn. Preferowany.
-- **`Condition &=`** — gdy potrzebujesz dołożyć `RowCondition` bezpośrednio (`Exists`, `Or`, gotowy obiekt).
+- **`Condition &=`** — gdy potrzebujesz dołożyć `RowCondition` bezpośrednio (`Exists`, `Or`, gotowy obiekt) **oraz gdy filtrujesz po cechach (`Features.X`) — LINQ tego nie obsługuje**.
 - **`FilterCondition`** — tylko jako ostatnia deska ratunku. Działa po stronie klienta, nie da się przez nią paginować/sortować po SQL-u.
+
+### Filtrowanie po cechach (Features)
+
+Cechy są dynamicznymi polami trzymanymi w osobnej tabeli — **nie są typowanymi properties klasy Row**. Dla cech używaj `FieldCondition` ze string-path `"Features.NazwaCechy"`:
+
+```csharp
+// Zwykłe pola Towaru — LINQ (preferowane, walidowane przy kompilacji)
+view.AddExpression<Towar>(t => !t.Blokada && t.Typ == TypTowaru.Towar);
+
+// Cechy — FieldCondition ze string-path (jedyna droga)
+view.Condition &= new FieldCondition.Equal("Features.GrupaTowaru", "Telewizor");
+view.Condition &= new FieldCondition.Equal("Features.Marka", "Samsung");
+view.Condition &= new FieldCondition.GreaterEqual("Features.Przekatna", 50);
+view.Condition &= new FieldCondition.LessEqual("Features.Przekatna", 75);
+```
+
+Path `"Features.NazwaCechy"` działa też w `LikeConditionProvider`, `OrderBy` widoku i bindingach `viewform.xml` (`EditValue="{Features.Marka}"`). Pełen opis cech (typy, składowanie, dostęp programowy) — patrz [features.md](features.md).
 
 Pełen opis `RowCondition` (rodzaje, `Exists`, `Or`/`And`, użycie w `SubTable`) — patrz [rowcondition.md](rowcondition.md).
 
