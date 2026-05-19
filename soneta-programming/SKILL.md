@@ -1,12 +1,25 @@
 ---
 name: soneta-programming
 description: >
-  Fundamentalne klasy ORM platformy enova365/Soneta Enterprise. Obejmuje mapowanie 
-  obiektowo-relacyjne (Row, Table, Module), zarządzanie sesją (Session), logowanie 
-  (Login, Database, BusApplication), paczki danych (Datapack, GuidedRow) oraz 
-  kontekst (Context). Używaj gdy użytkownik pyta o podstawowe klasy logiki biznesowej, 
-  strukturę obiektów ORM, sesje i transakcje, hierarchię klas Row/Table/Module,
-  mechanizm Datapack i synchronizację danych, lub kontekst aplikacji enova365.
+  Fundamentalne klasy ORM oraz wzorce kodu biznesowego platformy enova365 / Soneta
+  Enterprise / Triva. Obejmuje mapowanie obiektowo-relacyjne (Row, Table, Module,
+  GuidedRow, ExportedRow), zarządzanie sesją i transakcjami (Session, Logout,
+  Commit / CommitUI, Save, optimistic locking), logowanie (Login, Database,
+  BusApplication), paczki danych (Datapack, GuidedRow, ChangeInfos), serwerowe
+  filtrowanie LINQ (RowCondition, SubTable[condition]), kontekst i parametry
+  (Context, ContextBase), rozszerzenia modelu (Worker, Extender, [Action]),
+  widoki list (ViewInfo, FolderView, CreateView), cechy (Features), tłumaczenia
+  (Translate, ILogger), action result oraz zasady bezpiecznego kodu biznesowego
+  (safe-code, checklist do code review). Używaj **zawsze** gdy użytkownik:
+  (1) pisze, modyfikuje lub refaktoruje kod biznesowy enova365 / Soneta /
+  Triva — nawet jeśli nie wymienia nazw klas wprost; (2) pyta o Session,
+  Row, Table, Module, Login, Database, BusApplication, Context, Datapack,
+  GuidedRow, Worker, Extender, ViewInfo, RowCondition; (3) wspomina sesje,
+  transakcje biznesowe, Logout, Commit, Save, optimistic lock, blokady wierszy;
+  (4) prosi o code review lub bezpieczeństwo kodu biznesowego Soneta; (5)
+  wspomina pisanie dodatku, modułu, importu, workera, ekstendera, akcji w menu
+  Czynności, folderu/listy; (6) pyta o thread-safety, sesje konfiguracyjne
+  (ExecuteConfig), różnice dane konfiguracyjne vs operacyjne.
 ---
 
 # Soneta Programming Basics - Podstawowe klasy ORM
@@ -320,23 +333,10 @@ Więcej wzorców (kasowanie, obsługa błędów, pełny import end-to-end) - pat
 
 ## Narzędzia pomocnicze
 
-Skill udostępnia skrypt `scripts/scan-props.csx` (uruchamiany przez `dotnet script`) do odczytu publicznych pól klasy zagnieżdżonej `XxxModule+XxxRecord` ze skompilowanych DLL dodatku — bez ładowania IL do CLR (Roslyn `MetadataReference.CreateFromFile`). Wypisuje również właściwości klasy biznesowej (kalkulowane), Caption/Description oraz rekurencyjnie rozwija pola typu subrow z notacją kropkową.
+Skill udostępnia dwa skrypty `dotnet script` (`scripts/`) do statycznej inwentaryzacji bibliotek Soneta — bez ładowania IL do CLR (Roslyn `MetadataReference.CreateFromFile`):
 
-```bash
-dotnet script ~/.claude/skills/soneta-programming/scripts/scan-props.csx \
-    -- DokumentHandlowy ./bin/Debug/net8.0
-```
-
-Szczegóły, kody wyjścia i ograniczenia: [references/scan-props.md](references/scan-props.md).
-
-Drugi skrypt — `scripts/scan-modules.csx` — listuje wszystkie moduły (`*Module` dziedziczące z `Soneta.Business.Module`) oraz znajdujące się w nich tabele (`RowType`/`TableType` z Caption/Description). Pomocne przy wstępnej inwentaryzacji bibliotek, zanim sięgniesz po `scan-props.csx` dla konkretnej tabeli.
-
-```bash
-dotnet script ~/.claude/skills/soneta-programming/scripts/scan-modules.csx \
-    -- ./bin/Debug/net8.0
-```
-
-Szczegóły: [references/scan-modules.md](references/scan-modules.md).
+- `scan-modules.csx` — listuje moduły (`*Module`) i ich tabele (`*Row`/`*Table`) z Caption/Description. Dobre na start. Szczegóły, parametry i przykłady uruchomienia: [references/scan-modules.md](references/scan-modules.md).
+- `scan-props.csx` — wypisuje pola i właściwości kalkulowane konkretnej klasy biznesowej, rekurencyjnie po polach typu subrow. Sięgnij po niego, gdy znasz już tabelę i potrzebujesz jej kontraktu. Szczegóły: [references/scan-props.md](references/scan-props.md).
 
 ## Konwencje nazewnicze
 

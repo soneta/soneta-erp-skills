@@ -114,7 +114,8 @@ Wyjątek po `Commit()` ale przed `Save()` nie wycofuje zmian z bieżącej sesji 
 ### 5.2 Komunikaty walidacyjne przez `Translate`
 
 ```csharp
-throw new RowException(this, "Pole {0} jest wymagane".Translate(), nameof(Nazwa));
+throw new RowException(this, "Pole jest wymagane".Translate());
+throw new RowException(this, "Pole {0} jest wymagane".TranslateFormat(nameof(Nazwa)));
 ```
 
 ---

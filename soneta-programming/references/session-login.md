@@ -2,6 +2,16 @@
 
 Dokumentacja klas zarządzających połączeniem z bazą danych i sesjami w platformie enova365/Soneta.
 
+## Spis treści
+
+- [Hierarchia obiektów](#hierarchia-obiektów)
+- [Klasa BusApplication](#klasa-busapplication) — singleton, dostęp do instancji, właściwości
+- [Klasa Database](#klasa-database) — konfiguracja, logowanie do bazy
+- [Klasa Login](#klasa-login) — tworzenie, dostęp do operatora, tworzenie sesji, dane konfiguracyjne, sygnatury `CreateSession`
+- [Klasa Session](#klasa-session) — tworzenie, typy sesji, właściwości, zarządzanie danymi, sesje konfiguracyjne, wiele sesji, transakcje (`Logout`, `Commit`/`CommitUI`)
+- [Kompletny przykład](#kompletny-przykład)
+- [Thread-safety](#thread-safety) — które obiekty można współdzielić, które nie
+
 ## Hierarchia obiektów
 
 ```
@@ -229,7 +239,7 @@ using (var session2 = login.CreateSession(readOnly: true, config: false, name: "
 
 ### Transakcje biznesowe - Session.Logout()
 
-**WAŻNE:** Każda zmiana obiektu biznesowego MUSI być w transakcji!
+**Każda modyfikacja obiektu MUSI być w transakcji biznesowej** otwieranej przez `Session.Logout(editMode: true)` — dotyczy dodawania, modyfikacji właściwości oraz kasowania.
 
 ```csharp
 using (var session = login.CreateSession(readOnly: false, config: false, name: "Edycja"))

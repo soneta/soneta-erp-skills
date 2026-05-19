@@ -17,15 +17,11 @@ Praktyczne przykłady użycia podstawowych klas logiki biznesowej enova365/Sonet
 
 ## Ważne zasady
 
-### Thread-safety
+Ten plik zakłada znajomość fundamentów — przed sięgnięciem po przykłady upewnij się, że są jasne:
 
-**Obiekty single-threaded** - nie współdziel między wątkami:
-- `Session`, `Module`, `Table`, `Row`, `Context`
-
-**Obiekty multi-threaded** - można współdzielić:
-- `BusApplication`, `Database`, `Login`
-
-Każdy wątek powinien tworzyć własną sesję (Login można współdzielić).
+- **Thread-safety** (`Session`/`Row`/`Table`/`Module`/`Context` są single-threaded; `BusApplication`/`Database`/`Login` można współdzielić) — patrz [session-login.md](session-login.md).
+- **Transakcje biznesowe** — każda zmiana obiektu (dodanie, modyfikacja property, kasowanie) wymaga otwartej transakcji `session.Logout(editMode: true)` zakończonej `Commit()`; zapis do bazy przez `session.Save()` poza transakcją. Szczegóły, w tym typy sesji, `CommitUI()` i optimistic locking — patrz [session-login.md](session-login.md).
+- **Bezpieczny kod** — przy nowym kodzie i review weryfikuj reguły z [safe-code.md](safe-code.md).
 
 ### Extension methods dla modułów
 
@@ -37,22 +33,6 @@ var hm = session.GetHandel();
 var crm = session.GetCRM();
 var kadry = session.GetKadry();
 var bm = session.GetBusiness();
-```
-
-### Transakcje biznesowe
-
-**Każda zmiana obiektu MUSI być w transakcji** `Session.Logout(editMode: true)`:
-
-```csharp
-using (var transaction = session.Logout(editMode: true))
-{
-    // Zmiany: dodawanie, modyfikacja, kasowanie
-    obiekt.Wlasciwosc = nowaWartosc;
-    transaction.Commit();  // Zatwierdza zmiany
-}
-// Brak Commit() = automatyczny rollback
-
-session.Save();  // Zapis do bazy danych
 ```
 
 ## Dostęp do danych

@@ -7,6 +7,19 @@ ViewInfo to **kod UI** (patrz "Kod biznesowy vs UI" w głównym `SKILL.md`).
 Skill `soneta-form-xml` opisuje pełną składnię plików `viewform.xml`/`pageform.xml` (elementy `DataForm`, `Flow`, 
 `Grid`, `Field`, `Appearance`, `GroupBy`, atrybuty `EditValue`, `Visibility`, `IsReadOnly`, `Condition` itd.). Sięgaj do niego za każdym razem, gdy edytujesz lub generujesz XML formularza — bez tej wiedzy łatwo wygenerować nieprawidłowe znaczniki.
 
+## Spis treści
+
+- [Rejestracja folderu — atrybut `FolderView`](#rejestracja-folderu--atrybut-folderview)
+- [Anatomia klasy ViewInfo](#anatomia-klasy-viewinfo)
+- [Eventy — gdzie zaszywać logikę](#eventy--gdzie-zaszywać-logikę)
+  - [Kanoniczna para `InitContext` + `CreateView`](#kanoniczna-para-initcontext--createview)
+- [Klasa parametrów (`Params` / `WParams` / lub inna nazwa)](#klasa-parametrów-params--wparams--lub-inna-nazwa)
+- [Filtrowanie View — paleta narzędzi](#filtrowanie-view--paleta-narzędzi)
+  - [Filtrowanie po cechach (Features)](#filtrowanie-po-cechach-features)
+- [Powiązanie z `viewform.xml`](#powiązanie-z-viewformxml)
+- [Pełny przykład minimalny](#pełny-przykład-minimalny)
+- [Pułapki i dobre praktyki](#pułapki-i-dobre-praktyki)
+
 ---
 
 ## Rejestracja folderu — atrybut `FolderView`

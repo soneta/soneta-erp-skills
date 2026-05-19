@@ -6,14 +6,13 @@ Oba korzystają z [Context](context.md) do pobierania parametrów.
 
 ## Obiekty Worker
 
-Dodają dodatkowe properties wyliczane do obiektów, które mogą być stosowane w bindowaniu lub pozwalają na 
-definiowanie pozycji w menu Czynności.
+Worker dorzuca do obiektu danych dodatkowe properties wyliczane (do użycia w bindowaniu) oraz pozycje w menu Czynności.
 
-* Worker jest zawsze przypisany do obiektu danych. 
-* W nazwie klasy powinno się stosować sufiks `Worker`
-* Nazwa klasy worker powinna określać jego działanie.
-* Może być inicjowany z context za pomocą `[Context]`
-* Rejestracja za pomocą atrybutu assembly z dwoma parametrami `[Worker<WorkerType, DataType>]` - zalecana wersja generic
+* Przypisuj worker do konkretnego obiektu danych — worker zawsze działa w kontekście jednego typu.
+* Dodawaj do nazwy klasy sufiks `Worker` (np. `WyliczenieStanMagazynuWorker`).
+* Wybieraj nazwę klasy opisującą działanie, nie technikę.
+* Inicjuj parametry z kontekstu przez `[Context]`.
+* Rejestruj przez generyczny atrybut `[assembly: Worker<WorkerType, DataType>]` — to wersja zalecana.
 
 ### Rejestracja worker
 
@@ -95,7 +94,7 @@ public class SendEmailsForKontrahentWorker
         int counter = 0;
         foreach (var k in Kontrahenci)
         {
-            if (!string.IsNullOrEmpty(k.Email))
+            if (!k.Email.IsNullOrEmpty())
             {
                 WyslijEmail(k.Email);
                 ++counter;

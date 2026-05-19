@@ -4,6 +4,29 @@
 
 Najwygodniejsze API to budowa warunku z wyrażeń LINQ (`Expression<Predicate<TRow>>`) przez `RowCondition.FromExpression(...)` oraz aplikowanie wyrażeń bezpośrednio do `SubTable` i `View` przez indeksator i `AddExpression(...)`.
 
+## Spis treści
+
+- [Najważniejsze zasady](#najważniejsze-zasady)
+- [Wzorce użycia w kodzie](#wzorce-użycia-w-kodzie)
+  - [1. Indeksator `SubTable[expression]` - logika biznesowa](#1-indeksator-subtableexpression---logika-biznesowa)
+  - [2. `View.AddExpression(...)` - listy w UI](#2-viewaddexpression---listy-w-ui)
+  - [3. `Query.Table.AddExpression(...)` - zapytania niskopoziomowe](#3-querytableaddexpression---zapytania-niskopoziomowe)
+  - [4. `RowCondition.FromExpression(...)` - jawne budowanie warunku](#4-rowconditionfromexpression---jawne-budowanie-warunku)
+- [Zakres możliwych wyrażeń](#zakres-możliwych-wyrażeń)
+  - [Odwołania do pól](#odwołania-do-pól)
+  - [Wartości po stronie klienta](#wartości-po-stronie-klienta)
+  - [Typy proste, enum, int](#typy-proste-enum-int)
+  - [Bool](#bool)
+  - [String](#string)
+  - [Null / not null](#null--not-null)
+  - [Referencje](#referencje)
+  - [Operator IN - przynależność do zbioru](#operator-in---przynależność-do-zbioru)
+  - [Operatory logiczne i wyrażenia złożone](#operatory-logiczne-i-wyrażenia-złożone)
+  - [Pola złożone (Quantity, Currency, FromTo)](#pola-złożone-quantity-currency-fromto)
+  - [Kolekcje powiązane (podlisty)](#kolekcje-powiązane-podlisty)
+- [Ograniczenia - co się nie skompiluje do SQL](#ograniczenia---co-się-nie-skompiluje-do-sql)
+- [Kiedy używać czego](#kiedy-używać-czego)
+
 ## Najważniejsze zasady
 
 * W wyrażeniu LINQ można odwoływać się **wyłącznie do pól bazodanowych** (kolumn tabeli, pól złożonych, kolekcji powiązanych, cech). Próba użycia pola niebazodanowego rzuca `LinqConditionException`.
