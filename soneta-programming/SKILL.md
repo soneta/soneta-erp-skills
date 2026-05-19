@@ -17,21 +17,23 @@ Skill zawiera dokumentację fundamentalnych klas logiki biznesowej platformy eno
 
 SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzorce. Po szczegóły konkretnego tematu sięgaj do referencji:
 
-| Temat | Gdzie szukać |
-|---|---|
-| Hierarchia ORM, Row / Table / Module, klucze, ISessionable | sekcje poniżej |
-| Sesje, transakcje, Login, Database, BusApplication, optimistic locking | [references/session-login.md](references/session-login.md) |
-| Paczki danych, Datapack, GuidedRow, ExportedRow, synchronizacja, blokady | [references/datapack-guidedrow.md](references/datapack-guidedrow.md) |
-| Klasa Context - dane z UI, zaznaczenia, parametry workera | [references/context.md](references/context.md) |
-| Klasy parametrów (ContextBase) - filtry, trwałość, InvokeChanged | [references/contextbase.md](references/contextbase.md) |
-| Obiekty Worker i Extender - rozszerzenia modelu, akcje w menu Czynności | [references/worker-extender.md](references/worker-extender.md) |
-| Serwisy biznesowe (App / Database / Login / Session scope) | [references/services.md](references/services.md) |
-| Tłumaczenia (Translate, TranslateIgnore), ILogger, ActSource | [references/translations-logging.md](references/translations-logging.md) |
-| Action result zwracany przez worker / extender / Command - raporty, dialogi, nawigacja | [references/action-result.md](references/action-result.md) |
-| RowCondition - serwerowe warunki LINQ, filtrowanie SubTable / View / Query | [references/rowcondition.md](references/rowcondition.md) |
+| Temat                                                                                             | Gdzie szukać |
+|---------------------------------------------------------------------------------------------------|---|
+| Hierarchia ORM, Row / Table / Module, klucze, ISessionable                                        | sekcje poniżej |
+| Sesje, transakcje, Login, Database, BusApplication, optimistic locking                            | [references/session-login.md](references/session-login.md) |
+| Paczki danych, Datapack, GuidedRow, ExportedRow, synchronizacja, blokady                          | [references/datapack-guidedrow.md](references/datapack-guidedrow.md) |
+| Klasa Context - dane z UI, zaznaczenia, parametry workera                                         | [references/context.md](references/context.md) |
+| Klasy parametrów (ContextBase) - filtry, trwałość, InvokeChanged                                  | [references/contextbase.md](references/contextbase.md) |
+| Obiekty Worker i Extender - rozszerzenia modelu, akcje w menu Czynności                           | [references/worker-extender.md](references/worker-extender.md) |
+| Serwisy biznesowe (App / Database / Login / Session scope)                                        | [references/services.md](references/services.md) |
+| Tłumaczenia (Translate, TranslateIgnore), ILogger, ActSource                                      | [references/translations-logging.md](references/translations-logging.md) |
+| Action result zwracany przez worker / extender / Command - raporty, dialogi, nawigacja            | [references/action-result.md](references/action-result.md) |
+| RowCondition - serwerowe warunki LINQ, filtrowanie SubTable / View / Query                        | [references/rowcondition.md](references/rowcondition.md) |
 | ViewInfo - definicja widoków list (folderów), CreateView, klasa Params, powiązanie z viewform.xml | [references/viewinfo.md](references/viewinfo.md) |
 | Cechy (Features) - tabela Features, typy cech, dostęp typowany/nietypowany, bindowanie w form.xml | [references/features.md](references/features.md) |
-| Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów) | [references/examples.md](references/examples.md) |
+| Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów)                                      | [references/examples.md](references/examples.md) |
+| Skanowanie pól obiektu biznesowego z DLL (Roslyn MetadataReference)                   | [references/scan-props.md](references/scan-props.md) |
+| Inwentaryzacja modułów i tabel (`*Module` / `*Row` / `*Table`) z DLL                  | [references/scan-modules.md](references/scan-modules.md) |
 
 ## Architektura warstw
 
@@ -312,6 +314,26 @@ using (var session = login.CreateSession(readOnly: false, config: false, name: "
 ```
 
 Więcej wzorców (kasowanie, obsługa błędów, pełny import end-to-end) - patrz [references/examples.md](references/examples.md).
+
+## Narzędzia pomocnicze
+
+Skill udostępnia skrypt `scripts/scan-props.csx` (uruchamiany przez `dotnet script`) do odczytu publicznych pól klasy zagnieżdżonej `XxxModule+XxxRecord` ze skompilowanych DLL dodatku — bez ładowania IL do CLR (Roslyn `MetadataReference.CreateFromFile`). Wypisuje również właściwości klasy biznesowej (kalkulowane), Caption/Description oraz rekurencyjnie rozwija pola typu subrow z notacją kropkową.
+
+```bash
+dotnet script ~/.claude/skills/soneta-programming/scripts/scan-props.csx \
+    -- DokumentHandlowy ./bin/Debug/net8.0
+```
+
+Szczegóły, kody wyjścia i ograniczenia: [references/scan-props.md](references/scan-props.md).
+
+Drugi skrypt — `scripts/scan-modules.csx` — listuje wszystkie moduły (`*Module` dziedziczące z `Soneta.Business.Module`) oraz znajdujące się w nich tabele (`RowType`/`TableType` z Caption/Description). Pomocne przy wstępnej inwentaryzacji bibliotek, zanim sięgniesz po `scan-props.csx` dla konkretnej tabeli.
+
+```bash
+dotnet script ~/.claude/skills/soneta-programming/scripts/scan-modules.csx \
+    -- ./bin/Debug/net8.0
+```
+
+Szczegóły: [references/scan-modules.md](references/scan-modules.md).
 
 ## Konwencje nazewnicze
 
