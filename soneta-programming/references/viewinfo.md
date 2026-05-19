@@ -98,7 +98,7 @@ Logikę ViewInfo wprowadzasz przez handlery eventów dziedziczonych z `Soneta.Bu
 
 ```csharp
 public FakturyViewInfo() {
-    NewRowTable = "Faktura".TranslateIgnore();
+    NewRowTable = "Faktura";
     ResourceName = "Faktury";
 
     InitContext += FakturyViewInfo_InitContext;
@@ -252,7 +252,10 @@ Pełen opis `RowCondition` (rodzaje, `Exists`, `Or`/`And`, użycie w `SubTable`)
 ViewInfo i jego `Params` przez składnię `{NazwaViewInfo+Params.Nazwa}`:
 
 ```xml
-<DataForm xmlns="...">
+<DataForm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://www.enova.pl/schema/form.xsd"
+          xsi:schemaLocation="http://www.enova.pl/schema/form.xsd https://www.enova.pl/schema/form.xsd">
+  
   <Flow Name="FilterPanel">
     <Field EditValue="{FakturyViewInfo+Params.OdDaty}"
            CaptionHtml="Od daty"
@@ -302,7 +305,7 @@ namespace Soneta.Handel.UI;
 public class FakturyViewInfo : ViewInfo {
 
     public FakturyViewInfo() {
-        NewRowTable = "Faktura".TranslateIgnore();
+        NewRowTable = "Faktura";
         ResourceName = "Faktury";
         AllowNewInPlace = false;
 
@@ -328,7 +331,7 @@ public class FakturyViewInfo : ViewInfo {
     public enum FiltrFaktur { Wszystkie, TylkoZatwierdzone, TylkoNiezatwierdzone }
 
     public class Params : ContextBase {
-        const string key = "Handel.Faktury";
+        private const string key = "Handel.Faktury";
 
         public Params(Context context) : base(context) {
             odDaty = LoadProperty(nameof(OdDaty), key, Date.Today.GetFirstOfMonth());
