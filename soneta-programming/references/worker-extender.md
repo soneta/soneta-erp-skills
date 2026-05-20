@@ -7,11 +7,13 @@ Oba korzystają z [Context](context.md) do pobierania parametrów.
 ## Obiekty Worker
 
 Worker dorzuca do obiektu danych dodatkowe properties wyliczane (do użycia w bindowaniu) oraz pozycje w menu Czynności.
+Worker można też **utworzyć i wywołać ręcznie z kodu** — wystarczy zainstancjonować klasę, ustawić jej pola/properties
+i wywoływać metody (patrz [Programowe użycie workera](#programowe-użycie-workera)).
 
 * Przypisuj worker do konkretnego obiektu danych — worker zawsze działa w kontekście jednego typu.
 * Dodawaj do nazwy klasy sufiks `Worker` (np. `WyliczenieStanMagazynuWorker`).
 * Wybieraj nazwę klasy opisującą działanie, nie technikę.
-* Inicjuj parametry z kontekstu przez `[Context]`.
+* Inicjuj parametry z kontekstu przez `[Context]` lub przez konstruktor (jego parametry również pobierane są z `Context`).
 * Rejestruj przez generyczny atrybut `[assembly: Worker<WorkerType, DataType>]` — to wersja zalecana.
 
 ### Rejestracja worker
@@ -24,6 +26,20 @@ Worker dorzuca do obiektu danych dodatkowe properties wyliczane (do użycia w bi
 ```csharp
 // Niezalecana rejestracja atrybutem z parametrami
 [assembly: Worker(typeof(NazwaKlasyWorker), typeof(DataType))]
+```
+
+#### Opcjonalny alias `name`
+
+Atrybut `Worker` przyjmuje dodatkowy, opcjonalny parametr `name` — alternatywną nazwę używaną
+przy bindowaniu w `form.xml` (`{Workers.<name>.<Property>}`). Standardowo aliasem jest nazwa klasy
+workera **bez sufiksu `Worker`** (`WyliczenieStanMagazynuWorker` → `WyliczenieStanMagazynu`).
+Parametr `name` ma sens tylko wtedy, gdy chcesz zbindować worker pod inną nazwą niż domyślna —
+np. dla zachowania kompatybilności po refaktoringu klasy.
+
+```csharp
+[assembly: Worker<NowyWyliczStanuWorker, Towar>("WyliczenieStanMagazynu")]
+// W form.xml dalej używamy starego aliasu:
+//     EditValue="{Workers.WyliczenieStanMagazynu.StanMagazynu}"
 ```
 
 ### Deklaracja klasy worker
@@ -275,6 +291,72 @@ public class StanTowaruWorker
     }
 }
 ```
+
+## Konstruktor inicjowany z Context
+
+Jeśli klasa workera (lub extendera) ma **konstruktor publiczny z parametrami**, jego parametry są
+inicjowane z `Context` po typie — analogicznie jak property z atrybutem `[Context]`. Pozwala to
+trzymać pola jako `readonly` i wymusza komplet zależności w momencie tworzenia obiektu.
+
+```csharp
+[assembly: Worker<WyliczenieStanMagazynuWorker, Towar>]
+
+public class WyliczenieStanMagazynuWorker
+{
+    private readonly Towar towar;
+    private readonly Magazyn magazyn;
+
+    // Parametry konstruktora są pobierane z Context (po typie) w momencie tworzenia workera.
+    public WyliczenieStanMagazynuWorker(Towar towar, Magazyn magazyn)
+    {
+        this.towar = towar;
+        this.magazyn = magazyn;
+    }
+
+    public decimal StanMagazynu =>
+        magazyn != null ? towar.GetStan(magazyn) : towar.GetStanCalkowity();
+}
+```
+
+Reguły:
+* Jeśli jest więcej niż jeden konstruktor publiczny, platforma wybiera ten, dla którego potrafi
+  rozwiązać komplet parametrów z `Context`.
+* Konstruktor i property z `[Context]` można łączyć w jednej klasie.
+* Brak wymaganej zależności w `Context` skutkuje błędem / oknem parametrów (analogicznie jak
+  brakujące `[Context]`).
+
+## Programowe użycie workera
+
+Workera można utworzyć i wywołać bez pośrednictwa UI — ręcznie z kodu biznesowego. Wystarczy
+zainstancjonować klasę, ustawić pola/properties (lub przekazać je przez konstruktor) i wywołać
+metody.
+
+```csharp
+using (var session = login.CreateSession(readOnly: true, config: false, name: "PoliczStan"))
+{
+    var towar = session.GetTowary().Towary.WgKodu["NOWY001"];
+    var magazyn = session.GetMagazyny().Magazyny.WgKodu["MAG-A"];
+
+    var worker = new WyliczenieStanMagazynuWorker
+    {
+        Towar = towar,
+        Magazyn = magazyn,
+    };
+
+    decimal stan = worker.StanMagazynu;
+}
+```
+
+Kiedy worker wymaga konstruktora — przekaż zależności jako parametry konstruktora zamiast property:
+
+```csharp
+var worker = new WyliczenieStanMagazynuWorker(towar, magazyn);
+decimal stan = worker.StanMagazynu;
+```
+
+Taki sposób użycia jest przydatny w testach jednostkowych, w workerach wywoływanych z innych
+workerów oraz w kodzie biznesowym, który chce skorzystać z logiki zamkniętej w workerze bez
+przechodzenia przez UI.
 
 ## Dobre praktyki
 
