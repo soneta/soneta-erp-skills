@@ -139,18 +139,52 @@ foreach (var asmRef in compilation.References)
 
 var allowedDataTypes = new HashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default);
 INamedTypeSymbol primaryFilterType = null;
+Dictionary<string, object> scopeJson = null;
 if (typeFilter != null && includeRelated)
 {
     primaryFilterType = FindTypeByName(compilation, typeFilter);
     if (primaryFilterType != null)
     {
         allowedDataTypes.Add(primaryFilterType);
-        var related = ResolveRelatedTypes(primaryFilterType).ToList();
-        foreach (var r in related) allowedDataTypes.Add(r);
+        var related = ResolveRelatedTypes(primaryFilterType);
+        foreach (var r in related) allowedDataTypes.Add(r.Type);
+
+        // Dla każdego Row z zestawu (podstawowy oraz historyczny zwrócony z this[Date])
+        // dodaj klasy bazowe (do `Row` włącznie) oraz klasy pochodne. Dla tabel tego nie robimy —
+        // intermediate `*Table` generowane i framework Table to inny obszar.
+        var rowTypes = allowedDataTypes
+            .Where(t => InheritsFromNamed(t, "Row", "Soneta.Business")
+                        || (t.Name == "Row" && (t.ContainingNamespace?.ToDisplayString() ?? "") == "Soneta.Business"))
+            .ToList();
+        var baseAdded = new List<INamedTypeSymbol>();
+        var derivedAdded = new List<INamedTypeSymbol>();
+        foreach (var r in rowTypes)
+        {
+            foreach (var b in BaseTypes(r))
+                if (allowedDataTypes.Add(b)) baseAdded.Add(b);
+            foreach (var d in FindDerivedTypes(compilation, r))
+                if (allowedDataTypes.Add(d)) derivedAdded.Add(d);
+        }
 
         Console.Error.WriteLine($"# Typ podstawowy: {primaryFilterType.ToDisplayString()}");
         foreach (var r in related)
-            Console.Error.WriteLine($"# Typ powiązany: {r.ToDisplayString()}");
+            Console.Error.WriteLine($"# Typ powiązany ({r.Kind}): {r.Type.ToDisplayString()}");
+        foreach (var b in baseAdded)
+            Console.Error.WriteLine($"# Klasa bazowa: {b.ToDisplayString()}");
+        foreach (var d in derivedAdded)
+            Console.Error.WriteLine($"# Klasa pochodna: {d.ToDisplayString()}");
+
+        scopeJson = new Dictionary<string, object>
+        {
+            ["primary"] = primaryFilterType.ToDisplayString(),
+            ["related"] = related.Select(r => (object)new Dictionary<string, object>
+            {
+                ["type"] = r.Type.ToDisplayString(),
+                ["kind"] = r.Kind,
+            }).ToList(),
+            ["baseClasses"] = baseAdded.Select(b => (object)b.ToDisplayString()).ToList(),
+            ["derivedClasses"] = derivedAdded.Select(d => (object)d.ToDisplayString()).ToList(),
+        };
     }
     else
     {
@@ -183,7 +217,7 @@ var extenders = typeFilter == null
         .ToList()
     : new List<WorkerRegistration>();
 
-WriteJson(byData, extenders, typeFilter);
+WriteJson(byData, extenders, typeFilter, scopeJson);
 return 0;
 
 static bool IsWorkerAttribute(INamedTypeSymbol attrClass)
@@ -235,13 +269,15 @@ static string StripSuffix(string name, string suffix)
 static void WriteJson(
     List<IGrouping<ISymbol, WorkerRegistration>> byData,
     List<WorkerRegistration> extenders,
-    string typeFilter)
+    string typeFilter,
+    Dictionary<string, object> scope)
 {
     // Dictionary z zachowaną kolejnością wstawiania — opis na początku, potem klucze typów.
     var root = new Dictionary<string, object>();
     root["description"] = typeFilter != null
         ? $"Workery przypięte do typu `{typeFilter}` (Soneta)"
         : "Workery i extendery (Soneta)";
+    if (scope != null) root["scope"] = scope;
 
     foreach (var g in byData)
     {
@@ -420,67 +456,95 @@ static IEnumerable<INamedTypeSymbol> EnumerateAllTypes(INamespaceSymbol ns)
         foreach (var t in EnumerateAllTypes(sub)) yield return t;
 }
 
-// Zbiór typów powiązanych z `primary` (przechodnio):
-// - jeśli typ dziedziczy z `Soneta.Business.Row` → typ z property `Table` (klasa tabeli);
-// - jeśli typ dziedziczy z `Soneta.Business.Table` → typ zwracany przez indekser `this[int]`
-//   (klasa rekordu);
-// - jeśli typ implementuje interfejs `IRowWithHistory` → typ zwracany przez indekser
-//   przyjmujący `Soneta.Types.Date` (historyczny rekord).
-// Reguły aplikowane są w pętli — np. dla `Pracownik` (Row + IRowWithHistory) najpierw
-// dostajemy `Pracownicy` i `PracHistoria`, a `PracHistoria` (kolejny Row) dorzuca własną
-// tabelę `PracHistorie`. Pętle są zabezpieczone zbiorem już odwiedzonych typów.
-static IEnumerable<INamedTypeSymbol> ResolveRelatedTypes(INamedTypeSymbol primary)
+// Zbiór typów powiązanych z `primary` (przechodnio), wraz z rodzajem powiązania:
+// - "table"         — tabela uzyskana z property `Table` na klasie Row;
+// - "row"           — rekord uzyskany z `this[int]` na klasie Table;
+// - "history-row"   — rekord historyczny z `this[Date]` (IRowWithHistory);
+// - "history-table" — tabela rekordu historycznego (Row→Table na history-row).
+// Pętle są zabezpieczone zbiorem już odwiedzonych typów.
+static List<RelatedType> ResolveRelatedTypes(INamedTypeSymbol primary)
 {
-    var result = new HashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default);
-    var queue = new Queue<INamedTypeSymbol>();
-    queue.Enqueue(primary);
+    var results = new List<RelatedType>();
+    var queue = new Queue<(INamedTypeSymbol Type, string ParentKind)>();
+    queue.Enqueue((primary, "primary"));
     var visited = new HashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default) { primary };
 
     while (queue.Count > 0)
     {
-        var t = queue.Dequeue();
-        foreach (var related in DirectRelatedTypes(t))
+        var (t, parentKind) = queue.Dequeue();
+        var historyBranch = parentKind == "history-row" || parentKind == "history-table";
+
+        if (InheritsFromNamed(t, "Row", "Soneta.Business"))
         {
-            if (visited.Add(related))
+            if (FindMemberInherited(t, m => m is IPropertySymbol p && !p.IsIndexer && p.Name == "Table")
+                is IPropertySymbol tableProp
+                && tableProp.Type is INamedTypeSymbol tableType
+                && visited.Add(tableType))
             {
-                result.Add(related);
-                queue.Enqueue(related);
+                var kind = historyBranch ? "history-table" : "table";
+                results.Add(new RelatedType(tableType, kind));
+                queue.Enqueue((tableType, kind));
+            }
+        }
+
+        if (InheritsFromNamed(t, "Table", "Soneta.Business"))
+        {
+            if (FindMemberInherited(t, m => m is IPropertySymbol p
+                    && p.IsIndexer && p.Parameters.Length == 1
+                    && p.Parameters[0].Type.SpecialType == SpecialType.System_Int32)
+                is IPropertySymbol rowIndexer
+                && rowIndexer.Type is INamedTypeSymbol rowType
+                && visited.Add(rowType))
+            {
+                var kind = historyBranch ? "history-row" : "row";
+                results.Add(new RelatedType(rowType, kind));
+                queue.Enqueue((rowType, kind));
+            }
+        }
+
+        if (ImplementsInterface(t, "IRowWithHistory"))
+        {
+            if (FindMemberInherited(t, m => m is IPropertySymbol p
+                    && p.IsIndexer && p.Parameters.Length == 1
+                    && p.Parameters[0].Type is INamedTypeSymbol pt
+                    && pt.Name == "Date"
+                    && (pt.ContainingNamespace?.ToDisplayString() ?? "").StartsWith("Soneta", StringComparison.Ordinal))
+                is IPropertySymbol dateIndexer
+                && dateIndexer.Type is INamedTypeSymbol histType
+                && visited.Add(histType))
+            {
+                results.Add(new RelatedType(histType, "history-row"));
+                queue.Enqueue((histType, "history-row"));
             }
         }
     }
-    return result;
+    return results;
 }
 
-static IEnumerable<INamedTypeSymbol> DirectRelatedTypes(INamedTypeSymbol t)
+record RelatedType(INamedTypeSymbol Type, string Kind);
+
+// Wszystkie klasy bazowe (bez `object`).
+static IEnumerable<INamedTypeSymbol> BaseTypes(INamedTypeSymbol type)
 {
-    if (InheritsFromNamed(t, "Row", "Soneta.Business"))
-    {
-        if (FindMemberInherited(t, m => m is IPropertySymbol p && !p.IsIndexer && p.Name == "Table")
-            is IPropertySymbol tableProp
-            && tableProp.Type is INamedTypeSymbol tableType)
-            yield return tableType;
-    }
+    for (var t = type.BaseType; t != null && t.SpecialType != SpecialType.System_Object; t = t.BaseType)
+        yield return t;
+}
 
-    if (InheritsFromNamed(t, "Table", "Soneta.Business"))
+// Wszystkie klasy pochodne (publiczne, w referencjach), które mają `baseType` w łańcuchu BaseType.
+static IEnumerable<INamedTypeSymbol> FindDerivedTypes(CSharpCompilation compilation, INamedTypeSymbol baseType)
+{
+    foreach (var asmRef in compilation.References)
     {
-        if (FindMemberInherited(t, m => m is IPropertySymbol p
-                && p.IsIndexer && p.Parameters.Length == 1
-                && p.Parameters[0].Type.SpecialType == SpecialType.System_Int32)
-            is IPropertySymbol rowIndexer
-            && rowIndexer.Type is INamedTypeSymbol rowType)
-            yield return rowType;
-    }
-
-    if (ImplementsInterface(t, "IRowWithHistory"))
-    {
-        if (FindMemberInherited(t, m => m is IPropertySymbol p
-                && p.IsIndexer && p.Parameters.Length == 1
-                && p.Parameters[0].Type is INamedTypeSymbol pt
-                && pt.Name == "Date"
-                && (pt.ContainingNamespace?.ToDisplayString() ?? "").StartsWith("Soneta", StringComparison.Ordinal))
-            is IPropertySymbol dateIndexer
-            && dateIndexer.Type is INamedTypeSymbol histType)
-            yield return histType;
+        if (compilation.GetAssemblyOrModuleSymbol(asmRef) is not IAssemblySymbol asm) continue;
+        foreach (var t in EnumerateAllTypes(asm.GlobalNamespace))
+        {
+            if (t.TypeKind != TypeKind.Class) continue;
+            if (SymbolEqualityComparer.Default.Equals(t, baseType)) continue;
+            for (var b = t.BaseType; b != null && b.SpecialType != SpecialType.System_Object; b = b.BaseType)
+            {
+                if (SymbolEqualityComparer.Default.Equals(b, baseType)) { yield return t; break; }
+            }
+        }
     }
 }
 

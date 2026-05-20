@@ -105,13 +105,62 @@ uruchomień. Reguły rozpoznawania powiązań (po metadanych typu):
 | Klasa dziedzicząca z `Soneta.Business.Table` (np. `Pracownicy`, `DokHandlowe`) | Klasa rekordu (`Pracownik`, `DokumentHandlowy`) | indekser `this[int]` — typ zwracany |
 | Typ implementujący `IRowWithHistory` (np. `Pracownik`) | Typ rekordu historycznego (`PracHistoria`) | indekser `this[Soneta.Types.Date]` — typ zwracany |
 
-Reguły działają łącznie — np. dla `Pracownik` (Row + IRowWithHistory) zebrane są workery z trzech
-typów naraz: `Pracownik`, `Pracownicy`, `PracHistoria`. Informacje o znalezionych typach
-powiązanych skrypt wypisuje na stderr (`# Typ podstawowy: …`, `# Typ powiązany: …`), żeby nie
-zaśmiecać JSON-a na stdout.
+Reguły działają **przechodnio** i **łącznie** — np. dla `Pracownik` (Row + IRowWithHistory)
+zestaw to: `Pracownik`, `Pracownicy`, `PracHistoria`, `PracHistorie` (tabela historii dochodzi,
+bo `PracHistoria` to też Row z własną `Table`).
+
+Dodatkowo dla każdego znalezionego Row (oryginał + history-Row) skrypt **rozszerza zestaw o całą
+hierarchię**:
+- **klasy bazowe** (`baseClasses`) — chodzi w górę po `BaseType` aż do `object` wyłącznie
+  (włącznie z generowanym `*Row` z `*Module`, frameworkowymi `Row` / `GuidedRow` / `RowBase`);
+- **klasy pochodne** (`derivedClasses`) — przeszukuje wszystkie referencje w poszukiwaniu klas
+  mających dany Row w łańcuchu `BaseType` (np. `OsobaWspolpracujaca`, `PracownikFirmy`,
+  `Wlasciciel` dla `Pracownik`).
+
+Tabele tego rozszerzenia nie dostają — zbędne, intermediate `*Table` rzadko bywa celem rejestracji
+workera.
+
+Informacje o znalezionych typach skrypt wypisuje **dwojako**:
+
+1. **W JSON pod kluczem `scope`** (na stdout, sformatowane do parsowania):
+
+   ```json
+   {
+     "description": "Workery przypięte do typu `Pracownik` (Soneta)",
+     "scope": {
+       "primary": "Soneta.Kadry.Pracownik",
+       "related": [
+         { "type": "Soneta.Kadry.Pracownicy",    "kind": "table" },
+         { "type": "Soneta.Kadry.PracHistoria",  "kind": "history-row" },
+         { "type": "Soneta.Kadry.PracHistorie",  "kind": "history-table" }
+       ],
+       "baseClasses": [
+         "Soneta.Kadry.KadryModule.PracownikRow",
+         "Soneta.Business.GuidedRow",
+         "Soneta.Business.Row",
+         "Soneta.Kadry.KadryModule.PracHistoriaRow"
+       ],
+       "derivedClasses": [
+         "Soneta.Kadry.OsobaWspolpracujaca",
+         "Soneta.Kadry.PracownikFirmy",
+         "Soneta.Kadry.Wlasciciel"
+       ]
+     },
+     "Soneta.Kadry.Pracownik": [ /* … */ ],
+     "Soneta.Kadry.Pracownicy": [ /* … */ ]
+   }
+   ```
+
+   Pole `scope` pojawia się **wyłącznie** w trybie `--related` (przy zwykłym filtrze JSON nie ma
+   tego klucza). Dozwolone wartości `scope.related[].kind`: `table`, `row`, `history-row`,
+   `history-table`.
+
+2. **W logu na stderr** (`# Typ podstawowy: …`, `# Typ powiązany (kind): …`, `# Klasa bazowa: …`,
+   `# Klasa pochodna: …`) — wygodne do szybkiego podglądu w konsoli.
 
 Gdy `--related` jest podany, ale typu z `<NazwaTypuDanych>` nie da się znaleźć w referencjach
-(np. literówka), skrypt loguje ostrzeżenie na stderr i wraca do prostego dopasowania po nazwie.
+(np. literówka), skrypt loguje ostrzeżenie na stderr i wraca do prostego dopasowania po nazwie
+(bez sekcji `scope`).
 
 ### Przykłady
 
