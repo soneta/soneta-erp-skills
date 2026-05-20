@@ -1,19 +1,14 @@
 ---
 name: soneta-erp
 description: >
-  Mapa i przewodnik po wyspecjalizowanych skillach do pracy z platformą Soneta ERP
-  (enova365, Soneta Enterprise, Triva). Pomaga wybrać właściwy skill w zależności od
-  zadania: programowanie ORM (soneta-programming), planowanie dodatków
-  (soneta-addon-planning), definicje obiektów biznesowych (soneta-business-xml),
-  formularze UI (soneta-form-xml), definicje elementów wynagrodzenia
-  (soneta-place-def-elementow). Używaj tego skilla ZAWSZE gdy użytkownik: (1) rozpoczyna
-  nowe zadanie związane z enova365/Soneta/Triva i nie jest jasne, który wyspecjalizowany
-  skill zastosować; (2) pyta ogólnie o tworzenie dodatków, modułów lub rozszerzeń dla
-  Soneta ERP; (3) wspomina o platformie enova, Soneta Enterprise, Triva bez sprecyzowania
-  warstwy (dane, UI, logika, płace); (4) chce poznać dostępne narzędzia/skille do pracy
-  z ekosystemem Soneta; (5) realizuje zadanie obejmujące wiele warstw platformy
-  (np. nowy moduł z bazą danych, formularzami i logiką) i potrzebuje koordynacji między
-  skillami.
+  Mapa i przewodnik po wyspecjalizowanych skillach Soneta ERP (enova365, Soneta
+  Enterprise, Triva): soneta-programming (ORM), soneta-addon-planning, soneta-business-xml,
+  soneta-form-xml, soneta-place-def-elementow. Używaj gdy użytkownik: (1) rozpoczyna
+  zadanie dla enova365/Soneta/Triva i nie wiadomo, który skill wybrać; (2) pyta ogólnie
+  o dodatki, moduły lub rozszerzenia Soneta ERP; (3) wspomina enova, Soneta Enterprise,
+  Triva bez sprecyzowania warstwy (dane, UI, logika, płace); (4) chce poznać dostępne
+  skille; (5) realizuje zadanie obejmujące wiele warstw platformy (np. moduł z bazą,
+  formularzami i logiką).
 ---
 
 # Mapa skills podczas pracy z Soneta ERP (enova/Triva)

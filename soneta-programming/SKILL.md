@@ -1,25 +1,18 @@
 ---
 name: soneta-programming
 description: >
-  Fundamentalne klasy ORM oraz wzorce kodu biznesowego platformy enova365 / Soneta
-  Enterprise / Triva. Obejmuje mapowanie obiektowo-relacyjne (Row, Table, Module,
-  GuidedRow, ExportedRow), zarządzanie sesją i transakcjami (Session, Logout,
-  Commit / CommitUI, Save, optimistic locking), logowanie (Login, Database,
-  BusApplication), paczki danych (Datapack, GuidedRow, ChangeInfos), serwerowe
-  filtrowanie LINQ (RowCondition, SubTable[condition]), kontekst i parametry
-  (Context, ContextBase), rozszerzenia modelu (Worker, Extender, [Action]),
-  widoki list (ViewInfo, FolderView, CreateView), cechy (Features), tłumaczenia
-  (Translate, ILogger), action result oraz zasady bezpiecznego kodu biznesowego
-  (safe-code, checklist do code review). Używaj **zawsze** gdy użytkownik:
-  (1) pisze, modyfikuje lub refaktoruje kod biznesowy enova365 / Soneta /
-  Triva — nawet jeśli nie wymienia nazw klas wprost; (2) pyta o Session,
-  Row, Table, Module, Login, Database, BusApplication, Context, Datapack,
-  GuidedRow, Worker, Extender, ViewInfo, RowCondition; (3) wspomina sesje,
-  transakcje biznesowe, Logout, Commit, Save, optimistic lock, blokady wierszy;
-  (4) prosi o code review lub bezpieczeństwo kodu biznesowego Soneta; (5)
-  wspomina pisanie dodatku, modułu, importu, workera, ekstendera, akcji w menu
-  Czynności, folderu/listy; (6) pyta o thread-safety, sesje konfiguracyjne
-  (ExecuteConfig), różnice dane konfiguracyjne vs operacyjne.
+  Klasy ORM i wzorce kodu biznesowego enova365 / Soneta Enterprise / Triva:
+  Row/Table/Module, sesja i transakcje (Session, Commit/CommitUI, Save,
+  optimistic lock), Login/Database/BusApplication, Datapack/GuidedRow/ExportedRow,
+  serwerowy LINQ (RowCondition, SubTable[condition]), Context, Worker/Extender/[Action],
+  ViewInfo/FolderView, Features, Translate/ILogger oraz zasady bezpiecznego kodu
+  (safe-code, code review). Używaj gdy użytkownik: (1) pisze, modyfikuje lub
+  refaktoruje kod biznesowy enova365/Soneta/Triva; (2) pyta o Session, Row, Table,
+  Module, Login, Database, Context, Datapack, Worker, Extender, ViewInfo,
+  RowCondition; (3) wspomina sesje, transakcje, Commit, Save, optimistic lock,
+  blokady wierszy; (4) prosi o code review kodu biznesowego Soneta; (5) pisze
+  dodatek, worker, extender, akcję w menu Czynności, folder/listę; (6) pyta
+  o thread-safety, ExecuteConfig, dane konfiguracyjne vs operacyjne.
 ---
 
 # Soneta Programming Basics - Podstawowe klasy ORM
