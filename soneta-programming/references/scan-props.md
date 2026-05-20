@@ -41,7 +41,24 @@ Algorytm:
    - znajdź klasę biznesową (`DefinicjaNumeracji`) oraz typ `*Module+DefinicjaNumeracjiRow` (mogą być w innym module — np. `CoreModule`);
    - powtórz całą procedurę (kroki 5–8) dla tego rekordu, używając prefiksu `Numeracja.` w kluczach wyników (`Numeracja.Pole1`, `Numeracja.Pole2`, …).
    Rekurencja działa dowolnie głęboko (subrow w subrowie). Pętle (rekord zawierający siebie pośrednio) są zabezpieczone przez zbiór odwiedzonych typów.
-10. Wypisz tabelę markdown na stdout (kolumny: `Pole | Typ | Rodzaj | Tytuł | Opis`).
+10. **Metadane tabeli** — dodatkowo do nagłówka trafiają:
+    - `Tabela konfiguracyjna: Tak/Nie` — czytane z `[TableInfo(IsConfig=true)]` na zagnieżdżonej
+      klasie `*Module.*Table` (atrybut siedzi tam, nie na top-levelowym typie zwracanym przez
+      property `Table` w `*Row`).
+    - `Guided: root` — gdy `*Table` dziedziczy z `GuidedTable`/`ExportedTable`.
+    - `Guided: child — nadrzędna przez pole \`X\` → \`Y\`` — gdy w rekordzie istnieje pole
+      z `[ColumnInfo(GuidedRelation=…)]` wskazujące tabelę nadrzędną w drzewie obiektów.
+    - `Implementuje interfejsy: …` — lista interfejsów z `[TableInfo(Interfaces=…)]` tej tabeli.
+11. **Relacje interfejsowe** — skrypt buduje globalny indeks `interfejs → lista tabel implementujących`
+    (iteracja po wszystkich `*Module.*Table` we wszystkich referencjach). Dla każdego pola, którego
+    typ jest interfejsem występującym w tym indeksie (heurystyka: nazwa zaczyna się od `I` + wielka
+    litera), kolumna `Rodzaj` dostaje znacznik `iface-ref`, a po głównej tabeli pól wypisywana
+    jest sekcja `## Relacje interfejsowe` z listą `Pole | Interfejs | Tabele implementujące`.
+    Pozwala to od razu zobaczyć alternatywy, do których pole może wskazywać.
+12. **Znacznik `guided-parent`** — pole rekordu z atrybutem `[ColumnInfo(GuidedRelation=…)]`
+    dostaje w kolumnie `Rodzaj` dodatkowy tag `guided-parent`, sygnalizując, że to ono trzyma
+    referencję do rootu drzewa.
+13. Wypisz tabelę markdown na stdout (kolumny: `Pole | Typ | Rodzaj | Tytuł | Opis`).
 
 ## Wymagania
 
@@ -70,6 +87,9 @@ dotnet script ~/.claude/skills/soneta-programming/scripts/scan-props.csx \
 ```markdown
 # Pola i właściwości klasy biznesowej: `Soneta.Handel.DokumentHandlowy`
 Nazwa tabeli: `DokHandlowe`
+Tabela konfiguracyjna: Nie
+Guided: root
+Implementuje interfejsy: `IDokument`, `IKontrahentRef`
 
 - pola bazodanowe: 128
 - pola kalkulowane (z klas biznesowych): 388
@@ -78,14 +98,28 @@ Nazwa tabeli: `DokHandlowe`
 |------|-----|--------|-------|------|
 | Brutto | `decimal` | bazodanowe | Brutto | Wartość brutto dokumentu |
 | DataDokumentu | `System.DateTime` | bazodanowe | Data dokumentu |  |
-| Kontrahent | `Soneta.Kontrahenci.Kontrahent` | bazodanowe | Kontrahent |  |
+| Kontrahent | `Soneta.Kontrahenci.Kontrahent` | bazodanowe, iface-ref | Kontrahent |  |
 | Netto | `decimal` | bazodanowe | Netto |  |
 | Numer | `string` | bazodanowe | Numer |  |
 | SaldoWaluta | `decimal` |  | Saldo w walucie |  |
 | ...  | ... | ... | ... | ... |
+
+## Relacje interfejsowe
+
+Pola, których typ jest interfejsem zadeklarowanym w `[TableInfo(Interfaces=...)]` innych tabel.
+Pole może wskazywać na rekord dowolnej z poniższych tabel.
+
+| Pole | Interfejs | Tabele implementujące |
+|------|-----------|------------------------|
+| Kontrahent | `IKontrahent` | `Kontrahent`, `Pracownik`, `Urzad` |
 ```
 
-Kolumna `Rodzaj` ma wartość `bazodanowe` dla pól rekordu lub jest pusta dla właściwości kalkulowanych.
+Kolumna `Rodzaj` jest kombinacją znaczników rozdzielonych przecinkami:
+- `bazodanowe` — pole rekordu (`*Record`); brak znacznika = property kalkulowana klasy biznesowej.
+- `guided-parent` — pole z `[ColumnInfo(GuidedRelation=…)]` trzymające referencję do nadrzędnej
+  tabeli w drzewie obiektów guided.
+- `iface-ref` — typ pola jest interfejsem zadeklarowanym w `[TableInfo(Interfaces=…)]` innej tabeli;
+  konkretne tabele docelowe są wymienione w sekcji `## Relacje interfejsowe` pod tabelą pól.
 
 ## Kody wyjścia
 

@@ -112,8 +112,8 @@ foreach (var module in modules)
         continue;
     }
 
-    Console.WriteLine("| RowType | TableType | Guided | Tytuł | Opis |");
-    Console.WriteLine("|---------|-----------|--------|-------|------|");
+    Console.WriteLine("| RowType | TableType | Guided | Konfig | Interfaces | Tytuł | Opis |");
+    Console.WriteLine("|---------|-----------|--------|--------|------------|-------|------|");
     foreach (var row in rowClasses)
     {
         var rowType = row.Name.EndsWith("Row")
@@ -136,11 +136,19 @@ foreach (var module in modules)
         if (string.IsNullOrEmpty(description))
             description = GetAttributeFirstString(row, "DescriptionAttribute");
 
-        var guided = tableCls != null && InheritsFromGuidedOrExportedTable(tableCls)
-            ? "tak"
-            : "";
+        var isGuidedRoot = tableCls != null && InheritsFromGuidedOrExportedTable(tableCls);
+        var guided = isGuidedRoot ? "root" : "";
+        if (!isGuidedRoot)
+        {
+            var recordCls = module.GetTypeMembers(rowType + "Record").FirstOrDefault();
+            var parent = FindGuidedParent(recordCls, row);
+            if (!string.IsNullOrEmpty(parent)) guided = "child: " + parent;
+        }
 
-        Console.WriteLine($"| {rowType} | {tableType} | {guided} | {EscapeCell(caption)} | {EscapeCell(description)} |");
+        var konfig = IsConfigTable(tableCls) ? "konfig" : "";
+        var interfaces = string.Join(", ", GetTableInterfaces(tableCls));
+
+        Console.WriteLine($"| {rowType} | {tableType} | {guided} | {konfig} | {EscapeCell(interfaces)} | {EscapeCell(caption)} | {EscapeCell(description)} |");
         totalRows++;
     }
     Console.WriteLine();
@@ -183,6 +191,75 @@ static ISymbol FindMemberInherited(INamedTypeSymbol type, string name)
         if (m != null) return m;
     }
     return null;
+}
+
+// Zwraca opis nadrzędnej tabeli w strukturze guided dla tabel guided-child.
+// Pole rekordu oznaczone [ColumnInfo(GuidedRelation=RelationGuidedType.GuidedParent)] wskazuje
+// kierunek relacji; konkretny typ Row pobieramy z property o tej samej nazwie w klasie *Row
+// (w *Record pole ma zwykle typ IRow, więc bez Row nie da się ustalić konkretu).
+static string FindGuidedParent(INamedTypeSymbol recordCls, INamedTypeSymbol rowCls)
+{
+    if (recordCls == null) return "";
+    foreach (var f in recordCls.GetMembers().OfType<IFieldSymbol>())
+    {
+        foreach (var a in f.GetAttributes())
+        {
+            var an = a.AttributeClass?.Name;
+            if (an != "ColumnInfoAttribute" && an != "ColumnInfo") continue;
+            var hasGuided = a.NamedArguments.Any(na => na.Key == "GuidedRelation"
+                && na.Value.Kind == TypedConstantKind.Enum
+                && na.Value.Value is int v && v != 0);
+            if (!hasGuided) continue;
+            var propType = "?";
+            if (rowCls != null)
+            {
+                for (var rc = rowCls; rc != null && rc.SpecialType != SpecialType.System_Object; rc = rc.BaseType)
+                {
+                    var p = rc.GetMembers(f.Name).OfType<IPropertySymbol>().FirstOrDefault();
+                    if (p != null) { propType = p.Type.Name; break; }
+                }
+            }
+            return f.Name + "→" + propType;
+        }
+    }
+    return "";
+}
+
+// Lista interfejsów biznesowych z [TableInfo(Interfaces = new[] { "I1", "I2", ... })].
+// Soneta używa ich jako "relacji interfejsowych" — pole typu IXxx może referować dowolny
+// rekord z tabeli, która deklaruje IXxx w swoim TableInfo.
+static System.Collections.Generic.IEnumerable<string> GetTableInterfaces(INamedTypeSymbol tableCls)
+{
+    if (tableCls == null) yield break;
+    foreach (var a in tableCls.GetAttributes())
+    {
+        if (a.AttributeClass?.Name != "TableInfoAttribute" && a.AttributeClass?.Name != "TableInfo")
+            continue;
+        foreach (var na in a.NamedArguments)
+        {
+            if (na.Key != "Interfaces" || na.Value.Kind != TypedConstantKind.Array) continue;
+            foreach (var el in na.Value.Values)
+            {
+                if (el.Value is string s && !string.IsNullOrEmpty(s)) yield return s;
+            }
+        }
+    }
+}
+
+static bool IsConfigTable(INamedTypeSymbol tableCls)
+{
+    if (tableCls == null) return false;
+    foreach (var a in tableCls.GetAttributes())
+    {
+        if (a.AttributeClass?.Name != "TableInfoAttribute" && a.AttributeClass?.Name != "TableInfo")
+            continue;
+        foreach (var na in a.NamedArguments)
+        {
+            if (na.Key == "IsConfig" && na.Value.Value is bool b)
+                return b;
+        }
+    }
+    return false;
 }
 
 static string GetAttributeFirstString(ISymbol symbol, string attributeTypeName)

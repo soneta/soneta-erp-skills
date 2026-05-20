@@ -105,6 +105,7 @@ topLevelClasses.TryGetValue(recordBaseName, out mainBusinessClass);
 
 // Nazwa tabeli wyciągana z typu zwracanego przez property `Table` w klasie XxxxRow.
 string tableTypeName = null;
+bool isConfigTable = false;
 var rowClass = enclosing?.GetTypeMembers(recordBaseName + "Row").FirstOrDefault();
 if (rowClass != null)
 {
@@ -118,6 +119,20 @@ if (rowClass != null)
         }
     }
 }
+// Atrybut [TableInfo(IsConfig=true)] siedzi na klasie zagnieżdżonej XxxxModule.XxxxTable
+// (nie na top-level typie tabeli zwracanym przez property `Table` w *Row).
+var nestedTableCls = enclosing?.GetTypeMembers(recordBaseName + "Table").FirstOrDefault();
+if (nestedTableCls != null)
+    isConfigTable = IsConfigTable(nestedTableCls);
+
+// Wyznacz status guided: root (dziedziczy po GuidedTable/ExportedTable) lub child→ParentRow
+// (pole rekordu z [ColumnInfo(GuidedRelation=...)]). Pole zapamiętujemy też w guidedParentField,
+// żeby oznaczyć je później w tabeli pól.
+var isGuidedRoot = nestedTableCls != null && InheritsFromGuidedOrExportedTable(nestedTableCls);
+string guidedParentField = null;
+string guidedParentType = null;
+if (!isGuidedRoot)
+    (guidedParentField, guidedParentType) = FindGuidedParent(foundRecord, rowClass);
 
 // Klucz: nazwa pola z notacją kropkową dla subrowów; Wartość: (typ, czyBazodanowe, tytuł, opis)
 var merged = new SortedDictionary<string, (string Type, bool IsDb, string Caption, string Description)>(StringComparer.Ordinal);
@@ -138,6 +153,38 @@ else
 if (!string.IsNullOrEmpty(tableTypeName))
 {
     Console.WriteLine($"Nazwa tabeli: `{tableTypeName}`");
+    Console.WriteLine($"Tabela konfiguracyjna: {(isConfigTable ? "Tak" : "Nie")}");
+    if (isGuidedRoot)
+        Console.WriteLine("Guided: root");
+    else if (guidedParentField != null)
+        Console.WriteLine($"Guided: child — nadrzędna przez pole `{guidedParentField}` → `{guidedParentType}`");
+    var thisInterfaces = nestedTableCls != null ? GetTableInterfaces(nestedTableCls).ToList() : new System.Collections.Generic.List<string>();
+    if (thisInterfaces.Count > 0)
+        Console.WriteLine($"Implementuje interfejsy: {string.Join(", ", thisInterfaces.Select(i => "`" + i + "`"))}");
+}
+
+// Indeks interfejs → lista tabel implementujących, na potrzeby pokazania alternatyw
+// dla pól o typie interfejsowym (relacje interfejsowe Soneta). Klasy *Table są zagnieżdżone
+// w *Module — iterujemy po top-level *Module i pobieramy ich nested types.
+var interfaceImpls = new SortedDictionary<string, System.Collections.Generic.List<string>>(StringComparer.Ordinal);
+foreach (var asmRef in compilation.References)
+{
+    if (compilation.GetAssemblyOrModuleSymbol(asmRef) is not IAssemblySymbol asm) continue;
+    foreach (var top in EnumerateAllTypes(asm.GlobalNamespace))
+    {
+        if (top.ContainingType != null || !top.Name.EndsWith("Module")) continue;
+        foreach (var t in top.GetTypeMembers())
+        {
+            if (!t.Name.EndsWith("Table")) continue;
+            foreach (var iface in GetTableInterfaces(t))
+            {
+                if (!interfaceImpls.TryGetValue(iface, out var list))
+                    interfaceImpls[iface] = list = new System.Collections.Generic.List<string>();
+                var rowName = t.Name.Substring(0, t.Name.Length - "Table".Length);
+                list.Add(rowName);
+            }
+        }
+    }
 }
 Console.WriteLine();
 var dbCount = merged.Values.Count(v => v.IsDb);
@@ -147,12 +194,47 @@ Console.WriteLine($"- pola kalkulowane (z klas biznesowych): {calcCount}");
 Console.WriteLine();
 Console.WriteLine("| Pole | Typ | Rodzaj | Tytuł | Opis |");
 Console.WriteLine("|------|-----|--------|-------|------|");
+var interfaceFields = new System.Collections.Generic.List<(string Field, string IfaceShort, System.Collections.Generic.List<string> Impls)>();
 foreach (var kv in merged)
 {
     var rodzaj = kv.Value.IsDb ? "bazodanowe" : "";
+    if (guidedParentField != null && kv.Key == guidedParentField)
+        rodzaj = string.IsNullOrEmpty(rodzaj) ? "guided-parent" : rodzaj + ", guided-parent";
+    var shortType = ShortTypeName(kv.Value.Type);
+    if (shortType.StartsWith("I") && shortType.Length > 1 && char.IsUpper(shortType[1])
+        && interfaceImpls.TryGetValue(shortType, out var impls))
+    {
+        rodzaj = string.IsNullOrEmpty(rodzaj) ? "iface-ref" : rodzaj + ", iface-ref";
+        interfaceFields.Add((kv.Key, shortType, impls));
+    }
     Console.WriteLine($"| {kv.Key} | `{kv.Value.Type}` | {rodzaj} | {EscapeCell(kv.Value.Caption)} | {EscapeCell(kv.Value.Description)} |");
 }
+
+if (interfaceFields.Count > 0)
+{
+    Console.WriteLine();
+    Console.WriteLine("## Relacje interfejsowe");
+    Console.WriteLine();
+    Console.WriteLine("Pola, których typ jest interfejsem zadeklarowanym w `[TableInfo(Interfaces=...)]` innych tabel.");
+    Console.WriteLine("Pole może wskazywać na rekord dowolnej z poniższych tabel.");
+    Console.WriteLine();
+    Console.WriteLine("| Pole | Interfejs | Tabele implementujące |");
+    Console.WriteLine("|------|-----------|------------------------|");
+    foreach (var f in interfaceFields)
+    {
+        Console.WriteLine($"| {f.Field} | `{f.IfaceShort}` | {string.Join(", ", f.Impls.Select(i => "`" + i + "`"))} |");
+    }
+}
 return 0;
+
+static string ShortTypeName(string fullName)
+{
+    if (string.IsNullOrEmpty(fullName)) return "";
+    var lt = fullName.IndexOf('<');
+    if (lt >= 0) fullName = fullName.Substring(0, lt);
+    var dot = fullName.LastIndexOf('.');
+    return dot >= 0 ? fullName.Substring(dot + 1) : fullName;
+}
 
 static void ScanRecord(
     INamedTypeSymbol record,
@@ -265,6 +347,77 @@ static IEnumerable<IPropertySymbol> EnumerateInheritedProperties(INamedTypeSymbo
         foreach (var p in t.GetMembers().OfType<IPropertySymbol>())
             yield return p;
     }
+}
+
+static bool InheritsFromGuidedOrExportedTable(INamedTypeSymbol type)
+{
+    for (var t = type.BaseType; t != null && t.SpecialType != SpecialType.System_Object; t = t.BaseType)
+    {
+        if (t.Name == "GuidedTable" || t.Name == "ExportedTable") return true;
+    }
+    return false;
+}
+
+static (string field, string parentType) FindGuidedParent(INamedTypeSymbol recordCls, INamedTypeSymbol rowCls)
+{
+    if (recordCls == null) return (null, null);
+    foreach (var f in recordCls.GetMembers().OfType<IFieldSymbol>())
+    {
+        foreach (var a in f.GetAttributes())
+        {
+            var an = a.AttributeClass?.Name;
+            if (an != "ColumnInfoAttribute" && an != "ColumnInfo") continue;
+            var hasGuided = a.NamedArguments.Any(na => na.Key == "GuidedRelation"
+                && na.Value.Kind == TypedConstantKind.Enum
+                && na.Value.Value is int v && v != 0);
+            if (!hasGuided) continue;
+            var propType = "?";
+            if (rowCls != null)
+            {
+                for (var rc = rowCls; rc != null && rc.SpecialType != SpecialType.System_Object; rc = rc.BaseType)
+                {
+                    var p = rc.GetMembers(f.Name).OfType<IPropertySymbol>().FirstOrDefault();
+                    if (p != null) { propType = p.Type.Name; break; }
+                }
+            }
+            return (f.Name, propType);
+        }
+    }
+    return (null, null);
+}
+
+static System.Collections.Generic.IEnumerable<string> GetTableInterfaces(INamedTypeSymbol tableCls)
+{
+    if (tableCls == null) yield break;
+    foreach (var a in tableCls.GetAttributes())
+    {
+        if (a.AttributeClass?.Name != "TableInfoAttribute" && a.AttributeClass?.Name != "TableInfo")
+            continue;
+        foreach (var na in a.NamedArguments)
+        {
+            if (na.Key != "Interfaces" || na.Value.Kind != TypedConstantKind.Array) continue;
+            foreach (var el in na.Value.Values)
+            {
+                if (el.Value is string s && !string.IsNullOrEmpty(s)) yield return s;
+            }
+        }
+    }
+}
+
+static bool IsConfigTable(INamedTypeSymbol tableCls)
+{
+    if (tableCls == null) return false;
+    foreach (var a in tableCls.GetAttributes())
+    {
+        if (a.AttributeClass?.Name != "TableInfoAttribute" && a.AttributeClass?.Name != "TableInfo")
+            continue;
+        foreach (var na in a.NamedArguments)
+        {
+            if (na.Key == "IsConfig" && na.Value.Value is bool b)
+                return b;
+        }
+    }
+    return false;
 }
 
 static string GetAttributeFirstString(ISymbol symbol, string attributeTypeName)

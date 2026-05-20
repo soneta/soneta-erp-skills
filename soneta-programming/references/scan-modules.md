@@ -45,15 +45,25 @@ Algorytm:
      w l.mn. („Dokumenty handlowe"), bo opisują tabelę. Fallback: jeśli klasy `*Table` brak
      lub nie ma atrybutu, czytane są te same atrybuty z klasy `*Row`. Wartością jest pierwszy
      parametr `string` konstruktora atrybutu.
-   - `Guided` = `tak`, gdy klasa `*Table` dziedziczy (bezpośrednio lub pośrednio) z `GuidedTable`
-     albo `ExportedTable`. Tabele oznaczone `Guided=tak` są **rootami drzewa obiektów** —
-     stanowią korzeń paczki danych (`Datapack`/`GuidedRow`/`ExportedRow`) i to one są obsługiwane
-     przez mechanizm synchronizacji i eksportu/importu. Tabele bez tej flagi to elementy
-     szczegółowe (subrowy, info-rowy), które są częścią paczki danej tabeli-korzenia, ale nie
-     stanowią samodzielnego rootu.
+   - `Guided` — rozróżnia trzy stany:
+     - `root` — klasa `*Table` dziedziczy (bezpośrednio lub pośrednio) z `GuidedTable`
+       albo `ExportedTable`. Tabele te są **korzeniami drzewa obiektów** — stanowią root
+       paczki danych (`Datapack`/`GuidedRow`/`ExportedRow`) i to one są obsługiwane
+       przez mechanizm synchronizacji i eksportu/importu.
+     - `child: Pole→TypRow` — tabela jest częścią drzewa innego rootu; pole rekordu
+       z atrybutem `[ColumnInfo(GuidedRelation=…)]` wskazuje na tabelę nadrzędną.
+       `Pole` to nazwa pola w `*Record`, `TypRow` to konkretny typ `*Row` odczytany
+       z odpowiadającej property w klasie `*Row` (w `*Record` pole ma zwykle typ `IRow`).
+     - pusta wartość — tabela szczegółowa (subrow, info-row) niewchodząca w skład żadnego
+       drzewa guided.
+   - `Konfig` = `konfig`, gdy `*Table` ma `[TableInfo(IsConfig=true)]`. Tabele konfiguracyjne
+     żyją w osobnej sesji (`ExecuteConfig`) i mają inne reguły zapisu niż tabele operacyjne.
+   - `Interfaces` = lista nazw interfejsów zadeklarowanych w `[TableInfo(Interfaces = new[] { … })]`.
+     Soneta używa ich jako **relacji interfejsowych** — pole typu `IXxx` może referować rekord
+     z dowolnej tabeli deklarującej `IXxx` w swoim `TableInfo`.
    - Dla samego modułu (`*Module`) Tytuł/Opis czytane są analogicznie z atrybutów na klasie modułu.
 6. Wypisz markdown: sekcja `##` per moduł (z jego `Caption`/`Description` jeśli są), w każdej
-   sekcji tabela `RowType | TableType | Tytuł | Opis`.
+   sekcji tabela `RowType | TableType | Guided | Konfig | Interfaces | Tytuł | Opis`.
 
 ## Wymagania
 
@@ -89,14 +99,14 @@ Znaleziono modułów: 37
 - Opis: Moduł handlowy obsługujący dokumenty sprzedaży, zakupu, zamówień i innych operacji handlowych...
 - Tabel: 62
 
-| RowType | TableType | Guided | Tytuł | Opis |
-|---------|-----------|--------|-------|------|
-| DefDokHandlowego | DefDokHandlowych | tak | Definicje dokumentów handlowych | Konfigurowalna definicja (szablon) dokumentu handlowego... |
-| DefRelacjiHandlowej | DefRelHandlowych | tak | Definicje relacji handlowych | Konfigurowalna definicja relacji między dokumentami handlowymi... |
-| DokumentHandlowy | DokHandlowe | tak | Dokumenty handlowe | Główna tabela dokumentów handlowych (faktury, paragony, zamówienia, korekty, umowy itp.)... |
-| DokumentHandlowyKoszt | DokHandloweKoszt |  | Koszty dodatkowe | Koszt dodatkowy przypisany do dokumentu handlowego... |
-| DrukarkaFiskalna | DrukarkiFiskalne | tak | Lista drukarek fiskalnych | Konfiguracja drukarki fiskalnej... |
-| ...  | ... | ... | ... | ... |
+| RowType | TableType | Guided | Konfig | Interfaces | Tytuł | Opis |
+|---------|-----------|--------|--------|------------|-------|------|
+| DefDokHandlowego | DefDokHandlowych | root | konfig |  | Definicje dokumentów handlowych | Konfigurowalna definicja (szablon) dokumentu handlowego... |
+| DefRelacjiHandlowej | DefRelHandlowych | root | konfig |  | Definicje relacji handlowych | Konfigurowalna definicja relacji między dokumentami handlowymi... |
+| DokumentHandlowy | DokHandlowe | root |  | IDokument, IKontrahentRef | Dokumenty handlowe | Główna tabela dokumentów handlowych (faktury, paragony, zamówienia, korekty, umowy itp.)... |
+| DokumentHandlowyKoszt | DokHandloweKoszt | child: Dokument→DokumentHandlowy |  |  | Koszty dodatkowe | Koszt dodatkowy przypisany do dokumentu handlowego... |
+| DrukarkaFiskalna | DrukarkiFiskalne | root | konfig |  | Lista drukarek fiskalnych | Konfiguracja drukarki fiskalnej... |
+| ...  | ... | ... | ... | ... | ... | ... |
 
 _Łącznie tabel: 1196_
 ```
