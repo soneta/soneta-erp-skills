@@ -1,3 +1,4 @@
 **-workspace/**
+obj/
 .DS_Store
 .idea

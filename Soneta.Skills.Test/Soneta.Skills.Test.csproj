@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(SonetaTargetFramework)</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Soneta.Business\Soneta.Business.csproj" />
+    <ProjectReference Include="..\Soneta.Core\Soneta.Core.csproj" />
+    <ProjectReference Include="..\Soneta.CRM\Soneta.CRM.csproj" />
+    <ProjectReference Include="..\Soneta.Kasa\Soneta.Kasa.csproj" />
+    <ProjectReference Include="..\Soneta.Test\Soneta.Test.csproj" />
+    <ProjectReference Include="..\Soneta.Types\Soneta.Types.csproj" />
+  </ItemGroup>
+</Project>
