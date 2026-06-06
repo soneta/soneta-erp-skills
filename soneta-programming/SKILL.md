@@ -42,6 +42,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów)                                      | [references/examples.md](references/examples.md) |
 | Receptury kodu per obiekt biznesowy (domeny) — `Kontrahent` (pola, kolekcje, workery, finanse, RODO, KSeF) | [references/domeny/kontrahent.md](references/domeny/kontrahent.md) |
 | Receptury kodu per obiekt biznesowy (domeny) — `DokumentHandlowy` (faktury/magazynowe/zamówienia/korekty, relacje `IRelacjeService`, cykl życia, magazyn/partie/obroty, VAT/waluty, płatności, KSeF/fiskal/Intrastat, wydruki) | [references/domeny/dokument-handlowy.md](references/domeny/dokument-handlowy.md) |
+| Receptury kodu per obiekt biznesowy (domeny) — `Pracownik`/Kadry-Płace (zatrudnienie i dane kadrowe, historia `PracHistoria`+`Etat`, dodatki, nieobecności/limity, plan pracy/RCP, umowy cywilnoprawne, naliczanie wypłat, listy płac, wydruki PDF) | [references/domeny/pracownik.md](references/domeny/pracownik.md) |
 | **Zasady bezpiecznego kodu biznesowego — checklist do review i refaktoringu**                     | [references/safe-code.md](references/safe-code.md) |
 | Skanowanie pól obiektu biznesowego z DLL (Roslyn MetadataReference)                   | [references/scan-props.md](references/scan-props.md) |
 | Inwentaryzacja modułów i tabel (`*Module` / `*Row` / `*Table`) z DLL                  | [references/scan-modules.md](references/scan-modules.md) |
