@@ -6,6 +6,10 @@
     <ProjectReference Include="..\Soneta.Business\Soneta.Business.csproj" />
     <ProjectReference Include="..\Soneta.Core\Soneta.Core.csproj" />
     <ProjectReference Include="..\Soneta.CRM\Soneta.CRM.csproj" />
+    <ProjectReference Include="..\Soneta.Deklaracje\Soneta.Deklaracje.csproj" />
+    <ProjectReference Include="..\Soneta.Handel\Soneta.Handel.csproj" />
+    <ProjectReference Include="..\Soneta.KadryPlace\Soneta.KadryPlace.csproj" />
+    <ProjectReference Include="..\Soneta.KadryPlace.UI\Soneta.KadryPlace.UI.csproj" />
     <ProjectReference Include="..\Soneta.Kasa\Soneta.Kasa.csproj" />
     <ProjectReference Include="..\Soneta.Test\Soneta.Test.csproj" />
     <ProjectReference Include="..\Soneta.Types\Soneta.Types.csproj" />
