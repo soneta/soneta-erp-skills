@@ -126,12 +126,18 @@ throw new RowException(this, "Pole {0} jest wymagane".TranslateFormat(nameof(Naz
 
 ```csharp
 // ŹLE - ściąga całą tabelę
+foreach (DokumentHandlowy in hm.DokHandlowe.WgDaty.Where(d => data)) { ... }
+
+// DOBRZE - warunek wykonany przez serwer z użyciem pola klucza
+foreach (DokumentHandlowy in hm.DokHandlowe.WgDaty[data]) { ... }
+
+// ŹLE - ściąga całą tabelę
 foreach (Towar t in tm.Towary.WgKodu) {
     if (t.Aktywny && t.Cena > 100) { ... }
 }
 
 // DOBRZE - warunek wykonany przez serwer
-foreach (Towar t in tm.Towary[(Towar t) => t.Aktywny && t.Cena > 100]) { ... }
+foreach (Towar t in tm.Towary.WgKodu[(Towar t) => t.Aktywny && t.Cena > 100]) { ... }
 ```
 
 Szczegóły wyrażeń `RowCondition` (LINQ-like, predykaty, kompozycja) — patrz [rowcondition.md](rowcondition.md).
@@ -365,7 +371,7 @@ Do szybkiej weryfikacji PR-a / refaktoringu:
 - [ ] Komunikaty błędów przez `.Translate()` (§5.2, §11.1)
 
 **Dane**
-- [ ] Filtrowanie przez `SubTable[condition]`, nie pętle z `if` w pamięci (§6.1)
+- [ ] Filtrowanie przez `Key[keyValue]` lub `SubTable[condition]`, nie pętle z `if` w pamięci (§6.1)
 - [ ] Brak `View` w kodzie biznesowym (§6.2)
 - [ ] Brak pełnego skanu tabel kartotekowych; tabele operacyjne guided z zakresem czasowym; nie-guided w zakresie roota (§6.3)
 - [ ] Brak referencji do UI (`IsXxx`, `GetXxx`, `MessageBox`, `IUIServices`) w kodzie biznesowym (§7.1)

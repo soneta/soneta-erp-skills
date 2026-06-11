@@ -1,5 +1,7 @@
 # Action result zwracany przez akcje (worker, extender, Command)
 
+> Alternatywna nazwa tego tematu: **rezultaty workera**.
+
 Akcje (metody worker, akcje extender, handlery Command, callbacki) zwracają **action result** — obiekt
 sterujący tym, co stanie się w UI po wykonaniu logiki biznesowej. Typ zwróconego obiektu decyduje
 o sposobie obsługi.

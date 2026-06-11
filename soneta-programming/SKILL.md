@@ -35,7 +35,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Obiekty Worker i Extender - rozszerzenia modelu, akcje w menu Czynności                           | [references/worker-extender.md](references/worker-extender.md) |
 | Serwisy biznesowe (App / Database / Login / Session scope)                                        | [references/services.md](references/services.md) |
 | Tłumaczenia (Translate, TranslateIgnore), ILogger, ActSource                                      | [references/translations-logging.md](references/translations-logging.md) |
-| Action result zwracany przez worker / extender / Command - raporty, dialogi, nawigacja            | [references/action-result.md](references/action-result.md) |
+| Action result (rezultaty workera) zwracany przez worker / extender / Command - raporty, dialogi, nawigacja | [references/action-result.md](references/action-result.md) |
 | RowCondition - serwerowe warunki LINQ, filtrowanie SubTable / View / Query                        | [references/rowcondition.md](references/rowcondition.md) |
 | ViewInfo - definicja widoków list (folderów), CreateView, klasa Params, powiązanie z viewform.xml | [references/viewinfo.md](references/viewinfo.md) |
 | Cechy (Features) - tabela Features, typy cech, dostęp typowany/nietypowany, bindowanie w form.xml | [references/features.md](references/features.md) |
