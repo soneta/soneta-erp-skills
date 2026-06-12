@@ -6,7 +6,7 @@ using Soneta.Magazyny;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 3 — Stany dokumentu i cykl życia (W12–W16).
+/// Rozdział 3 — Stany dokumentu i cykl życia (HANDEL-W12–HANDEL-W16).
 /// <para>
 /// Stanem dokumentu steruje jedno zapisywalne pole <c>dok.Stan</c>
 /// (<see cref="StanDokumentuHandlowego"/>: <c>Bufor=0, Zatwierdzony=1, Zablokowany=2, Anulowany=3</c>).
@@ -47,8 +47,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W12: zatwierdzenie przychodu (PW) zmienia stan na Zatwierdzony i tworzy zasoby po Save.")]
-    public void W12_ZatwierdzeniePrzychodu_UstawiaStanIKsięgujeZasoby()
+    [Description("HANDEL-W12: zatwierdzenie przychodu (PW) zmienia stan na Zatwierdzony i tworzy zasoby po Save.")]
+    public void HANDEL_W12_ZatwierdzeniePrzychodu_UstawiaStanIKsięgujeZasoby()
     {
         // Tworzymy PW z pozycją (przychód — bez ryzyka stanu ujemnego).
         var dok = UtworzDokument(Definicje.PrzyjecieWewnetrzne, magazyn: Magazyn(Magazyn_.Firma));
@@ -73,8 +73,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W13: cofnięcie zatwierdzonego dokumentu bez zależności z powrotem do bufora.")]
-    public void W13_CofniecieDoBufora_PrzywracaStanBufor()
+    [Description("HANDEL-W13: cofnięcie zatwierdzonego dokumentu bez zależności z powrotem do bufora.")]
+    public void HANDEL_W13_CofniecieDoBufora_PrzywracaStanBufor()
     {
         // Zatwierdzony PW bez dokumentów podrzędnych.
         var guid = UtworzZatwierdzonyPwIZapisz();
@@ -93,8 +93,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W14: anulowanie dokumentu w buforze ustawia stan Anulowany, rekord pozostaje w bazie.")]
-    public void W14_AnulowanieZBufora_UstawiaStanAnulowany()
+    [Description("HANDEL-W14: anulowanie dokumentu w buforze ustawia stan Anulowany, rekord pozostaje w bazie.")]
+    public void HANDEL_W14_AnulowanieZBufora_UstawiaStanAnulowany()
     {
         // PW w buforze (anulowanie z bufora nie wymaga odksięgowania).
         var dok = UtworzDokument(Definicje.PrzyjecieWewnetrzne, magazyn: Magazyn(Magazyn_.Firma));
@@ -114,8 +114,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W14: anulowanie zatwierdzonego przychodu odksięgowuje zasoby, rekord zostaje.")]
-    public void W14_AnulowanieZatwierdzonego_OdksięgowujeIRekordZostaje()
+    [Description("HANDEL-W14: anulowanie zatwierdzonego przychodu odksięgowuje zasoby, rekord zostaje.")]
+    public void HANDEL_W14_AnulowanieZatwierdzonego_OdksięgowujeIRekordZostaje()
     {
         // Zatwierdzony PW (utworzył zasoby).
         var guid = UtworzZatwierdzonyPwIZapisz();
@@ -136,8 +136,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W16: usunięcie dokumentu w buforze bez zależności (Delete) trwale kasuje rekord.")]
-    public void W16_UsuniecieZBufora_KasujeRekord()
+    [Description("HANDEL-W16: usunięcie dokumentu w buforze bez zależności (Delete) trwale kasuje rekord.")]
+    public void HANDEL_W16_UsuniecieZBufora_KasujeRekord()
     {
         // Dokument w buforze, bez powiązań i rezerwacji — usunięcie dozwolone.
         var dok = UtworzDokument(Definicje.PrzyjecieWewnetrzne, magazyn: Magazyn(Magazyn_.Firma));
@@ -160,8 +160,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W16: anulowanie jako alternatywa dla usunięcia zatwierdzonego — rekord pozostaje.")]
-    public void W16_ZatwierdzonyAnulowanyZamiastUsuniety_RekordZostaje()
+    [Description("HANDEL-W16: anulowanie jako alternatywa dla usunięcia zatwierdzonego — rekord pozostaje.")]
+    public void HANDEL_W16_ZatwierdzonyAnulowanyZamiastUsuniety_RekordZostaje()
     {
         // Zatwierdzonego dokumentu nie można usuwać przez Delete (tylko bufor) —
         // zalecaną ścieżką dla nieodwracalnego wycofania jest anulowanie (zachowuje numer i audyt).
@@ -181,8 +181,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W15: PoprawaStanuDokumentuWorker na poprawnym dokumencie nie zmienia jego stanu.")]
-    public void W15_NaprawaStanu_NaPoprawnymDokumencie_ZachowujeStan()
+    [Description("HANDEL-W15: PoprawaStanuDokumentuWorker na poprawnym dokumencie nie zmienia jego stanu.")]
+    public void HANDEL_W15_NaprawaStanu_NaPoprawnymDokumencie_ZachowujeStan()
     {
         // Zatwierdzony, spójny dokument — naprawa stanu nie powinna nic zepsuć.
         var guid = UtworzZatwierdzonyPwIZapisz();
@@ -202,8 +202,8 @@ public class Rozdzial03_CyklZyciaTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W15: PrzeliczenieStanuWorker w trybie SprawdzićPoprawność (diagnostyka) nie zmienia danych.")]
-    public void W15_SprawdzeniePoprawnosciObrotow_NieZmieniaStanu()
+    [Description("HANDEL-W15: PrzeliczenieStanuWorker w trybie SprawdzićPoprawność (diagnostyka) nie zmienia danych.")]
+    public void HANDEL_W15_SprawdzeniePoprawnosciObrotow_NieZmieniaStanu()
     {
         // Zatwierdzony przychód z poprawnymi obrotami.
         var guid = UtworzZatwierdzonyPwIZapisz();

@@ -13,12 +13,12 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 /// <summary>
 /// Rozdział E/F (część druga) — operacje na planie pracy i RCP wykraczające poza CRUD dni:
 /// <list type="bullet">
-/// <item>E3 — aktualizacja kalendarza pracownika (worker seryjny, wymaga Context → <c>[Ignore]</c>),</item>
-/// <item>E4 — uzgodnienie doby pracowniczej (worker dnia/grupowy, wymaga Context → <c>[Ignore]</c>),</item>
-/// <item>E5 — odczyt normy i czasu przepracowanego przez <c>pracownik.Czasy : KalkulatorPracownika</c> (★ pełny odczyt),</item>
-/// <item>F3 — import RCP: sam import plikowy <c>[Ignore]</c>; przeliczenie we/wy przez <c>ImportDniaWorker</c> (★),</item>
-/// <item>F4 — weryfikacja/korekta RCP: <c>DzienRCP</c>/<c>StanRCP</c> (★ korekta na świeżym dniu),</item>
-/// <item>F5 — praca hybrydowa: strefy dnia i podzielniki (★ odczyt).</item>
+/// <item>KADRY-E3 — aktualizacja kalendarza pracownika (worker seryjny, wymaga Context → <c>[Ignore]</c>),</item>
+/// <item>KADRY-E4 — uzgodnienie doby pracowniczej (worker dnia/grupowy, wymaga Context → <c>[Ignore]</c>),</item>
+/// <item>KADRY-E5 — odczyt normy i czasu przepracowanego przez <c>pracownik.Czasy : KalkulatorPracownika</c> (★ pełny odczyt),</item>
+/// <item>KADRY-F3 — import RCP: sam import plikowy <c>[Ignore]</c>; przeliczenie we/wy przez <c>ImportDniaWorker</c> (★),</item>
+/// <item>KADRY-F4 — weryfikacja/korekta RCP: <c>DzienRCP</c>/<c>StanRCP</c> (★ korekta na świeżym dniu),</item>
+/// <item>KADRY-F5 — praca hybrydowa: strefy dnia i podzielniki (★ odczyt).</item>
 /// </list>
 /// <para>
 /// Operujemy wyłącznie na <b>publicznym kontrakcie</b> platformy Soneta (jak dodatek zewnętrzny),
@@ -27,7 +27,7 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 /// a scenariusze zapisu budujemy na własnych, jawnych datach dla pracownika „006".
 /// </para>
 /// <para>
-/// <b>Granica testowalności.</b> Operacje wymagające <see cref="Context"/> (worker E3/E4 grupowy —
+/// <b>Granica testowalności.</b> Operacje wymagające <see cref="Context"/> (worker KADRY-E3/KADRY-E4 grupowy —
 /// <c>Params : ContextBase</c> z ctorem <c>(Context)</c>, karmiony zaznaczeniem listy) lub źródła
 /// zewnętrznego (import RCP z pliku/czytnika) są oznaczone <c>[Ignore]</c> z uzasadnieniem — opisują
 /// kontrakt, nie wykonują operacji. <c>KalkulatorPracownika</c>/<c>CzasDni</c>/<c>ZestawienieNadgodzin</c>
@@ -42,14 +42,14 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     private static readonly FromTo Okres = new(new Date(2026, 6, 1), new Date(2026, 6, 30));
     private static readonly YearMonth Miesiac = new(2026, 6);
 
-    // ============================== E3 — Aktualizacja kalendarza pracownika ==============================
+    // ============================== KADRY-E3 — Aktualizacja kalendarza pracownika ==============================
 
     [Test]
-    [Description("E3 (kontrakt, [Ignore]): AktualizujKalendarzWorker to worker seryjny z menu Czynności. " +
+    [Description("KADRY-E3 (kontrakt, [Ignore]): AktualizujKalendarzWorker to worker seryjny z menu Czynności. " +
                  "Pracownicy/Pars są set-only, a Params : ContextBase ma ctor (Context) — bez zaznaczenia " +
                  "listy (Context) nie da się zbudować parametrów, więc operacji nie wykonujemy w teście.")]
-    [Ignore("E3: AktualizujKalendarzWorker.Params : ContextBase wymaga Context (zaznaczenie listy pracowników) — brak czystego API bezkontekstowego.")]
-    public void E3_AktualizujKalendarz_WymagaContext_Ignore()
+    [Ignore("KADRY-E3: AktualizujKalendarzWorker.Params : ContextBase wymaga Context (zaznaczenie listy pracowników) — brak czystego API bezkontekstowego.")]
+    public void KADRY_E3_AktualizujKalendarz_WymagaContext_Ignore()
     {
         // Świadomie nie wykonujemy — operacja seryjna sterowana zaznaczeniem UI (Context).
         // worker.Pracownicy = context.Get<Pracownik[]>();
@@ -59,10 +59,10 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E3 (odczyt konfiguracji): kalendarz docelowy/źródłowy aktualizacji to konfiguracja " +
+    [Description("KADRY-E3 (odczyt konfiguracji): kalendarz docelowy/źródłowy aktualizacji to konfiguracja " +
                  "Etat.Kalendarz oraz interpretacja Etat.InterpretacjaKalendarza — odczyt nie wymaga workera " +
-                 "ani Context i nie rzuca; pokazuje skąd worker E3 bierze stan wejściowy.")]
-    public void E3_KalendarzIInterpretacja_OdczytKonfiguracjiEtatu_NieRzuca()
+                 "ani Context i nie rzuca; pokazuje skąd worker KADRY-E3 bierze stan wejściowy.")]
+    public void KADRY_E3_KalendarzIInterpretacja_OdczytKonfiguracjiEtatu_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         p.Should().NotBeNull("pracownik '006' istnieje w bazie Demo");
@@ -70,7 +70,7 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
         System.Action odczyt = () =>
         {
             // Etat leży na bieżącym zapisie historycznym (pracownik.Last.Etat); kalendarz i interpretacja
-            // sterują aktualizacją (E3).
+            // sterują aktualizacją (KADRY-E3).
             var etat = p.Last?.Etat;
             if (etat is not null)
             {
@@ -86,13 +86,13 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
         odczyt.Should().NotThrow("odczyt kalendarza/interpretacji z Etatu nie wymaga Context ani transakcji");
     }
 
-    // ============================== E4 — Uzgodnienie doby pracowniczej ==============================
+    // ============================== KADRY-E4 — Uzgodnienie doby pracowniczej ==============================
 
     [Test]
-    [Description("E4 (kontrakt, odczyt): granica doby to atrybuty KONFIGURACYJNE Etatu " +
+    [Description("KADRY-E4 (kontrakt, odczyt): granica doby to atrybuty KONFIGURACYJNE Etatu " +
                  "(ConfigPoczątekDobyNiedzieledIŚwięta — read-only, NormaDobowa) — nie ma edytowalnego pola " +
                  "początku doby na pojedynczym DzienPracy. Odczyt tych pól nie rzuca.")]
-    public void E4_ModelDoby_OdczytKonfiguracjiEtatu_NieRzuca()
+    public void KADRY_E4_ModelDoby_OdczytKonfiguracjiEtatu_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         p.Should().NotBeNull("pracownik '006' istnieje w bazie Demo");
@@ -112,12 +112,12 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E4 (kontrakt, [Ignore]): worker pojedynczego dnia DzienPracy.UzgodnijDobePracowniczaWorker " +
+    [Description("KADRY-E4 (kontrakt, [Ignore]): worker pojedynczego dnia DzienPracy.UzgodnijDobePracowniczaWorker " +
                  "ma Dzień set-only i wymaga istniejącego dnia ewidencji oraz IsEnabled; worker grupowy " +
                  "(Params : ContextBase) wymaga Context. W Demo brak deterministycznej doby nocnej do uzgodnienia, " +
                  "więc operacji nie wykonujemy — opisujemy kontrakt (IsEnabled + Uzgodnij/Przenieś).")]
-    [Ignore("E4: UzgodnijDobePracownicza — worker dnia wymaga deterministycznego dnia nocnego (brak w Demo); worker grupowy wymaga Context.")]
-    public void E4_UzgodnijDobePracownicza_WymagaContextLubDanych_Ignore()
+    [Ignore("KADRY-E4: UzgodnijDobePracownicza — worker dnia wymaga deterministycznego dnia nocnego (brak w Demo); worker grupowy wymaga Context.")]
+    public void KADRY_E4_UzgodnijDobePracownicza_WymagaContextLubDanych_Ignore()
     {
         // var dzien = pracownik.DniPracy[data];
         // if (DzienPracy.UzgodnijDobePracowniczaWorker.IsEnabledUzgodnijDobePracownicza(dzien)) { ... }
@@ -125,12 +125,12 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
         Assert.Fail("Test oznaczony [Ignore] — nie powinien być uruchamiany.");
     }
 
-    // ============================== E5 — Odczyt normy / czasu przepracowanego (★ testowalne) ==============================
+    // ============================== KADRY-E5 — Odczyt normy / czasu przepracowanego (★ testowalne) ==============================
 
     [Test]
-    [Description("E5: pracownik.Czasy zwraca KalkulatorPracownika (NIE Row — obiekt liczący, czysty odczyt " +
+    [Description("KADRY-E5: pracownik.Czasy zwraca KalkulatorPracownika (NIE Row — obiekt liczący, czysty odczyt " +
                  "bez transakcji). Kalkulator istnieje dla pracownika z bazy Demo.")]
-    public void E5_Czasy_ZwracaKalkulatorPracownika_NieNull()
+    public void KADRY_E5_Czasy_ZwracaKalkulatorPracownika_NieNull()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         p.Should().NotBeNull("pracownik '006' istnieje w bazie Demo");
@@ -140,10 +140,10 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E5: Norma(okres) (plan) i Praca(okres) (realizacja) zwracają CzasDni (Czas : Time, Dni : int). " +
+    [Description("KADRY-E5: Norma(okres) (plan) i Praca(okres) (realizacja) zwracają CzasDni (Czas : Time, Dni : int). " +
                  "Wywołanie to czysty odczyt — nie rzuca i nie wymaga transakcji. Wartości mogą być Empty/Invalid " +
                  "(brak danych Demo w okresie), więc sprawdzamy tylko sam kontrakt odczytu.")]
-    public void E5_NormaIPraca_OdczytZaOkres_ZwracaCzasDni_NieRzuca()
+    public void KADRY_E5_NormaIPraca_OdczytZaOkres_ZwracaCzasDni_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         var kalk = p.Czasy;
@@ -169,10 +169,10 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E5: NormaKodeksowa(YearMonth) zwraca normę kodeksową miesiąca (pełny etat) jako CzasDni; " +
+    [Description("KADRY-E5: NormaKodeksowa(YearMonth) zwraca normę kodeksową miesiąca (pełny etat) jako CzasDni; " +
                  "dla czerwca 2026 (20 dni roboczych × 8h) norma kodeksowa jest dodatnia — wynik nie jest Invalid " +
                  "i ma policzalne Dni/Czas.")]
-    public void E5_NormaKodeksowa_DlaMiesiaca_JestDodatnia()
+    public void KADRY_E5_NormaKodeksowa_DlaMiesiaca_JestDodatnia()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         var kalk = p.Czasy;
@@ -186,9 +186,9 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E5: Nadgodziny(YearMonth) zwraca ZestawienieNadgodzin (struct: N50/N100/NSW/Razem — wszystkie Time, " +
+    [Description("KADRY-E5: Nadgodziny(YearMonth) zwraca ZestawienieNadgodzin (struct: N50/N100/NSW/Razem — wszystkie Time, " +
                  "read-only). Nocne(okres) zwraca Time. Czysty odczyt — nie rzuca; przy braku danych Demo wynik = Zero.")]
-    public void E5_NadgodzinyINocne_OdczytStatystyk_NieRzuca()
+    public void KADRY_E5_NadgodzinyINocne_OdczytStatystyk_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         var kalk = p.Czasy;
@@ -209,9 +209,9 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E5: DniNie(okres)/NormaNie(okres) odczytują liczbę i normę dni nieobecności za okres. " +
+    [Description("KADRY-E5: DniNie(okres)/NormaNie(okres) odczytują liczbę i normę dni nieobecności za okres. " +
                  "DniNie zwraca int (>=0), NormaNie zwraca CzasDni. Czysty odczyt — nie rzuca.")]
-    public void E5_NieobecnosciZaOkres_OdczytLiczbyINormy_NieRzuca()
+    public void KADRY_E5_NieobecnosciZaOkres_OdczytLiczbyINormy_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         var kalk = p.Czasy;
@@ -226,23 +226,23 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
         dniNie.Should().BeGreaterThanOrEqualTo(0, "liczba dni nieobecności nie jest ujemna");
     }
 
-    // ============================== F3 — Import RCP (przeliczenie we/wy, ★) ==============================
+    // ============================== KADRY-F3 — Import RCP (przeliczenie we/wy, ★) ==============================
 
     [Test]
-    [Description("F3 ([Ignore]): import surowych odbić z pliku/czytnika RCP wymaga zewnętrznego źródła " +
+    [Description("KADRY-F3 ([Ignore]): import surowych odbić z pliku/czytnika RCP wymaga zewnętrznego źródła " +
                  "(plik/serwis/format) — brak czystego API w publicznym kontrakcie. Testowalny jest jedynie " +
                  "fragment po wczytaniu: przeliczenie już-wpisanych we/wy przez ImportDniaWorker (osobny test).")]
-    [Ignore("F3: import z pliku/urządzenia RCP wymaga zewnętrznego źródła (I/O) — poza zakresem testu kontraktu.")]
-    public void F3_ImportZPliku_WymagaZrodlaZewnetrznego_Ignore()
+    [Ignore("KADRY-F3: import z pliku/urządzenia RCP wymaga zewnętrznego źródła (I/O) — poza zakresem testu kontraktu.")]
+    public void KADRY_F3_ImportZPliku_WymagaZrodlaZewnetrznego_Ignore()
     {
         Assert.Fail("Test oznaczony [Ignore] — nie powinien być uruchamiany.");
     }
 
     [Test]
-    [Description("F3 (przeliczenie, ★): po wpisaniu zdarzeń we/wy na dzień ewidencji (jak po imporcie) " +
+    [Description("KADRY-F3 (przeliczenie, ★): po wpisaniu zdarzeń we/wy na dzień ewidencji (jak po imporcie) " +
                  "ImportDniaWorker { DzienPracy = dzien }.Przelicz() przelicza odbicia na czas pracy — operacja " +
                  "na obiektach sesji (bez I/O). Worker ma bezparametrowy ctor i property DzienPracy {get;set;}.")]
-    public void F3_ImportDniaWorker_PrzeliczWeWy_NieRzuca()
+    public void KADRY_F3_ImportDniaWorker_PrzeliczWeWy_NieRzuca()
     {
         Guid guidPrac = Guid.Empty;
 
@@ -278,13 +278,13 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
         dp2.WeWy.Cast<WejscieWyjscie>().Should().HaveCount(2, "wejście i wyjście zostały zachowane");
     }
 
-    // ============================== F4 — Weryfikacja / korekta RCP (★ testowalne) ==============================
+    // ============================== KADRY-F4 — Weryfikacja / korekta RCP (★ testowalne) ==============================
 
     [Test]
-    [Description("F4 (odczyt): DniRCP to DateSubTable<DzienRCP> (typowane) — indeksator [Date] zwraca DzienRCP/null " +
+    [Description("KADRY-F4 (odczyt): DniRCP to DateSubTable<DzienRCP> (typowane) — indeksator [Date] zwraca DzienRCP/null " +
                  "i nie rzuca. DzienRCP to wynik importu/weryfikacji; w Demo zwykle brak (null) dla naszej daty. " +
                  "Odczytujemy StanRCP (enum StanWeryfikacjiRCP) i Praca.Czas defensywnie.")]
-    public void F4_DniRCP_OdczytIndeksatoremPoDacie_NieRzuca()
+    public void KADRY_F4_DniRCP_OdczytIndeksatoremPoDacie_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         p.DniRCP.Should().NotBeNull("kolekcja zweryfikowanego RCP (DniRCP) istnieje");
@@ -304,10 +304,10 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("F4 (korekta, ★): na świeżo utworzonym DzienRCP korygujemy godziny na subrowie Praca, " +
+    [Description("KADRY-F4 (korekta, ★): na świeżo utworzonym DzienRCP korygujemy godziny na subrowie Praca, " +
                  "ustawiamy StanRCP (enum) na Poprawny i dopisujemy Uwagi (MemoText). Po zapisie DniRCP[data] " +
                  "zwraca dzień ze zmienionym stanem i godzinami. Czas/OdGodziny na rootcie są kalkulowane (read-only).")]
-    public void F4_KorektaDzienRCP_ZmianaStanuIGodzin_ZapisOdczyt()
+    public void KADRY_F4_KorektaDzienRCP_ZmianaStanuIGodzin_ZapisOdczyt()
     {
         Guid guidPrac = Guid.Empty;
 
@@ -338,13 +338,13 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
         rcp2.Praca.DoGodziny.Should().Be(new Time(16, 0));
     }
 
-    // ============================== F5 — Praca hybrydowa / strefy / podzielniki (odczyt) ==============================
+    // ============================== KADRY-F5 — Praca hybrydowa / strefy / podzielniki (odczyt) ==============================
 
     [Test]
-    [Description("F5 (odczyt): DzienPracy.Strefy to SubTable<StrefaPracy> — podział dnia na strefy " +
+    [Description("KADRY-F5 (odczyt): DzienPracy.Strefy to SubTable<StrefaPracy> — podział dnia na strefy " +
                  "(stacjonarna / zdalna). Każda StrefaPracy ma Definicja : DefinicjaStrefy i CzasRozliczany : Time. " +
                  "Kolekcja istnieje (może być pusta w Demo); iteracja i odczyt pól nie rzucają.")]
-    public void F5_StrefyDniaPracy_OdczytPodzialuNaStrefy_NieRzuca()
+    public void KADRY_F5_StrefyDniaPracy_OdczytPodzialuNaStrefy_NieRzuca()
     {
         Guid guidPrac = Guid.Empty;
 
@@ -375,11 +375,11 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("F5 (odczyt podzielników): pracownik.RozliczeniaCzasuPracy (dokumenty) oraz " +
+    [Description("KADRY-F5 (odczyt podzielników): pracownik.RozliczeniaCzasuPracy (dokumenty) oraz " +
                  "pracownik.ElementyRozliczeniaCzasuPracy (pozycje) to SubTable — kolekcje istnieją (mogą być puste " +
                  "w Demo). Element ma Definicja : DefinicjaStrefy i Czas : Time; odczyt nie rzuca. Budowy dokumentu " +
                  "rozliczenia nie testujemy — wymaga DefinicjaRozliczeniaCzasuPracy i przebiega przez extendery/UI.")]
-    public void F5_PodzielnikiRozliczeniaCzasuPracy_OdczytKolekcji_NieRzuca()
+    public void KADRY_F5_PodzielnikiRozliczeniaCzasuPracy_OdczytKolekcji_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         p.RozliczeniaCzasuPracy.Should().NotBeNull("kolekcja dokumentów rozliczenia czasu pracy istnieje");
@@ -398,10 +398,10 @@ public class RozdzialEFrest_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("F5 (kontrakt typów): DefinicjaStrefy wystawia stałe Guid Praca_Zdalna / PracaZdalnaOkazjonalna " +
+    [Description("KADRY-F5 (kontrakt typów): DefinicjaStrefy wystawia stałe Guid Praca_Zdalna / PracaZdalnaOkazjonalna " +
                  "(identyfikacja stref pracy zdalnej) oraz enum TypStrefy (NieWplywa/Zwieksza/Zmniejsza). " +
                  "Stałe są niepuste — to publiczne punkty zaczepienia rozliczenia pracy hybrydowej.")]
-    public void F5_DefinicjaStrefy_StalePracaZdalnaIEnumTypStrefy_SaDostepne()
+    public void KADRY_F5_DefinicjaStrefy_StalePracaZdalnaIEnumTypStrefy_SaDostepne()
     {
         DefinicjaStrefy.Praca_Zdalna.Should().NotBe(Guid.Empty, "stała identyfikuje strefę pracy zdalnej");
         DefinicjaStrefy.PracaZdalnaOkazjonalna.Should().NotBe(Guid.Empty, "stała identyfikuje strefę pracy zdalnej okazjonalnej");

@@ -12,19 +12,19 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział C (część „potrąceniowa") — receptury C2–C7 z dokumentu skilla <c>pracownik.md</c>:
+/// Rozdział C (część „potrąceniowa") — receptury KADRY-C2–KADRY-C7 z dokumentu skilla <c>kadry/KADRY03-dodatki-potracenia.md</c>:
 /// <list type="bullet">
-/// <item><b>C2</b> — potrącenia: w modelu płacowym potrącenie NIE ma osobnej klasy; to
+/// <item><b>KADRY-C2</b> — potrącenia: w modelu płacowym potrącenie NIE ma osobnej klasy; to
 /// <c>Soneta.Kadry.Dodatek</c> z definicją elementu o <c>Algorytm.Potracenie == true</c>;</item>
-/// <item><b>C3</b> — akordy: <c>Soneta.Kadry.Akord</c> bez publicznego konstruktora — dodawane przez
+/// <item><b>KADRY-C3</b> — akordy: <c>Soneta.Kadry.Akord</c> bez publicznego konstruktora — dodawane przez
 /// worker <c>Pracownik.DodajAkordWorker</c>; zakończenie przez <c>ZakończAkordWorker</c>;</item>
-/// <item><b>C4</b> — zajęcia komornicze: <c>new ZajęcieKomornicze(pracownik)</c>; anulowanie/przywracanie
+/// <item><b>KADRY-C4</b> — zajęcia komornicze: <c>new ZajęcieKomornicze(pracownik)</c>; anulowanie/przywracanie
 /// przez workery <c>AnulujWorker</c>/<c>PrzywrócWorker</c>;</item>
-/// <item><b>C5</b> — operacje seryjne na dodatkach (moduł <c>Soneta.Przeszeregowania</c>): worker
+/// <item><b>KADRY-C5</b> — operacje seryjne na dodatkach (moduł <c>Soneta.Przeszeregowania</c>): worker
 /// <c>NowyDodatekWorker</c> oraz dokument <c>Przeszeregowanie</c>;</item>
-/// <item><b>C6</b> — świadczenia socjalne (ZFŚS): <c>new SwiadczSocjalne(pracownik)</c> + subrow
+/// <item><b>KADRY-C6</b> — świadczenia socjalne (ZFŚS): <c>new SwiadczSocjalne(pracownik)</c> + subrow
 /// <c>Rozliczenie</c>;</item>
-/// <item><b>C7</b> — pożyczki (KZP/ZFM): trzystopniowo <c>FundPozyczkowy(pracownik, definicja)</c> →
+/// <item><b>KADRY-C7</b> — pożyczki (KZP/ZFM): trzystopniowo <c>FundPozyczkowy(pracownik, definicja)</c> →
 /// <c>Pozyczka(fundusz)</c> → harmonogram rat przez <c>UzgodnijRatyWorker</c>.</item>
 /// </list>
 /// <para>
@@ -71,15 +71,15 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
         Place.DefElementow.Cast<DefinicjaElementu>()
              .FirstOrDefault(d => d.RodzajZrodla == RodzajŹródłaWypłaty.ZajęcieKomornicze);
 
-    // ============================== C2 — Potrącenia (stałe / jednorazowe) ==============================
+    // ============================== KADRY-C2 — Potrącenia (stałe / jednorazowe) ==============================
 
     [Test]
-    [Description("C2: potrącenie NIE jest osobną klasą — to Dodatek z definicją elementu, w której " +
+    [Description("KADRY-C2: potrącenie NIE jest osobną klasą — to Dodatek z definicją elementu, w której " +
                  "Algorytm.Potracenie == true. Tworzymy przez new Dodatek(pracownik) + Kadry.Dodatki.AddRow. " +
                  "UWAGA (zweryfikowane): aby definicję podpiąć pod Dodatek, musi ona mieć RodzajZrodla == Dodatek " +
                  "ORAZ Algorytm.Potracenie == true — sam znacznik Algorytm.Potracenie nie wystarcza " +
                  "(DodHistoria.Element odrzuca definicje o innym rodzaju źródła, np. \"Alimenty\").")]
-    public void C2_Potracenie_ToDodatekZDefinicjaPotracajaca()
+    public void KADRY_C2_Potracenie_ToDodatekZDefinicjaPotracajaca()
     {
         var defPotracenia = PierwszaDefinicjaPotraceniaJakoDodatek();
         if (defPotracenia == null)
@@ -97,7 +97,7 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
         {
             var pracownik = NowyPracownikEtatowy("C2", out guid);
 
-            // Mechanizm identyczny jak C1 (Dodatek + DodHistoria) — różni tylko dobór definicji.
+            // Mechanizm identyczny jak KADRY-C1 (Dodatek + DodHistoria) — różni tylko dobór definicji.
             var potracenie = new Dodatek(pracownik);
             Kadry.Dodatki.AddRow(potracenie);     // tworzy pierwszy zapis DodHistoria (Last)
 
@@ -117,10 +117,10 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
     }
 
     [Test]
-    [Description("C2 (jednorazowe): potrącenie jednorazowe to Dodatek z OKRESEM zawężonym do jednego " +
+    [Description("KADRY-C2 (jednorazowe): potrącenie jednorazowe to Dodatek z OKRESEM zawężonym do jednego " +
                  "miesiąca rozliczeniowego — naliczy się tylko w wypłatach z tego miesiąca. " +
                  "Okres ustawiamy przez FromTo.Month(YearMonth).")]
-    public void C2_PotracenieJednorazowe_OkresZawezonyDoMiesiaca()
+    public void KADRY_C2_PotracenieJednorazowe_OkresZawezonyDoMiesiaca()
     {
         var defPotracenia = PierwszaDefinicjaPotraceniaJakoDodatek();
         if (defPotracenia == null)
@@ -145,13 +145,13 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
         h.Okres.To.Should().Be(okresMiesiaca.To);
     }
 
-    // ============================== C3 — Akordy ==============================
+    // ============================== KADRY-C3 — Akordy ==============================
 
     [Test]
-    [Description("C3: Akord NIE ma publicznego konstruktora — kanoniczną ścieżką dodania jest worker " +
+    [Description("KADRY-C3: Akord NIE ma publicznego konstruktora — kanoniczną ścieżką dodania jest worker " +
                  "Pracownik.DodajAkordWorker (parametryzowany przez Params(context) + Pracownicy[]). " +
                  "Definicję akordu pobieramy ze słownika DefinicjeAkordow (klucz WgNazwa). Odczyt z pracownik.Akordy.")]
-    public void C3_Akord_DodawanyWorkerem_ZDefinicjiSlownika()
+    public void KADRY_C3_Akord_DodawanyWorkerem_ZDefinicjiSlownika()
     {
         var defAkordu = Kadry.DefinicjeAkordow.Cast<DefinicjaAkordu>().FirstOrDefault();
         if (defAkordu == null)
@@ -197,15 +197,15 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
         akordy[0].Last.Should().NotBeNull("akord ma bieżący zapis historii AkordHistoria");
     }
 
-    // ============================== C4 — Zajęcia wynagrodzenia (komornicze/alimentacyjne) ==============================
+    // ============================== KADRY-C4 — Zajęcia wynagrodzenia (komornicze/alimentacyjne) ==============================
 
     [Test]
-    [Description("C4: zajęcie komornicze to JEDNA klasa ZajęcieKomornicze (alimentacyjne vs niealimentacyjne " +
+    [Description("KADRY-C4: zajęcie komornicze to JEDNA klasa ZajęcieKomornicze (alimentacyjne vs niealimentacyjne " +
                  "rozstrzyga definicja elementu i parametry zapisu historii, nie osobny typ ani pole Priorytet — " +
                  "którego na ZajęcieKomornicze NIE ma). Ctor publiczny new ZajęcieKomornicze(pracownik) + " +
                  "Kadry.ZajKomornicze.AddRow. Element (potrącenie zajęcia) jest wymagany. " +
                  "Rodzaj to enum RodzajeZajęciaWynagrodzenia { Kwota, KwotaMiesięczna }.")]
-    public void C4_ZajecieKomornicze_TworzoneZParametrami()
+    public void KADRY_C4_ZajecieKomornicze_TworzoneZParametrami()
     {
         // Element zajęcia — definicja o RodzajZrodla == ZajęcieKomornicze (dedykowany rodzaj źródła).
         var elementZajecia = PierwszaDefinicjaZajecia();
@@ -238,10 +238,10 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
     }
 
     [Test]
-    [Description("C4 (anulowanie): zajęcie anuluje się WORKEREM ZajęcieKomornicze.AnulujWorker (nie ręcznym " +
+    [Description("KADRY-C4 (anulowanie): zajęcie anuluje się WORKEREM ZajęcieKomornicze.AnulujWorker (nie ręcznym " +
                  "ustawianiem flagi Anulowane) — worker dba o storna i spójność rozliczenia. Tu weryfikujemy " +
                  "tylko publiczny model anulowania (utworzenie + uruchomienie workera).")]
-    public void C4_ZajecieKomornicze_AnulujWorker()
+    public void KADRY_C4_ZajecieKomornicze_AnulujWorker()
     {
         var elementZajecia = PierwszaDefinicjaZajecia();
         if (elementZajecia == null)
@@ -277,17 +277,17 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
             .Anulowane.Should().BeTrue("worker AnulujWorker oznacza zajęcie jako anulowane");
     }
 
-    // ============================== C5 — Operacje seryjne na dodatkach (moduł Przeszeregowania) ==============================
+    // ============================== KADRY-C5 — Operacje seryjne na dodatkach (moduł Przeszeregowania) ==============================
 
     [Test]
-    [Description("C5: seryjne nadanie dodatku grupie realizuje moduł Soneta.Przeszeregowania — worker " +
+    [Description("KADRY-C5: seryjne nadanie dodatku grupie realizuje moduł Soneta.Przeszeregowania — worker " +
                  "NowyDodatekWorker (Params(context) { Definicja, Podstawa, Procent } + Pracownicy[]). " +
                  "Worker przyjmuje TABLICĘ pracowników, więc nadaje się do operacji grupowej. " +
                  "Tu weryfikujemy utworzenie/parametryzację — efekt to nowy Dodatek u pracownika.")]
     [Ignore("NowyDodatekWorker (moduł Przeszeregowania) rzuca NullReferenceException w headless host " +
             "testowym (Przeszeregowania/NowyDodatek.cs:94) — operacja seryjna zależy od stanu operatora/" +
             "kontekstu UI nieobecnego w bazie Demo. Test dokumentuje publiczny model workera seryjnego.")]
-    public void C5_OperacjaSeryjna_NowyDodatekWorker_GrupaPracownikow()
+    public void KADRY_C5_OperacjaSeryjna_NowyDodatekWorker_GrupaPracownikow()
     {
         // Definicja dodatku (RodzajZrodla == Dodatek) — np. Premia z Demo.
         var def = Place.DefElementow.WgNazwy["Premia"] as DefinicjaElementu;
@@ -332,11 +332,11 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
     }
 
     [Test]
-    [Description("C5 (dokument Przeszeregowanie): dokument zbiorczy Soneta.Przeszeregowania.Przeszeregowanie " +
+    [Description("KADRY-C5 (dokument Przeszeregowanie): dokument zbiorczy Soneta.Przeszeregowania.Przeszeregowanie " +
                  "ma publiczny ctor + AddRow (kolekcja nie ma AddNew). Jest PLANEM — NIE zmienia danych dopóki " +
                  "nie zostanie wykonany (WykonajWorker). Tu weryfikujemy utworzenie i parametryzację nagłówka " +
                  "(Data, Nazwa). Kolekcja Pracownicy jest zarządzana przez przepływ workera, nie prostym Add.")]
-    public void C5_DokumentPrzeszeregowania_JestPlanemDoWykonania()
+    public void KADRY_C5_DokumentPrzeszeregowania_JestPlanemDoWykonania()
     {
         Guid guid = Guid.Empty;
         InTransaction(() =>
@@ -354,14 +354,14 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
         // Bez Save — to wyłącznie weryfikacja utworzenia/parametryzacji planu (rollback po teście).
     }
 
-    // ============================== C6 — Świadczenia socjalne (ZFŚS) ==============================
+    // ============================== KADRY-C6 — Świadczenia socjalne (ZFŚS) ==============================
 
     [Test]
-    [Description("C6: świadczenie socjalne to Soneta.Kadry.SwiadczSocjalne (ctor publiczny new SwiadczSocjalne" +
+    [Description("KADRY-C6: świadczenie socjalne to Soneta.Kadry.SwiadczSocjalne (ctor publiczny new SwiadczSocjalne" +
                  "(pracownik) + Kadry.SwiadczeniaSoc.AddRow). Definicję pobieramy ze słownika DefSwiadczSocjal " +
                  "(klucz WgNazwy); dane rozliczeniowe (Element, Kwota, Okres) ustawiamy na subrowie Rozliczenie. " +
                  "Faktyczne rozliczenie (Rozliczone == true) następuje przy naliczeniu wypłaty.")]
-    public void C6_SwiadczenieSocjalne_TworzoneZRozliczeniem()
+    public void KADRY_C6_SwiadczenieSocjalne_TworzoneZRozliczeniem()
     {
         var defSwiadcz = Kadry.DefSwiadczSocjal.Cast<DefinicjaŚwiadczeniaSocjalnego>().FirstOrDefault();
         if (defSwiadcz == null)
@@ -399,14 +399,14 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
         s.Rozliczenie.Rozliczone.Should().BeFalse("rozliczenie następuje dopiero przy naliczeniu wypłaty");
     }
 
-    // ============================== C7 — Pożyczki (KZP / ZFM) ==============================
+    // ============================== KADRY-C7 — Pożyczki (KZP / ZFM) ==============================
 
     [Test]
-    [Description("C7: ścieżka trzystopniowa FundPozyczkowy(pracownik, definicja) → Pozyczka(fundusz) → " +
+    [Description("KADRY-C7: ścieżka trzystopniowa FundPozyczkowy(pracownik, definicja) → Pozyczka(fundusz) → " +
                  "harmonogram rat. Pożyczki NIE da się utworzyć bez funduszu (ctor wymaga FundPozyczkowy). " +
                  "Definicję funduszu pobieramy ze słownika DefFundPozycz (WgNazwy). Element (wypłata) i " +
                  "ElementRaty (potrącenie raty) to RÓŻNE definicje. Harmonogram generuje worker UzgodnijRatyWorker.")]
-    public void C7_Pozyczka_FunduszPozyczkaHarmonogram()
+    public void KADRY_C7_Pozyczka_FunduszPozyczkaHarmonogram()
     {
         var defFunduszu = Kadry.DefFundPozycz.Cast<DefinicjaFunduszuPozyczkowego>().FirstOrDefault();
         if (defFunduszu == null)
@@ -457,11 +457,11 @@ public class RozdzialCrest_PotraceniaTest : PracownikTestBase
     }
 
     [Test]
-    [Description("C7 (harmonogram): harmonogram rat generuje worker Pozyczka.UzgodnijRatyWorker " +
+    [Description("KADRY-C7 (harmonogram): harmonogram rat generuje worker Pozyczka.UzgodnijRatyWorker " +
                  "(Params(context){ UzgodnijRaty, PrzeliczRaty }, property Pożyczka) albo metoda " +
                  "pozyczka.UpdatePozyczka() — NIE ręczne dodawanie RataPozyczki. Worker rozkłada kapitał/odsetki. " +
                  "Faktyczne potrącenia rat (Stan/Splacono) aktualizują się dopiero przy naliczeniu wypłaty.")]
-    public void C7_Pozyczka_HarmonogramRatPrzezWorker()
+    public void KADRY_C7_Pozyczka_HarmonogramRatPrzezWorker()
     {
         var defFunduszu = Kadry.DefFundPozycz.Cast<DefinicjaFunduszuPozyczkowego>().FirstOrDefault();
         if (defFunduszu == null)

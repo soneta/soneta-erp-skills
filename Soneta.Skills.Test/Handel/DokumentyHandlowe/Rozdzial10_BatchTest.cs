@@ -8,7 +8,7 @@ using Soneta.Handel;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 10 — Operacje zbiorcze (batch), wzorce W53–W55.
+/// Rozdział 10 — Operacje zbiorcze (batch), wzorce HANDEL-W53–HANDEL-W55.
 /// <para>
 /// Operacje na zbiorze dokumentów wykonujemy bezpiecznie i wydajnie: filtr <b>serwerowy</b>
 /// (a nie pełny skan tabeli operacyjnej <c>DokHandlowe</c>), <b>krótkie transakcje</b>
@@ -49,11 +49,11 @@ public class Rozdzial10_BatchTest : DokumentHandlowyTestBase
         return guidy;
     }
 
-    // === W54 — Hurtowe zatwierdzanie wielu dokumentów w jednej transakcji ===
+    // === HANDEL-W54 — Hurtowe zatwierdzanie wielu dokumentów w jednej transakcji ===
 
     [Test]
-    [Description("W54: hurtowe zatwierdzanie — kilka PW w buforze zatwierdzonych pętlą po Stan w jednej transakcji; po Save wszystkie są Zatwierdzone.")]
-    public void W54_HurtoweZatwierdzanie_WszystkieDokumentyZatwierdzone()
+    [Description("HANDEL-W54: hurtowe zatwierdzanie — kilka PW w buforze zatwierdzonych pętlą po Stan w jednej transakcji; po Save wszystkie są Zatwierdzone.")]
+    public void HANDEL_W54_HurtoweZatwierdzanie_WszystkieDokumentyZatwierdzone()
     {
         // 1. Przygotowanie: 3 dokumenty PW w buforze, zapisane trwale.
         var guidy = UtworzPwWBuforzeIZapisz(ile: 3);
@@ -81,8 +81,8 @@ public class Rozdzial10_BatchTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W54: hurtowe cofnięcie do bufora — kilka zatwierdzonych PW cofniętych jedną pętlą po Stan; po Save wszystkie wracają do bufora.")]
-    public void W54_HurtoweCofniecieDoBufora_WszystkieWBuforze()
+    [Description("HANDEL-W54: hurtowe cofnięcie do bufora — kilka zatwierdzonych PW cofniętych jedną pętlą po Stan; po Save wszystkie wracają do bufora.")]
+    public void HANDEL_W54_HurtoweCofniecieDoBufora_WszystkieWBuforze()
     {
         // 1. Najpierw zatwierdzamy kilka PW (stan wyjściowy do cofnięcia).
         var guidy = UtworzPwWBuforzeIZapisz(ile: 2);
@@ -109,11 +109,11 @@ public class Rozdzial10_BatchTest : DokumentHandlowyTestBase
             .Should().OnlyContain(d => d.Bufor && !d.Zatwierdzony);
     }
 
-    // === W55 — Wydajne przetwarzanie w paczkach (krótkie transakcje, okresowy Save) ===
+    // === HANDEL-W55 — Wydajne przetwarzanie w paczkach (krótkie transakcje, okresowy Save) ===
 
     [Test]
-    [Description("W55: przetwarzanie w paczkach — kilka dokumentów dzielonych na małe transakcje z okresowym Save; po przetworzeniu wszystkie poprawnie zatwierdzone.")]
-    public void W55_PrzetwarzanieWPaczkach_WszystkieDokumentyPrzetworzone()
+    [Description("HANDEL-W55: przetwarzanie w paczkach — kilka dokumentów dzielonych na małe transakcje z okresowym Save; po przetworzeniu wszystkie poprawnie zatwierdzone.")]
+    public void HANDEL_W55_PrzetwarzanieWPaczkach_WszystkieDokumentyPrzetworzone()
     {
         // 1. Większy (na potrzeby testu kilkuelementowy) zbiór PW w buforze.
         const int ileDokumentow = 5;
@@ -152,8 +152,8 @@ public class Rozdzial10_BatchTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W55: filtr serwerowy z zakresem czasowym — wsadowo zatwierdzamy tylko PW z dzisiejszą datą i w buforze; wzorzec SubTable[condition] zamiast pełnego skanu.")]
-    public void W55_FiltrSerwerowyZakresCzasowy_PrzetwarzaTylkoWybranePaczki()
+    [Description("HANDEL-W55: filtr serwerowy z zakresem czasowym — wsadowo zatwierdzamy tylko PW z dzisiejszą datą i w buforze; wzorzec SubTable[condition] zamiast pełnego skanu.")]
+    public void HANDEL_W55_FiltrSerwerowyZakresCzasowy_PrzetwarzaTylkoWybranePaczki()
     {
         // 1. Tworzymy kilka PW w buforze (data = dziś, nadana domyślnie przez definicję).
         const int ileDokumentow = 4;
@@ -194,11 +194,11 @@ public class Rozdzial10_BatchTest : DokumentHandlowyTestBase
             Get<DokumentHandlowy>(g).Zatwierdzony.Should().BeTrue();
     }
 
-    // === W53 — Ewidencjonowanie zbiorcze (EwidencjonowanieZbiorczeWorker) ===
+    // === HANDEL-W53 — Ewidencjonowanie zbiorcze (EwidencjonowanieZbiorczeWorker) ===
 
     [Test]
-    [Description("W53: ewidencjonowanie zbiorcze (EwidencjonowanieZbiorczeWorker) — pomijane: wymaga konfiguracji księgowej/ewidencji niedostępnej wprost w bazie Demo.")]
-    public void W53_EwidencjonowanieZbiorcze_PominietePoniewazWymagaKonfiguracjiKsiegowej()
+    [Description("HANDEL-W53: ewidencjonowanie zbiorcze (EwidencjonowanieZbiorczeWorker) — pomijane: wymaga konfiguracji księgowej/ewidencji niedostępnej wprost w bazie Demo.")]
+    public void HANDEL_W53_EwidencjonowanieZbiorcze_PominietePoniewazWymagaKonfiguracjiKsiegowej()
     {
         // SKIP: pełny tor ewidencjonowania zbiorczego wymaga skonfigurowanej ewidencji
         // księgowej (definicja dokumentu ewidencji typu SprzedażZbiorczaEwidencja) oraz
@@ -227,7 +227,7 @@ public class Rozdzial10_BatchTest : DokumentHandlowyTestBase
         //  - Worker przetwarza tylko dokumenty Zatwierdzone/Zablokowane i pomija już
         //    zaewidencjonowane (EwidencjaZbiorcza != null).
         //  - Definicja to rekord konfiguracyjny — pobierz istniejący (WgSymbolu/WgTypu), nie twórz "w locie".
-        Assert.Ignore("W53: ewidencjonowanie zbiorcze wymaga konfiguracji ewidencji księgowej/kasy " +
+        Assert.Ignore("HANDEL-W53: ewidencjonowanie zbiorcze wymaga konfiguracji ewidencji księgowej/kasy " +
                       "niedostępnej wprost w bazie Demo. Publiczny tor (Ewidencjonuj() + Params) opisany w komentarzu.");
     }
 }

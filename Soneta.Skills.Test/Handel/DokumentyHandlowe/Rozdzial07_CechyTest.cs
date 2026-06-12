@@ -8,7 +8,7 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 7 — Cechy (Features) na dokumencie handlowym (wzorce W40–W42).
+/// Rozdział 7 — Cechy (Features) na dokumencie handlowym (wzorce HANDEL-W40–HANDEL-W42).
 /// <para>
 /// Cechy (<see cref="FeatureCollection"/>) to definiowalne informacje przypisane do <c>Row</c> —
 /// tu: do dokumentu (<see cref="DokumentHandlowy"/>) i pozycji (<see cref="PozycjaDokHandlowego"/>).
@@ -21,7 +21,7 @@ namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 /// cechy bez <c>FeatureSetDefinition</c>: zarówno <c>Features.Exists(nazwa)</c>, jak i warunek
 /// serwerowy po string-path <c>"Features.Nazwa"</c> (<c>FieldCondition</c>) dla NIEZDEFINIOWANEJ
 /// cechy rzucają <see cref="System.ArgumentException"/> — NIE zwracają false ani pustego zbioru.
-/// Testy zapisu wartości cech (W41) oraz filtrowania zwracającego rekordy (W42) są <b>pominięte</b>,
+/// Testy zapisu wartości cech (HANDEL-W41) oraz filtrowania zwracającego rekordy (HANDEL-W42) są <b>pominięte</b>,
 /// bo wymagałyby wcześniej utworzonej definicji cechy, której Demo nie gwarantuje.
 /// </para>
 /// </summary>
@@ -33,11 +33,11 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
     private const string NieistniejacaCecha = "SkillTestCechaXyz";
 
     // ---------------------------------------------------------------------------------------------
-    // W41 — Odczyt i zapis cech (Features)
+    // HANDEL-W41 — Odczyt i zapis cech (Features)
     // ---------------------------------------------------------------------------------------------
 
     [Test]
-    [Description("W41: property Features dokumentu jest dostępna (nie-null) zaraz po utworzeniu dokumentu.")]
+    [Description("HANDEL-W41: property Features dokumentu jest dostępna (nie-null) zaraz po utworzeniu dokumentu.")]
     public void Features_NaDokumencie_JestDostepna()
     {
         // Tworzymy minimalny dokument przychodowy (PW) na magazynie Firma — bez kontrahenta.
@@ -52,7 +52,7 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W41: property Features pozycji dokumentu jest dostępna (nie-null) po dodaniu pozycji.")]
+    [Description("HANDEL-W41: property Features pozycji dokumentu jest dostępna (nie-null) po dodaniu pozycji.")]
     public void Features_NaPozycji_JestDostepna()
     {
         var dok = UtworzDokument(Definicje.PrzyjecieWewnetrzne, magazyn: Magazyn(Magazyn_.Firma));
@@ -67,7 +67,7 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W41: Features.Exists(nazwa) dla NIEZDEFINIOWANEJ cechy RZUCA ArgumentException " +
+    [Description("HANDEL-W41: Features.Exists(nazwa) dla NIEZDEFINIOWANEJ cechy RZUCA ArgumentException " +
                  "(odwołanie do cechy bez FeatureSetDefinition nie jest bezpieczne — nie zwraca false).")]
     public void Features_Exists_DlaNiezdefiniowanejCechy_RzucaArgumentException()
     {
@@ -82,7 +82,7 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
         Assert.Throws<System.ArgumentException>(() => dok.Features.Exists(NieistniejacaCecha));
     }
 
-    // --- POMINIĘTE (W41 zapis): ustawienie wartości cechy ---
+    // --- POMINIĘTE (HANDEL-W41 zapis): ustawienie wartości cechy ---
     // Powód: zapis dok["Nazwa"] = wartość wymaga istniejącej definicji cechy (FeatureDefinition)
     // zarejestrowanej dla tabeli DokHandlowe / PozycjeDokHan. Baza Demo nie gwarantuje żadnej
     // takiej definicji, a tworzenie nowych definicji cech wykracza poza zakres tego rozdziału
@@ -90,11 +90,11 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
     // rzuciłoby wyjątek, więc testu zapisu świadomie NIE piszemy.
 
     // ---------------------------------------------------------------------------------------------
-    // W42 — Filtrowanie / wyszukiwanie po wartości cechy (serwerowo)
+    // HANDEL-W42 — Filtrowanie / wyszukiwanie po wartości cechy (serwerowo)
     // ---------------------------------------------------------------------------------------------
 
     [Test]
-    [Description("W42: warunek serwerowy FieldCondition.Equal po string-path 'Features.Nazwa' " +
+    [Description("HANDEL-W42: warunek serwerowy FieldCondition.Equal po string-path 'Features.Nazwa' " +
                  "dla NIEZDEFINIOWANEJ cechy RZUCA ArgumentException przy aplikacji na indeksie dokumentów.")]
     public void FiltrPoCesze_NaIndeksieDokumentow_DlaNiezdefiniowanejCechy_RzucaArgumentException()
     {
@@ -110,13 +110,13 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W42: złożony warunek RowCondition.And/FieldCondition po NIEZDEFINIOWANEJ cesze " +
+    [Description("HANDEL-W42: złożony warunek RowCondition.And/FieldCondition po NIEZDEFINIOWANEJ cesze " +
                  "RZUCA ArgumentException przy wykonaniu serwerowym (brak FeatureSetDefinition).")]
     public void FiltrPoCesze_WarunekZlozony_DlaNiezdefiniowanejCechy_RzucaArgumentException()
     {
         // Składanie warunków serwerowych: cecha-bool ORAZ cecha-data >= dziś.
         // Wartości podajemy w typie zgodnym z typem cechy (bool dla Bool, Date dla Date) — zgodnie
-        // z W42. Sam warunek się składa, ale wykonanie na indeksie wymaga definicji cechy.
+        // z HANDEL-W42. Sam warunek się składa, ale wykonanie na indeksie wymaga definicji cechy.
         var warunek = new RowCondition.And(
             new FieldCondition.Equal($"Features.{NieistniejacaCecha}", true),
             new FieldCondition.GreaterEqual($"Features.{NieistniejacaCecha}Data", Date.Today));
@@ -128,7 +128,7 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W42: filtr po cesze na kolekcji SubTable pozycji dokumentu (dok.Pozycje[condition]) " +
+    [Description("HANDEL-W42: filtr po cesze na kolekcji SubTable pozycji dokumentu (dok.Pozycje[condition]) " +
                  "wykonuje się bez błędu i dla nieistniejącej cechy zwraca pusty zbiór.")]
     public void FiltrPoCesze_NaPozycjachDokumentu_WykonujeSieBezBledu()
     {
@@ -145,18 +145,18 @@ public class Rozdzial07_CechyTest : DokumentHandlowyTestBase
         pozycje.Should().BeEmpty();
     }
 
-    // --- POMINIĘTE (W42 z trafieniami): filtr po cesze zwracający rekordy ---
+    // --- POMINIĘTE (HANDEL-W42 z trafieniami): filtr po cesze zwracający rekordy ---
     // Powód: aby warunek FieldCondition.Equal("Features.Nazwa", wartość) zwrócił jakikolwiek
     // dokument/pozycję, musi istnieć definicja cechy ORAZ zapisana wartość tej cechy na rekordzie.
     // Oba elementy wymagałyby zdefiniowania własnej cechy (FeatureDefinition) i zapisu jej wartości,
     // czego Demo nie gwarantuje. Testujemy więc jedynie, że konstrukcja i wykonanie warunku
     // serwerowego są poprawne (powyżej), nie zaś zawartość zwróconego zbioru.
 
-    // --- POMINIĘTE (W40): przenoszenie cech z partii / dokumentu nadrzędnego ---
+    // --- POMINIĘTE (HANDEL-W40): przenoszenie cech z partii / dokumentu nadrzędnego ---
     // Powód: przenoszenie cech to mechanizm KONFIGURACYJNY (flagi DefDokHandlowego.KopiujCechyDostawy,
     // KopiujCechyDokumentu/KopiujCechyPozycji na definicji relacji), a faktyczne skopiowanie cechy
     // wymaga: (1) istniejącej definicji cechy zarejestrowanej dla pozycji/partii, (2) zapisanego
     // przyjęcia z ustawioną cechą i (3) rozchodu ze wskazaniem partii. Bez gwarantowanej definicji
-    // cechy w Demo nie da się zweryfikować przeniesienia wartości bezpieczną ścieżką, więc W40
+    // cechy w Demo nie da się zweryfikować przeniesienia wartości bezpieczną ścieżką, więc HANDEL-W40
     // pomijamy w testach (pozostaje udokumentowany w skillu jako konfiguracja, nie API).
 }

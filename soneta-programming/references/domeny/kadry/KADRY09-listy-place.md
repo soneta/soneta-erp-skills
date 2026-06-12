@@ -142,7 +142,7 @@ using Soneta.Place;
 
 var raporty = session.GetRequiredService<IReportService>();
 
-var context = new Context(session.Context);
+var context = Context.Empty.Clone(session);
 context.Set(wyplata);              // pojedyncza Wyplata
 
 var rr = new ReportResult {
@@ -186,7 +186,7 @@ using Soneta.Place;
 
 var raporty = session.GetRequiredService<IReportService>();
 
-var context = new Context(session.Context);
+var context = Context.Empty.Clone(session);
 context.Set(listaPlac);            // ListaPlac
 
 var rr = new ReportResult {

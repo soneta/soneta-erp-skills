@@ -10,7 +10,7 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział G — „Umowy cywilnoprawne" (receptury G1, G2).
+/// Rozdział G — „Umowy cywilnoprawne" (receptury KADRY-G1, KADRY-G2).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta dla umów
 /// cywilnoprawnych pracownika. <c>Soneta.Kadry.Umowa</c> to <b>root historyczny</b> (tabela
@@ -33,14 +33,14 @@ public class RozdzialG_UmowyTest : PracownikTestBase
     private DefinicjaElementu DefUmowy(Guid rodzaj) =>
         Place.DefElementow[rodzaj] as DefinicjaElementu;
 
-    // ============================== G1 — Dodawanie umów cywilnoprawnych ==============================
+    // ============================== KADRY-G1 — Dodawanie umów cywilnoprawnych ==============================
 
     [Test]
-    [Description("G1: umowę zlecenie tworzymy przez Session.AddRow(new Umowa(pracownik)); w OnAdded " +
+    [Description("KADRY-G1: umowę zlecenie tworzymy przez Session.AddRow(new Umowa(pracownik)); w OnAdded " +
                  "powstaje pierwszy zapis UmowaHistoria (umowa.Last). Element = rodzaj umowy " +
                  "(DefElementow[DefinicjaElementu.UmowaZlecenie]); dane nagłówkowe na roocie, " +
                  "a kwota (Wartosc) na zapisie historycznym Last. Odczyt z pracownik.Umowy.")]
-    public void G1_UmowaZlecenie_DodawanaZElementemIWartosciaNaLast()
+    public void KADRY_G1_UmowaZlecenie_DodawanaZElementemIWartosciaNaLast()
     {
         // Definicja elementu płacowego = rodzaj umowy (zlecenie) ze słownika konfiguracyjnego.
         var defZlecenie = DefUmowy(DefinicjaElementu.UmowaZlecenie);
@@ -103,10 +103,10 @@ public class RozdzialG_UmowyTest : PracownikTestBase
     }
 
     [Test]
-    [Description("G1 (o dzieło): wariant rodzaju umowy wskazujemy inną definicją elementu — " +
+    [Description("KADRY-G1 (o dzieło): wariant rodzaju umowy wskazujemy inną definicją elementu — " +
                  "DefElementow[DefinicjaElementu.Umowa20] (umowa o dzieło 20% KUP). Mechanizm " +
                  "tworzenia identyczny jak dla zlecenia (root + zapis historyczny Last).")]
-    public void G1_UmowaODzielo_WskazywanaInnaDefinicjaElementu()
+    public void KADRY_G1_UmowaODzielo_WskazywanaInnaDefinicjaElementu()
     {
         // Wariant „o dzieło" = definicja Umowa20 (20% KUP).
         var defDzielo = DefUmowy(DefinicjaElementu.Umowa20);
@@ -140,9 +140,9 @@ public class RozdzialG_UmowyTest : PracownikTestBase
     }
 
     [Test]
-    [Description("G1 (warianty rodzaju): stałe Guid definicji elementów umów (UmowaZlecenie, Umowa20, " +
+    [Description("KADRY-G1 (warianty rodzaju): stałe Guid definicji elementów umów (UmowaZlecenie, Umowa20, " +
                  "UmowaRyczałtowa) wskazują w słowniku DefElementow definicje o RodzajZrodla == Umowa.")]
-    public void G1_StaleDefinicjiElementow_WskazujaDefinicjeOZrodleUmowa()
+    public void KADRY_G1_StaleDefinicjiElementow_WskazujaDefinicjeOZrodleUmowa()
     {
         // Dokumentujemy warianty rodzaju umowy bez modyfikacji danych — same stałe + słownik.
         foreach (var rodzaj in new[]
@@ -159,12 +159,12 @@ public class RozdzialG_UmowyTest : PracownikTestBase
         }
     }
 
-    // ============================== G2 — Zmiana/aneks umowy ==============================
+    // ============================== KADRY-G2 — Zmiana/aneks umowy ==============================
 
     [Test]
-    [Description("G2 (korekta): zmiana danych nagłówkowych umowy (Tytul, Okres) w bieżącym okresie — " +
+    [Description("KADRY-G2 (korekta): zmiana danych nagłówkowych umowy (Tytul, Okres) w bieżącym okresie — " +
                  "bez Update/AddRow. Liczba zapisów historii się nie zmienia.")]
-    public void G2_Korekta_ZmieniaNaglowekBezNowegoOkresu()
+    public void KADRY_G2_Korekta_ZmieniaNaglowekBezNowegoOkresu()
     {
         Guid guidUmowy = Guid.Empty;
         var okresPocz = new FromTo(new Date(2026, 1, 1), new Date(2026, 12, 31));
@@ -202,10 +202,10 @@ public class RozdzialG_UmowyTest : PracownikTestBase
     }
 
     [Test]
-    [Description("G2 (aneks 'od daty'): Historia.Update(odDnia) klonuje zapis aktualny na odDnia, " +
+    [Description("KADRY-G2 (aneks 'od daty'): Historia.Update(odDnia) klonuje zapis aktualny na odDnia, " +
                  "skraca stary do odDnia-1 i zwraca NOWY klon (okres od odDnia); klon dodajemy do " +
                  "tabeli UmowaHistorie i ustawiamy na nim nową Wartosc.")]
-    public void G2_AneksOdDaty_TworzyNowyZapisHistoriiOdDnia_ISkracaStary()
+    public void KADRY_G2_AneksOdDaty_TworzyNowyZapisHistoriiOdDnia_ISkracaStary()
     {
         Guid guidUmowy = Guid.Empty;
         var odDnia = new Date(2026, 7, 1);
@@ -226,7 +226,7 @@ public class RozdzialG_UmowyTest : PracownikTestBase
         });
         SaveDispose();
 
-        // Aneks „od daty": nowy zapis historyczny obowiązujący od odDnia (analogicznie do PracHistoria/A14).
+        // Aneks „od daty": nowy zapis historyczny obowiązujący od odDnia (analogicznie do PracHistoria/KADRY-A14).
         InTransaction(() =>
         {
             var umowa = Get<Umowa>(guidUmowy);

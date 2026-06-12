@@ -8,7 +8,7 @@ using Soneta.Handel.RelacjeDokumentow.Api;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 4 — Relacje i generowanie dokumentów (W17–W24).
+/// Rozdział 4 — Relacje i generowanie dokumentów (HANDEL-W17–HANDEL-W24).
 /// Cały rozdział korzysta wyłącznie z publicznego toru przekształceń:
 /// serwisu <see cref="IRelacjeService"/> (scope: Session) oraz pól kalkulowanych
 /// <c>DokumentyMagazynowe</c> / <c>DokumentyHandlowe</c>.
@@ -45,10 +45,10 @@ public class Rozdzial04_RelacjeTest : DokumentHandlowyTestBase
         InTransaction(() => dok.Stan = StanDokumentuHandlowego.Zatwierdzony);
     }
 
-    // === W17 — ZO → FV (NowyPodrzednyIndywidualny) ===
+    // === HANDEL-W17 — ZO → FV (NowyPodrzednyIndywidualny) ===
 
     [Test]
-    [Description("W17: z zatwierdzonego zamówienia odbiorcy (ZO) generuje pojedynczą fakturę (FV) " +
+    [Description("HANDEL-W17: z zatwierdzonego zamówienia odbiorcy (ZO) generuje pojedynczą fakturę (FV) " +
                  "przez IRelacjeService.NowyPodrzednyIndywidualny; sprawdza, że powstał dokument z pozycjami.")]
     public void NowyPodrzednyIndywidualny_ZoNaFv_TworzyFaktureZPozycjami()
     {
@@ -85,53 +85,98 @@ public class Rozdzial04_RelacjeTest : DokumentHandlowyTestBase
         faktura.Pozycje.Count.Should().BeGreaterThan(0); // pozycje przepisane z zamówienia
     }
 
-    // === W21 — FV → WZ pojedynczo (NowyPodrzednyIndywidualny) ===
+    // === HANDEL-W21 — FV → WZ pojedynczo (NowyPodrzednyIndywidualny) ===
 
     [Test]
-    [Description("W21: do zatwierdzonej faktury sprzedaży (FV) generuje pojedynczy dokument magazynowy (WZ) " +
+    [Description("HANDEL-W21: do zatwierdzonej faktury sprzedaży (FV) generuje pojedynczy dokument magazynowy (WZ) " +
                  "przez NowyPodrzednyIndywidualny; sprawdza powstanie dokumentu magazynowego.")]
     public void NowyPodrzednyIndywidualny_FvNaWz_TworzyWydanieMagazynowe()
     {
-        // Relacja FV→WZ wymaga ZATWIERDZONEJ faktury sprzedaży jako nadrzędnej.
-        // W testowej bazie Demo zatwierdzenie FV rzuca NullReferenceException w ewidencji VAT (facts §3),
-        // więc nie da się dostarczyć poprawnego dokumentu nadrzędnego dla tej relacji.
-        Assert.Ignore("Relacja FA→WZ wymaga zatwierdzonej FV; zatwierdzenie FV w testowej bazie Demo " +
-                      "rzuca NRE w ewidencji VAT (facts §3) — scenariusz niewykonalny.");
+        // Zatwierdzona FV (nadrzędny) — helper zapisuje ją z pozycją przed zatwierdzeniem,
+        // dzięki czemu KrajPodatkuVat jest przeliczony i ewidencja VAT powstaje bez NRE.
+        var fvGuid = UtworzZatwierdzonaFakture();
+
+        var fv = Get<DokumentHandlowy>(fvGuid);
+        DokumentHandlowy[] wz = null;
+        InTransaction(() =>
+            wz = Relacje.NowyPodrzednyIndywidualny(new[] { fv }, Definicje.WydanieZewnetrzne));
+        var wzGuid = wz[0].Guid;
+        SaveDispose();
+
+        // Receptura HANDEL-W21: „sprawdza POWSTANIE dokumentu magazynowego”. Relacja indywidualna tworzy
+        // jeden podrzędny WZ powiązany z fakturą. (Transfer ilości/pozycji rozchodu zależy od wyboru
+        // dostaw — HandlerSet.WybierzDostawyCallback / DostawaWorker — i jest poza zakresem tego smoke-testu.)
+        wz.Should().HaveCount(1, "relacja indywidualna: jeden nadrzędny → jeden podrzędny");
+        var wzDok = Get<DokumentHandlowy>(wzGuid);
+        wzDok.Should().NotBeNull();
+        wzDok.Definicja.Symbol.Should().Be(Definicje.WydanieZewnetrzne, "powstał dokument magazynowy WZ");
+
+        // Powiązanie zwrotne: faktura wskazuje wygenerowany dokument magazynowy.
+        var fvOdczyt = Get<DokumentHandlowy>(fvGuid);
+        fvOdczyt.DokumentyMagazynowe.Should().Contain(d => d.Guid == wzGuid,
+            "wygenerowany WZ jest powiązany z fakturą nadrzędną");
     }
 
-    // === W18 — wiele FV → 1 WZ zbiorcze (NowyPodrzednyZbiorczy) ===
+    // === HANDEL-W18 — wiele FV → 1 WZ zbiorcze (NowyPodrzednyZbiorczy) ===
 
     [Test]
-    [Description("W18: z dwóch zatwierdzonych faktur (tego samego kontrahenta) tworzy JEDEN zbiorczy " +
+    [Description("HANDEL-W18: z dwóch zatwierdzonych faktur (tego samego kontrahenta) tworzy JEDEN zbiorczy " +
                  "dokument magazynowy (WZ) przez NowyPodrzednyZbiorczy; wynik to agregat (zwykle 1 dokument).")]
+    [Ignore("HANDEL-W18 — zbiorcza relacja FV→WZ (wiele faktur → jeden dokument magazynowy) NIE jest " +
+            "zarejestrowaną akcją przekształcenia dla faktury sprzedaży w bazie Demo: " +
+            "DokumentHandlowy.ResolveActions() nie zawiera tej operacji, więc IRelacjeService.NowyPodrzednyZbiorczy " +
+            "rzuca InvalidOperationException('Operacja tworzenia relacji nie jest dostępna'). To ograniczenie " +
+            "konfiguracji relacji (nie problem zatwierdzenia FV — ten jest rozwiązany przez UtworzZatwierdzonaFakture). " +
+            "Wariant zbiorczy pokrywa np. ZO→FV; FV→WZ działa indywidualnie (HANDEL-W21).")]
     public void NowyPodrzednyZbiorczy_WieleFvNaJednoWz_TworzyDokumentZbiorczy()
     {
-        // Relacja zbiorcza FV→WZ wymaga dwóch ZATWIERDZONYCH faktur sprzedaży jako nadrzędnych.
-        // W testowej bazie Demo zatwierdzenie FV rzuca NullReferenceException w ewidencji VAT (facts §3),
-        // więc nie da się dostarczyć poprawnych dokumentów nadrzędnych dla tej relacji.
-        Assert.Ignore("Relacja zbiorcza FA→WZ wymaga zatwierdzonych FV; zatwierdzenie FV w testowej " +
-                      "bazie Demo rzuca NRE w ewidencji VAT (facts §3) — scenariusz niewykonalny.");
+        // Pozostawione jako wykonywalna dokumentacja intencji — relacja niedostępna w Demo (patrz [Ignore]).
+        var fv1 = UtworzZatwierdzonaFakture();
+        var fv2 = UtworzZatwierdzonaFakture();
+
+        var d1 = Get<DokumentHandlowy>(fv1);
+        var d2 = Get<DokumentHandlowy>(fv2);
+        DokumentHandlowy[] wz = null;
+        InTransaction(() =>
+            wz = Relacje.NowyPodrzednyZbiorczy(new[] { d1, d2 }, Definicje.WydanieZewnetrzne));
+        SaveDispose();
+
+        wz.Should().NotBeNull();
+        wz.Should().HaveCount(1, "zbiorczy: dwie faktury → jeden wspólny dokument magazynowy");
+        Get<DokumentHandlowy>(wz[0].Guid).Definicja.Symbol.Should().Be(Definicje.WydanieZewnetrzne);
     }
 
-    // === W20 — odczyt powiązań: faktura.DokumentyMagazynowe ===
+    // === HANDEL-W20 — odczyt powiązań: faktura.DokumentyMagazynowe ===
 
     [Test]
-    [Description("W20: po wygenerowaniu WZ z faktury odczytuje powiązanie zwrotne przez pole kalkulowane " +
+    [Description("HANDEL-W20: po wygenerowaniu WZ z faktury odczytuje powiązanie zwrotne przez pole kalkulowane " +
                  "faktura.DokumentyMagazynowe — zwraca tablicę (nie null), zawiera wygenerowany dokument.")]
     public void DokumentyMagazynowe_PoWygenerowaniuWz_ZwracaPowiazanyDokument()
     {
-        // Scenariusz wymaga ZATWIERDZONEJ faktury sprzedaży (FV) jako nadrzędnej dla WZ.
-        // W testowej bazie Demo zatwierdzenie FV rzuca NullReferenceException w ewidencji VAT,
-        // więc nie da się zbudować zatwierdzonej FV → relacji FV→WZ nie da się tu wykonać.
-        // Powiązania zwrotne (DokumentyMagazynowe) pokrywa wzorzec ZO→FV w innych testach tego rozdziału.
-        Assert.Ignore("Relacja FA→WZ wymaga zatwierdzonej FV; zatwierdzenie FV w testowej bazie Demo " +
-                      "rzuca NRE w ewidencji VAT (facts §3) — scenariusz niewykonalny.");
+        // 1) Zatwierdzona faktura sprzedaży (FV) — dokument nadrzędny relacji FV→WZ.
+        //    Helper zapisuje FV z pozycją PRZED zatwierdzeniem, więc KrajPodatkuVat jest przeliczony
+        //    i ewidencja VAT powstaje bez NRE (patrz UtworzZatwierdzonaFakture).
+        var fvGuid = UtworzZatwierdzonaFakture();
+
+        // 2) Wygeneruj dokument magazynowy (WZ) z faktury — relacja podrzędna w transakcji edycyjnej.
+        var fv = Get<DokumentHandlowy>(fvGuid);
+        DokumentHandlowy[] wz = null;
+        InTransaction(() =>
+            wz = Relacje.NowyPodrzednyIndywidualny(new[] { fv }, Definicje.WydanieZewnetrzne));
+        var wzGuid = wz[0].Guid;
+        SaveDispose();
+
+        // 3) Powiązanie zwrotne czytamy po SaveDispose przez re-get: pole kalkulowane DokumentyMagazynowe.
+        var fvOdczyt = Get<DokumentHandlowy>(fvGuid);
+        fvOdczyt.DokumentyMagazynowe.Should().NotBeNull("pole kalkulowane zawsze zwraca tablicę (nie null)");
+        fvOdczyt.DokumentyMagazynowe.Should().Contain(d => d.Guid == wzGuid,
+            "po wygenerowaniu WZ faktura wskazuje go w DokumentyMagazynowe");
     }
 
-    // === W20 — odczyt powiązań: dok.DokumentyHandlowe dla samego dokumentu handlowego ===
+    // === HANDEL-W20 — odczyt powiązań: dok.DokumentyHandlowe dla samego dokumentu handlowego ===
 
     [Test]
-    [Description("W20: pola kalkulowane DokumentyMagazynowe/DokumentyHandlowe zawsze zwracają tablicę " +
+    [Description("HANDEL-W20: pola kalkulowane DokumentyMagazynowe/DokumentyHandlowe zawsze zwracają tablicę " +
                  "(nigdy null) — bezpieczne do iterowania także dla dokumentu bez powiązań.")]
     public void PolaPowiazan_BezRelacji_ZwracajaPustaTabliceNieNull()
     {
@@ -148,10 +193,10 @@ public class Rozdzial04_RelacjeTest : DokumentHandlowyTestBase
         zo.DokumentyHandlowe.Should().NotBeNull();
     }
 
-    // === W24 — łańcuch relacji w dół: zamówienie -> faktury -> magazynowe ===
+    // === HANDEL-W24 — łańcuch relacji w dół: zamówienie -> faktury -> magazynowe ===
 
     [Test]
-    [Description("W24: po wygenerowaniu FV z ZO odczytuje łańcuch relacji w dół przez pola kalkulowane " +
+    [Description("HANDEL-W24: po wygenerowaniu FV z ZO odczytuje łańcuch relacji w dół przez pola kalkulowane " +
                  "(zo.DokumentyHandlowe). Łańcuch respektuje istniejące powiązania; gdy relacji brak — Ignore.")]
     public void LancuchRelacji_ZoNaFv_OdczytPrzezPolaKalkulowane()
     {

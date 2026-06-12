@@ -6,7 +6,7 @@ using Soneta.Core;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W7 — Dane kontaktowe i adresy WWW.
+/// CRM-W7 — Dane kontaktowe i adresy WWW.
 /// Testy pokazują dodanie kanału e-mail do kolekcji <c>Kontakty</c> (typ rodzaju pobierany ze
 /// słownika <c>RodzajeKontaktow</c>) oraz dodanie adresu WWW (konstruktor z hostem
 /// <c>new AdresWWW(kontrahent)</c>, pole URL nazywa się <c>Adres</c>).

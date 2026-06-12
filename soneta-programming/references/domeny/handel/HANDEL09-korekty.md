@@ -115,7 +115,13 @@ session.Save();   // tu księgują się skorygowane obroty/partie
 ```
 
 **Pułapki:**
-- **Dedykowany worker `UtworzKorektePrzyjeciaWorker` jest `internal`** — nie da się go zainstancjonować z dodatku zewnętrznego. Publiczny tor to **`IRelacjeService.NowaKorekta`** (wewnętrznie worker robi dokładnie to samo: `NowaKorekta` + dostosowanie `Pozycje[].Ilosc` z uwzględnieniem obrotów/storn).
+- **Korektę przyjęcia (PW/PZ) buduje się — jak każdą korektę — przez RELACJĘ
+  `IRelacjeService.NowaKorekta(new[]{ przyjecie })`** (NIE workerem `internal`, NIE tworząc dokumentu
+  korygującego wprost). Wynik to dokument korygujący z `korekta.DokumentKorygowany == przyjecie`,
+  a samo przyjęcie ma korektę w kalkulowanym `DokumentyKorygujące` (zweryfikowane HANDEL-W49).
+  Dedykowany worker `UtworzKorektePrzyjeciaWorker` jest `internal` i niedostępny z dodatku —
+  publiczny tor to `NowaKorekta` (wewnętrznie robi to samo: `NowaKorekta` + dostosowanie
+  `Pozycje[].Ilosc` z uwzględnieniem obrotów/storn).
 - Korekta przyjęcia działa na zaksięgowanych obrotach i partiach — różnicowe wyliczenia ilości względem obrotów (`MagazynyModule.Obroty`) i storn wykonuje platforma. Z poziomu publicznego kontraktu ustaw docelową `Ilosc`/`Cena` na pozycji korekty.
 - Magazyn (zasoby/obroty) aktualizuje się dopiero po `session.Save()`, nie po `Commit()`.
 - Jeśli przyjęcie wskazywało partię/dostawę, korekta musi odnosić się do tej samej dostawy — przy złożonych scenariuszach (rozchody z tej partii, przesunięcia) korektę realizuj na pełnej, zalogowanej sesji aplikacyjnej.
@@ -234,9 +240,23 @@ static void WybierzZaliczki(DokumentDocelowy target) {
 ```
 
 **Pułapki:**
-- Bez dostarczenia odpowiedniego callbacka (`WybierzDokumentyZaliczkoweCallback` / `WybierzZaliczkiWgStawkiVatCallback`) domyślne handlery rzucają `NotImplementedException` — **musisz** wskazać tryb przenoszenia zaliczki zgodny z konfiguracją definicji końcowej (`SposobPrzenoszeniaZaliczki`: `NaPozycje` vs `NaDokument`).
-- Tryb przenoszenia (na pozycje / wg stawki VAT) jest **cechą definicji** dokumentu końcowego — użyj callbacka pasującego do konfiguracji, inaczej rozliczenie nie zadziała.
-- Worker rozliczenia (`RealizacjaZaliczkiWorker`, edytor kwot wg stawki) jest `internal` — z dodatku używaj publicznego `DokumentHandlowyRealizacjaZaliczkiWorker` (wskazanie dokumentów) wewnątrz callbacka.
+- **Rozliczenie zaliczki przez publiczny `IRelacjeService` NIE jest dostępne w bazie Demo
+  (GoldStandard).** Relacja zaliczkowa to `DefRelacjiZaliczki` (nazwy „Faktura (zaliczka)" /
+  „Zaliczkowy (r. zal.)") oznaczona w konfiguracji `<Hidden>True</Hidden>`. **Relacje ukryte nie są
+  zwracane przez `DokumentHandlowy.ResolveActions()`**, więc `IRelacjeService.DolaczNadrzedny`
+  (i analogicznie `NowyPodrzednyIndywidualny`) rzuca `InvalidOperationException("Operacja tworzenia
+  relacji nie jest dostępna")` dla KAŻDEJ nazwy relacji zaliczkowej. Rozliczenie zaliczki uruchamia
+  **wewnętrzny przepływ zaliczkowy platformy** (worker/Command z UI), nie publiczne API relacji
+  (zweryfikowane HANDEL-W51).
+- **KOREKTA wcześniejszej oceny:** parametry rozliczenia SĄ publiczne
+  (`RelacjeHandloweWorker.DokumentyZaliczkoweParams` + `HandlerSet.WybierzDokumentyZaliczkoweCallback`) —
+  faktyczną blokadą jest **ukrycie samej relacji**, nie brak parametrów ani brak dokumentu FZAL.
+  FZAL (faktura zaliczkowa) istnieje w Demo (`DefDok_SprzedazeInne`, symbol „FZAL").
+- Tryb przenoszenia (na pozycje / wg stawki VAT) jest **cechą definicji** dokumentu końcowego
+  (`SposobPrzenoszeniaZaliczki`: `NaPozycje` vs `NaDokument`); dobierz callback pasujący do
+  konfiguracji. Bez właściwego callbacka domyślne handlery rzucają `NotImplementedException`.
+- Worker rozliczenia (`RealizacjaZaliczkiWorker`, edytor kwot wg stawki) jest `internal` — z dodatku
+  używaj publicznego `DokumentHandlowyRealizacjaZaliczkiWorker` (wskazanie dokumentów) wewnątrz callbacka.
 - Faktura zaliczkowa musi być **zatwierdzona** przed rozliczeniem; `DokumentyZaliczkowe` to pole **kalkulowane** — nie ustawiasz go, czytasz.
 - Tabela VAT dokumentu zaliczkowego jest przeliczana proporcjonalnie do wpłaconej zaliczki (logika `DokumentZaliczkowyWorker`) — nie modyfikuj `SumyVAT` ręcznie.
 
@@ -256,8 +276,11 @@ static void WybierzZaliczki(DokumentDocelowy target) {
 
 **Pola i typy:**
 - Definicja: `session.GetHandel().DefDokHandlowych.WgSymbolu["MM"]`.
-- `DokumentHandlowy.MagazynZ: Soneta.Magazyny.Magazyn` — magazyn źródłowy (rozchód).
-- `DokumentHandlowy.MagazynDo: Soneta.Magazyny.Magazyn` — magazyn docelowy (**kalkulowane**: ustawia magazyn na podrzędnym dokumencie przesunięcia `Podrzędne[TypRelacjiHandlowej.PrzesunięcieDo]`; wymaga, by dokument przesunięcia już istniał — ustawiaj po `Definicja`).
+- `DokumentHandlowy.Magazyn: Soneta.Magazyny.Magazyn` — **magazyn źródłowy (rozchód) ustawiaj
+  standardowym polem `Magazyn`**, a NIE `MagazynZ` — to ostatnie bywa **read-only** poza
+  `ZamówieniemWewnętrznym` (zweryfikowane HANDEL-W52).
+- `DokumentHandlowy.MagazynDo: Soneta.Magazyny.Magazyn` — magazyn docelowy (**kalkulowane**: deleguje do podrzędnego dokumentu przesunięcia `Podrzędne[TypRelacjiHandlowej.PrzesunięcieDo]`; ustawiaj po `Definicja` i **przed** dodaniem pozycji).
+- **Drugi magazyn to dane KONFIGURACYJNE.** MM wymaga DWÓCH różnych magazynów; jeśli Demo ma tylko jeden („F"), drugi tworzysz w sesji **konfiguracyjnej** (`new Magazyn { Symbol, Nazwa }`, ew. przepięty `Oddzial`), a potem **odświeżasz sesję operacyjną** (świeża sesja wczyta konfigurację), by go zobaczyć.
 - `PozycjaDokHandlowego.Towar`, `Ilosc: Quantity`.
 
 **Snippet:**
@@ -273,8 +296,10 @@ using (var t = session.Logout(editMode: true)) {
     session.AddRow(mm);
     mm.Definicja = hm.DefDokHandlowych.WgSymbolu["MM"];     // definicja PIERWSZA
 
-    mm.MagazynZ  = magazyny.Magazyny.WgSymbol["F"];          // magazyn źródłowy
-    mm.MagazynDo = magazyny.Magazyny.WgNazwa["Magazyn 2"];   // magazyn docelowy (po ustawieniu definicji)
+    // Magazyn ŹRÓDŁOWY ustawiamy standardowym polem Magazyn (MagazynZ bywa read-only).
+    // Oba magazyny PRZED dodaniem pozycji (inaczej „dokument bez magazynu").
+    mm.Magazyn   = magazyny.Magazyny.WgSymbol["F"];          // magazyn źródłowy (rozchód)
+    mm.MagazynDo = magazyny.Magazyny.WgNazwa["Magazyn 2"];   // magazyn docelowy (po Definicji, przed pozycjami)
 
     var poz = new PozycjaDokHandlowego(mm);
     session.AddRow(poz);
@@ -289,8 +314,12 @@ session.Save();   // tu księguje się rozchód ze źródła i przychód do celu
 
 **Pułapki:**
 - `MagazynDo` jest **polem kalkulowanym** delegującym do podrzędnego dokumentu przesunięcia — ustaw je **po** `Definicja` (a najlepiej przed dodaniem pozycji), bo `IsReadOnlyMagazynDo()` blokuje zmianę magazynu, gdy istnieją już pozycje.
-- `MagazynZ` i `MagazynDo` **muszą być różne** i oba dostępne (prawa do magazynów / przypisanie definicji do magazynu wg konfiguracji `Ogólne.PrzypisanieDefinicjiDoMagazynu`).
-- Rozchód MM podlega blokadzie stanu ujemnego (Demo: `StanUjemnyVerifier`) — magazyn źródłowy musi mieć **zapisany** zasób przesuwanego towaru.
+- Magazyn źródłowy (`Magazyn`) i docelowy (`MagazynDo`) **muszą być różne** i oba dostępne
+  (prawa do magazynów / przypisanie definicji do magazynu wg konfiguracji
+  `Ogólne.PrzypisanieDefinicjiDoMagazynu`). Pozycję dodawaj **po** ustawieniu obu magazynów.
+- Rozchód MM podlega blokadzie stanu ujemnego (Demo: `StanUjemnyVerifier`) — magazyn źródłowy musi
+  mieć **zapisany** zasób przesuwanego towaru. `PrzyjmijNaStan` robi `SaveDispose` → przed MM
+  pracuj na **świeżej** sesji (inaczej `AccessWriteDenied`); magazyny pobieraj z tej świeżej sesji.
 - Obroty (rozchód + przychód) księgują się po `session.Save()`, nie po `Commit()`.
 - Korektę przesunięcia wykonuj przez `IRelacjeService.NowaKorekta` (jak w HANDEL-W48/HANDEL-W49); ręczna korekta partii przy MM jest złożona i wymaga pełnej sesji aplikacyjnej.
 

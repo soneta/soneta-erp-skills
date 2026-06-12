@@ -12,19 +12,19 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział B (pozostałe receptury etatu) — B2..B7 z dokumentu skilla <c>pracownik.md</c>:
+/// Rozdział B (pozostałe receptury etatu) — KADRY-B2..KADRY-B7 z dokumentu skilla <c>kadry/KADRY02-etat.md</c>:
 /// <list type="bullet">
-/// <item><b>B2</b> — aneks (zmiana warunków zatrudnienia „od daty");</item>
-/// <item><b>B3</b> — przeszeregowanie (zmiana stawki / grupy zaszeregowania);</item>
-/// <item><b>B4</b> — rozwiązanie / wygaśnięcie umowy o pracę;</item>
-/// <item><b>B5</b> — obniżenie wymiaru etatu;</item>
-/// <item><b>B6</b> — podzielniki kosztów (rozdział kosztów wynagrodzenia);</item>
-/// <item><b>B7</b> — aktualizacja danych wg definicji stanowiska (matrycy).</item>
+/// <item><b>KADRY-B2</b> — aneks (zmiana warunków zatrudnienia „od daty");</item>
+/// <item><b>KADRY-B3</b> — przeszeregowanie (zmiana stawki / grupy zaszeregowania);</item>
+/// <item><b>KADRY-B4</b> — rozwiązanie / wygaśnięcie umowy o pracę;</item>
+/// <item><b>KADRY-B5</b> — obniżenie wymiaru etatu;</item>
+/// <item><b>KADRY-B6</b> — podzielniki kosztów (rozdział kosztów wynagrodzenia);</item>
+/// <item><b>KADRY-B7</b> — aktualizacja danych wg definicji stanowiska (matrycy).</item>
 /// </list>
 /// <para>
-/// Wszystkie zmiany „od daty" realizujemy wzorcem A14: <c>Historia.Update(date)</c> klonuje zapis
+/// Wszystkie zmiany „od daty" realizujemy wzorcem KADRY-A14: <c>Historia.Update(date)</c> klonuje zapis
 /// aktualny na datę, skraca stary do dnia poprzedniego i zwraca nowy klon (okres od daty), który
-/// MUSI trafić do tabeli <c>PracHistorie</c> (<c>AddRow</c>). Na świeżym zapisie obowiązuje bramka B1:
+/// MUSI trafić do tabeli <c>PracHistorie</c> (<c>AddRow</c>). Na świeżym zapisie obowiązuje bramka KADRY-B1:
 /// <c>Etat.Okres</c> ustawiamy jako pierwsze pole etatu (odblokowuje pozostałe), a do <c>Save()</c>
 /// wymagane są <c>Etat.Wydzial</c> i <c>Etat.Stanowisko</c>.
 /// </para>
@@ -54,7 +54,7 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
         pracownik.Last.Imie = "Jan";
 
         var etat = pracownik.Last.Etat;
-        etat.Okres = okres;                                   // BRAMKA B1: Okres najpierw
+        etat.Okres = okres;                                   // BRAMKA KADRY-B1: Okres najpierw
         etat.TypUmowy = TypUmowyOPrace.NaCzasNieokreślony;
         etat.Podstawa = StosPracyNaPodstawie.UmowyOPrace;
         etat.Stanowisko = "Specjalista";                      // wymagane przy Save
@@ -68,13 +68,13 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
         return pracownik;
     }
 
-    // ============================== B2 — Zmiana warunków zatrudnienia (aneks) ==============================
+    // ============================== KADRY-B2 — Zmiana warunków zatrudnienia (aneks) ==============================
 
     [Test]
-    [Description("B2: aneks 'od daty' to nowy zapis historii — Historia.Update(odDnia) + PracHistorie.AddRow; " +
+    [Description("KADRY-B2: aneks 'od daty' to nowy zapis historii — Historia.Update(odDnia) + PracHistorie.AddRow; " +
                  "na sklonowanym Etat (Okres już ustawiony) zmieniamy warunki: Stanowisko, MiejscePracy, " +
                  "DataZawarcia, Wydzial. Stary okres skraca się do odDnia-1, nowy obowiązuje od odDnia.")]
-    public void B2_Aneks_ZmianaWarunkow_OdDaty_TworzyNowyZapis()
+    public void KADRY_B2_Aneks_ZmianaWarunkow_OdDaty_TworzyNowyZapis()
     {
         Guid guid = Guid.Empty;
         var okres = new FromTo(new Date(2026, 1, 1), Date.MaxValue);
@@ -110,13 +110,13 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
         zapisy[0].Etat.Stanowisko.Should().Be("Specjalista");
     }
 
-    // ============================== B3 — Przeszeregowanie (zmiana stawki / grupy) ==============================
+    // ============================== KADRY-B3 — Przeszeregowanie (zmiana stawki / grupy) ==============================
 
     [Test]
-    [Description("B3: przeszeregowanie 'od daty' — nowy zapis historii, a na Etat.Zaszeregowanie podnosimy " +
+    [Description("KADRY-B3: przeszeregowanie 'od daty' — nowy zapis historii, a na Etat.Zaszeregowanie podnosimy " +
                  "Stawka (Currency). Stawka to Currency, Wymiar to Fraction. Grupę pobieramy DYNAMICZNIE " +
                  "ze słownika GrupyZaszer (pierwszy wpis), nie hardkodujemy kodu.")]
-    public void B3_Przeszeregowanie_ZmianaStawki_IGrupy_OdDaty()
+    public void KADRY_B3_Przeszeregowanie_ZmianaStawki_IGrupy_OdDaty()
     {
         // Grupa zaszeregowania — referencja do słownika; bierzemy pierwszy istniejący wpis (jeśli jest).
         var grupa = Kadry.GrupyZaszer.Cast<GrupaZaszeregowania>().FirstOrDefault();
@@ -148,13 +148,13 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
             nowyZapis.Etat.Grupa.Should().NotBeNull("grupa zaszeregowania powiązana z etatem");
     }
 
-    // ============================== B4 — Rozwiązanie / wygaśnięcie umowy o pracę ==============================
+    // ============================== KADRY-B4 — Rozwiązanie / wygaśnięcie umowy o pracę ==============================
 
     [Test]
-    [Description("B4: rozwiązanie umowy — skrócenie Etat.Okres.To do dnia rozwiązania, dane wypowiedzenia " +
+    [Description("KADRY-B4: rozwiązanie umowy — skrócenie Etat.Okres.To do dnia rozwiązania, dane wypowiedzenia " +
                  "(OkresWypowiedzenia.*), przyczyna ze słownika PrzyczRozwUmow (pobrana DYNAMICZNIE, pierwszy " +
                  "wpis), tryb (PodstawaPrawna/Inicjatywa enumy) oraz flaga Etat.PracownikZwolniony.")]
-    public void B4_RozwiazanieUmowy_SkracaOkres_UstawiaPrzyczyneIWypowiedzenie()
+    public void KADRY_B4_RozwiazanieUmowy_SkracaOkres_UstawiaPrzyczyneIWypowiedzenie()
     {
         // Przyczyna rozwiązania to REKORD słownika (referencja), nie enum — bierzemy pierwszy wpis z Demo.
         var przyczyna = Kadry.PrzyczRozwUmow.Cast<PrzyczynaRozwUmowy>().FirstOrDefault();
@@ -197,10 +197,10 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
     }
 
     [Test]
-    [Description("B4 (rozróżnienie): PrzyczynaRozwUmowy to rekord słownika (referencja) z polem Typ " +
+    [Description("KADRY-B4 (rozróżnienie): PrzyczynaRozwUmowy to rekord słownika (referencja) z polem Typ " +
                  "(enum TypPrzyczynyRozwUmowy: Rozwiązanie/Wygaśnięcie) — to ono rozróżnia rozwiązanie od " +
                  "wygaśnięcia. Referencja (rekord) != Typ (enum na rekordzie).")]
-    public void B4_PrzyczynaRozwUmowy_JestRekordemSlownika_ZTypem()
+    public void KADRY_B4_PrzyczynaRozwUmowy_JestRekordemSlownika_ZTypem()
     {
         var przyczyny = Kadry.PrzyczRozwUmow.Cast<PrzyczynaRozwUmowy>().ToList();
         przyczyny.Should().NotBeEmpty("baza Demo zawiera słownik przyczyn rozwiązania umowy");
@@ -210,14 +210,14 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
             p.Typ.Should().BeOneOf(TypPrzyczynyRozwUmowy.Rozwiązanie, TypPrzyczynyRozwUmowy.Wygaśnięcie);
     }
 
-    // ============================== B5 — Obniżenie wymiaru etatu ==============================
+    // ============================== KADRY-B5 — Obniżenie wymiaru etatu ==============================
 
     [Test]
-    [Description("B5: obniżenie wymiaru 'od daty' przez nowy zapis historii; obniżony wymiar utrwalamy na " +
+    [Description("KADRY-B5: obniżenie wymiaru 'od daty' przez nowy zapis historii; obniżony wymiar utrwalamy na " +
                  "Etat.Zaszeregowanie.Wymiar (Fraction). UWAGA: subrow Etat.ObnizenieEtatu jest w PEŁNI " +
                  "tylko-do-odczytu (brak publicznego settera i metody Save) — pełny zapis stanu obniżenia " +
                  "realizują workery platformy; w kodzie biznesowym ustawiamy docelowy wymiar na Zaszeregowaniu.")]
-    public void B5_ObnizenieWymiaru_UstawiaDocelowyWymiar_NaZaszeregowaniu()
+    public void KADRY_B5_ObnizenieWymiaru_UstawiaDocelowyWymiar_NaZaszeregowaniu()
     {
         Guid guid = Guid.Empty;
         var okres = new FromTo(new Date(2026, 1, 1), Date.MaxValue);
@@ -247,10 +247,10 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
     }
 
     [Test]
-    [Description("B5 (kontrakt): wszystkie property subrowa ObniżenieWymiaruEtatu (Wymiar, Stawka, " +
+    [Description("KADRY-B5 (kontrakt): wszystkie property subrowa ObniżenieWymiaruEtatu (Wymiar, Stawka, " +
                  "RodzajStawki, TypStawki, Element, Kalendarz, Info) są tylko-do-odczytu — bezpośrednia " +
                  "modyfikacja nie jest możliwa przez publiczny kontrakt; stan obniżenia ustawiają workery.")]
-    public void B5_ObnizenieEtatu_JestTylkoDoOdczytu()
+    public void KADRY_B5_ObnizenieEtatu_JestTylkoDoOdczytu()
     {
         var t = typeof(ObniżenieWymiaruEtatu);
         foreach (var nazwa in new[] { "Wymiar", "Stawka", "RodzajStawki", "TypStawki", "Element", "Kalendarz", "Info" })
@@ -261,13 +261,13 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
         }
     }
 
-    // ============================== B6 — Podzielniki kosztów ==============================
+    // ============================== KADRY-B6 — Podzielniki kosztów ==============================
 
     [Test]
-    [Description("B6: trójpoziomowa struktura podzielnika — PodzielnikKosztow(pracownik)+PodzielKosztow.AddRow, " +
+    [Description("KADRY-B6: trójpoziomowa struktura podzielnika — PodzielnikKosztow(pracownik)+PodzielKosztow.AddRow, " +
                  "Historia.Update(odDnia)+HistPodzielnikow.AddRow, ElementPodzielnika(historia)+ElemPodzielnikow.AddRow. " +
                  "ElementPodzialowy to referencja (Wydzial), ustawiamy Wspolczynnik; Procent jest kalkulowany.")]
-    public void B6_PodzielnikKosztow_TworzyHistorieIElementUdzialu()
+    public void KADRY_B6_PodzielnikKosztow_TworzyHistorieIElementUdzialu()
     {
         var core = Session.GetCore();
         // Cel rozdziału musi pochodzić z tabeli zgodnej z definicją podzielnika (domyślna definicja
@@ -314,13 +314,13 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
         elementy[0].Wspolczynnik.Should().Be(100d);
     }
 
-    // ============================== B7 — Aktualizacja wg definicji stanowiska (matrycy) ==============================
+    // ============================== KADRY-B7 — Aktualizacja wg definicji stanowiska (matrycy) ==============================
 
     [Test]
-    [Description("B7: powiązanie etatu z definicją stanowiska (matrycą) 'od daty' — nowy zapis historii, " +
+    [Description("KADRY-B7: powiązanie etatu z definicją stanowiska (matrycą) 'od daty' — nowy zapis historii, " +
                  "Etat.Definicja = matryca (referencja z HR.DefStanowisk, pobrana DYNAMICZNIE), a wartości " +
                  "z matrycy (Stanowisko/wymiar/stawka) przenosimy JAWNIE na etat. Mark [Ignore] gdy brak matryc.")]
-    public void B7_DefinicjaStanowiska_PowiazanieIPrzeniesienieWartosci()
+    public void KADRY_B7_DefinicjaStanowiska_PowiazanieIPrzeniesienieWartosci()
     {
         // Definicja stanowiska — matryca konfiguracyjna; pobieramy pierwszą istniejącą (DYNAMICZNIE).
         var def = Session.GetHR().DefStanowisk.Cast<DefinicjaStanowiska>().FirstOrDefault();
@@ -353,9 +353,9 @@ public class RozdzialBrest_EtatTest : PracownikTestBase
     }
 
     [Test]
-    [Description("B7 (kontrakt): definicje stanowisk pobieramy ze słownika konfiguracyjnego HR.DefStanowisk; " +
+    [Description("KADRY-B7 (kontrakt): definicje stanowisk pobieramy ze słownika konfiguracyjnego HR.DefStanowisk; " +
                  "klucz po nazwie to WgNazwa (a nie WgNazwy). Iteracja słownika zwraca rekordy DefinicjaStanowiska.")]
-    public void B7_DefStanowisk_JestSlownikiemKonfiguracyjnym()
+    public void KADRY_B7_DefStanowisk_JestSlownikiemKonfiguracyjnym()
     {
         var defs = Session.GetHR().DefStanowisk.Cast<DefinicjaStanowiska>().ToList();
         // Słownik może być pusty w Demo — istotne, że iteracja działa i klucz WgNazwa istnieje.

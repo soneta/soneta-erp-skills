@@ -8,12 +8,12 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 8 skilla „dokument-handlowy” — VAT, wartości i waluty (W43–W47).
+/// Rozdział 8 skilla „dokument-handlowy” — VAT, wartości i waluty (HANDEL-W43–HANDEL-W47).
 /// <para>
 /// Testy weryfikują publiczny kontrakt dokumentu w zakresie tabeli VAT (<c>dok.SumyVAT</c>),
 /// podsumowań wartości (<c>dok.Suma</c>, <c>dok.SumaPozycji</c>), ręcznej korekty VAT
 /// (<c>dok.KorektaVAT</c>), sposobu liczenia VAT (<c>dok.LiczonaOd</c>) oraz — w zakresie, w jakim
-/// nie wymaga to sieci/kursu — zmiany waluty dokumentu (W47).
+/// nie wymaga to sieci/kursu — zmiany waluty dokumentu (HANDEL-W47).
 /// </para>
 /// <para>
 /// <b>Reguły bazy Demo</b>, których trzymają się testy:
@@ -63,7 +63,7 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
         {
             fv.Data = Date.Today;
             fv.DataOperacji = Date.Today;
-            // LiczonaOd ustawiamy PRZED pozycjami (W46) — zmiana po pozycjach wymusza przeliczenie cen.
+            // LiczonaOd ustawiamy PRZED pozycjami (HANDEL-W46) — zmiana po pozycjach wymusza przeliczenie cen.
             fv.LiczonaOd = SposobLiczeniaVAT.OdNetto;
             DodajPozycje(fv, Towar(Towar_.Bikini), ilosc, cena);
             guidFv = fv.Guid;
@@ -73,13 +73,13 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W43 — Odczytanie tabeli VAT (dok.SumyVAT)
+    // HANDEL-W43 — Odczytanie tabeli VAT (dok.SumyVAT)
     // ===================================================================================
 
     [Test]
-    [Description("W43: po zapisaniu FV (od netto, pozycja BIKINI) dok.SumyVAT zawiera co najmniej jedną " +
+    [Description("HANDEL-W43: po zapisaniu FV (od netto, pozycja BIKINI) dok.SumyVAT zawiera co najmniej jedną " +
                  "stawkę, a kwoty Netto/VAT/Brutto na wierszu SumaVAT są spójne (netto+vat == brutto, wszystkie > 0).")]
-    public void W43_TabelaVat_NiepustaISensowneKwoty()
+    public void HANDEL_W43_TabelaVat_NiepustaISensowneKwoty()
     {
         // Arrange + Act: zapisana FV od netto (2 szt po 50 = netto 100).
         var guidFv = UtworzZapisanaFvOdNetto(ilosc: 2, cena: 50);
@@ -106,15 +106,15 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
             brutto.Should().Be(netto + vat, "brutto stawki to suma netto i VAT");
         }
 
-        // Łączny VAT z tabeli VAT (tabela jest mała — .Sum jest akceptowalne, patrz pułapki W43).
+        // Łączny VAT z tabeli VAT (tabela jest mała — .Sum jest akceptowalne, patrz pułapki HANDEL-W43).
         decimal vatRazem = sumy.Sum(s => s.Suma.VAT);
         vatRazem.Should().BeGreaterThan(0m, "FV ze stawką VAT > 0 nalicza podatek");
     }
 
     [Test]
-    [Description("W43: wiersz SumaVAT udostępnia kwoty w walucie dokumentu (SumaCy: BruttoNettoCy) jako Currency; " +
+    [Description("HANDEL-W43: wiersz SumaVAT udostępnia kwoty w walucie dokumentu (SumaCy: BruttoNettoCy) jako Currency; " +
                  "dla dokumentu krajowego (PLN) brutto walutowe odpowiada brutto w walucie systemowej.")]
-    public void W43_TabelaVat_KwotyWalutoweCy()
+    public void HANDEL_W43_TabelaVat_KwotyWalutoweCy()
     {
         var guidFv = UtworzZapisanaFvOdNetto(ilosc: 1, cena: 100);
         var dok = Get<DokumentHandlowy>(guidFv);
@@ -130,13 +130,13 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W44 — Odczyt podsumowań wartości dokumentu (dok.Suma, dok.SumaPozycji)
+    // HANDEL-W44 — Odczyt podsumowań wartości dokumentu (dok.Suma, dok.SumaPozycji)
     // ===================================================================================
 
     [Test]
-    [Description("W44: dok.Suma (BruttoNetto) podaje podsumowanie netto/VAT/brutto całego dokumentu; " +
+    [Description("HANDEL-W44: dok.Suma (BruttoNetto) podaje podsumowanie netto/VAT/brutto całego dokumentu; " +
                  "dla FV 2 szt po 50 (od netto) netto == 100, a brutto == netto + VAT.")]
-    public void W44_PodsumowanieDokumentu_Suma()
+    public void HANDEL_W44_PodsumowanieDokumentu_Suma()
     {
         var guidFv = UtworzZapisanaFvOdNetto(ilosc: 2, cena: 50);
         var dok = Get<DokumentHandlowy>(guidFv);
@@ -154,9 +154,9 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W44: dok.SumaPozycji (BruttoNettoPozycji, read-only) liczona z pozycji jest spójna z dok.Suma " +
+    [Description("HANDEL-W44: dok.SumaPozycji (BruttoNettoPozycji, read-only) liczona z pozycji jest spójna z dok.Suma " +
                  "dla zapisanego dokumentu (po przeliczeniu obie reprezentacje są zgodne).")]
-    public void W44_SumaPozycji_SpojnaZSuma()
+    public void HANDEL_W44_SumaPozycji_SpojnaZSuma()
     {
         var guidFv = UtworzZapisanaFvOdNetto(ilosc: 3, cena: 40);
         var dok = Get<DokumentHandlowy>(guidFv);
@@ -174,13 +174,13 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W45 — Ręczna korekta tabeli VAT (dok.KorektaVAT)
+    // HANDEL-W45 — Ręczna korekta tabeli VAT (dok.KorektaVAT)
     // ===================================================================================
 
     [Test]
-    [Description("W45: ustawienie dok.KorektaVAT = true jest trwałe — po zapisie i odczycie na świeżej sesji " +
+    [Description("HANDEL-W45: ustawienie dok.KorektaVAT = true jest trwałe — po zapisie i odczycie na świeżej sesji " +
                  "flaga pozostaje włączona (publiczny tor korekty tabeli VAT, worker korekty jest internal).")]
-    public void W45_KorektaVat_FlagaUstawiana()
+    public void HANDEL_W45_KorektaVat_FlagaUstawiana()
     {
         // Tworzymy FV od netto z pozycją (potrzebny stan magazynu pod rozchód).
         var guidFv = UtworzZapisanaFvOdNetto(ilosc: 1, cena: 100);
@@ -199,13 +199,13 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W46 — Sposób liczenia VAT (dok.LiczonaOd)
+    // HANDEL-W46 — Sposób liczenia VAT (dok.LiczonaOd)
     // ===================================================================================
 
     [Test]
-    [Description("W46: dok.LiczonaOd ustawione na OdNetto PRZED pozycjami jest zapisywane i odczytywane " +
+    [Description("HANDEL-W46: dok.LiczonaOd ustawione na OdNetto PRZED pozycjami jest zapisywane i odczytywane " +
                  "na świeżej sesji; enum SposobLiczeniaVAT.OdNetto == 1.")]
-    public void W46_LiczonaOd_OdNetto()
+    public void HANDEL_W46_LiczonaOd_OdNetto()
     {
         // UtworzZapisanaFvOdNetto ustawia LiczonaOd = OdNetto przed dodaniem pozycji.
         var guidFv = UtworzZapisanaFvOdNetto(ilosc: 1, cena: 50);
@@ -215,9 +215,9 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W46: dok.LiczonaOd ustawione na OdBrutto PRZED pozycjami jest trwałe; " +
+    [Description("HANDEL-W46: dok.LiczonaOd ustawione na OdBrutto PRZED pozycjami jest trwałe; " +
                  "wartość 0 jest niedozwolona, więc zawsze ustawiamy konkretny wariant enuma (OdBrutto == 2).")]
-    public void W46_LiczonaOd_OdBrutto()
+    public void HANDEL_W46_LiczonaOd_OdBrutto()
     {
         // Warunek wstępny: zapisane przyjęcie pod rozchód FV.
         PrzyjmijBikiniNaStan();
@@ -231,7 +231,7 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
         {
             fv.Data = Date.Today;
             fv.DataOperacji = Date.Today;
-            // Ustawiamy sposób liczenia PRZED pozycjami (W46) — wpływa na przeliczenie netto↔brutto.
+            // Ustawiamy sposób liczenia PRZED pozycjami (HANDEL-W46) — wpływa na przeliczenie netto↔brutto.
             fv.LiczonaOd = SposobLiczeniaVAT.OdBrutto;
             DodajPozycje(fv, Towar(Towar_.Bikini), 1, 123);
             guidFv = fv.Guid;
@@ -245,17 +245,17 @@ public class Rozdzial08_VatWalutyTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W47 — Zmiana waluty dokumentu i cen (SKIP — wymaga kursu/sieci, worker internal)
+    // HANDEL-W47 — Zmiana waluty dokumentu i cen (SKIP — wymaga kursu/sieci, worker internal)
     // ===================================================================================
 
     [Test]
-    [Ignore("W47 — zmiana waluty dokumentu wymaga kursu na wskazaną datę. Worker " +
+    [Ignore("HANDEL-W47 — zmiana waluty dokumentu wymaga kursu na wskazaną datę. Worker " +
             "DokumentHandlowyZmianaWalutyWorker jest INTERNAL (nie do zainstancjonowania z dodatku " +
             "zewnętrznego), a baza Demo zwykle nie ma kursu EUR „na dziś” — próba przeliczenia rzuca " +
             "KursWalutyNotFoundException. Pobranie aktualnego kursu wymagałoby sieci (NBP), czego testy " +
             "nie robią (reguła: bez sieci). Publiczny tor to akcja Czynności z parametrami " +
             "DokumentHandlowyZmianaWalutyWorkerParams lub ręczne ustawienie pól waluty/kursu — oba " +
-            "zależne od istniejącego kursu w bazie. SKIP wg pułapek W47 (brak gwarantowanego kursu, bez sieci).")]
-    [Description("W47: zmiana waluty dokumentu (EUR) z przeliczeniem cen — pominięte (wymaga kursu/sieci; worker internal).")]
-    public void W47_ZmianaWaluty_Skip() { }
+            "zależne od istniejącego kursu w bazie. SKIP wg pułapek HANDEL-W47 (brak gwarantowanego kursu, bez sieci).")]
+    [Description("HANDEL-W47: zmiana waluty dokumentu (EUR) z przeliczeniem cen — pominięte (wymaga kursu/sieci; worker internal).")]
+    public void HANDEL_W47_ZmianaWaluty_Skip() { }
 }

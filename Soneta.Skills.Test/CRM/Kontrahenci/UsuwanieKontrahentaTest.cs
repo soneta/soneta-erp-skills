@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W5 — Bezpieczne usuwanie kontrahenta.
+/// CRM-W5 — Bezpieczne usuwanie kontrahenta.
 /// Test pokazuje czyste usunięcie świeżo utworzonego rekordu (brak powiązań) oraz alternatywę
 /// „miękkiego" wycofania (<c>Blokada=true</c>), zalecaną gdy istnieją dokumenty/rozrachunki.
 /// </summary>

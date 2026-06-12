@@ -10,15 +10,15 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział D — „Nieobecności i czas pracy" (receptury D1, D2, D7).
+/// Rozdział D — „Nieobecności i czas pracy" (receptury KADRY-D1, KADRY-D2, KADRY-D7).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta dla obsługi
 /// nieobecności pracownika oraz limitów urlopowych. Każda metoda mapuje się 1:1 do receptury
-/// z dokumentu skilla <c>pracownik.md</c>:
+/// z dokumentu skilla <c>kadry/KADRY04-nieobecnosci.md</c>:
 /// <list type="bullet">
-/// <item><b>D1</b> — wprowadzanie nieobecności (<c>NieobecnośćPracownika</c>, kolekcja <c>Nieobecnosci</c>);</item>
-/// <item><b>D2</b> — korygowanie nieobecności (zmiana okresu/typu, rekord <c>KorektaNieobecności</c>);</item>
-/// <item><b>D7</b> — analiza limitów urlopowych (naliczenie <c>NaliczanieLimitow.DodajLimit()</c> + odczyt z <c>pracownik.Limity</c>).</item>
+/// <item><b>KADRY-D1</b> — wprowadzanie nieobecności (<c>NieobecnośćPracownika</c>, kolekcja <c>Nieobecnosci</c>);</item>
+/// <item><b>KADRY-D2</b> — korygowanie nieobecności (zmiana okresu/typu, rekord <c>KorektaNieobecności</c>);</item>
+/// <item><b>KADRY-D7</b> — analiza limitów urlopowych (naliczenie <c>NaliczanieLimitow.DodajLimit()</c> + odczyt z <c>pracownik.Limity</c>).</item>
 /// </list>
 /// </para>
 /// <para>
@@ -29,9 +29,9 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 /// <para>
 /// <b>Uwaga praktyczna (odkryta w trakcie testów):</b> ustawienie <c>Okres</c> na nieobecności typu
 /// „urlop wypoczynkowy" wyzwala synchroniczne przeliczenie limitu i — gdy pracownik nie ma jeszcze
-/// naliczonego limitu na ten dzień — rzuca <c>LimitNotFoundException</c>. Dlatego dla scenariuszy D1/D2
+/// naliczonego limitu na ten dzień — rzuca <c>LimitNotFoundException</c>. Dlatego dla scenariuszy KADRY-D1/KADRY-D2
 /// (czysta obsługa rekordu nieobecności) używamy typu nieobecności <b>niewymagającego limitu</b>
-/// („Urlop bezpłatny (art 174 kp)"), a urlop wypoczynkowy testujemy dopiero po naliczeniu limitu (D7).
+/// („Urlop bezpłatny (art 174 kp)"), a urlop wypoczynkowy testujemy dopiero po naliczeniu limitu (KADRY-D7).
 /// </para>
 /// </summary>
 [TestFixture]
@@ -42,12 +42,12 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
     private const string DefBezplatny2 = "Urlop bezpłatny (kod 350)";
     private const string DefUrlopWyp = "Urlop wypoczynkowy";
 
-    // ============================== D1 — Wprowadzanie nieobecności ==============================
+    // ============================== KADRY-D1 — Wprowadzanie nieobecności ==============================
 
     [Test]
-    [Description("D1: Nieobecnosc jest typem ABSTRAKCYJNYM; konkretnym typem nieobecności pracownika " +
+    [Description("KADRY-D1: Nieobecnosc jest typem ABSTRAKCYJNYM; konkretnym typem nieobecności pracownika " +
                  "jest NieobecnośćPracownika (dziedziczy po Nieobecnosc) z ctorem (Pracownik).")]
-    public void D1_NieobecnoscPracownika_JestKonkretnymTypemNieobecnosci()
+    public void KADRY_D1_NieobecnoscPracownika_JestKonkretnymTypemNieobecnosci()
     {
         // Dokumentujemy regułę z receptury: new Nieobecnosc() jest niemożliwe (typ abstrakcyjny),
         // więc używamy NieobecnośćPracownika. Sprawdzamy relację dziedziczenia bez instancjonowania abstrakta.
@@ -57,9 +57,9 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D1: nieobecność tworzymy NieobecnośćPracownika(pracownik) (ctor wiąże z pracownikiem) " +
+    [Description("KADRY-D1: nieobecność tworzymy NieobecnośćPracownika(pracownik) (ctor wiąże z pracownikiem) " +
                  "+ AddRow; ustawiamy Definicja (słownik DefNieobecnosci) i Okres (FromTo); zapis przez Save().")]
-    public void D1_WprowadzenieNieobecnosci_TworzyRekordWKolekcjiNieobecnosci()
+    public void KADRY_D1_WprowadzenieNieobecnosci_TworzyRekordWKolekcjiNieobecnosci()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull("pracownik z Demo istnieje");
@@ -94,9 +94,9 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D1 (odczyt): pracownik.Nieobecnosci.GetIntersectedRows(FromTo) zwraca nieobecności " +
+    [Description("KADRY-D1 (odczyt): pracownik.Nieobecnosci.GetIntersectedRows(FromTo) zwraca nieobecności " +
                  "przecinające zadany przedział; poza przedziałem nieobecność nie jest zwracana.")]
-    public void D1_GetIntersectedRows_FiltrujePoPrzecieciuOkresu()
+    public void KADRY_D1_GetIntersectedRows_FiltrujePoPrzecieciuOkresu()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
         var def = Kalend.DefNieobecnosci.WgNazwy[DefBezplatny] as DefinicjaNieobecnosci;
@@ -122,12 +122,12 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
             .Should().BeEmpty("nieobecność nie przecina się z wrześniem 2026");
     }
 
-    // ============================== D2 — Korygowanie nieobecności ==============================
+    // ============================== KADRY-D2 — Korygowanie nieobecności ==============================
 
     [Test]
-    [Description("D2 (wariant A): okres nieobecności jest polem zapisywalnym — na istniejącym rekordzie " +
+    [Description("KADRY-D2 (wariant A): okres nieobecności jest polem zapisywalnym — na istniejącym rekordzie " +
                  "można zmienić Okres (np. wydłużyć nieobecność) i utrwalić zmianę przez Save().")]
-    public void D2_ModyfikacjaOkresu_ZmianaIstniejacegoRekordu()
+    public void KADRY_D2_ModyfikacjaOkresu_ZmianaIstniejacegoRekordu()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
         var def = Kalend.DefNieobecnosci.WgNazwy[DefBezplatny] as DefinicjaNieobecnosci;
@@ -161,9 +161,9 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D2 (wariant A): zmiana typu nieobecności — pole Definicja jest zapisywalne, " +
+    [Description("KADRY-D2 (wariant A): zmiana typu nieobecności — pole Definicja jest zapisywalne, " +
                  "można podmienić rodzaj nieobecności na istniejącym rekordzie.")]
-    public void D2_ZmianaDefinicji_PodmieniaTypNieobecnosci()
+    public void KADRY_D2_ZmianaDefinicji_PodmieniaTypNieobecnosci()
     {
         var pracownik = Pracownik(Pracownik_.Strzelecki);
         var def1 = Kalend.DefNieobecnosci.WgNazwy[DefBezplatny] as DefinicjaNieobecnosci;
@@ -195,10 +195,10 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D2 (wariant C): korektę dodajemy konstruktorem KorektaNieobecności(nieobecność) — " +
+    [Description("KADRY-D2 (wariant C): korektę dodajemy konstruktorem KorektaNieobecności(nieobecność) — " +
                  "rekord korygujący o okresie ZAWARTYM w okresie korygowanym; po zapisie nieobecność " +
                  "pierwotna zostaje oznaczona flagą Korygowana=true.")]
-    public void D2_KorektaNieobecnosci_OznaczaNieobecnoscJakoKorygowana()
+    public void KADRY_D2_KorektaNieobecnosci_OznaczaNieobecnoscJakoKorygowana()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         var def = Kalend.DefNieobecnosci.WgNazwy[DefBezplatny] as DefinicjaNieobecnosci;
@@ -243,26 +243,26 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Ignore("Worker UstalPonowniePodstawęNaliczaniaWorker (D2 wariant B) jest aktywny tylko dla zwolnień " +
+    [Ignore("Worker UstalPonowniePodstawęNaliczaniaWorker (KADRY-D2 wariant B) jest aktywny tylko dla zwolnień " +
             "ZUS / urlopów macierzyńskich (IsEnabledPonownieUstalPodstawę), a FAKTYCZNE przeliczenie kwot " +
             "zasiłku następuje dopiero przy ponownym naliczeniu wypłaty (mechanizm PodstawaZasilku). Na bazie " +
             "Demo z rollbackiem, bez pełnego scenariusza naliczenia listy płac, nie da się sensownie zweryfikować " +
-            "efektu workera. LUKA w pracownik.md D2: dokument nie podaje minimalnego, wykonalnego scenariusza " +
+            "efektu workera. LUKA w kadry/KADRY04-nieobecnosci.md KADRY-D2: dokument nie podaje minimalnego, wykonalnego scenariusza " +
             "naliczenia wypłaty pozwalającego zweryfikować przeliczenie podstawy.")]
-    [Description("D2 (wariant B): czynność 'Ustal ponownie podstawę naliczania' przez worker — " +
+    [Description("KADRY-D2 (wariant B): czynność 'Ustal ponownie podstawę naliczania' przez worker — " +
                  "niewykonalna na samej korekcie rekordu bez naliczonej wypłaty.")]
-    public void D2_PonowneUstaleniePodstawy_PrzezWorker_Niewykonalne()
+    public void KADRY_D2_PonowneUstaleniePodstawy_PrzezWorker_Niewykonalne()
     {
         // Pozostawione jako [Ignore] — patrz uzasadnienie w atrybucie.
     }
 
-    // ============================== D7 — Analiza limitów urlopowych ==============================
+    // ============================== KADRY-D7 — Analiza limitów urlopowych ==============================
 
     [Test]
-    [Description("D7: limit urlopowy NIE jest tworzony ręcznie — najpierw naliczamy go " +
+    [Description("KADRY-D7: limit urlopowy NIE jest tworzony ręcznie — najpierw naliczamy go " +
                  "NaliczanieLimitow.DodajLimit(), potem odczytujemy z pracownik.Limity; arytmetyka " +
                  "Wykorzystane == Razem - Pozostalo jest spójna.")]
-    public void D7_NaliczenieLimitu_TworzyLimitDoOdczytu()
+    public void KADRY_D7_NaliczenieLimitu_TworzyLimitDoOdczytu()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         var defLimit = Kalend.DefinicjeLimitow.WgNazwy[DefUrlopWyp] as DefinicjaLimitu;
@@ -305,10 +305,10 @@ public class RozdzialD_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D7: wprowadzenie urlopu wypoczynkowego wymaga ISTNIEJĄCEGO limitu na ten dzień — ustawienie " +
+    [Description("KADRY-D7: wprowadzenie urlopu wypoczynkowego wymaga ISTNIEJĄCEGO limitu na ten dzień — ustawienie " +
                  "Okres na nieobecności urlopowej wyzwala przeliczenie limitu; po wcześniejszym naliczeniu " +
                  "limitu zapis przechodzi bez LimitNotFoundException, a limit jest odczytywalny.")]
-    public void D7_UrlopWypoczynkowy_WymagaNaliczonegoLimitu()
+    public void KADRY_D7_UrlopWypoczynkowy_WymagaNaliczonegoLimitu()
     {
         var defLimit = Kalend.DefinicjeLimitow.WgNazwy[DefUrlopWyp] as DefinicjaLimitu;
         var rok = FromTo.Year(new Date(2026, 1, 1));

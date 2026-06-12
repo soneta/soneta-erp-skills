@@ -70,6 +70,14 @@ if (dok.Zatwierdzony)
   zasobów. Jeśli baza blokuje stan ujemny (weryfikator `StanUjemnyVerifier`, jak w bazie Demo),
   rozchód (FV/WZ/RW) wymaga **wcześniej zapisanego** przyjęcia (PW/PZ) tego towaru — inaczej `Save()`
   rzuci wyjątek.
+- **Faktura sprzedaży (FV) — zapisz pozycje PRZED zatwierdzeniem.** Zatwierdzenie dokumentu sprzedaży
+  tworzy **ewidencję VAT** (`DokumentHandlowy.CreateEwidencja`), która czyta `dok.KrajPodatkuVat`. Pole to
+  jest przeliczane z `pozycja.Stawka.Kraj` przez **odroczone zdarzenie sesji wykonywane na `Save()`**
+  (nie na `Commit()`). Jeśli dodasz pozycje i zatwierdzisz w **tej samej** sesji (sam `CommitUI`, bez
+  `Save()` pomiędzy), `KrajPodatkuVat` jest jeszcze `null` → zatwierdzenie rzuca `NullReferenceException`
+  w ewidencji VAT. Poprawna kolejność: utwórz FV z pozycjami → **`Save()`** (przelicza `KrajPodatkuVat`)
+  → odczytaj na świeżej sesji → dopiero teraz `Stan = Zatwierdzony`. (W testach robi to helper
+  `UtworzZatwierdzonaFakture` w `DokumentHandlowyTestBase`.)
 - Zatwierdzenie uruchamia walidatory dokumentu (kompletność pozycji, magazyn, kontrahent, tabela
   VAT). Błędy wychodzą w `Commit()`/`Save()` jako `RowException` — nie połykaj ich (safe-code §4).
 - W workerze/extenderze użyj `t.CommitUI()` zamiast `t.Commit()`

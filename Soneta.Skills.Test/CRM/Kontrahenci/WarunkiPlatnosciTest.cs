@@ -6,7 +6,7 @@ using Soneta.Kasa;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W9 — Warunki płatności i limity kredytowe.
+/// CRM-W9 — Warunki płatności i limity kredytowe.
 /// Testy pokazują ustawienie sposobu zapłaty (rekord <c>FormaPlatnosci</c> z modułu Kasa),
 /// terminu płatności oraz typu limitu kredytowego. Pola kalkulowane (np.
 /// <c>LimitNieograniczony</c>) są tylko do odczytu i wynikają z ustawień.

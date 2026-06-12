@@ -167,6 +167,11 @@ session.Save();
 - Dokumenty zbiorcze powstają tylko z dokumentów **zgodnych** (wymóg ten sam kontrahent / magazyn /
   waluta — zależnie od definicji relacji zbiorczej). Niezgodne wejście → wyjątek lub pominięcie.
 - Wszystkie nadrzędne muszą być **zatwierdzone**.
+- **Relacja musi być zarejestrowaną akcją przekształcenia dla dokumentu źródłowego** — sprawdza to
+  `dok.ResolveActions()`. Gdy danej relacji zbiorczej nie ma (zależy od konfiguracji/wersji), serwis
+  rzuca `InvalidOperationException("Operacja tworzenia relacji nie jest dostępna")`. Np. w czystej bazie
+  Demo zbiorcza relacja **FV → WZ** nie jest dostępną akcją faktury (FV→WZ działa tylko indywidualnie —
+  HANDEL-W17/relacja indywidualna); zbiorczy wariant jest pewny np. dla ZO → FV.
 - Tak jak w HANDEL-W17 — brak wymaganego callbacka w `HandlerSet` → `NotImplementedException`.
 - Nie zakładaj `Length == nadrzedne.Length` — tu wynik jest **agregatem** (zwykle 1 dokument).
 

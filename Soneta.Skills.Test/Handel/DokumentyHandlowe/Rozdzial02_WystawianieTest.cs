@@ -8,12 +8,12 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 2 — „Wystawianie dokumentów” (wzorce W4–W11).
+/// Rozdział 2 — „Wystawianie dokumentów” (wzorce HANDEL-W4–HANDEL-W11).
 /// <para>
 /// Testy pokazują tworzenie dokumentu handlowego od zera w różnych wariantach: faktura sprzedaży (FV),
 /// faktura zakupu (FZ — numer obcy i daty), dokument magazynowy (PW/PZ), zamówienie odbiorcy (ZO),
 /// dodawanie pozycji (towar/ilość/cena/rabat), dokument z usługą (MONTAZ — bez magazynu),
-/// dokument w walucie obcej (W9) oraz odbiorca inny niż kontrahent (W11).
+/// dokument w walucie obcej (HANDEL-W9) oraz odbiorca inny niż kontrahent (HANDEL-W11).
 /// </para>
 /// <para>
 /// <b>Reguły bazy Demo</b>, których trzymają się testy:
@@ -38,10 +38,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
     private Guid PrzyjmijBikiniNaStan(double ilosc = 100, double cena = 25)
         => PrzyjmijNaStan(Towar_.Bikini, ilosc, cena);
 
-    // ============================== W4 — Faktura sprzedaży (FV) ==============================
+    // ============================== HANDEL-W4 — Faktura sprzedaży (FV) ==============================
 
     [Test]
-    [Description("W4: FV krajowa od netto z pozycją BIKINI — po zapisie powstaje tabela VAT i wartość dokumentu.")]
+    [Description("HANDEL-W4: FV krajowa od netto z pozycją BIKINI — po zapisie powstaje tabela VAT i wartość dokumentu.")]
     public void FakturaSprzedazy_OdNetto_WyliczaSumeIVat()
     {
         // Najpierw przyjęcie na stan (zapisane) — inaczej rozchód FV zablokuje kontrola stanu ujemnego.
@@ -76,7 +76,7 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W4: FV liczona od brutto — pole LiczonaOd przyjmuje wartość Brutto.")]
+    [Description("HANDEL-W4: FV liczona od brutto — pole LiczonaOd przyjmuje wartość Brutto.")]
     public void FakturaSprzedazy_OdBrutto_UstawiaLiczonaOdBrutto()
     {
         PrzyjmijBikiniNaStan();
@@ -96,10 +96,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
         fv.LiczonaOd.Should().Be(SposobLiczeniaVAT.OdBrutto);
     }
 
-    // ============================== W5 — Zakup od dostawcy (PZ) ==============================
+    // ============================== HANDEL-W5 — Zakup od dostawcy (PZ) ==============================
 
     [Test]
-    [Description("W5: zakup od dostawcy (PZ) z datą operacji (zakupu) różną od daty wystawienia — przyjęcie zewnętrzne, przychód.")]
+    [Description("HANDEL-W5: zakup od dostawcy (PZ) z datą operacji (zakupu) różną od daty wystawienia — przyjęcie zewnętrzne, przychód.")]
     public void FakturaZakupu_UstawiaNumerObcyIDatyZakupu()
     {
         // W bazie Demo „faktura zakupu" jako dokument handlowy nie istnieje — stronę zakupową
@@ -135,7 +135,7 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W5: zakup od dostawcy (PZ) z przyjęciem na magazyn księguje przychód — po zatwierdzeniu i Save powstają zasoby dokumentu.")]
+    [Description("HANDEL-W5: zakup od dostawcy (PZ) z przyjęciem na magazyn księguje przychód — po zatwierdzeniu i Save powstają zasoby dokumentu.")]
     public void FakturaZakupu_KsiegujePrzychod_TworzyZasoby()
     {
         Guid guidPz = Guid.Empty;
@@ -161,10 +161,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
         zapis.Zasoby.Cast<object>().Should().NotBeEmpty();
     }
 
-    // ============================== W6 — Dokument magazynowy (PW/PZ) ==============================
+    // ============================== HANDEL-W6 — Dokument magazynowy (PW/PZ) ==============================
 
     [Test]
-    [Description("W6: PW (przyjęcie wewnętrzne) buduje stan magazynu — po Save powstają zasoby.")]
+    [Description("HANDEL-W6: PW (przyjęcie wewnętrzne) buduje stan magazynu — po Save powstają zasoby.")]
     public void PrzyjecieWewnetrzne_PW_TworzyZasoby()
     {
         // PW jest dokumentem wewnętrznym (przychód) — bez kontrahenta, magazyn wymagany.
@@ -177,7 +177,7 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W6: dokument magazynowy bez magazynu — Save rzuca wyjątek (Magazyn jest wymagany).")]
+    [Description("HANDEL-W6: dokument magazynowy bez magazynu — Save rzuca wyjątek (Magazyn jest wymagany).")]
     public void DokumentMagazynowy_BezMagazynu_RzucaPrzyZapisie()
     {
         // Brak wymaganego magazynu → operacja musi się nie powieść. Wyjątek może paść już
@@ -193,7 +193,7 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W6: PZ (przyjęcie zewnętrzne od dostawcy) — przychód z kontrahentem-dostawcą.")]
+    [Description("HANDEL-W6: PZ (przyjęcie zewnętrzne od dostawcy) — przychód z kontrahentem-dostawcą.")]
     public void PrzyjecieZewnetrzne_PZ_TworzyZasoby()
     {
         Guid guidPz = Guid.Empty;
@@ -215,10 +215,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
         zapis.Zasoby.Cast<object>().Should().NotBeEmpty();
     }
 
-    // ============================== W7 — Zamówienie (ZO) ==============================
+    // ============================== HANDEL-W7 — Zamówienie (ZO) ==============================
 
     [Test]
-    [Description("W7: ZO (zamówienie odbiorcy) z terminem dostawy — nie buduje stanu magazynu.")]
+    [Description("HANDEL-W7: ZO (zamówienie odbiorcy) z terminem dostawy — nie buduje stanu magazynu.")]
     public void ZamowienieOdbiorcy_ZO_UstawiaTerminDostawy_BezObrotow()
     {
         Guid guidZo = Guid.Empty;
@@ -247,10 +247,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
         zapis.Zasoby.Cast<object>().Should().BeEmpty();
     }
 
-    // ============================== W8 — Dodawanie pozycji ==============================
+    // ============================== HANDEL-W8 — Dodawanie pozycji ==============================
 
     [Test]
-    [Description("W8: pozycja z automatyczną ceną (tylko Towar + Ilosc) — cena pobrana z cennika jest dodatnia.")]
+    [Description("HANDEL-W8: pozycja z automatyczną ceną (tylko Towar + Ilosc) — cena pobrana z cennika jest dodatnia.")]
     public void DodaniePozycji_AutomatycznaCena_PobieraZCennika()
     {
         PrzyjmijBikiniNaStan();
@@ -272,7 +272,7 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W8: ręczne nadpisanie ceny i rabatu — Cena/Rabat przyjmują podane wartości, zapalają korekty.")]
+    [Description("HANDEL-W8: ręczne nadpisanie ceny i rabatu — Cena/Rabat przyjmują podane wartości, zapalają korekty.")]
     public void DodaniePozycji_RecznaCenaIRabat_NadpisujeWartosci()
     {
         PrzyjmijBikiniNaStan();
@@ -295,10 +295,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
         ((double)poz.Rabat).Should().BeApproximately(0.1, 1e-9);
     }
 
-    // ============================== W10 — Dokument z usługą (MONTAZ) ==============================
+    // ============================== HANDEL-W10 — Dokument z usługą (MONTAZ) ==============================
 
     [Test]
-    [Description("W10: FV tylko z usługą (MONTAZ) — liczy VAT/wartość, ale nie tworzy obrotów magazynowych.")]
+    [Description("HANDEL-W10: FV tylko z usługą (MONTAZ) — liczy VAT/wartość, ale nie tworzy obrotów magazynowych.")]
     public void FakturaZUsluga_Montaz_BezObrotowMagazynowych()
     {
         // Usługa nie pobiera ze stanu — NIE potrzeba wcześniejszego przyjęcia (StanUjemnyVerifier nie blokuje).
@@ -325,10 +325,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
         ((double)zapis.Suma.Netto).Should().BeGreaterThan(0);
     }
 
-    // ============================== W11 — Odbiorca inny niż kontrahent ==============================
+    // ============================== HANDEL-W11 — Odbiorca inny niż kontrahent ==============================
 
     [Test]
-    [Description("W11: nabywca (Kontrahent) różny od odbiorcy towaru (Odbiorca) — dwa różne pola typu Kontrahent.")]
+    [Description("HANDEL-W11: nabywca (Kontrahent) różny od odbiorcy towaru (Odbiorca) — dwa różne pola typu Kontrahent.")]
     public void OdbiorcaInnyNizKontrahent_UstawiaOdbiorce()
     {
         PrzyjmijBikiniNaStan();
@@ -356,10 +356,10 @@ public class Rozdzial02_WystawianieTest : DokumentHandlowyTestBase
         fv.Osoba.Should().Be("Jan Kowalski");
     }
 
-    // ============================== W9 — Dokument w walucie obcej (bezpiecznie, bez sieci) ==============================
+    // ============================== HANDEL-W9 — Dokument w walucie obcej (bezpiecznie, bez sieci) ==============================
 
     [Test]
-    [Description("W9: dokument walutowy wymaga kursu — bez kursu EUR na datę operacja zgłasza błąd; test bezpieczny (bez sieci).")]
+    [Description("HANDEL-W9: dokument walutowy wymaga kursu — bez kursu EUR na datę operacja zgłasza błąd; test bezpieczny (bez sieci).")]
     public void DokumentWalutowy_BezKursuEur_RzucaLubPomijane()
     {
         // UWAGA: NIE pobieramy kursu z sieci. Baza Demo zwykle nie ma kursu EUR „na dziś”,

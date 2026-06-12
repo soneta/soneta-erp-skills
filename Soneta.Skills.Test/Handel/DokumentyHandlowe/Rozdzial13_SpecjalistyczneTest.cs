@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using AwesomeAssertions;
 using NUnit.Framework;
+using Soneta.Business.UI;                 // IReportService, ReportResult, ReportFormats
 using Soneta.Deklaracje.UE;
 using Soneta.Handel;
 using Soneta.Handel.Kompletacje;
@@ -9,7 +11,7 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 13 skilla „dokument-handlowy” — tematy specjalistyczne (W67–W74):
+/// Rozdział 13 skilla „dokument-handlowy” — tematy specjalistyczne (HANDEL-W67–HANDEL-W74):
 /// KSeF, fiskalizacja, e-paragon, kompletacja oraz Intrastat.
 /// <para>
 /// <b>Zasada całego rozdziału:</b> większość operacji łączy dokument z systemem zewnętrznym
@@ -42,13 +44,13 @@ namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
 {
     // =================================================================================================
-    // W74 — INTRASTAT (offline, w pełni testowalne)
+    // HANDEL-W74 — INTRASTAT (offline, w pełni testowalne)
     // =================================================================================================
 
     [Test]
-    [Description("W74: pole dokumentu RodzajTransakcji (KodRodzajuTransakcji) jest publicznie zapisywalne " +
+    [Description("HANDEL-W74: pole dokumentu RodzajTransakcji (KodRodzajuTransakcji) jest publicznie zapisywalne " +
                  "— ustawiamy rodzaj transakcji Intrastat na dokumencie i odczytujemy go z powrotem.")]
-    public void W74_RodzajTransakcji_MoznaUstawicNaDokumencie()
+    public void HANDEL_W74_RodzajTransakcji_MoznaUstawicNaDokumencie()
     {
         // Dokument zakupu unijnego (FF, faktura od dostawcy) — Intrastat dotyczy przepływów towarów w UE.
         // FF to dokument przychodowy — nie wymaga stanu magazynowego, więc można go utworzyć w Demo bez przyjęcia.
@@ -63,9 +65,9 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W74: pole OkresIntrastat (Date) — miesiąc, w którym dokument trafi na deklarację — " +
+    [Description("HANDEL-W74: pole OkresIntrastat (Date) — miesiąc, w którym dokument trafi na deklarację — " +
                  "jest publicznie zapisywalne; ustawiamy je i weryfikujemy odczyt.")]
-    public void W74_OkresIntrastat_MoznaUstawicNaDokumencie()
+    public void HANDEL_W74_OkresIntrastat_MoznaUstawicNaDokumencie()
     {
         var dok = UtworzDokument(Definicje.FakturaZakupu, kontrahent: Kontrahent(Kontrahent_.Abc));
 
@@ -77,10 +79,10 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W74: konstrukcja parametrów workera DokumentHandlowyZmienIntrastatParams przez Context " +
+    [Description("HANDEL-W74: konstrukcja parametrów workera DokumentHandlowyZmienIntrastatParams przez Context " +
                  "i osadzenie ich w workerze przez konstruktor — parametry (KodCN/Masa/Kraj/Przelicznik) " +
                  "są ustawiane i widoczne przez worker.Params (offline; bez wywołania Update()).")]
-    public void W74_ParametryWorkeraIntrastat_KonstrukcjaIPrzekazanie()
+    public void HANDEL_W74_ParametryWorkeraIntrastat_KonstrukcjaIPrzekazanie()
     {
         var dok = UtworzDokument(Definicje.FakturaZakupu, kontrahent: Kontrahent(Kontrahent_.Abc));
 
@@ -104,9 +106,9 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W74: IsVisibleUpdate workera Intrastat jest false dla dokumentu, którego definicja ma " +
+    [Description("HANDEL-W74: IsVisibleUpdate workera Intrastat jest false dla dokumentu, którego definicja ma " +
                  "Intrastat == NieUwzględniaj (akcja pomijana) — sprawdzane czysto lokalnie, bez Update().")]
-    public void W74_IsVisibleUpdate_DlaDefinicjiNieUwzgledniajacej_False()
+    public void HANDEL_W74_IsVisibleUpdate_DlaDefinicjiNieUwzgledniajacej_False()
     {
         // FV (faktura sprzedaży) w Demo nie jest dokumentem unijnym uwzględnianym w Intrastacie:
         // jego definicja ma RodzajIntrastat.NieUwzględniaj, więc akcja aktualizacji jest niewidoczna.
@@ -127,10 +129,10 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W74: metoda dokumentu UaktualnijIntrastat(kodCN, masa, kraj, przelicznik) jest publiczna, " +
+    [Description("HANDEL-W74: metoda dokumentu UaktualnijIntrastat(kodCN, masa, kraj, przelicznik) jest publiczna, " +
                  "wykonuje się lokalnie i zwraca liczbę zaktualizowanych pozycji (>= 0). Dla dokumentu bez " +
                  "pozycji zwraca 0 — operacja jest bezpieczna i nie wymaga sieci.")]
-    public void W74_UaktualnijIntrastat_ZwracaLiczbeZaktualizowanychPozycji()
+    public void HANDEL_W74_UaktualnijIntrastat_ZwracaLiczbeZaktualizowanychPozycji()
     {
         // Dokument bez pozycji — metoda nie ma czego aktualizować, ale musi się wykonać i zwrócić 0.
         var dok = UtworzDokument(Definicje.FakturaZakupu, kontrahent: Kontrahent(Kontrahent_.Abc));
@@ -145,10 +147,10 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W74: wyszukanie dokumentów do deklaracji za okres — filtr SERWEROWY po dacie (klucz WgDaty), " +
+    [Description("HANDEL-W74: wyszukanie dokumentów do deklaracji za okres — filtr SERWEROWY po dacie (klucz WgDaty), " +
                  "a kwalifikację do Intrastatu weryfikujemy odczytem zapisanego pola OkresIntrastat. " +
                  "Dokument zapisujemy (SaveDispose) i odnajdujemy po Guid.")]
-    public void W74_WyszukanieDokumentowDoDeklaracji_FiltrSerwerowy()
+    public void HANDEL_W74_WyszukanieDokumentowDoDeklaracji_FiltrSerwerowy()
     {
         // PZ (przywóz unijny) to dokument magazynowy → wymaga magazynu.
         var dok = UtworzDokument(
@@ -188,13 +190,13 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     // =================================================================================================
-    // W73 — KOMPLETACJA (offline; pełne tworzenie kompletu wymaga konfiguracji spoza Demo)
+    // HANDEL-W73 — KOMPLETACJA (offline; pełne tworzenie kompletu wymaga konfiguracji spoza Demo)
     // =================================================================================================
 
     [Test]
-    [Description("W73: SposobEdycjiKompletacji odczytany z definicji zwykłego dokumentu (FV) to None — " +
+    [Description("HANDEL-W73: SposobEdycjiKompletacji odczytany z definicji zwykłego dokumentu (FV) to None — " +
                  "czyli definicja nie obsługuje kompletacji (warunek widoczności akcji PrzeliczWgKartoteki).")]
-    public void W73_DefinicjaZwyklaNieObslugujeKompletacji()
+    public void HANDEL_W73_DefinicjaZwyklaNieObslugujeKompletacji()
     {
         // FV to zwykła faktura — jej definicja nie jest definicją kompletacji.
         var dok = UtworzDokument(Definicje.FakturaSprzedazy, kontrahent: Kontrahent(Kontrahent_.Abc));
@@ -205,9 +207,9 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W73: akcja PrzeliczWgKartoteki jest niewidoczna (IsVisiblePrzeliczWgKartoteki == false) " +
+    [Description("HANDEL-W73: akcja PrzeliczWgKartoteki jest niewidoczna (IsVisiblePrzeliczWgKartoteki == false) " +
                  "dla dokumentu, którego definicja ma SposobEdycjiKompletacji == None — sprawdzane lokalnie.")]
-    public void W73_AkcjaPrzeliczWgKartoteki_NiewidocznaDlaDefinicjiBezKompletacji()
+    public void HANDEL_W73_AkcjaPrzeliczWgKartoteki_NiewidocznaDlaDefinicjiBezKompletacji()
     {
         var dok = UtworzDokument(Definicje.FakturaSprzedazy, kontrahent: Kontrahent(Kontrahent_.Abc));
 
@@ -220,38 +222,38 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Ignore("W73 (utworzenie dokumentu kompletacji + PrzeliczWgKartoteki): wymaga definicji dokumentu z " +
+    [Ignore("HANDEL-W73 (utworzenie dokumentu kompletacji + PrzeliczWgKartoteki): wymaga definicji dokumentu z " +
             "SposobEdycjiKompletacji != None oraz kartoteki kompletacji (wyrób + składniki) i magazynu z " +
             "zapisanym przychodem składników (Demo blokuje stan ujemny). Baza Demo nie gwarantuje gotowej " +
             "definicji kompletacji ani kartoteki kompletu — utworzenie ich to dane KONFIGURACYJNE spoza " +
             "zakresu testu dokumentu handlowego. Logika widoczności akcji jest pokryta lokalnie powyżej.")]
-    [Description("W73: utworzenie kompletu i przeliczenie wg kartoteki — pominięte (brak definicji/kartoteki kompletacji w Demo).")]
-    public void W73_UtworzenieKompletuIPrzeliczenie_Skip() { }
+    [Description("HANDEL-W73: utworzenie kompletu i przeliczenie wg kartoteki — pominięte (brak definicji/kartoteki kompletacji w Demo).")]
+    public void HANDEL_W73_UtworzenieKompletuIPrzeliczenie_Skip() { }
 
     // =================================================================================================
-    // W69 — WALIDACJA STRUKTURY XML KSeF (offline; wymaga wcześniej wygenerowanego XML)
+    // HANDEL-W69 — WALIDACJA STRUKTURY XML KSeF (offline; wymaga wcześniej wygenerowanego XML)
     // =================================================================================================
 
     [Test]
-    [Ignore("W69 (walidacja struktury XML — KSeFSprawdzXMLWorker.Check / KSeFSchemaVerifier.Verify): część " +
+    [Ignore("HANDEL-W69 (walidacja struktury XML — KSeFSprawdzXMLWorker.Check / KSeFSchemaVerifier.Verify): część " +
             "samej walidacji jest offline (lokalny XSD), ALE warunkiem wstępnym (IsEnabledCheck) jest, by " +
             "dokument miał już WYGENEROWANY plik KSeF (ImportExportKSeF.Xml niepusty). Generowanie XML KSeF " +
             "to operacja modułu KSeF na zatwierdzonej fakturze sprzedaży z kompletem danych podatkowych " +
             "(pieczątka firmy, NIP-y, stawki) — w bazie Demo nie jest to gwarantowane bez konfiguracji KSeF. " +
             "Bez wygenerowanego XML Check() jest no-op / rzuca, więc test offline nie jest wiarygodny. " +
-            "Sama wysyłka i pobranie UPO to operacje SIECIOWE (W67/W68) — patrz testy poniżej.")]
-    [Description("W69: walidacja struktury XML KSeF — pominięte (wymaga wcześniej wygenerowanego pliku KSeF; offline część nieosiągalna w Demo).")]
-    public void W69_WalidacjaStrukturyXml_Skip() { }
+            "Sama wysyłka i pobranie UPO to operacje SIECIOWE (HANDEL-W67/HANDEL-W68) — patrz testy poniżej.")]
+    [Description("HANDEL-W69: walidacja struktury XML KSeF — pominięte (wymaga wcześniej wygenerowanego pliku KSeF; offline część nieosiągalna w Demo).")]
+    public void HANDEL_W69_WalidacjaStrukturyXml_Skip() { }
 
     // =================================================================================================
-    // W71 — FISKALIZACJA (offline: ustawienie parametrów workera; wydruk = sprzęt → SKIP)
+    // HANDEL-W71 — FISKALIZACJA (offline: ustawienie parametrów workera; wydruk = sprzęt → SKIP)
     // =================================================================================================
 
     [Test]
-    [Description("W71: konstrukcja parametrów FiskalizacjaDokumentuWorker.ParametryFiskalizacjiDokumentu " +
+    [Description("HANDEL-W71: konstrukcja parametrów FiskalizacjaDokumentuWorker.ParametryFiskalizacjiDokumentu " +
                  "przez Context oraz osadzenie ich w workerze (offline — BEZ wywołania Execute/druku). " +
                  "Weryfikujemy, że worker i jego parametry dają się złożyć z publicznego kontraktu.")]
-    public void W71_ParametryFiskalizacji_KonstrukcjaIPrzekazanie()
+    public void HANDEL_W71_ParametryFiskalizacji_KonstrukcjaIPrzekazanie()
     {
         // Paragon (PAR) to dokument sprzedaży — kandydat do fiskalizacji.
         var dok = UtworzDokument(Definicje.Paragon, kontrahent: Kontrahent(Kontrahent_.Abc));
@@ -272,9 +274,9 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W71: IsVisibleExecute jest false dla dokumentu niesprzedażowego (przyjęcie magazynowe PZ) — " +
+    [Description("HANDEL-W71: IsVisibleExecute jest false dla dokumentu niesprzedażowego (przyjęcie magazynowe PZ) — " +
                  "fiskalizacja dotyczy tylko Sprzedaży/KorektySprzedaży. Czysta logika lokalna, bez druku.")]
-    public void W71_IsVisibleExecute_DlaZakupu_False()
+    public void HANDEL_W71_IsVisibleExecute_DlaZakupu_False()
     {
         // PZ to przyjęcie magazynowe (przychód, kategoria PrzyjęcieMagazynowe), NIE sprzedaż —
         // nie podlega fiskalizacji (paragon/fiskalizacja dotyczy wyłącznie dokumentów sprzedaży).
@@ -291,9 +293,9 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W71: IsEnabledExecute jest false dla dokumentu w BUFORZE — oznaczyć jako zafiskalizowane " +
+    [Description("HANDEL-W71: IsEnabledExecute jest false dla dokumentu w BUFORZE — oznaczyć jako zafiskalizowane " +
                  "można tylko dokument zatwierdzony (z pustym SymbolKasy). Sprawdzane lokalnie, bez druku.")]
-    public void W71_IsEnabledExecute_DlaBufora_False()
+    public void HANDEL_W71_IsEnabledExecute_DlaBufora_False()
     {
         // Paragon w buforze (świeżo utworzony, Stan == Bufor).
         var dok = UtworzDokument(Definicje.Paragon, kontrahent: Kontrahent(Kontrahent_.Abc));
@@ -307,22 +309,39 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Ignore("W71 (faktyczny wydruk / odczyt SymbolKasy po Execute): klasa Fiscalizer drukuje na DRUKARCE " +
-            "FISKALNEJ — operacja SPRZĘTOWA, nie do odtworzenia w teście jednostkowym. Dodatkowo dok.SymbolKasy " +
-            "NIE jest publiczną właściwością DokumentHandlowy (brak getter/setter w publicznym kontrakcie), " +
-            "więc efekt FiskalizacjaDokumentuWorker.Execute() nie jest odczytywalny z dodatku zewnętrznego. " +
-            "Testujemy więc tylko konstrukcję parametrów i warunki IsVisible/IsEnabled (powyżej).")]
-    [Description("W71: wydruk fiskalny i odczyt SymbolKasy po Execute — pominięte (sprzęt + pole niepubliczne).")]
-    public void W71_WydrukFiskalnyIOdczytSymbolKasy_Skip() { }
+    [Description("HANDEL-W71 (mock wydruku fiskalnego przez format tekstowy): faktyczna fiskalizacja drukuje " +
+                 "na DRUKARCE FISKALNEJ (Fiscalizer — sprzęt) i ustawia niepubliczne dok.SymbolKasy, czego nie " +
+                 "da się odtworzyć/odczytać z dodatku zewnętrznego. Jako nie-sprzętowy zamiennik renderujemy " +
+                 "dokument sprzedaży do ReportFormats.TXT (IReportService.GenerateReportStr) — dostajemy tekstową " +
+                 "treść wydruku bez podłączonej drukarki.")]
+    public void HANDEL_W71_WydrukFiskalny_MockDoTekstu()
+    {
+        var dok = Get<DokumentHandlowy>(UtworzFaktureWBuforze());
+
+        var rr = new ReportResult
+        {
+            TemplateFileName = WzorzecSprzedaz,
+            DataType = typeof(DokumentHandlowy),
+            Context = KontekstWydruku(dok),
+            OutputFormat = ReportFormats.TXT,          // mock zamiast drukarki fiskalnej
+            AskForParameters = false,
+            ParametersHandler = WypelnijParametryWydruku
+        };
+
+        string tekst = Raporty.GenerateReportStr(rr);
+
+        tekst.Should().NotBeNullOrWhiteSpace(
+            "render do ReportFormats.TXT zwraca tekstową treść wydruku (mock wydruku fiskalnego bez sprzętu)");
+    }
 
     // =================================================================================================
-    // W72 — E-PARAGON (offline: ustawienie adresu e-mail; wysyłka/wydruk = sieć/sprzęt → SKIP)
+    // HANDEL-W72 — E-PARAGON (offline: ustawienie adresu e-mail; wysyłka/wydruk = sieć/sprzęt → SKIP)
     // =================================================================================================
 
     [Test]
-    [Description("W72: pole dokumentu EParagonAdresEmail jest publicznie zapisywalne — ustawiamy adres " +
+    [Description("HANDEL-W72: pole dokumentu EParagonAdresEmail jest publicznie zapisywalne — ustawiamy adres " +
                  "e-mail odbiorcy e-paragonu i odczytujemy go z powrotem (offline; bez wysyłki e-mail).")]
-    public void W72_EParagonAdresEmail_MoznaUstawicNaDokumencie()
+    public void HANDEL_W72_EParagonAdresEmail_MoznaUstawicNaDokumencie()
     {
         // Paragon (PAR) — dokument, który może zostać e-paragonem.
         var dok = UtworzDokument(Definicje.Paragon, kontrahent: Kontrahent(Kontrahent_.Abc));
@@ -334,43 +353,71 @@ public class Rozdzial13_SpecjalistyczneTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Ignore("W72 (flaga EParagon, polityka OznaczJakoEParagon, wysyłka e-mail, ponowny wydruk paragonu): " +
-            "dok.EParagon NIE jest publiczną właściwością DokumentHandlowy (brak w publicznym kontrakcie), " +
-            "więc efekt uboczny ustawienia EParagonAdresEmail (auto EParagon = true) nie jest odczytywalny " +
-            "z dodatku zewnętrznego. Sama wysyłka e-paragonu wymaga SIECI (e-mail), a PonownyWydrukParagonuWorker " +
-            "drukuje na DRUKARCE FISKALNEJ (sprzęt) — obie operacje nie do odtworzenia w teście jednostkowym. " +
-            "Testujemy więc tylko ustawienie EParagonAdresEmail (powyżej).")]
-    [Description("W72: flaga EParagon / polityka / wysyłka e-mail / ponowny wydruk — pominięte (pole niepubliczne + sieć/sprzęt).")]
-    public void W72_FlagaWysylkaIPonownyWydruk_Skip() { }
+    [Description("HANDEL-W72 (mock ponownego wydruku paragonu przez format tekstowy): wysyłka e-paragonu wymaga " +
+                 "SIECI (e-mail), a PonownyWydrukParagonuWorker drukuje na DRUKARCE FISKALNEJ (sprzęt) — obu nie " +
+                 "da się odtworzyć w teście jednostkowym. Jako nie-sprzętowy zamiennik tworzymy paragon (PAR) z " +
+                 "adresem e-paragonu i renderujemy go do ReportFormats.TXT — sprawdzamy, że powstała niepusta treść.")]
+    public void HANDEL_W72_PonownyWydrukParagonu_MockDoTekstu()
+    {
+        // Paragon (PAR) ze stanem magazynowym i adresem e-paragonu — w buforze.
+        PrzyjmijNaStan(Towar_.Bikini, 20);
+        var par = UtworzDokument(Definicje.Paragon,
+            kontrahent: Kontrahent(Kontrahent_.Abc),
+            magazyn: Magazyn(Magazyn_.Firma));
+        InTransaction(() =>
+        {
+            DodajPozycje(par, Towar(Towar_.Bikini), ilosc: 1, cena: 9);
+            par.EParagonAdresEmail = "klient@example.com";
+        });
+        var guid = par.Guid;
+        SaveDispose();
+
+        var dok = Get<DokumentHandlowy>(guid);
+
+        var rr = new ReportResult
+        {
+            TemplateFileName = WzorzecSprzedaz,
+            DataType = typeof(DokumentHandlowy),
+            Context = KontekstWydruku(dok),
+            OutputFormat = ReportFormats.TXT,          // mock zamiast ponownego wydruku na drukarce fiskalnej
+            AskForParameters = false,
+            ParametersHandler = WypelnijParametryWydruku
+        };
+
+        string tekst = Raporty.GenerateReportStr(rr);
+
+        tekst.Should().NotBeNullOrWhiteSpace(
+            "render paragonu do ReportFormats.TXT zwraca tekstową treść (mock ponownego wydruku bez sprzętu)");
+    }
 
     // =================================================================================================
-    // W67 / W68 / W70 — KSeF: wysyłka, status, import (SIEĆ → SKIP)
+    // HANDEL-W67 / HANDEL-W68 / HANDEL-W70 — KSeF: wysyłka, status, import (SIEĆ → SKIP)
     // =================================================================================================
 
     [Test]
-    [Ignore("W67 (wysłanie faktury do KSeF — KSeFWyslijWorker.Wyslij / KSeFWysylkaWsadowaWorker.WyslijZbiorczo): " +
+    [Ignore("HANDEL-W67 (wysłanie faktury do KSeF — KSeFWyslijWorker.Wyslij / KSeFWysylkaWsadowaWorker.WyslijZbiorczo): " +
             "cała komunikacja z bramką KSeF (IKSeFAPIv2Service/IKSeFAPIService) wymaga SIECI — nie do " +
-            "odtworzenia w teście jednostkowym. Warunkiem wstępnym jest też zwalidowany XML (W69), którego " +
+            "odtworzenia w teście jednostkowym. Warunkiem wstępnym jest też zwalidowany XML (HANDEL-W69), którego " +
             "Demo nie gwarantuje. Testujemy w skillu jedynie przygotowanie parametrów/weryfikatora, ale bez " +
             "realnej wysyłki nie ma odczytywalnego efektu offline na publicznym kontrakcie dokumentu.")]
-    [Description("W67: wysyłka faktury do KSeF (pojedyncza/zbiorcza) — pominięte (operacja sieciowa).")]
-    public void W67_WysylkaKSeF_Skip() { }
+    [Description("HANDEL-W67: wysyłka faktury do KSeF (pojedyncza/zbiorcza) — pominięte (operacja sieciowa).")]
+    public void HANDEL_W67_WysylkaKSeF_Skip() { }
 
     [Test]
-    [Ignore("W68 (sprawdzenie statusu KSeF i odczyt numeru KSeF): KSeFSprawdzStatusWorker.SprawdzStatus woła " +
+    [Ignore("HANDEL-W68 (sprawdzenie statusu KSeF i odczyt numeru KSeF): KSeFSprawdzStatusWorker.SprawdzStatus woła " +
             "bramkę KSeF (SIEĆ) — nie do odtworzenia jednostkowo. Odczyt zapisanego statusu (dok.StatusKSeF) " +
             "i numeru (dok.KSeFKomunikat.NumerDokumentuKSeF) byłby offline, ale wymaga wcześniejszej wysyłki " +
             "ustawiającej KSeFKomunikat — bez niej w Demo nie ma czego odczytać (StatusKSeF == NieDotyczy/Brak), " +
             "więc test nie weryfikowałby realnego zachowania. SKIP: zależność od stanu po operacji sieciowej.")]
-    [Description("W68: sprawdzenie statusu i odczyt numeru KSeF — pominięte (sieć + brak danych KSeF w Demo).")]
-    public void W68_StatusINumerKSeF_Skip() { }
+    [Description("HANDEL-W68: sprawdzenie statusu i odczyt numeru KSeF — pominięte (sieć + brak danych KSeF w Demo).")]
+    public void HANDEL_W68_StatusINumerKSeF_Skip() { }
 
     [Test]
-    [Ignore("W70 (import faktur z KSeF — KSeFDownloadPartWorker.Pobierz): pobranie paczek wyników wymaga SIECI " +
+    [Ignore("HANDEL-W70 (import faktur z KSeF — KSeFDownloadPartWorker.Pobierz): pobranie paczek wyników wymaga SIECI " +
             "(IKSeFAPIv2Service.PobierzFakturyZPaczek) i operuje na rekordach konfiguracyjno-systemowych " +
             "(KSeFZapytanieOFa, KSeFPlik), a nie bezpośrednio na DokumentHandlowy — dokument zakupu powstaje " +
             "dopiero w kolejnym kroku (import XML, obszar księgowy). Brak offline'owego, odczytywalnego efektu " +
             "na dokumencie handlowym. SKIP: operacja sieciowa poza zakresem dokumentu handlowego.")]
-    [Description("W70: import faktur zakupu z KSeF — pominięte (operacja sieciowa; obszar konfiguracyjno-księgowy).")]
-    public void W70_ImportZKSeF_Skip() { }
+    [Description("HANDEL-W70: import faktur zakupu z KSeF — pominięte (operacja sieciowa; obszar konfiguracyjno-księgowy).")]
+    public void HANDEL_W70_ImportZKSeF_Skip() { }
 }

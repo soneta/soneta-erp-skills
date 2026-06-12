@@ -13,5 +13,9 @@
     <ProjectReference Include="..\Soneta.Kasa\Soneta.Kasa.csproj" />
     <ProjectReference Include="..\Soneta.Test\Soneta.Test.csproj" />
     <ProjectReference Include="..\Soneta.Types\Soneta.Types.csproj" />
+    <ProjectReference Include="..\Soneta.Workflow\Soneta.Workflow.csproj" />
+    <ProjectReference Include="..\Soneta.Workflow.UI\Soneta.Workflow.UI.csproj" />
+    <ProjectReference Include="..\Soneta.Zadania\Soneta.Zadania.csproj" />
+    <ProjectReference Include="..\Soneta.Zadania.UI\Soneta.Zadania.UI.csproj" />
   </ItemGroup>
 </Project>

@@ -80,8 +80,13 @@ session.Save();
   twórz za każdym razem nowego rekordu w kartotece. Rekordu incydentalnego nie modyfikuj
   (`JestIncydentalny == true`); dane konkretnego nabywcy (nazwa, NIP, adres) zapisz na samym
   dokumencie / w jego polach adresowych, nie na rekordzie kontrahenta.
-- Nie twórz towaru „w locie" przy wystawianiu dokumentu — brak towaru to błąd danych, nie sytuacja do
-  cichego uzupełnienia. Towar musi mieć ustawioną jednostkę (HANDEL-W57).
+- Brak towaru przy zwykłym wystawianiu faktury to **błąd danych** — nie uzupełniaj go po cichu.
+  Ale technicznie **kontrahent i towar to dane KARTOTEKOWE (operacyjne), nie konfiguracyjne** —
+  gdy scenariusz tego wymaga (np. import, kreator), możesz utworzyć NOWY towar
+  (`Session.AddRow(new Towar { … })`), NOWEGO kontrahenta (`new Kontrahent { … }`) i dokument
+  używający ich **w jednej transakcji edycyjnej tej samej sesji operacyjnej** — to wykonalne
+  i wspierane (zweryfikowane HANDEL-W56). Towar minimalnie potrzebuje `Kod` + `Nazwa` (jednostka
+  domyślna — HANDEL-W57); nie wymaga osobnej sesji konfiguracyjnej.
 - W `RowCondition` używaj tylko pól bazodanowych. `JestIncydentalny`, `NazwaFormatowana` itp. są
   kalkulowane → w wyrażeniu LINQ rzucą `LinqConditionException`.
 
@@ -220,14 +225,15 @@ dane i ponowić operację.
 
 | Wariant | Wyjątek | Reakcja |
 |---|---|---|
-| Konflikt optymistyczny | `RowConflictException` | świeża sesja → ponów operację (retry) |
+| Konflikt optymistyczny | `Soneta.Business.ConcurrencyException` | świeża sesja → ponów operację (retry) |
 | Naruszenie integralności / unikalności | `RowException` (z `InnerException`) | komunikat dla użytkownika, bez retry |
 | Walidacja biznesowa | `RowException` / `BusException` | zgłoś użytkownikowi, popraw dane |
 | Brak praw / okno edycji zamknięte | `AccessWriteDenied` | edytuj na świeżej, zalogowanej sesji |
 
 **Pola i typy:** `Session.Save()`, `Session.Logout(editMode: true)`, wyjątki z `Soneta.Business`
-(`RowConflictException`, `RowException`, `BusException`, `AccessWriteDenied`). Po `Save()` w środku
-operacji okno edycji bywa zamknięte — kolejna edycja na tej samej sesji rzuci `AccessWriteDenied`.
+(`ConcurrencyException` — konflikt optymistyczny; `RowException`, `BusException`, `AccessWriteDenied`).
+Po `Save()` w środku operacji okno edycji bywa zamknięte — kolejna edycja na tej samej sesji rzuci
+`AccessWriteDenied`.
 
 **Snippet:**
 
@@ -247,7 +253,7 @@ for (int proba = 1; ; proba++)
         session.Save();
         break;                                                  // sukces
     }
-    catch (RowConflictException) when (proba < maxProb)
+    catch (ConcurrencyException) when (proba < maxProb)
     {
         // ktoś zapisał rekord równolegle — odśwież i spróbuj ponownie
         session = session.Login.CreateSession(readOnly: false, config: false, name: "Retry");
@@ -261,8 +267,14 @@ for (int proba = 1; ; proba++)
 ```
 
 **Pułapki:**
-- Konflikt optymistyczny ujawnia się **dopiero w `Save()`** (nie w `Commit`). Nie połykaj
-  `RowConflictException` — albo ponów na świeżych danych, albo eskaluj (safe-code §4).
+- Konflikt optymistyczny ujawnia się **dopiero w `Save()`** (nie w `Commit`) i ma typ
+  `Soneta.Business.ConcurrencyException`. Nie połykaj go — albo ponów na świeżych danych, albo
+  eskaluj (safe-code §4).
+- **Realny konflikt odtworzysz edytując TEN SAM dokument w DWÓCH sesjach** (`Login.CreateSession(
+  readOnly: false, config: false, …)` ×2): sesja A edytuje pole (np. `dok.Opis` — **na dokumencie
+  buforowym**; na zatwierdzonym `Opis` jest read-only) i `Save()` → bumpuje wersję rekordu; sesja B
+  ma już starą wersję i przy `Save()` rzuca `ConcurrencyException`. Działa w domyślnym fixture
+  `TestBase` — nie wymaga wyłączania transakcji (zweryfikowane HANDEL-W59).
 - Retry rób na **świeżym odczycie** rekordu (po `Guid`) w nowej/odświeżonej sesji — ponowne
   zapisanie tej samej, „starej" instancji odtworzy konflikt.
 - Po `Save()` wewnątrz dłuższej operacji okno edycji jest zamknięte → następna edycja na tej samej

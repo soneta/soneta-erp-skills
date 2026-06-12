@@ -10,20 +10,20 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział K (część pierwsza) — „Ewidencje pracownicze" (receptury K1–K5).
+/// Rozdział K (część pierwsza) — „Ewidencje pracownicze" (receptury KADRY-K1–KADRY-K5).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta dla ewidencji
 /// pracowniczych. Wszystkie ewidencje mają wspólny wzorzec: są kolekcjami <c>SubTable</c> na rootcie
 /// <c>Pracownik</c> (nie na <c>PracHistoria</c>), a każdy wpis to osobny <c>GuidedRow</c> tworzony
 /// konstruktorem <c>new Xxx(pracownik)</c>, który wiąże wpis z pracownikiem. Dodanie realizujemy
 /// przez <c>Session.AddRow(new Xxx(pracownik))</c> (równoważne <c>pracownik.Kolekcja.AddRow(...)</c>).
-/// Każda metoda mapuje się 1:1 do receptury z dokumentu skilla <c>pracownik.md</c>:
+/// Każda metoda mapuje się 1:1 do receptury z dokumentu skilla <c>kadry/KADRY11-ewidencje.md</c>:
 /// <list type="bullet">
-/// <item><b>K1</b> — badania lekarskie (<c>new BadanieLekarskie(pracownik)</c>, <c>pracownik.BadaniaLekarskie</c>; pole <c>WazneDo</c> bez „ż");</item>
-/// <item><b>K2</b> — szkolenia BHP (<c>new SzkolenieBHP(pracownik)</c>, <c>pracownik.SzkoleniaBHP</c>; pole <c>WażneDo</c> z „ż");</item>
-/// <item><b>K3</b> — szkolenia i uprawnienia HR (<c>WniosekOSzkolenie</c>/<c>UkończoneSzkolenie</c>/<c>UprawnieniePracownika</c> — moduł <c>Soneta.HR</c>);</item>
-/// <item><b>K4</b> — nagrody/kary (<c>new Nagroda/Kara(pracownik)</c>, abstr. <c>NagrodaKara</c>) i oświadczenia (<c>OświadczeniePracownika(pracownik, def[, data])</c>);</item>
-/// <item><b>K5</b> — wypadki przy pracy (<c>new Wypadek(pracownik)</c>, <c>pracownik.Wypadki</c>).</item>
+/// <item><b>KADRY-K1</b> — badania lekarskie (<c>new BadanieLekarskie(pracownik)</c>, <c>pracownik.BadaniaLekarskie</c>; pole <c>WazneDo</c> bez „ż");</item>
+/// <item><b>KADRY-K2</b> — szkolenia BHP (<c>new SzkolenieBHP(pracownik)</c>, <c>pracownik.SzkoleniaBHP</c>; pole <c>WażneDo</c> z „ż");</item>
+/// <item><b>KADRY-K3</b> — szkolenia i uprawnienia HR (<c>WniosekOSzkolenie</c>/<c>UkończoneSzkolenie</c>/<c>UprawnieniePracownika</c> — moduł <c>Soneta.HR</c>);</item>
+/// <item><b>KADRY-K4</b> — nagrody/kary (<c>new Nagroda/Kara(pracownik)</c>, abstr. <c>NagrodaKara</c>) i oświadczenia (<c>OświadczeniePracownika(pracownik, def[, data])</c>);</item>
+/// <item><b>KADRY-K5</b> — wypadki przy pracy (<c>new Wypadek(pracownik)</c>, <c>pracownik.Wypadki</c>).</item>
 /// </list>
 /// </para>
 /// <para>
@@ -44,13 +44,13 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
     private static T Pierwsza<T>(Table tabela) where T : Row =>
         tabela.Cast<T>().FirstOrDefault();
 
-    // ============================== K1 — Badania lekarskie ==============================
+    // ============================== KADRY-K1 — Badania lekarskie ==============================
 
     [Test]
-    [Description("K1: new BadanieLekarskie(pracownik) wiąże wpis z pracownikiem; Definicja (DefBadanLek) " +
+    [Description("KADRY-K1: new BadanieLekarskie(pracownik) wiąże wpis z pracownikiem; Definicja (DefBadanLek) " +
                  "jest wymagana; Data/Termin/WazneDo to Soneta.Types.Date (WazneDo BEZ z-kreska); wpis trafia " +
                  "do pracownik.BadaniaLekarskie.")]
-    public void K1_BadanieLekarskie_DodanieZDefinicja_TrafiaDoKolekcji()
+    public void KADRY_K1_BadanieLekarskie_DodanieZDefinicja_TrafiaDoKolekcji()
     {
         var definicja = Pierwsza<DefinicjaBadaniaLekarskiego>(Kadry.DefBadanLek);
         if (definicja == null)
@@ -77,9 +77,9 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K1: pracownik.Badania to manager (BadaniaLekarskieManager) tylko do odczytu — inny obiekt " +
+    [Description("KADRY-K1: pracownik.Badania to manager (BadaniaLekarskieManager) tylko do odczytu — inny obiekt " +
                  "niż kolekcja CRUD pracownik.BadaniaLekarskie (SubTable<BadanieLekarskie>).")]
-    public void K1_Badania_ManagerOdczytu_RozniSieOdKolekcjiCrud()
+    public void KADRY_K1_Badania_ManagerOdczytu_RozniSieOdKolekcjiCrud()
     {
         var pracownik = Host();
 
@@ -89,12 +89,12 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
         pracownik.BadaniaLekarskie.Should().NotBeNull();
     }
 
-    // ============================== K2 — Szkolenia BHP ==============================
+    // ============================== KADRY-K2 — Szkolenia BHP ==============================
 
     [Test]
-    [Description("K2: new SzkolenieBHP(pracownik) + Definicja (DefSzkolenBHP, wymagana); pole ważności to " +
-                 "WażneDo (Z z-kreska) - w przeciwieństwie do K1; wpis trafia do pracownik.SzkoleniaBHP.")]
-    public void K2_SzkolenieBHP_DodanieZDefinicja_TrafiaDoKolekcji()
+    [Description("KADRY-K2: new SzkolenieBHP(pracownik) + Definicja (DefSzkolenBHP, wymagana); pole ważności to " +
+                 "WażneDo (Z z-kreska) - w przeciwieństwie do KADRY-K1; wpis trafia do pracownik.SzkoleniaBHP.")]
+    public void KADRY_K2_SzkolenieBHP_DodanieZDefinicja_TrafiaDoKolekcji()
     {
         var definicja = Pierwsza<DefinicjaSzkoleniaBHP>(Kadry.DefSzkolenBHP);
         if (definicja == null)
@@ -119,12 +119,12 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
         pracownik.SzkoleniaBHP.Cast<Soneta.Kadry.SzkolenieBHP>().Should().Contain(szkolenie);
     }
 
-    // ============================== K3 — Szkolenia i uprawnienia (HR) ==============================
+    // ============================== KADRY-K3 — Szkolenia i uprawnienia (HR) ==============================
 
     [Test]
-    [Description("K3a: WniosekOSzkolenie([Required] Pracownik) z modułu Soneta.HR (session.GetHR()); Definicja " +
+    [Description("KADRY-K3a: WniosekOSzkolenie([Required] Pracownik) z modułu Soneta.HR (session.GetHR()); Definicja " +
                  "(DefinicjeSzkolen) + Etap (EtapRealizSzkol) to słowniki HR; Koszt to Soneta.Types.Currency.")]
-    public void K3a_WniosekOSzkolenie_DodanieZBudzetemIKosztem_TrafiaDoKolekcji()
+    public void KADRY_K3a_WniosekOSzkolenie_DodanieZBudzetemIKosztem_TrafiaDoKolekcji()
     {
         var hr = Session.GetHR();
         var definicja = Pierwsza<DefinicjaSzkolenia>(hr.DefinicjeSzkolen);
@@ -153,9 +153,9 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K3b: UkończoneSzkolenie([Required] Pracownik) — moduł HR; pola Nazwa/Okres(FromTo)/Ocena; " +
+    [Description("KADRY-K3b: UkończoneSzkolenie([Required] Pracownik) — moduł HR; pola Nazwa/Okres(FromTo)/Ocena; " +
                  "wpis trafia do pracownik.UkończoneSzkolenia. Drugi ctor (WniosekOSzkolenie) przepina pracownika.")]
-    public void K3b_UkonczoneSzkolenie_DodanieZPracownika_TrafiaDoKolekcji()
+    public void KADRY_K3b_UkonczoneSzkolenie_DodanieZPracownika_TrafiaDoKolekcji()
     {
         var pracownik = Host();
         UkończoneSzkolenie ukonczone = null;
@@ -174,9 +174,9 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K3c: UprawnieniePracownika([Required] Pracownik) — moduł HR; Definicja (DefUprawnien, słownik), " +
+    [Description("KADRY-K3c: UprawnieniePracownika([Required] Pracownik) — moduł HR; Definicja (DefUprawnien, słownik), " +
                  "Numer, DataUzyskania/TerminWaznosci (Date); wpis trafia do pracownik.Uprawnienia.")]
-    public void K3c_UprawnieniePracownika_DodanieZDefinicja_TrafiaDoKolekcji()
+    public void KADRY_K3c_UprawnieniePracownika_DodanieZDefinicja_TrafiaDoKolekcji()
     {
         var hr = Session.GetHR();
         var definicja = Pierwsza<DefinicjaUprawnienia>(hr.DefUprawnien);
@@ -201,12 +201,12 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
         pracownik.Uprawnienia.Cast<UprawnieniePracownika>().Should().Contain(uprawnienie);
     }
 
-    // ============================== K4 — Nagrody/kary; oświadczenia ==============================
+    // ============================== KADRY-K4 — Nagrody/kary; oświadczenia ==============================
 
     [Test]
-    [Description("K4a: NagrodaKara jest ABSTRAKCYJNA — używamy podtypu new Nagroda(pracownik); ctor ustawia " +
+    [Description("KADRY-K4a: NagrodaKara jest ABSTRAKCYJNA — używamy podtypu new Nagroda(pracownik); ctor ustawia " +
                  "Typ na Nagroda; Definicja to słownik DefNagrodKar; wpis trafia do pracownik.NagrodyKary.")]
-    public void K4a_Nagroda_DodaniePodtypuKonkretnego_UstawiaTypNagroda()
+    public void KADRY_K4a_Nagroda_DodaniePodtypuKonkretnego_UstawiaTypNagroda()
     {
         // Definicja musi zgadzać się typem z wpisem — dla Nagrody bierzemy definicję o Typ == Nagroda
         // (przypisanie niezgodnej typem definicji rzuca ArgumentException w set_Definicja).
@@ -232,9 +232,9 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K4a: konkretny podtyp Kara ustawia Typ na Kara; oba podtypy trafiają do tej samej kolekcji " +
+    [Description("KADRY-K4a: konkretny podtyp Kara ustawia Typ na Kara; oba podtypy trafiają do tej samej kolekcji " +
                  "pracownik.NagrodyKary (SubTable<NagrodaKara>).")]
-    public void K4a_Kara_DodaniePodtypuKonkretnego_UstawiaTypKara()
+    public void KADRY_K4a_Kara_DodaniePodtypuKonkretnego_UstawiaTypKara()
     {
         // Dla Kary bierzemy definicję o Typ == Kara (analogicznie do Nagrody).
         var definicja = Kadry.DefNagrodKar.Cast<DefinicjaNagrodyKary>()
@@ -257,9 +257,9 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K4b: OświadczeniePracownika NIE ma ctora samego (Pracownik) — Definicja jest [Required] " +
+    [Description("KADRY-K4b: OświadczeniePracownika NIE ma ctora samego (Pracownik) — Definicja jest [Required] " +
                  "w konstruktorze; wariant (pracownik, definicja, Date) ustawia DataZlozenia; słownik DefOswiadczen.")]
-    public void K4b_Oswiadczenie_DodanieZWymaganaDefinicjaIData_TrafiaDoKolekcji()
+    public void KADRY_K4b_Oswiadczenie_DodanieZWymaganaDefinicjaIData_TrafiaDoKolekcji()
     {
         // Preferuj PIT-2, ale dowolna definicja oświadczenia wystarcza (ctor wymaga definicji).
         var definicja = Kadry.DefOswiadczen.Cast<DefinicjaOświadczenia>().FirstOrDefault(d => d.Nazwa == "PIT-2")
@@ -282,12 +282,12 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
         pracownik.Oświadczenia.Cast<OświadczeniePracownika>().Should().Contain(oswiadczenie);
     }
 
-    // ============================== K5 — Wypadki przy pracy ==============================
+    // ============================== KADRY-K5 — Wypadki przy pracy ==============================
 
     [Test]
-    [Description("K5: new Wypadek(pracownik); Data to Date, Godzina to Soneta.Types.Time; pola opisowe " +
+    [Description("KADRY-K5: new Wypadek(pracownik); Data to Date, Godzina to Soneta.Types.Time; pola opisowe " +
                  "(Okolicznosci/Skutki) to MemoText; flagi skutków to bool; wpis trafia do pracownik.Wypadki.")]
-    public void K5_Wypadek_DodanieZDanymiPodstawowymi_TrafiaDoKolekcji()
+    public void KADRY_K5_Wypadek_DodanieZDanymiPodstawowymi_TrafiaDoKolekcji()
     {
         var pracownik = Host();
         Soneta.Kadry.Wypadek wypadek = null;
@@ -311,9 +311,9 @@ public class RozdzialK1_EwidencjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K5: Wypadek wymaga Definicja (Soneta.Core.DefinicjaDokumentu) do numeracji — Numer " +
+    [Description("KADRY-K5: Wypadek wymaga Definicja (Soneta.Core.DefinicjaDokumentu) do numeracji — Numer " +
                  "(NumerDokumentu) nadaje platforma. Sprawdzamy, że pole Definicja jest częścią kontraktu.")]
-    public void K5_Wypadek_PoleDefinicjaJestCzesciaKontraktu()
+    public void KADRY_K5_Wypadek_PoleDefinicjaJestCzesciaKontraktu()
     {
         var pracownik = Host();
         Soneta.Kadry.Wypadek wypadek = null;

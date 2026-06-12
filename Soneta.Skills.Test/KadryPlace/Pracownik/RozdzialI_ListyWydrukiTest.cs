@@ -14,26 +14,26 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział I — „Listy płac, przelewy, wydruki” (receptury I1, I2, I3).
+/// Rozdział I — „Listy płac, przelewy, wydruki” (receptury KADRY-I1, KADRY-I2, KADRY-I3).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu list płac i ich wydruków.
 /// </para>
 /// <list type="bullet">
-/// <item><b>I1a</b> — ręczne utworzenie pustej listy płac (<c>new ListaPlac()</c> + <c>Place.ListyPlac.AddRow</c>),
+/// <item><b>KADRY-I1a</b> — ręczne utworzenie pustej listy płac (<c>new ListaPlac()</c> + <c>Place.ListyPlac.AddRow</c>),
 /// ustawienie pól w wymaganej kolejności (Definicja → Data → DataWyplaty → MiesiacZUS → Okres).</item>
-/// <item><b>I1b</b> — naliczenie wypłaty workerem <c>NaliczanieSeryjne.Pracownika</c> z jawną
+/// <item><b>KADRY-I1b</b> — naliczenie wypłaty workerem <c>NaliczanieSeryjne.Pracownika</c> z jawną
 /// <c>DefinicjaListy</c> (sprawdzona ścieżka z sekcji H): worker tworzy listę płac wg tej definicji i WIĄŻE
 /// z nią wypłatę. Asercja: wypłata naliczona, powiązanie dwukierunkowe (<c>w.ListaPlac</c> niepuste, jego
 /// <c>Definicja == def</c>; <c>w.Pracownik == pracownik</c>).
 /// <b>Rozbieżność dokumentacji:</b> niskopoziomowy worker <c>Soneta.Place.NaliczanieWypłat</c> uruchomiony
-/// tylko z <c>ListaPłac</c>+<c>Pracownik</c> (snippet I1 w pracownik.md) w bazie Demo nie napełnia listy
+/// tylko z <c>ListaPłac</c>+<c>Pracownik</c> (snippet KADRY-I1 w kadry/KADRY09-listy-place.md) w bazie Demo nie napełnia listy
 /// (zwraca pustą <c>WszystkieWypłaty</c>); działającą ścieżką naliczania jest <c>NaliczanieSeryjne</c>.</item>
-/// <item><b>I2</b> — PDF kwitka (paska) wypłaty przez <c>IReportService.GenerateReport</c>
+/// <item><b>KADRY-I2</b> — PDF kwitka (paska) wypłaty przez <c>IReportService.GenerateReport</c>
 /// (wzorzec <c>PasekWyplaty.repx</c>, <c>DataType = typeof(Wyplata)</c>).</item>
-/// <item><b>I3</b> — PDF pełnej listy płac (<c>PelnaListaPlac.repx</c>, <c>DataType = typeof(ListaPlac)</c>).</item>
+/// <item><b>KADRY-I3</b> — PDF pełnej listy płac (<c>PelnaListaPlac.repx</c>, <c>DataType = typeof(ListaPlac)</c>).</item>
 /// </list>
 /// <para>
-/// <b>Wydruki (I2/I3):</b> serwis <see cref="IReportService"/> (warstwa <c>Soneta.Business.UI</c>) jest
+/// <b>Wydruki (KADRY-I2/KADRY-I3):</b> serwis <see cref="IReportService"/> (warstwa <c>Soneta.Business.UI</c>) jest
 /// w bieżącym zestawie referencji Skills.Test OSIĄGALNY (transytywnie, tak jak w wydrukach handlowych —
 /// rozdz. 12 dokumentów handlowych). Faktyczne wyrenderowanie PDF wymaga jednak zarejestrowanego wzorca
 /// <c>*.repx</c> (z assembly <c>Soneta.KadryPlace.Reports</c>) oraz silnika renderującego (DevExpress) —
@@ -53,10 +53,10 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
     /// <summary>Sygnatura nagłówka pliku PDF (pierwsze 4 bajty/znaki strumienia).</summary>
     private const string PdfMagic = "%PDF";
 
-    /// <summary>Wzorzec wydruku paska (kwitka) wypłaty — wg tabeli I2 (DataType = Wyplata).</summary>
+    /// <summary>Wzorzec wydruku paska (kwitka) wypłaty — wg tabeli KADRY-I2 (DataType = Wyplata).</summary>
     private const string WzorzecPasek = "PasekWyplaty.repx";
 
-    /// <summary>Wzorzec wydruku pełnej listy płac — wg tabeli I3 (DataType = ListaPlac).</summary>
+    /// <summary>Wzorzec wydruku pełnej listy płac — wg tabeli KADRY-I3 (DataType = ListaPlac).</summary>
     private const string WzorzecPelnaLista = "PelnaListaPlac.repx";
 
     /// <summary>Serwis raportowy ze scope’u bieżącej sesji (jak w wydrukach handlowych).</summary>
@@ -138,14 +138,14 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
     }
 
     // ===================================================================================
-    // I1 — Tworzenie i naliczanie listy płac
+    // KADRY-I1 — Tworzenie i naliczanie listy płac
     // ===================================================================================
 
     [Test]
-    [Description("I1 (część A): ręcznie tworzymy pustą listę płac — new ListaPlac() + Place.ListyPlac.AddRow + " +
+    [Description("KADRY-I1 (część A): ręcznie tworzymy pustą listę płac — new ListaPlac() + Place.ListyPlac.AddRow + " +
                  "pola w wymaganej kolejności (Definicja → Data → DataWyplaty → MiesiacZUS → Okres). " +
                  "Asercja: lista istnieje, ma przypisaną definicję i jest pusta (Wyplaty napełnia dopiero worker).")]
-    public void I1a_PustaListaPlac_TworzenieRecznePolaWKolejnosci()
+    public void KADRY_I1a_PustaListaPlac_TworzenieRecznePolaWKolejnosci()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();
@@ -166,13 +166,13 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
     }
 
     [Test]
-    [Description("I1 (część B): naliczamy wypłatę etatową workerem NaliczanieSeryjne.Pracownika (sprawdzona " +
+    [Description("KADRY-I1 (część B): naliczamy wypłatę etatową workerem NaliczanieSeryjne.Pracownika (sprawdzona " +
                  "ścieżka z sekcji H). Worker sam dobiera/tworzy listę płac i WIĄŻE z nią wypłatę. " +
                  "Asercja: wypłata naliczona, powiązana dwukierunkowo z listą płac (w.ListaPlac niepuste, " +
                  "ma definicję) i z pracownikiem (w.Pracownik == pracownik). " +
                  "Uwaga: niskopoziomowy worker Soneta.Place.NaliczanieWypłat (samo ListaPłac+Pracownik z " +
                  "dokumentacji) w bazie Demo nie napełnia listy — sprawdzoną ścieżką jest NaliczanieSeryjne.")]
-    public void I1b_ListaPlac_NaliczanieWyplatyPowiazanaZLista()
+    public void KADRY_I1b_ListaPlac_NaliczanieWyplatyPowiazanaZLista()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();
@@ -192,15 +192,15 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
     }
 
     // ===================================================================================
-    // I2 — Drukowanie/PDF kwitka (paska) wypłaty
+    // KADRY-I2 — Drukowanie/PDF kwitka (paska) wypłaty
     // ===================================================================================
 
     [Test]
-    [Description("I2: pasek (kwitek) wypłaty do PDF przez IReportService.GenerateReport " +
+    [Description("KADRY-I2: pasek (kwitek) wypłaty do PDF przez IReportService.GenerateReport " +
                  "(TemplateFileName = PasekWyplaty.repx, DataType = typeof(Wyplata), OutputFormat = PDF, " +
                  "Context.Set(wyplata)). Strumień zaczyna się od sygnatury „%PDF”. " +
                  "Brak wzorca/silnika renderującego → Assert.Ignore (suita zielona).")]
-    public void I2_PasekWyplaty_DoPdf_ZaczynaSieOdPdf()
+    public void KADRY_I2_PasekWyplaty_DoPdf_ZaczynaSieOdPdf()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
         pracownik.Should().NotBeNull();
@@ -211,7 +211,7 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
         if (wyplata == null)
             Assert.Ignore("Worker nie naliczył wypłaty dla pracownika Demo — brak danych do wydruku paska.");
 
-        // Kontekst wydruku: pojedyncza Wyplata (jak w snippetcie I2).
+        // Kontekst wydruku: pojedyncza Wyplata (jak w snippetcie KADRY-I2).
         var context = Login.CreateEmptyContext().Clone(Session);
         context.Set(wyplata);
 
@@ -236,7 +236,7 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
         }
         catch (Exception ex)
         {
-            Assert.Ignore("Pominięto I2: wygenerowanie PDF paska wymaga zarejestrowanego wzorca '" +
+            Assert.Ignore("Pominięto KADRY-I2: wygenerowanie PDF paska wymaga zarejestrowanego wzorca '" +
                           WzorzecPasek + "' (assembly Soneta.KadryPlace.Reports) oraz silnika renderującego " +
                           "(DevExpress), których testowa baza Demo nie gwarantuje. Test dokumentuje publiczne API " +
                           "IReportService.GenerateReport. Szczegóły: " + ex.GetType().Name + " — " + ex.Message);
@@ -248,15 +248,15 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
     }
 
     // ===================================================================================
-    // I3 — Drukowanie/PDF całej listy płac
+    // KADRY-I3 — Drukowanie/PDF całej listy płac
     // ===================================================================================
 
     [Test]
-    [Description("I3: pełna lista płac do PDF przez IReportService.GenerateReport " +
+    [Description("KADRY-I3: pełna lista płac do PDF przez IReportService.GenerateReport " +
                  "(TemplateFileName = PelnaListaPlac.repx, DataType = typeof(ListaPlac), OutputFormat = PDF, " +
                  "Context.Set(listaPlac)). Strumień zaczyna się od sygnatury „%PDF”. " +
                  "Brak wzorca/silnika renderującego → Assert.Ignore (suita zielona).")]
-    public void I3_PelnaListaPlac_DoPdf_ZaczynaSieOdPdf()
+    public void KADRY_I3_PelnaListaPlac_DoPdf_ZaczynaSieOdPdf()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
         pracownik.Should().NotBeNull();
@@ -292,7 +292,7 @@ public class RozdzialI_ListyWydrukiTest : PracownikTestBase
         }
         catch (Exception ex)
         {
-            Assert.Ignore("Pominięto I3: wygenerowanie PDF pełnej listy płac wymaga zarejestrowanego wzorca '" +
+            Assert.Ignore("Pominięto KADRY-I3: wygenerowanie PDF pełnej listy płac wymaga zarejestrowanego wzorca '" +
                           WzorzecPelnaLista + "' (assembly Soneta.KadryPlace.Reports) oraz silnika renderującego " +
                           "(DevExpress), których testowa baza Demo nie gwarantuje. Test dokumentuje publiczne API " +
                           "IReportService.GenerateReport. Szczegóły: " + ex.GetType().Name + " — " + ex.Message);

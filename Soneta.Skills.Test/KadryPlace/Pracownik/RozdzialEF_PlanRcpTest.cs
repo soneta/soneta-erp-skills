@@ -10,7 +10,7 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział E/F — „Plan pracy i kalendarz" (E1, E2) oraz „RCP — rejestracja czasu pracy" (F1, F2).
+/// Rozdział E/F — „Plan pracy i kalendarz" (KADRY-E1, KADRY-E2) oraz „RCP — rejestracja czasu pracy" (KADRY-F1, KADRY-F2).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta dla planu pracy
 /// i rejestracji czasu. Model: pracownik wystawia trzy niezależne kolekcje dni typu
@@ -47,12 +47,12 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
         return Kalend.DefinicjeDni.Rows.Cast<DefinicjaDnia>().FirstOrDefault();
     }
 
-    // ============================== E1 — Plan pracy (harmonogram) ==============================
+    // ============================== KADRY-E1 — Plan pracy (harmonogram) ==============================
 
     [Test]
-    [Description("E1 (odczyt): DniPlanu to DateSubTable nietypowany (zwraca Row, rzutujemy na DzienPlanu); " +
+    [Description("KADRY-E1 (odczyt): DniPlanu to DateSubTable nietypowany (zwraca Row, rzutujemy na DzienPlanu); " +
                  "DniPlanu == Etat.Kalendarz.Dni; indeksator [Date] jest tylko do odczytu i zwraca null dla braku dnia.")]
-    public void E1_DniPlanu_OdczytIndeksatoremPoDacie_ZwracaDzienPlanuLubNull()
+    public void KADRY_E1_DniPlanu_OdczytIndeksatoremPoDacie_ZwracaDzienPlanuLubNull()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         p.Should().NotBeNull("pracownik '006' istnieje w bazie Demo");
@@ -80,10 +80,10 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E1 (zapis): nowy dzień planu tworzymy ctorem DzienPlanu(pracownik, data) + AddRow, " +
+    [Description("KADRY-E1 (zapis): nowy dzień planu tworzymy ctorem DzienPlanu(pracownik, data) + AddRow, " +
                  "ustawiamy Definicja (ze słownika DefinicjeDni) i godziny na subrowie Praca; po zapisie " +
                  "indeksator DniPlanu[data] zwraca utworzony dzień.")]
-    public void E1_UtworzenieDniaPlanu_UstawiaGodzinyNaSubrowiePraca()
+    public void KADRY_E1_UtworzenieDniaPlanu_UstawiaGodzinyNaSubrowiePraca()
     {
         var def = DowolnaDefinicjaDnia();
         def.Should().NotBeNull("Demo zawiera definicje dni (słownik DefinicjeDni)");
@@ -118,13 +118,13 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
         dp2.Praca.DoGodziny.Should().Be(new Time(16, 0));
     }
 
-    // ============================== E2 — Kopiowanie planu / pracy (publiczne static) ==============================
+    // ============================== KADRY-E2 — Kopiowanie planu / pracy (publiczne static) ==============================
 
     [Test]
-    [Description("E2: KalendarzPlanuKopia.Kopiuj(pracownik, okres) to publiczna metoda STATYCZNA " +
+    [Description("KADRY-E2: KalendarzPlanuKopia.Kopiuj(pracownik, okres) to publiczna metoda STATYCZNA " +
                  "(bez Context) — kopiuje wyliczony plan na okres do bufora DniPlanuKopia. Test wykonuje " +
                  "wywołanie w transakcji i sprawdza, że nie rzuca oraz że bufor DniPlanuKopia jest dostępny.")]
-    public void E2_KalendarzPlanuKopia_Kopiuj_StaticNaOkres_NieRzuca()
+    public void KADRY_E2_KalendarzPlanuKopia_Kopiuj_StaticNaOkres_NieRzuca()
     {
         var okres = new FromTo(new Date(2026, 6, 1), new Date(2026, 6, 30));
 
@@ -133,7 +133,7 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
             var p = Pracownik(Pracownik_.Andrzejewski);
 
             // Publiczny static Kopiuj(Pracownik, FromTo) — właściwa droga dla kodu serwerowego/testów
-            // (worker KopiujWorker wymaga Context/zaznaczenia i jest gardzony licencją BI — patrz E2).
+            // (worker KopiujWorker wymaga Context/zaznaczenia i jest gardzony licencją BI — patrz KADRY-E2).
             System.Action kopiuj = () => KalendarzPlanuKopia.Kopiuj(p, okres);
             kopiuj.Should().NotThrow("Kopiuj(Pracownik, FromTo) to publiczne statyczne API bez Context");
 
@@ -144,9 +144,9 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("E2: KalendarzPracyKopia.Kopiuj(pracownik, okres) — analogiczny publiczny static dla " +
+    [Description("KADRY-E2: KalendarzPracyKopia.Kopiuj(pracownik, okres) — analogiczny publiczny static dla " +
                  "kopiowania realizacji (pracy) na okres; kopia trafia do bufora DniPracyKopia.")]
-    public void E2_KalendarzPracyKopia_Kopiuj_StaticNaOkres_NieRzuca()
+    public void KADRY_E2_KalendarzPracyKopia_Kopiuj_StaticNaOkres_NieRzuca()
     {
         var okres = new FromTo(new Date(2026, 6, 1), new Date(2026, 6, 30));
 
@@ -162,13 +162,13 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
         SaveDispose();
     }
 
-    // ============================== F1 — Odczyt zarejestrowanego/ewidencjonowanego czasu ==============================
+    // ============================== KADRY-F1 — Odczyt zarejestrowanego/ewidencjonowanego czasu ==============================
 
     [Test]
-    [Description("F1 (odczyt): DniPracy i DniRCP to DateSubTable TYPOWANE (DzienPracy / DzienRCP); " +
+    [Description("KADRY-F1 (odczyt): DniPracy i DniRCP to DateSubTable TYPOWANE (DzienPracy / DzienRCP); " +
                  "indeksator [Date] zwraca właściwy typ lub null i nie rzuca. DzienRCP testujemy tylko " +
                  "ODCZYTOWO — jest wynikiem importu/weryfikacji RCP, nie tworzymy go ręcznie.")]
-    public void F1_DniPracyIDniRCP_OdczytIndeksatoremPoDacie_NieRzuca()
+    public void KADRY_F1_DniPracyIDniRCP_OdczytIndeksatoremPoDacie_NieRzuca()
     {
         var p = Pracownik(Pracownik_.Andrzejewski);
         p.DniPracy.Should().NotBeNull("kolekcja ewidencji (DniPracy) istnieje");
@@ -196,10 +196,10 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
     }
 
     [Test]
-    [Description("F1 (zapis ewidencji): dzień ewidencji tworzymy ctorem DzienPracy(pracownik, data) + AddRow " +
+    [Description("KADRY-F1 (zapis ewidencji): dzień ewidencji tworzymy ctorem DzienPracy(pracownik, data) + AddRow " +
                  "(sam ctor nie rejestruje wiersza); godziny ustawiamy na subrowie Praca. Po zapisie " +
                  "DniPracy[data] zwraca utworzony dzień.")]
-    public void F1_UtworzenieDniaPracy_UstawiaGodzinyNaSubrowiePraca()
+    public void KADRY_F1_UtworzenieDniaPracy_UstawiaGodzinyNaSubrowiePraca()
     {
         Guid guidPrac = Guid.Empty;
 
@@ -227,13 +227,13 @@ public class RozdzialEF_PlanRcpTest : PracownikTestBase
         dp2.Praca.DoGodziny.Should().Be(new Time(16, 0));
     }
 
-    // ============================== F2 — Wejścia/wyjścia (zdarzenia RCP na dniu pracy) ==============================
+    // ============================== KADRY-F2 — Wejścia/wyjścia (zdarzenia RCP na dniu pracy) ==============================
 
     [Test]
-    [Description("F2: zdarzenie WejscieWyjscie jest childem DzienPracy — ctor WejscieWyjscie(dzienPracy) + " +
+    [Description("KADRY-F2: zdarzenie WejscieWyjscie jest childem DzienPracy — ctor WejscieWyjscie(dzienPracy) + " +
                  "AddRow do kalend.WejsciaWyjscia; ustawiamy Godzina i Typ (enum TypWejsciaWyjscia). " +
                  "Odczyt przez DzienPracy.WeWy (LpSubTable, posortowane po Lp).")]
-    public void F2_WejscieWyjscie_DodanieWejsciaIWyjscia_DoDniaPracy()
+    public void KADRY_F2_WejscieWyjscie_DodanieWejsciaIWyjscia_DoDniaPracy()
     {
         Guid guidPrac = Guid.Empty;
 

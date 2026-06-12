@@ -42,6 +42,7 @@ archiwizacja). Klasa `ReportResult` opisuje *co* i *jak* wydrukować.
 | `Sign`, `VisibleSignature` | `bool` | podpis certyfikatem (tylko tryb interaktywny okienkowy). |
 | `OutputHandler` | `Func<Stream,object>` | własna obsługa gotowego strumienia (tryb wzorca; **nieobsługiwane przez `IReportService`** — patrz HANDEL-W66). |
 | `ReportName` | `string` | nazwa wydruku z menu (tryb interaktywny; **wyklucza się** z `TemplateFileName`/`IReportService`). |
+| `ParametersHandler` | `Action<Type,Context>` | wołany dla **każdego** typu parametru wymaganego przez wzorzec, którego brak w kontekście — tu uzupełnij `Context` instancją parametru (patrz pułapka „parametry wzorca” w HANDEL-W62). |
 
 > **Reguła spójności (`CheckConsistency`):** `IReportService` wymaga ustawionego
 > `TemplateFileName` i **nie** akceptuje `OutputHandler` ani `ReportName`. `ReportName`
@@ -81,7 +82,7 @@ using Soneta.Handel;
 var raporty = session.GetRequiredService<IReportService>();
 
 // 1. Kontekst: pojedynczy dokument + jego elementy + parametry wzorca.
-var context = new Context(session);
+var context = Context.Empty.Clone(session);
 context.Set(dok);
 context.Set(dok.Definicja);
 context.Set(dok.Kontrahent);
@@ -94,7 +95,14 @@ var rr = new ReportResult {
     DataType = typeof(DokumentHandlowy),               // wydruk dla pojedynczego dokumentu
     Context = context,
     OutputFormat = ReportFormats.PDF,
-    AskForParameters = false                           // tryb wsadowy — nie pytaj o parametry
+    AskForParameters = false,                          // tryb wsadowy — nie pytaj o parametry
+    // Uzupełnij KAŻDY wymagany typ parametru wzorca instancją (ctor z Context). Bez tego
+    // GenerateReport zwróci QueryContextInformation zamiast strumienia (patrz pułapki niżej):
+    ParametersHandler = (type, cx) => {
+        var ctor = type.GetConstructor(new[] { typeof(Context) });
+        var par  = ctor != null ? ctor.Invoke(new object[] { cx }) : Activator.CreateInstance(type);
+        if (par != null) cx.Set(par);
+    }
 };
 
 // 3. Generowanie do strumienia i zapis do pliku.
@@ -106,17 +114,27 @@ using (var plik = new FileStream(@"C:\Temp\FV.pdf", FileMode.Create, FileAccess.
 **Pułapki:**
 - `GenerateReport` zwraca **`Stream`** dla formatów binarnych (PDF, XLSX, PNG). Dla
   `HTML`/`TXT` użyj `GenerateReportStr` (zwraca `string`). Zwrócony strumień **opakuj w `using`**.
-- Kontekst musi zawierać wszystko, czego wymaga wzorzec: rekord (`Context.Set(dok)`),
-  tablicę zaznaczeń **i** instancję parametrów (`ParametryWydrukuDokumentu`). Brak parametru
-  + `AskForParameters = true` w trybie wsadowym zawiesi się na oczekiwaniu na UI — w kodzie
-  bez interfejsu zawsze ustaw `AskForParameters = false`.
-- Wydruk faktury powinien dotyczyć dokumentu **zatwierdzonego** (`Stan == Zatwierdzony`) —
-  dokument w buforze nie ma jeszcze nadanego numeru pełnego.
+- **Parametry wzorca (najczęstsza przyczyna „Problem z przygotowaniem raportu”):** wzorzec ma
+  zwykle własne typy parametrów (np. parametry wydruku faktury), których **instancje muszą być
+  w kontekście**. Gdy ich brak, silnik nie ma jak zapytać o nie bez UI i `GenerateReport` zwraca
+  `QueryContextInformation` zamiast strumienia → rzut `InvalidOperationException("Problem z
+  przygotowaniem raportu")`. Rozwiązanie publiczne i agnostyczne: ustaw `ParametersHandler`, który
+  dla każdego żądanego typu tworzy instancję (ctor z `Context`) i woła `Context.Set(...)` (jak w
+  snippecie). Listę wymaganych typów podejrzysz wcześniej przez
+  `GetParameterTypes(templateFileName, context)`.
+- Kontekst musi zawierać też rekord (`Context.Set(dok)`) i tablicę zaznaczeń (`Context.Set(new[]{dok})`).
+  W kodzie bez interfejsu **zawsze** ustaw `AskForParameters = false`.
+- Wydruk faktury produkcyjnie dotyczy dokumentu **zatwierdzonego** (`Stan == Zatwierdzony`).
+  W teście na bazie Demo można wyrenderować FV także **z bufora** — sumy/VAT/płatności są w buforze już
+  wyliczone, więc PDF powstaje poprawnie. (Samo zatwierdzenie FV jest wykonalne, ale wymaga zapisania
+  pozycji przed `Stan = Zatwierdzony` — patrz pułapka ewidencji VAT / `KrajPodatkuVat` w HANDEL03-W12.)
 - Sprawdzenie poprawności PDF w teście: pierwsze 4 znaki strumienia to `"%PDF"`;
   HTML zaczyna się od `"<!DOCTYPE html"`.
 - **Druk na fizyczną drukarkę** (`PrintReport`, `Target = Printer`) wymaga sprzętu i
-  sterownika — **nie da się tego przetestować jednostkowo**. W testach i integracjach
-  używaj ścieżki `GenerateReport` → strumień/PDF.
+  sterownika. W testach i integracjach **zastępuj go drukiem do pliku tekstowego**: renderuj
+  dokument przez `GenerateReportStr(rr)` z `OutputFormat = ReportFormats.TXT` i zapisz do `.txt`
+  (`File.WriteAllText`), sprawdzając niepustość treści — to pełny, **nie-sprzętowy** odpowiednik
+  wydruku (zweryfikowane HANDEL-W62). Do integracji binarnych użyj `GenerateReport` → strumień/PDF.
 
 ---
 
@@ -129,9 +147,10 @@ dla faktury, różni się tylko wzorcem dobranym do rodzaju dokumentu (wg jego d
 
 | Wariant | Wzorzec / `DataType` |
 |---|---|
-| Przyjęcie / wydanie magazynowe | wzorzec magazynowy (`*.repx`), `DataType = typeof(DokumentHandlowy)` |
+| Przyjęcie / wydanie magazynowe | wzorzec magazynowy `"Magazyn.repx"`, `DataType = typeof(DokumentHandlowy)` |
 | Przesunięcie MM | wzorzec MM |
 | Wydruk wg definicji dokumentu | wzorzec domyślny przypisany do `dok.Definicja` |
+| Druk do pliku tekstowego (zamiast drukarki) | `"Magazyn.repx"` + `OutputFormat = TXT` + `GenerateReportStr` → `.txt` |
 
 **Pola i typy:** jak w HANDEL-W62 — `IReportService.GenerateReport`, `ReportResult.TemplateFileName`,
 `DokumentHandlowy.Definicja` (decyduje o domyślnym wzorcu).
@@ -146,7 +165,7 @@ using Soneta.Handel;
 // 'wz' — zatwierdzony dokument WZ (rozchód magazynowy).
 var raporty = session.GetRequiredService<IReportService>();
 
-var context = new Context(session);
+var context = Context.Empty.Clone(session);
 context.Set(wz);
 context.Set(wz.Definicja);
 context.Set(wz.Magazyn);
@@ -174,6 +193,10 @@ using (Stream pdf = raporty.GenerateReport(rr)) {
 - Nazwy wzorców są elementem konfiguracji wdrożenia (lista wydruków zarejestrowanych dla typu).
   Listę typów parametrów, których wymaga konkretny wzorzec, sprawdzisz przez
   `GetParameterTypes(templateFileName, context)` przed wywołaniem `GenerateReport`.
+- **Wzorzec dokumentu magazynowego (PW/PZ/WZ/RW) to `"Magazyn.repx"`** (`DataType =
+  typeof(DokumentHandlowy)`). Zamiast druku na drukarkę renderuj do pliku tekstowego tą samą ścieżką
+  co faktura: `GenerateReportStr(rr)` z `OutputFormat = ReportFormats.TXT` → `File.WriteAllText(...)`
+  i sprawdzenie niepustości — bez sprzętu (zweryfikowane HANDEL-W63).
 
 ---
 
@@ -213,7 +236,7 @@ using Soneta.Types;          // FromTo, Date
 var raporty = session.GetRequiredService<IReportService>();
 
 var dzien = Date.Today;
-var context = new Context(session);
+var context = Context.Empty.Clone(session);
 context.Set(new FromTo(dzien, dzien));               // parametr okresu wzorca zestawienia
 
 var rr = new ReportResult {
@@ -279,7 +302,7 @@ DokumentHandlowy[] zaznaczone = /* ... */;
 
 var raporty = session.GetRequiredService<IReportService>();
 
-var context = new Context(session);
+var context = Context.Empty.Clone(session);
 context.Set(zaznaczone);                       // zbiór rekordów do wydruku
 
 var rr = new ReportResult {
@@ -338,7 +361,7 @@ using Soneta.Handel;
 
 var raporty = session.GetRequiredService<IReportService>();
 
-var context = new Context(session);
+var context = Context.Empty.Clone(session);
 context.Set(dok);
 context.Set(new DokumentHandlowy[] { dok });
 context.Set(new ParametryWydrukuDokumentu(context) { Duplikat = false });
@@ -384,14 +407,27 @@ using (var ms = new MemoryStream()) {
 ---
 
 > **Co jest testowalne, a co nie (sekcja 12):**
-> - **Testowalne:** generowanie wydruku do strumienia/PDF/HTML/TXT przez
->   `IReportService.GenerateReport`/`GenerateReportStr` (HANDEL-W62, HANDEL-W63, HANDEL-W64-ścieżka bazodanowa,
->   HANDEL-W65, HANDEL-W66). Asercja: PDF zaczyna się od `"%PDF"`, HTML od `"<!DOCTYPE html"`.
-> - **Nietestowalne jednostkowo (wymaga sprzętu):** druk na fizyczną drukarkę
->   (`PrintReport`, `Target = Printer`) oraz fiskalny raport dobowy/okresowy drukarki
->   (`IFiscalPrinterAPI.DrukujRaport`/`DrukujRaportOkresowy`, `Fiskalizuj`). Dla nich
->   testuj tylko poprawne ustawienie `ReportResult`/`RaportOkresowyParams`, bez faktycznego
->   druku.
+> - **Testowalne i zweryfikowane testami** (`Soneta.Skills.Test/Handel/DokumentyHandlowe/Rozdzial12_WydrukiTest.cs`):
+>   generowanie wydruku przez `IReportService.GenerateReport`/`GenerateReportStr` — silnik
+>   DevExpress renderuje na bazie Demo (zob. też `Soneta.Wydruki.Test`). Aktywne testy:
+>   HANDEL-W62 (FV → PDF, sygnatura `"%PDF"`; oraz **druk do pliku tekstowego** — `GenerateReportStr`
+>   + `ReportFormats.TXT` → `.txt`, zamiast druku na drukarkę), HANDEL-W66 (PDF → `byte[]` do integracji),
+>   HANDEL-W65 (wydruk zbiorczy `DataType = typeof(DokumentHandlowy[])` + `Rows` → PDF),
+>   HANDEL-W64 (render do `ReportFormats.TXT` przez `GenerateReportStr`),
+>   HANDEL-W63 (dokument magazynowy wzorcem `"Magazyn.repx"` → plik `.txt`). Warunek: poprawny
+>   `ParametersHandler` (uzupełnia parametry wzorca) — inaczej „Problem z przygotowaniem raportu”.
+> - **Wydruki fiskalne — mockowane przez `ReportFormats.TXT`:** faktyczny wydruk fiskalny
+>   (`Fiscalizer`, `PonownyWydrukParagonuWorker`, `IFiscalPrinterAPI.DrukujRaport*`/`Fiskalizuj`)
+>   steruje **drukarką fiskalną** (sprzęt) i ustawia niepubliczne pola (`SymbolKasy`, `EParagon`) —
+>   nie do odtworzenia jednostkowo. Jako nie-sprzętowy zamiennik renderuje się dokument do
+>   `ReportFormats.TXT` (`GenerateReportStr`) i sprawdza niepustą treść — tak działają testy
+>   HANDEL-W64 (raport), HANDEL-W71, HANDEL-W72 (`Rozdzial13_SpecjalistyczneTest.cs`).
+> - **Druk na fizyczną drukarkę zastępujemy drukiem do pliku tekstowego:** zamiast `PrintReport`
+>   (`Target = Printer`, sprzęt) renderuj `GenerateReportStr` + `ReportFormats.TXT` i zapisz do `.txt`
+>   (HANDEL-W62 dla faktury, HANDEL-W63 dla dokumentu magazynowego wzorcem `"Magazyn.repx"`).
+> - **Pozostaje nietestowalne (konfiguracja/integracja) — `[Ignore]`:** wysyłka e-mail
+>   (`Target = Email`, `OutputHandler` — wymaga konta/szablonu, tryb UI; CheckConsistency odrzuca
+>   `OutputHandler` w `IReportService`).
 
 ---
 

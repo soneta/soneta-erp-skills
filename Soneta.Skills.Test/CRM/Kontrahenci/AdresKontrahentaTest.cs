@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W6 — Adres kontrahenta.
+/// CRM-W6 — Adres kontrahenta.
 /// Test pokazuje, że <c>Adres</c> to property zwracająca obiekt złożony (nie da się przypisać
 /// całego adresu) — modyfikujemy jego pola. Uwaga na typ <c>KodPocztowy</c> = <c>int</c>
 /// (do formatu „00-000" służy <c>KodPocztowyS</c>).

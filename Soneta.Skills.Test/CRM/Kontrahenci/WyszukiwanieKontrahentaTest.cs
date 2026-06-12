@@ -7,7 +7,7 @@ using Soneta.CRM;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W1 — Wyszukiwanie i identyfikacja kontrahenta.
+/// CRM-W1 — Wyszukiwanie i identyfikacja kontrahenta.
 /// Testy pokazują trzy podstawowe sposoby odnajdywania kontrahenta używane w kodzie dodatków:
 /// po kodzie (klucz unikalny), po nazwie (klucz nieunikalny) oraz po NIP (filtr serwerowy
 /// <c>SubTable[condition]</c>, zamiast iteracji całej tabeli w pamięci).

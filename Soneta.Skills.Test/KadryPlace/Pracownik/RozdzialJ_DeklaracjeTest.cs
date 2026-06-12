@@ -12,7 +12,7 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział J — „Deklaracje (ZUS, PIT, PFRON, PPK)" (receptury J1–J6).
+/// Rozdział J — „Deklaracje (ZUS, PIT, PFRON, PPK)" (receptury KADRY-J1–KADRY-J6).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu modułu Deklaracje
 /// (<c>Soneta.Deklaracje.DeklaracjeModule</c>, dostęp przez <c>Session.GetDeklaracje()</c>).
@@ -21,12 +21,12 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 /// <c>Soneta.Deklaracje.{ZUS,PIT,PFRON,PPK}.*</c>.
 /// </para>
 /// <para>
-/// <b>Rozróżnienie kluczowe.</b> Naliczenie/utworzenie większości deklaracji (J1–J5) to operacja
+/// <b>Rozróżnienie kluczowe.</b> Naliczenie/utworzenie większości deklaracji (KADRY-J1–KADRY-J5) to operacja
 /// lokalna (zapis wiersza), ale wymaga <c>Context</c> i — dla ZUS — obiektu <c>KEDU</c> (kontener
 /// dokumentów ZUS), którego nie da się sensownie zbudować bez środowiska modułu Deklaracje.
-/// E-wysyłka (KEDU/PUE/SODiR/MF) jest sieciowa/plikowa. Dlatego testy J1–J5 dokumentują
+/// E-wysyłka (KEDU/PUE/SODiR/MF) jest sieciowa/plikowa. Dlatego testy KADRY-J1–KADRY-J5 dokumentują
 /// <b>KONTRAKT</b> typów/workerów kompilowalnie (przez odwołania do typów <c>typeof(...)</c>,
-/// ctory, metody) i są oznaczone <c>[Ignore]</c> z powodem. Realnie wykonujemy J6 (bilanse otwarcia
+/// ctory, metody) i są oznaczone <c>[Ignore]</c> z powodem. Realnie wykonujemy KADRY-J6 (bilanse otwarcia
 /// PIT — czyste API biznesowe na pracowniku) oraz próbę naliczenia PIT-11.
 /// </para>
 /// <para>
@@ -40,17 +40,17 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
     /// <summary>Skrót do modułu Deklaracje bieżącej sesji operacyjnej.</summary>
     private DeklaracjeModule Deklaracje => Session.GetDeklaracje();
 
-    // ============================== J1 — Zgłoszenia ZUS (ZUA/ZZA, ZCNA, ZWUA) ==============================
+    // ============================== KADRY-J1 — Zgłoszenia ZUS (ZUA/ZZA, ZCNA, ZWUA) ==============================
 
     [Test]
-    [Description("J1: zgłoszenia ZUS to wiersze deklaracji w Soneta.Deklaracje.ZUS — ZUA (społeczne+zdrowotne), " +
+    [Description("KADRY-J1: zgłoszenia ZUS to wiersze deklaracji w Soneta.Deklaracje.ZUS — ZUA (społeczne+zdrowotne), " +
                  "ZZA (zdrowotne), ZCNA (rodzina), ZWUA (wyrejestrowanie). Konkretne typy mają ctor " +
                  "(Pracownik, KEDU): new ZUA(pracownik, kedu). Workerem zbiorczym jest " +
                  "ZarejestrujPracownikówWorker (zagnieżdżone .Rejestracja/.Rodzina/.Wyrejestrowanie/.ZgloszenieUmow), " +
                  "Params budowane z Context (ctor (Context)) + pole Kedu. Tu dokumentujemy KONTRAKT typów; " +
                  "samo utworzenie wymaga Context + KEDU.")]
     [Ignore("wymaga Context/KEDU / e-wysyłka sieciowa — dokumentowany kontrakt typów ZUS")]
-    public void J1_ZgloszeniaZUS_ZUA_ZZA_ZCNA_ZWUA_Kontrakt()
+    public void KADRY_J1_ZgloszeniaZUS_ZUA_ZZA_ZCNA_ZWUA_Kontrakt()
     {
         // Kontrakt typów zgłoszeniowych ZUS — odwołania kompilowalne (zweryfikowane z DLL).
         typeof(Soneta.Deklaracje.ZUS.ZUA).Should().NotBeNull("ZUA — zgłoszenie społeczne+zdrowotne");
@@ -72,17 +72,17 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
             .Should().NotBeNull("KEDU ma ctor (Session), ale realne złożenie wymaga modułu Deklaracje");
     }
 
-    // ============================== J2 — Deklaracje rozliczeniowe ZUS (DRA, RIA, IMIR/RMUA) ==============================
+    // ============================== KADRY-J2 — Deklaracje rozliczeniowe ZUS (DRA, RIA, IMIR/RMUA) ==============================
 
     [Test]
-    [Description("J2: rozliczeniowe ZUS — DRA (deklaracja rozliczeniowa, ctor (KEDU)), RIA (raport po ustaniu, " +
+    [Description("KADRY-J2: rozliczeniowe ZUS — DRA (deklaracja rozliczeniowa, ctor (KEDU)), RIA (raport po ustaniu, " +
                  "ctor (Pracownik, KEDU)), RMUA (informacja miesięczna dla ubezpieczonego = IMIR, ctor " +
                  "(Pracownik, RMUA.TypOkresuDeklaracji)). Naliczanie seryjne: NaliczanieSeryjneRIAWorker / " +
                  "NaliczanieSeryjneRMUAWorker (ctor bezparametrowy + Pracownicy/Pars + metoda NaliczRMUA(Context)). " +
                  "Pojedynczą deklarację przelicza DeklaracjaWorker.Przelicz() (DataType Deklaracja). " +
                  "KEDU + Context wymagane — dokumentujemy KONTRAKT.")]
     [Ignore("wymaga Context/KEDU / e-wysyłka sieciowa — dokumentowany kontrakt rozliczeń ZUS")]
-    public void J2_RozliczeniaZUS_DRA_RIA_IMIR_Kontrakt()
+    public void KADRY_J2_RozliczeniaZUS_DRA_RIA_IMIR_Kontrakt()
     {
         // DRA wiąże się z KEDU (ctor (KEDU)), RIA z pracownikiem i KEDU.
         typeof(Soneta.Deklaracje.ZUS.DRA).GetConstructor(new[] { typeof(Soneta.Deklaracje.ZUS.KEDU) })
@@ -106,16 +106,16 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
         typeof(DeklaracjaWorker).GetMethod("Przelicz").Should().NotBeNull("DeklaracjaWorker.Przelicz()");
     }
 
-    // ============================== J3 — Deklaracje PIT (PIT-11, 4R, 8AR, R, IFT) ==============================
+    // ============================== KADRY-J3 — Deklaracje PIT (PIT-11, 4R, 8AR, R, IFT) ==============================
 
     [Test]
-    [Description("J3: imienne PIT (PIT-11, PIT-R, IFT-1/IFT-1R, PIT-8C) nalicza seryjnie zagnieżdżony " +
+    [Description("KADRY-J3: imienne PIT (PIT-11, PIT-R, IFT-1/IFT-1R, PIT-8C) nalicza seryjnie zagnieżdżony " +
                  "Soneta.Deklaracje.PIT.NaliczanieSeryjne.* (PIT_11Worker ma ctor (Session); Params ctor (Context)). " +
                  "PIT-4R/PIT-8AR (PIT4/PIT8A) są zbiorcze na poziomie podmiotu/US (ctory nonpublic — tworzone " +
                  "workerami zbiorczymi). Tu dokumentujemy KONTRAKT typów i workerów. Realne naliczenie PIT-11 " +
-                 "próbujemy w J3b.")]
+                 "próbujemy w KADRY-J3b.")]
     [Ignore("wymaga Context / dane źródłowe (wypłaty + BO PIT) — dokumentowany kontrakt PIT")]
-    public void J3_DeklaracjePIT_Kontrakt()
+    public void KADRY_J3_DeklaracjePIT_Kontrakt()
     {
         // Typy deklaracji PIT (wiersze tabeli Deklaracje).
         typeof(Soneta.Deklaracje.PIT.PIT11).Should().NotBeNull("PIT-11");
@@ -140,13 +140,13 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("J3b: próba realnego naliczenia PIT-11 dla pracownika Demo workerem " +
+    [Description("KADRY-J3b: próba realnego naliczenia PIT-11 dla pracownika Demo workerem " +
                  "NaliczanieSeryjne.PIT_11Worker(Session) { Pracownicy = [...] }, ustawiając Pars.Okres (rok) " +
                  "i Pars.Data, a następnie wywołując Nalicz_PIT_11(). Worker wymaga środowiska Context/danych " +
                  "źródłowych — w razie wyjątku oznaczamy [Ignore].")]
     [Ignore("PIT_11Worker wymaga Context/KEDU oraz danych źródłowych (naliczone wypłaty + BO PIT); " +
             "naliczenie w izolacji testu rzuca — dokumentowany kontrakt wywołania")]
-    public void J3b_NaliczeniePIT11_ProbaRealna()
+    public void KADRY_J3b_NaliczeniePIT11_ProbaRealna()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();
@@ -162,16 +162,16 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
         SaveDispose();
     }
 
-    // ============================== J4 — Deklaracje PFRON (Wn-D, INF-2, DEK-R, INF-D-P) ==============================
+    // ============================== KADRY-J4 — Deklaracje PFRON (Wn-D, INF-2, DEK-R, INF-D-P) ==============================
 
     [Test]
-    [Description("J4: PFRON to wiersze deklaracji w Soneta.Deklaracje.PFRON — WN_D (Wn-D), INF_2 (informacja " +
+    [Description("KADRY-J4: PFRON to wiersze deklaracji w Soneta.Deklaracje.PFRON — WN_D (Wn-D), INF_2 (informacja " +
                  "roczna), DEK_R (deklaracja roczna wpłat), INF_D_P (załącznik o pracowniku niepełnosprawnym). " +
                  "PFRON nie ma seryjnego naliczania na Pracownicy — deklarację tworzy się w module Deklaracje, " +
                  "a przelicza DeklaracjaWorker.Przelicz() (DataType Deklaracja). Dane źródłowe pochodzą z " +
-                 "PracHistoria.PFRON (A13). Tworzenie/edycja wymaga Context — dokumentujemy KONTRAKT.")]
+                 "PracHistoria.PFRON (KADRY-A13). Tworzenie/edycja wymaga Context — dokumentujemy KONTRAKT.")]
     [Ignore("wymaga Context / e-wysyłka SODiR — dokumentowany kontrakt typów PFRON")]
-    public void J4_DeklaracjePFRON_Kontrakt()
+    public void KADRY_J4_DeklaracjePFRON_Kontrakt()
     {
         typeof(Soneta.Deklaracje.PFRON.WN_D).Should().NotBeNull("Wn-D — wniosek o dofinansowanie");
         typeof(Soneta.Deklaracje.PFRON.INF_2).Should().NotBeNull("INF-2 — informacja roczna");
@@ -184,10 +184,10 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
         typeof(DeklaracjaWorker).GetMethod("Przelicz").Should().NotBeNull();
     }
 
-    // ============================== J5 — Operacje PPK ==============================
+    // ============================== KADRY-J5 — Operacje PPK ==============================
 
     [Test]
-    [Description("J5: dokumenty PPK to wiersze deklaracji w Soneta.Deklaracje.PPK (RejestracjaUczestnikaPPK, " +
+    [Description("KADRY-J5: dokumenty PPK to wiersze deklaracji w Soneta.Deklaracje.PPK (RejestracjaUczestnikaPPK, " +
                  "DeklaracjaUczestnikaPPK, ZakończenieZatrudnieniaUczestnikaPPK, RozliczenieSkładekPPK, …). " +
                  "Operacje zbiorcze na Pracownicy realizuje DeklaracjePPKPracownikówWorker (zagnieżdżone " +
                  ".Rejestracja/.Rezygnacja/.Wznowienie/.ZakończenieZatrudnienia/.ZmianaDanychIdentyfikacyjnych); " +
@@ -195,7 +195,7 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
                  "Kwalifikacja/auto-zapis to workery na pracowniku (PPKWorker/AutoZapisPPKWorker, ctor (Context)). " +
                  "Dokumentujemy KONTRAKT — operacje wymagają Context i zwykle DokumentyPracodawcyPPK.")]
     [Ignore("wymaga Context / DokumentyPracodawcyPPK — dokumentowany kontrakt operacji PPK")]
-    public void J5_OperacjePPK_Kontrakt()
+    public void KADRY_J5_OperacjePPK_Kontrakt()
     {
         // Typy dokumentów PPK.
         typeof(Soneta.Deklaracje.PPK.RejestracjaUczestnikaPPK).Should().NotBeNull();
@@ -213,17 +213,17 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
             .Should().NotBeNull("DeklaracjePPKBaseWorker.Params(Context)");
     }
 
-    // ============================== J6 — Bilanse otwarcia PIT (REALNIE TESTOWALNE) ==============================
+    // ============================== KADRY-J6 — Bilanse otwarcia PIT (REALNIE TESTOWALNE) ==============================
 
     [Test]
-    [Description("J6: bilans otwarcia PIT to kolekcja na pracowniku (pracownik.BilansyOtwarciaPIT, " +
+    [Description("KADRY-J6: bilans otwarcia PIT to kolekcja na pracowniku (pracownik.BilansyOtwarciaPIT, " +
                  "SubTable<Soneta.Place.BilansOtwarciaPIT>). Tworzymy czystym API biznesowym (BEZ Context/KEDU): " +
                  "Session.AddRow(new BilansOtwarciaPIT_29(pracownik)) w trybie edycji; ustawiamy Data oraz kwoty " +
                  "(PrzychodUlgaEtat, Spoleczne). UWAGA: bazowy BilansOtwarciaPIT jest ABSTRAKCYJNY — instancjonujemy " +
                  "konkretną wersję BilansOtwarciaPIT_29 (Wersja=PIT11_29) lub BilansOtwarciaPIT_11 (PIT11_11), " +
                  "ctor (Pracownik); brak ctora bezparametrowego, Pracownik read-only. Odczyt przez " +
                  "pracownik.BilansyOtwarciaPIT.")]
-    public void J6_BilansOtwarciaPIT_TworzenieIOdczyt()
+    public void KADRY_J6_BilansOtwarciaPIT_TworzenieIOdczyt()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();
@@ -264,11 +264,11 @@ public class RozdzialJ_DeklaracjeTest : PracownikTestBase
     }
 
     [Test]
-    [Description("J6b: pozostałe kolekcje wdrożeniowe ERP-7 na pracowniku — pracownik.WynagrodzeniaERP7 " +
+    [Description("KADRY-J6b: pozostałe kolekcje wdrożeniowe ERP-7 na pracowniku — pracownik.WynagrodzeniaERP7 " +
                  "(SubTable<Soneta.Kalend.WynagrodzenieERP7>) i pracownik.NieobecnosciERP7 " +
                  "(SubTable<Soneta.Kalend.NieobecnoscERP7>). Dokumentujemy KONTRAKT (kolekcje istnieją i są " +
                  "iterowalne czystym API, bez Context); sam druk Z-3/ERP-7 to generowanie w module Deklaracje.")]
-    public void J6b_KolekcjeERP7_Odczyt()
+    public void KADRY_J6b_KolekcjeERP7_Odczyt()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();

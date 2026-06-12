@@ -6,7 +6,7 @@ using Soneta.CRM;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W8 — Osoby kontaktowe.
+/// CRM-W8 — Osoby kontaktowe.
 /// Test pokazuje dodanie osoby kontaktowej i powiązanie jej z kontrahentem przez
 /// <c>KontaktOsoba.Kontrahent</c> — osoba pojawia się wtedy w kolekcji <c>Osoby</c> kontrahenta.
 /// </summary>

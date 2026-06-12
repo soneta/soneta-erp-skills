@@ -12,14 +12,14 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
 /// Rozdział B+C — „Etat (umowa o pracę)" i „Dodatki / stałe elementy wynagrodzenia"
-/// (receptury B1 i C1 z dokumentu skilla <c>pracownik.md</c>).
+/// (receptury KADRY-B1 z <c>kadry/KADRY02-etat.md</c> i KADRY-C1 z <c>kadry/KADRY03-dodatki-potracenia.md</c>).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta. Pokazują:
 /// <list type="bullet">
-/// <item><b>B1</b> — warunki etatu siedzą w subrowie <c>PracHistoria.Etat</c>; stawkę ustawiamy na
+/// <item><b>KADRY-B1</b> — warunki etatu siedzą w subrowie <c>PracHistoria.Etat</c>; stawkę ustawiamy na
 /// subrowie <c>Etat.Zaszeregowanie</c> w wymaganej KOLEJNOŚCI (najpierw <c>RodzajStawki</c>, potem
 /// <c>Wymiar</c>) — odwrócenie kolejności rzuca <see cref="ColReadOnlyException"/>;</item>
-/// <item><b>C1</b> — dodatek (stały element wynagrodzenia) jest obiektem historycznym; tworzymy go
+/// <item><b>KADRY-C1</b> — dodatek (stały element wynagrodzenia) jest obiektem historycznym; tworzymy go
 /// przez <c>new Dodatek(pracownik)</c> + <c>Kadry.Dodatki.AddRow</c>, a parametry (Element, Okres)
 /// ustawiamy na pierwszym zapisie <c>d.Last</c>.</item>
 /// </list>
@@ -33,13 +33,13 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 [TestFixture]
 public class RozdzialBC_EtatDodatkiTest : PracownikTestBase
 {
-    // ============================== B1 — Definiowanie etatu (umowa o pracę) ==============================
+    // ============================== KADRY-B1 — Definiowanie etatu (umowa o pracę) ==============================
 
     [Test]
-    [Description("B1: warunki etatu ustawiamy na subrowie Etat zapisu historii. KOLEJNOŚĆ: najpierw " +
+    [Description("KADRY-B1: warunki etatu ustawiamy na subrowie Etat zapisu historii. KOLEJNOŚĆ: najpierw " +
                  "Etat.Okres (odblokowuje pozostałe pola etatu), potem TypUmowy/Podstawa/Stanowisko/Wydzial " +
                  "oraz stawka na subrowie Zaszeregowanie. Wydzial to referencja do korzenia (Wydzialy.Firma).")]
-    public void B1_DefiniowanieEtatu_NaNowymPracowniku_UstawiaWarunkiIStawke()
+    public void KADRY_B1_DefiniowanieEtatu_NaNowymPracowniku_UstawiaWarunkiIStawke()
     {
         Guid guid = Guid.Empty;
         var kod = "B1_" + Guid.NewGuid().ToString("N").Substring(0, 6);
@@ -47,7 +47,7 @@ public class RozdzialBC_EtatDodatkiTest : PracownikTestBase
 
         InTransaction(() =>
         {
-            // A1: AddRow tworzy pierwszy zapis historii (Last) + kalendarz — warunki etatu ustawiamy
+            // KADRY-A1: AddRow tworzy pierwszy zapis historii (Last) + kalendarz — warunki etatu ustawiamy
             // na Etat tego pierwszego zapisu.
             var pracownik = Session.AddRow(new PracownikFirmy());
             pracownik.Kod = kod;
@@ -96,10 +96,10 @@ public class RozdzialBC_EtatDodatkiTest : PracownikTestBase
     }
 
     [Test]
-    [Description("B1 (pułapka kolejności): na świeżym zapisie historii cały Etat jest tylko-do-odczytu " +
+    [Description("KADRY-B1 (pułapka kolejności): na świeżym zapisie historii cały Etat jest tylko-do-odczytu " +
                  "dopóki nie ustawimy Etat.Okres. Próba ustawienia TypUmowy/RodzajStawki/Wymiar PRZED " +
                  "Etat.Okres rzuca ColReadOnlyException; po ustawieniu Okres pola stają się zapisywalne.")]
-    public void B1_Pulapka_PolaEtatuReadOnlyDopokiNieUstawionoOkresu()
+    public void KADRY_B1_Pulapka_PolaEtatuReadOnlyDopokiNieUstawionoOkresu()
     {
         InTransaction(() =>
         {
@@ -140,13 +140,13 @@ public class RozdzialBC_EtatDodatkiTest : PracownikTestBase
         });
     }
 
-    // ============================== C1 — Dodatki / stałe elementy wynagrodzenia ==============================
+    // ============================== KADRY-C1 — Dodatki / stałe elementy wynagrodzenia ==============================
 
     [Test]
-    [Description("C1: dodatek tworzymy przez new Dodatek(pracownik) + Kadry.Dodatki.AddRow (para); " +
+    [Description("KADRY-C1: dodatek tworzymy przez new Dodatek(pracownik) + Kadry.Dodatki.AddRow (para); " +
                  "AddRow tworzy pierwszy zapis DodHistoria (d.Last), na którym ustawiamy Element " +
                  "(z Place.DefElementow.WgNazwy[\"Premia\"]) oraz Okres. Odczyt z pracownik.Dodatki.")]
-    public void C1_Dodatek_TworzonyZDefinicjaElementu_IOkresem()
+    public void KADRY_C1_Dodatek_TworzonyZDefinicjaElementu_IOkresem()
     {
         // Definicja elementu wynagrodzenia ze słownika KONFIGURACYJNEGO (po nazwie).
         // W bazie Demo istnieje gotowa definicja "Premia".
@@ -164,7 +164,7 @@ public class RozdzialBC_EtatDodatkiTest : PracownikTestBase
             pracownik.Kod = "C1_" + Guid.NewGuid().ToString("N").Substring(0, 6);
             pracownik.Last.Nazwisko = "Premiowany";
             pracownik.Last.Imie = "Lucjan";
-            // Etat.Okres najpierw — odblokowuje warunki etatu (patrz B1). Po ustawieniu Okres
+            // Etat.Okres najpierw — odblokowuje warunki etatu (patrz KADRY-B1). Po ustawieniu Okres
             // weryfikator wymaga jednostki organizacyjnej (Wydzial) przy Save.
             pracownik.Last.Etat.Okres = okres;
             pracownik.Last.Etat.Wydzial = Kadry.Wydzialy.Firma;
@@ -197,9 +197,9 @@ public class RozdzialBC_EtatDodatkiTest : PracownikTestBase
     }
 
     [Test]
-    [Description("C1 (definicja elementu): definicje dodatków pobieramy ze słownika Place.DefElementow; " +
+    [Description("KADRY-C1 (definicja elementu): definicje dodatków pobieramy ze słownika Place.DefElementow; " +
                  "definicja \"Premia\" istnieje w bazie Demo i jest źródłem typu Dodatek.")]
-    public void C1_DefinicjaElementu_PobieranaZeSlownika_PoNazwie()
+    public void KADRY_C1_DefinicjaElementu_PobieranaZeSlownika_PoNazwie()
     {
         // DefElementow to kolekcja konfiguracyjna; indeksowanie WgNazwy zwraca definicję po nazwie.
         var premia = Place.DefElementow.WgNazwy["Premia"] as DefinicjaElementu;

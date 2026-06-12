@@ -8,7 +8,7 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 5 — „Odczyt i wyszukiwanie” (wzorce W25–W30).
+/// Rozdział 5 — „Odczyt i wyszukiwanie” (wzorce HANDEL-W25–HANDEL-W30).
 /// <para>
 /// Testy pokazują, jak dodatek zewnętrzny odczytuje i wyszukuje dokumenty handlowe wyłącznie na
 /// publicznym kontrakcie platformy: odczyt pozycji (<c>dok.Pozycje</c>), wyszukiwanie serwerowe wg
@@ -50,16 +50,16 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
         return guid;
     }
 
-    // === W25 — Odczytanie pozycji dokumentu ===
+    // === HANDEL-W25 — Odczytanie pozycji dokumentu ===
 
     [Test]
-    [Description("W25: dok.Pozycje (LpSubTable) zwraca zapisane pozycje z poprawnym towarem, " +
+    [Description("HANDEL-W25: dok.Pozycje (LpSubTable) zwraca zapisane pozycje z poprawnym towarem, " +
                  "ilością i wyliczoną wartością.")]
-    public void W25_OdczytPozycji_ZwracaTowarIloscIWartosc()
+    public void HANDEL_W25_OdczytPozycji_ZwracaTowarIloscIWartosc()
     {
         var guid = UtworzZnanyDokumentPW(ilosc: 3, cena: 12);
 
-        // Odczyt na świeżej sesji po Guid (W29).
+        // Odczyt na świeżej sesji po Guid (HANDEL-W29).
         var dok = Get<DokumentHandlowy>(guid);
         dok.Should().NotBeNull();
 
@@ -75,9 +75,9 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W25: filtr serwerowy dok.Pozycje[p => p.Towar == towar] zawęża pozycje do " +
+    [Description("HANDEL-W25: filtr serwerowy dok.Pozycje[p => p.Towar == towar] zawęża pozycje do " +
                  "wskazanego towaru.")]
-    public void W25_FiltrPozycjiWgTowaru_ZwracaTylkoPasujace()
+    public void HANDEL_W25_FiltrPozycjiWgTowaru_ZwracaTylkoPasujace()
     {
         var guid = UtworzZnanyDokumentPW();
         var dok = Get<DokumentHandlowy>(guid);
@@ -95,12 +95,12 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
         pozycjeTransport.Should().BeEmpty();
     }
 
-    // === W28 — Wyszukiwanie wg okresu, definicji, stanu (serwerowo) ===
+    // === HANDEL-W28 — Wyszukiwanie wg okresu, definicji, stanu (serwerowo) ===
 
     [Test]
-    [Description("W28: hm.DokHandlowe.WgDaty[condition] z koniunkcją definicja + okres + magazyn " +
+    [Description("HANDEL-W28: hm.DokHandlowe.WgDaty[condition] z koniunkcją definicja + okres + magazyn " +
                  "odnajduje utworzony dokument serwerowo.")]
-    public void W28_WyszukiwanieWgDefinicjiOkresuMagazynu_ZnajdujeDokument()
+    public void HANDEL_W28_WyszukiwanieWgDefinicjiOkresuMagazynu_ZnajdujeDokument()
     {
         var guid = UtworzZnanyDokumentPW();
 
@@ -122,9 +122,9 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W28: filtr po stanie dokumentu — Bufor znajduje świeży dokument, " +
+    [Description("HANDEL-W28: filtr po stanie dokumentu — Bufor znajduje świeży dokument, " +
                  "Zatwierdzony go nie zawiera.")]
-    public void W28_WyszukiwanieWgStanu_RozrozniaBuforOdZatwierdzonego()
+    public void HANDEL_W28_WyszukiwanieWgStanu_RozrozniaBuforOdZatwierdzonego()
     {
         var guid = UtworzZnanyDokumentPW();
 
@@ -141,12 +141,12 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
         zatwierdzone.Should().NotContain(d => d.Guid == guid);
     }
 
-    // === W29 — Odczyt dokumentu wg Guid oraz wg pełnego numeru ===
+    // === HANDEL-W29 — Odczyt dokumentu wg Guid oraz wg pełnego numeru ===
 
     [Test]
-    [Description("W29: indeksator hm.DokHandlowe[guid] zwraca zapisany dokument dla istniejącego " +
+    [Description("HANDEL-W29: indeksator hm.DokHandlowe[guid] zwraca zapisany dokument dla istniejącego " +
                  "Guid, a dla nieznanego Guid rzuca RowNotFoundException (nie zwraca null).")]
-    public void W29_OdczytPoGuid_ZwracaDokumentLubRzucaDlaNieznanego()
+    public void HANDEL_W29_OdczytPoGuid_ZwracaDokumentLubRzucaDlaNieznanego()
     {
         var guid = UtworzZnanyDokumentPW();
 
@@ -163,9 +163,9 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W29: wyszukanie po pełnym numerze warunkiem na polu bazodanowym Numer.Pelny " +
+    [Description("HANDEL-W29: wyszukanie po pełnym numerze warunkiem na polu bazodanowym Numer.Pelny " +
                  "(klucz WgMagazynuNumer); odczyt sformatowanego numeru przez Numer.NumerPelny.")]
-    public void W29_OdczytPoPelnymNumerze_FiltrSerwerowy_ZnajdujeDokument()
+    public void HANDEL_W29_OdczytPoPelnymNumerze_FiltrSerwerowy_ZnajdujeDokument()
     {
         var guid = UtworzZnanyDokumentPW();
 
@@ -186,12 +186,12 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
         znaleziony.Guid.Should().Be(guid);
     }
 
-    // === W26 — Odczytanie dokumentów dla kontrahenta ===
+    // === HANDEL-W26 — Odczytanie dokumentów dla kontrahenta ===
 
     [Test]
-    [Description("W26: typowany filtr serwerowy od strony Handlu (WgKontrahentaObcy) zawężony " +
+    [Description("HANDEL-W26: typowany filtr serwerowy od strony Handlu (WgKontrahentaObcy) zawężony " +
                  "okresem zwraca dokumenty wskazanego kontrahenta.")]
-    public void W26_DokumentyKontrahenta_FiltrServerowyOdStronyHandlu()
+    public void HANDEL_W26_DokumentyKontrahenta_FiltrServerowyOdStronyHandlu()
     {
         // PW nie nosi kontrahenta — by mieć dokument WG kontrahenta tworzymy FV (sprzedaż).
         // FV rozchodowe wymaga ZATWIERDZONEGO przyjęcia na stan (Demo blokuje stan ujemny).
@@ -220,12 +220,12 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
         dokumenty.Should().OnlyContain(d => d.Kontrahent == kontrahent);
     }
 
-    // === W30 — Korekty: pole bazodanowe Korekta + powiązania kalkulowane ===
+    // === HANDEL-W30 — Korekty: pole bazodanowe Korekta + powiązania kalkulowane ===
 
     [Test]
-    [Description("W30: świeży dokument zwykły nie jest korektą (pole bazodanowe Korekta == false), " +
+    [Description("HANDEL-W30: świeży dokument zwykły nie jest korektą (pole bazodanowe Korekta == false), " +
                  "a DokumentKorygowany jest null.")]
-    public void W30_DokumentZwykly_NieJestKorekta_BrakDokumentuKorygowanego()
+    public void HANDEL_W30_DokumentZwykly_NieJestKorekta_BrakDokumentuKorygowanego()
     {
         var guid = UtworzZnanyDokumentPW();
         var dok = Get<DokumentHandlowy>(guid);
@@ -241,9 +241,9 @@ public class Rozdzial05_OdczytTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W30: serwerowy filtr korekt na polu bazodanowym Korekta (WgDaty) NIE zawiera " +
+    [Description("HANDEL-W30: serwerowy filtr korekt na polu bazodanowym Korekta (WgDaty) NIE zawiera " +
                  "zwykłego dokumentu.")]
-    public void W30_SerwerowyFiltrKorekt_NieZawieraZwyklegoDokumentu()
+    public void HANDEL_W30_SerwerowyFiltrKorekt_NieZawieraZwyklegoDokumentu()
     {
         var guid = UtworzZnanyDokumentPW();
 

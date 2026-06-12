@@ -13,12 +13,12 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 11 skilla „dokument-handlowy” — Operacje pomocnicze (przekrojowe) (W56–W61).
+/// Rozdział 11 skilla „dokument-handlowy” — Operacje pomocnicze (przekrojowe) (HANDEL-W56–HANDEL-W61).
 /// <para>
 /// Testy weryfikują wzorce „okołodokumentowe”: bezpieczne pozyskanie kontrahenta/towaru i obsługę
-/// kontrahenta incydentalnego (W56), przeliczanie jednostek miary towaru (W57), walidację przed
-/// zatwierdzeniem (W58), obsługę błędów/blokady optymistycznej (W59), odczyt metadanych audytowych
-/// <c>ChangeInfos</c> (W60) oraz pracę z definicjami i numeracją dokumentu (W61).
+/// kontrahenta incydentalnego (HANDEL-W56), przeliczanie jednostek miary towaru (HANDEL-W57), walidację przed
+/// zatwierdzeniem (HANDEL-W58), obsługę błędów/blokady optymistycznej (HANDEL-W59), odczyt metadanych audytowych
+/// <c>ChangeInfos</c> (HANDEL-W60) oraz pracę z definicjami i numeracją dokumentu (HANDEL-W61).
 /// </para>
 /// <para>
 /// W bazie Demo działa <c>StanUjemnyVerifier</c> (blokada stanu ujemnego): rozchód wymaga
@@ -49,13 +49,13 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W56 — Bezpieczne pobranie / utworzenie kontrahenta i towaru pozycji
+    // HANDEL-W56 — Bezpieczne pobranie / utworzenie kontrahenta i towaru pozycji
     // ===================================================================================
 
     [Test]
-    [Description("W56: WgKodu zwraca istniejący rekord dla znanego kodu, a null dla kodu spoza kartoteki " +
+    [Description("HANDEL-W56: WgKodu zwraca istniejący rekord dla znanego kodu, a null dla kodu spoza kartoteki " +
                  "(klucz unikalny — pojedynczy rekord lub null).")]
-    public void W56_LookupPoKodzie_ZwracaRekordLubNull()
+    public void HANDEL_W56_LookupPoKodzie_ZwracaRekordLubNull()
     {
         // Istniejący kontrahent z bazy Demo — lookup po kluczu unikalnym zwraca jeden rekord.
         Kontrahent istniejacy = Kontrahent(Kontrahent_.Abc);
@@ -73,9 +73,9 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W56: kontrahent incydentalny — rekord systemowy pobierany po stałej Kontrahent.INCYDENTALNY " +
+    [Description("HANDEL-W56: kontrahent incydentalny — rekord systemowy pobierany po stałej Kontrahent.INCYDENTALNY " +
                  "(indeksator GuidedTable po Guid); rekord ma JestIncydentalny == true.")]
-    public void W56_KontrahentIncydentalny_PobranyPoGuidJestOznaczonyJakoIncydentalny()
+    public void HANDEL_W56_KontrahentIncydentalny_PobranyPoGuidJestOznaczonyJakoIncydentalny()
     {
         // Sprzedaż jednorazowa (klient detaliczny bez kartoteki) — używamy systemowego rekordu
         // „incydentalnego” zamiast tworzyć nowego kontrahenta. Dostęp po stałej Guid.
@@ -91,10 +91,10 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W56: fallback przy braku rekordu — gdy WgKodu zwraca null, kontrola istnienia pozwala " +
+    [Description("HANDEL-W56: fallback przy braku rekordu — gdy WgKodu zwraca null, kontrola istnienia pozwala " +
                  "sięgnąć po systemowy rekord incydentalny; jednak na fakturze (FV) NIE wolno go ustawiać — " +
                  "setter rzuca ArgumentException (kontrahent incydentalny niedozwolony w dokumentach typu FV).")]
-    public void W56_FallbackNaIncydentalnego_GdyBrakKontrahentaPoKodzie()
+    public void HANDEL_W56_FallbackNaIncydentalnego_GdyBrakKontrahentaPoKodzie()
     {
         // Symulacja: kod nabywcy nie istnieje w kartotece — WgKodu zwraca null (kontrola istnienia).
         Kontrahent kontrahent = Kontrahent("DETAL_BEZ_KARTOTEKI");
@@ -115,13 +115,13 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W57 — Przeliczanie jednostek miary towaru (Towar.PrzeliczJednostkę)
+    // HANDEL-W57 — Przeliczanie jednostek miary towaru (Towar.PrzeliczJednostkę)
     // ===================================================================================
 
     [Test]
-    [Description("W57: PrzeliczJednostkę w jednostce podstawowej towaru (przeliczenie tożsamościowe) " +
+    [Description("HANDEL-W57: PrzeliczJednostkę w jednostce podstawowej towaru (przeliczenie tożsamościowe) " +
                  "zwraca tę samą wartość i symbol — przelicznik 1:1 jest zawsze zdefiniowany.")]
-    public void W57_PrzeliczJednostkeNaPodstawowa_ZwracaTeSamaIlosc()
+    public void HANDEL_W57_PrzeliczJednostkeNaPodstawowa_ZwracaTeSamaIlosc()
     {
         var towar = Towar(Towar_.Bikini);
         towar.Should().NotBeNull();
@@ -137,9 +137,9 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W57: na pozycji dokumentu po ustawieniu Towaru symbol jednostki na Ilosc pochodzi z " +
+    [Description("HANDEL-W57: na pozycji dokumentu po ustawieniu Towaru symbol jednostki na Ilosc pochodzi z " +
                  "jednostki podstawowej towaru — new Quantity(n, poz.Ilosc.Symbol) daje zgodny symbol.")]
-    public void W57_SymbolJednostkiNaPozycji_PochodziZTowaru()
+    public void HANDEL_W57_SymbolJednostkiNaPozycji_PochodziZTowaru()
     {
         var towar = Towar(Towar_.Bikini);
         var dok = UtworzDokument(Definicje.PrzyjecieWewnetrzne, magazyn: Magazyn(Magazyn_.Firma));
@@ -158,13 +158,13 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W58 — Walidacja przed zatwierdzeniem (kompletność, zasób)
+    // HANDEL-W58 — Walidacja przed zatwierdzeniem (kompletność, zasób)
     // ===================================================================================
 
     [Test]
-    [Description("W58: własna walidacja kompletności przed zmianą stanu — dokument bez pozycji ma " +
+    [Description("HANDEL-W58: własna walidacja kompletności przed zmianą stanu — dokument bez pozycji ma " +
                  "Pozycje.IsEmpty == true (właściwość serwerowa), co pozwala zgłosić czytelny błąd.")]
-    public void W58_WalidacjaKompletnosci_PustyDokumentMaPozycjeIsEmpty()
+    public void HANDEL_W58_WalidacjaKompletnosci_PustyDokumentMaPozycjeIsEmpty()
     {
         // FV bez pozycji — nabywca ustawiony, ale brak pozycji.
         var dok = UtworzDokument(Definicje.FakturaSprzedazy,
@@ -181,9 +181,9 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W58: blokada stanu ujemnego — zatwierdzenie i zapis rozchodu (WZ) towaru bez wcześniej " +
+    [Description("HANDEL-W58: blokada stanu ujemnego — zatwierdzenie i zapis rozchodu (WZ) towaru bez wcześniej " +
                  "zapisanego przyjęcia zgłasza wyjątek dopiero w Save() (StanUjemnyVerifier).")]
-    public void W58_RozchodBezStanu_RzucaWyjatekWSave()
+    public void HANDEL_W58_RozchodBezStanu_RzucaWyjatekWSave()
     {
         // WZ rozchodowy towaru BIKINI — w tym teście NIE robimy wcześniejszego przyjęcia,
         // więc stan jest niewystarczający. Magazyn księguje się dopiero w Save().
@@ -199,13 +199,13 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W59 — Obsługa błędów i blokada optymistyczna
+    // HANDEL-W59 — Obsługa błędów i blokada optymistyczna
     // ===================================================================================
 
     [Test]
-    [Description("W59: wzorzec łapania wyjątku platformy — edycja na sesji z zamkniętym oknem edycji " +
+    [Description("HANDEL-W59: wzorzec łapania wyjątku platformy — edycja na sesji z zamkniętym oknem edycji " +
                  "(po SaveDispose) rzuca wyjątek; asercja typu/komunikatu zamiast „połykania”.")]
-    public void W59_EdycjaPozaTransakcja_RzucaWyjatek()
+    public void HANDEL_W59_EdycjaPozaTransakcja_RzucaWyjatek()
     {
         // Tworzymy i zapisujemy dokument; po SaveDispose okno edycji bieżącej sesji jest zamknięte.
         var guid = UtworzZatwierdzonyPwIZapisz();
@@ -221,9 +221,9 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W59: walidacja własna rzucana jako RowException PRZED Commit — wyjątek niesie odwołanie " +
+    [Description("HANDEL-W59: walidacja własna rzucana jako RowException PRZED Commit — wyjątek niesie odwołanie " +
                  "do wiersza i komunikat; asercja typu wyjątku i jego Row.")]
-    public void W59_WalidacjaWlasna_RzucaRowException()
+    public void HANDEL_W59_WalidacjaWlasna_RzucaRowException()
     {
         // Pokazujemy WZORZEC obsługi: walidacja własna zgłasza RowException(dok, komunikat) przed Commit.
         var dok = UtworzDokument(Definicje.FakturaSprzedazy, magazyn: Magazyn(Magazyn_.Firma));
@@ -242,13 +242,13 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W60 — Odczyt metadanych dokumentu (ChangeInfos)
+    // HANDEL-W60 — Odczyt metadanych dokumentu (ChangeInfos)
     // ===================================================================================
 
     [Test]
-    [Description("W60: po utworzeniu i zapisaniu dokumentu FirstChangeInfo (kto/kiedy założył) jest " +
+    [Description("HANDEL-W60: po utworzeniu i zapisaniu dokumentu FirstChangeInfo (kto/kiedy założył) jest " +
                  "wypełnione, gdy audyt jest włączony; gdy null (tryb testowy bez rejestracji) — pomijamy asercję.")]
-    public void W60_FirstChangeInfo_PoZapisieNiepusteLubPominiete()
+    public void HANDEL_W60_FirstChangeInfo_PoZapisieNiepusteLubPominiete()
     {
         var guid = UtworzZatwierdzonyPwIZapisz();
         var dok = Get<DokumentHandlowy>(guid);
@@ -269,9 +269,9 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W60: LastChangeInfo (kto/kiedy ostatnio zmienił) po zapisie jest niepuste lub — w trybie " +
+    [Description("HANDEL-W60: LastChangeInfo (kto/kiedy ostatnio zmienił) po zapisie jest niepuste lub — w trybie " +
                  "bez rejestracji audytu — null; odczyt nie rzuca, asercję czasu wykonujemy warunkowo.")]
-    public void W60_LastChangeInfo_PoZapisieNiepusteLubPominiete()
+    public void HANDEL_W60_LastChangeInfo_PoZapisieNiepusteLubPominiete()
     {
         var guid = UtworzZatwierdzonyPwIZapisz();
         var dok = Get<DokumentHandlowy>(guid);
@@ -288,13 +288,13 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W61 — Praca z definicjami i numeracją (seria, numer pełny, bufor)
+    // HANDEL-W61 — Praca z definicjami i numeracją (seria, numer pełny, bufor)
     // ===================================================================================
 
     [Test]
-    [Description("W61: dokument w buforze nie ma jeszcze numeru właściwego — BuforNumer == \"BUFOR\", " +
+    [Description("HANDEL-W61: dokument w buforze nie ma jeszcze numeru właściwego — BuforNumer == \"BUFOR\", " +
                  "a po zatwierdzeniu i zapisie Numer.NumerPelny zawiera nadany numer (bez znacznika BUFOR).")]
-    public void W61_NumerNadawanyPrzyZatwierdzeniu_BuforPotemNumerWlasciwy()
+    public void HANDEL_W61_NumerNadawanyPrzyZatwierdzeniu_BuforPotemNumerWlasciwy()
     {
         // Dokument w buforze (jeszcze niezatwierdzony).
         var dok = UtworzDokument(Definicje.PrzyjecieWewnetrzne, magazyn: Magazyn(Magazyn_.Firma));
@@ -318,9 +318,9 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W61: pobranie definicji po symbolu (WgSymbolu) oraz odczyt dozwolonych serii dokumentu " +
+    [Description("HANDEL-W61: pobranie definicji po symbolu (WgSymbolu) oraz odczyt dozwolonych serii dokumentu " +
                  "przez GetListSeria(); dodatkowo na zatwierdzonym i zapisanym PW Numer.NumerPelny jest niepusty.")]
-    public void W61_DefinicjaISerie_OdczytPublicznegoKontraktu()
+    public void HANDEL_W61_DefinicjaISerie_OdczytPublicznegoKontraktu()
     {
         // Definicja dokumentu pobierana po symbolu z bazy Demo (klucz WgSymbolu).
         DefDokHandlowego def = Definicja(Definicje.FakturaSprzedazy);
@@ -359,31 +359,96 @@ public class Rozdzial11_PomocniczeTest : DokumentHandlowyTestBase
     // ===================================================================================
 
     [Test]
-    [Ignore("W56 — utworzenie NOWEGO kontrahenta/towaru „w locie” (new Kontrahent()/new Towar() + AddRow) " +
-            "to dane kartotekowe (KONFIGURACYJNE), a nie zachowanie dokumentu handlowego. Rozdział wprost " +
-            "odradza tworzenie towaru przy wystawianiu (brak towaru = błąd danych → BusException). Tworzenie " +
-            "kartoteki kontrahenta jest pokryte w testach CRM (kontrahent.md, W3). SKIP: poza zakresem rozdziału.")]
-    [Description("W56: tworzenie nowego rekordu kartotekowego w locie — pominięte (zakres CRM/konfiguracja).")]
-    public void W56_TworzenieNowegoRekordu_Skip() { }
+    [Description("HANDEL-W56: kontrahent i towar to dane KARTOTEKOWE (nie konfiguracyjne) — można je tworzyć w tej " +
+                 "samej sesji operacyjnej co dokument. Test tworzy NOWY towar, NOWEGO kontrahenta i NOWE zamówienie " +
+                 "odbiorcy (ZO) używające ich — wszystko w jednej transakcji — i po zapisie weryfikuje powiązania.")]
+    public void HANDEL_W56_TowarKontrahentIDokument_TworzoneRazem()
+    {
+        var sufiks = Guid.NewGuid().ToString("N").Substring(0, 6);
+        Guid dokGuid = Guid.Empty, towarGuid = Guid.Empty, kontrGuid = Guid.Empty;
+
+        InTransaction(() =>
+        {
+            // 1) Nowy towar (kartoteka) — minimalnie Kod + Nazwa.
+            var towar = Session.AddRow(new Towar());
+            towar.Kod = "TWNEW_" + sufiks;
+            towar.Nazwa = "Towar testowy " + sufiks;
+
+            // 2) Nowy kontrahent (kartoteka) — minimalnie Kod + Nazwa.
+            var kontrahent = Session.AddRow(new Kontrahent());
+            kontrahent.Kod = "KNEW_" + sufiks;
+            kontrahent.Nazwa = "Kontrahent testowy " + sufiks;
+
+            // 3) Dokument (ZO — nie księguje magazynu) używający świeżo utworzonych rekordów.
+            var dok = Session.AddRow(new DokumentHandlowy());
+            dok.Definicja = Definicja(Definicje.ZamowienieOdbiorcy);   // definicja PIERWSZA
+            dok.Magazyn = Magazyn(Magazyn_.Firma);
+            dok.Kontrahent = kontrahent;                              // referencja do NOWEGO kontrahenta
+            DodajPozycje(dok, towar, ilosc: 3, cena: 15);            // pozycja z NOWYM towarem
+
+            dokGuid = dok.Guid;
+            towarGuid = towar.Guid;
+            kontrGuid = kontrahent.Guid;
+        });
+        SaveDispose();
+
+        // Wszystkie trzy obiekty zostały zapisane i są poprawnie powiązane (odczyt na świeżej sesji).
+        var dok2 = Get<DokumentHandlowy>(dokGuid);
+        dok2.Kontrahent.Guid.Should().Be(kontrGuid, "dokument wskazuje świeżo utworzonego kontrahenta");
+        dok2.Pozycje.Cast<PozycjaDokHandlowego>().Single().Towar.Guid.Should().Be(towarGuid,
+            "pozycja wskazuje świeżo utworzony towar");
+        Get<Towar>(towarGuid).Kod.Should().Be("TWNEW_" + sufiks, "nowy towar trafił do kartoteki");
+        Get<Kontrahent>(kontrGuid).Kod.Should().Be("KNEW_" + sufiks, "nowy kontrahent trafił do kartoteki");
+    }
 
     [Test]
-    [Ignore("W57 — przeliczenie z jednostki POMOCNICZEJ na podstawową (PrzeliczJednostkę z realnym " +
+    [Ignore("HANDEL-W57 — przeliczenie z jednostki POMOCNICZEJ na podstawową (PrzeliczJednostkę z realnym " +
             "przelicznikiem ≠ 1:1) wymaga towaru z ZDEFINIOWANYM przelicznikiem jednostki pomocniczej/" +
             "uzupełniającej. Przeliczniki to dane konfiguracyjne towaru; baza Demo nie gwarantuje towaru " +
             "z jednoznacznym przelicznikiem pomocniczym (TRANSPORT ma jednostkę km, ale konfiguracja " +
             "przeliczników nie jest częścią kontraktu testu). Z throwError: true brak przelicznika rzuciłby " +
             "wyjątek — test byłby kruchy. Pokrywamy konwersję tożsamościową (1:1) i symbol jednostki pozycji. " +
             "SKIP: realny przelicznik pomocniczy = konfiguracja towaru poza zakresem.")]
-    [Description("W57: przeliczenie z jednostki pomocniczej (przelicznik ≠ 1:1) — pominięte (konfiguracja towaru).")]
-    public void W57_PrzeliczniePomocniczej_Skip() { }
+    [Description("HANDEL-W57: przeliczenie z jednostki pomocniczej (przelicznik ≠ 1:1) — pominięte (konfiguracja towaru).")]
+    public void HANDEL_W57_PrzeliczniePomocniczej_Skip() { }
 
     [Test]
-    [Ignore("W59 — realny konflikt optymistyczny (RowConflictException) i retry wymagają RÓWNOLEGŁEGO zapisu " +
-            "tego samego rekordu z DRUGIEJ sesji/wątku. TestBase udostępnia pojedynczą sesję operacyjną i wycofuje " +
-            "zmiany w transakcji bazodanowej; symulacja drugiej, zapisującej sesji wykracza poza ten model testowy " +
-            "(ryzyko zakleszczeń i niestabilności). Wzorzec łapania wyjątku platformy pokrywamy w " +
-            "W59_EdycjaPozaTransakcja i W59_WalidacjaWlasna (asercja typu wyjątku). SKIP: realny wyścig zapisu " +
-            "poza modelem TestBase.")]
-    [Description("W59: faktyczny konflikt optymistyczny i retry między sesjami — pominięte (model TestBase).")]
-    public void W59_KonfliktOptymistyczny_Skip() { }
+    [Description("HANDEL-W59: konflikt optymistyczny — ten sam dokument otwarty w DWÓCH sesjach. Sesja A edytuje " +
+                 "i zapisuje (bumpuje wersję rekordu w bazie). Sesja B ma już nieaktualną wersję — przy jej Save " +
+                 "platforma wykrywa konflikt i rzuca Soneta.Business.ConcurrencyException.")]
+    public void HANDEL_W59_KonfliktOptymistyczny_DwieSesje()
+    {
+        // Istniejący, ZAPISANY dokument w BUFORZE — wspólny rekord dla obu sesji. Bufor, bo na
+        // dokumencie zatwierdzonym pola (np. Opis) są tylko do odczytu — konfliktu nie dałoby się wywołać edycją.
+        var pw = UtworzDokument(Definicje.PrzyjecieWewnetrzne, magazyn: Magazyn(Magazyn_.Firma));
+        InTransaction(() => DodajPozycje(pw, Towar(Towar_.Bikini), ilosc: 10, cena: 5));
+        var guid = pw.Guid;
+        SaveDispose();
+
+        using var sesjaA = Login.CreateSession(readOnly: false, config: false, name: "W59-A");
+        using var sesjaB = Login.CreateSession(readOnly: false, config: false, name: "W59-B");
+
+        var dokA = sesjaA.GetHandel().DokHandlowe[guid];
+        var dokB = sesjaB.GetHandel().DokHandlowe[guid];
+        dokA.Should().NotBeNull("sesja A widzi zapisany dokument");
+        dokB.Should().NotBeNull("sesja B widzi ten sam dokument (ta sama, początkowa wersja)");
+
+        // Sesja A: edycja + zapis → rekord dostaje nowszą wersję w bazie.
+        using (var t = sesjaA.Logout(editMode: true))
+        {
+            dokA.Opis = "zmiana A " + Guid.NewGuid().ToString("N").Substring(0, 4);
+            t.Commit();
+        }
+        sesjaA.Save();
+
+        // Sesja B: edytuje SWOJĄ (już nieaktualną) kopię i próbuje zapisać → konflikt optymistyczny.
+        using (var t = sesjaB.Logout(editMode: true))
+        {
+            dokB.Opis = "zmiana B (na nieaktualnej wersji)";
+            t.Commit();
+        }
+        Action zapisB = () => sesjaB.Save();
+        zapisB.Should().Throw<ConcurrencyException>(
+            "druga sesja zapisuje rekord zmieniony w międzyczasie przez pierwszą — blokada optymistyczna");
+    }
 }

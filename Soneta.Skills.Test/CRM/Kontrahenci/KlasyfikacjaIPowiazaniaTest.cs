@@ -6,7 +6,7 @@ using Soneta.CRM;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W13/W14 — Klasyfikacja i powiązania (odczyt kontraktu publicznego).
+/// CRM-W13/CRM-W14 — Klasyfikacja i powiązania (odczyt kontraktu publicznego).
 /// Testy dokumentują dostęp do kolekcji klasyfikacyjnych (<c>Kategorie</c>, <c>Branze</c>,
 /// <c>Features</c>) oraz powiązań (<c>Opiekunowie</c>, <c>Podrzedni</c>, <c>PodmiotNadrzedny</c>).
 /// Świeżo utworzony, samodzielny kontrahent ma te kolekcje puste i brak podmiotu nadrzędnego —

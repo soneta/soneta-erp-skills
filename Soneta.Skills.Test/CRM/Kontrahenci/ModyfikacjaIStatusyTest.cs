@@ -5,7 +5,7 @@ using Soneta.CRM;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W4 — Modyfikacja danych i statusów kontrahenta.
+/// CRM-W4 — Modyfikacja danych i statusów kontrahenta.
 /// Testy pokazują zmianę nazwy oraz ustawienie statusów dostępności/handlowych:
 /// <c>Blokada</c> (ukrycie na listach) i <c>BlokadaSprzedazy</c> (zakaz dokumentów rozchodu).
 /// </summary>

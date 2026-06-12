@@ -72,7 +72,7 @@ session.Save();          // dopiero teraz zapis do bazy — tu wykrywane konflik
 - Worker działa na danych z `ZaOkres` (data wystawienia) — zawsze podaj zakres, nie zostawiaj
   pełnego skanu całej historii.
 - Konflikt edycji (ktoś zapisał ten sam dokument) wybuchnie w `session.Save()` jako
-  `RowConflictException` — obsłuż go (refresh + retry lub eskalacja), nie połykaj (§4).
+  `ConcurrencyException` — obsłuż go (refresh + retry lub eskalacja), nie połykaj (§4).
 
 ### HANDEL-W54 — Hurtowe zatwierdzanie / generowanie dokumentów dla zaznaczonego zbioru
 
@@ -140,7 +140,7 @@ session.Save();
   `t.CommitUI()` zamiast `t.Commit()`.
 - Nie iteruj całej tabeli `DokHandlowe` z `if` w pamięci — filtr serwerowy z zakresem czasowym
   (§6.1, §6.3). Zaznaczony w UI zbiór masz w `context` jako `DokumentHandlowy[]`.
-- `Save()` po operacji relacji może rzucić `RowConflictException` (optimistic lock) — obsłuż (§4).
+- `Save()` po operacji relacji może rzucić `ConcurrencyException` (optimistic lock) — obsłuż (§4).
 
 ### HANDEL-W55 — Wydajne przetwarzanie wielu dokumentów w jednej sesji (paczki)
 
@@ -154,10 +154,10 @@ użytkowników i bez ryzyka, że pojedynczy konflikt unieważni całą operację
 |---|---|
 | Filtr serwerowy z zakresem czasowym | `hm.DokHandlowe[(DokumentHandlowy d) => d.Data >= od && d.Data <= doD && …]` |
 | Paczki o stałym rozmiarze | licznik w pętli + `Commit()` / `Save()` co N rekordów |
-| Izolacja konfliktu paczki | `try/catch (RowConflictException)` wokół `Save()` paczki, retry/log paczki |
+| Izolacja konfliktu paczki | `try/catch (ConcurrencyException)` wokół `Save()` paczki, retry/log paczki |
 | Tylko odczyt (raport) | `login.CreateSession(readOnly: true, …)` — bez transakcji edycyjnej |
 
-**Pola i typy:** `Soneta.Types.Date` (zakres), `StanDokumentuHandlowego`, `RowConflictException`
+**Pola i typy:** `Soneta.Types.Date` (zakres), `StanDokumentuHandlowego`, `ConcurrencyException`
 (`session.Save()`), `IDisposable` na sesji i transakcji.
 
 **Snippet:**
@@ -205,7 +205,7 @@ session.Save();                              // ostatnia (niepełna) paczka
 - Po `session.Save()` w środku pętli okno edycji jest zamknięte — kolejną edycję otwórz **nową**
   transakcją (`session.Logout(true)`), inaczej `AccessWriteDenied`. (W testach wzorzec to
   `Save()` → `SaveDispose()` → odczyt na świeżej sesji po `Guid`.)
-- Obsłuż `RowConflictException` per paczka (refresh + retry lub log i kontynuacja), nie łap
+- Obsłuż `ConcurrencyException` per paczka (refresh + retry lub log i kontynuacja), nie łap
   `Exception` ogólnie (§4, §9.1). Połknięty wyjątek z `Save()` = utrata danych.
 - Nie współdziel `Session`/`Row` między wątkami — równoległe przetwarzanie wymaga osobnej sesji
   na wątek (§3.1).

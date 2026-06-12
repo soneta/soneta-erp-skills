@@ -10,6 +10,88 @@ Context to **kontener par klucz-wartość**, gdzie:
 
 Context jest stale aktualizowany podczas pracy z programem i przechowuje informacje o aktualnym stanie interfejsu.
 
+## Context jest zawsze powiązany z sesją
+
+Każdy kontekst jest **związany z konkretną sesją** (`Session`) - jest od niej zależny i udostępnia ją przez
+`Context.Session` (implementuje `ISessionable`). To powiązanie pociąga za sobą ważną regułę:
+
+> **Obiekty umieszczane w kontekście muszą pochodzić z tej samej sesji co sam kontekst.**
+> Nie wolno mieszać w jednym kontekście obiektów z różnych sesji.
+
+Wynika to z faktu, że obiekty biznesowe (`Row` i pochodne) są single-threaded i żyją w obrębie jednej sesji -
+ten sam rekord wczytany w dwóch sesjach to dwa różne obiekty. Gdy potrzebujesz operować na obiektach
+z innej sesji, najpierw przenieś je do właściwej sesji (np. `session.Get(obiekt)`) albo przenieś cały
+kontekst do tej sesji - patrz klonowanie poniżej.
+
+## Klonowanie kontekstu do innej sesji
+
+Kontekst można przenieść do wskazanej sesji - tworzony jest wtedy kontekst związany z tą sesją,
+do którego kopiowane są wartości z kontekstu bazowego.
+
+```csharp
+// Zawsze tworzy NOWY obiekt kontekstu związany z podaną sesją
+// i kopiuje do niego wartości z kontekstu bazowego.
+Context kopia = context.Clone(session);
+
+// Zwraca kontekst w podanej sesji. Jeśli sesja kontekstu pokrywa się
+// z podaną sesją, zwracany jest TEN SAM obiekt (bez kopiowania);
+// w przeciwnym razie zachowuje się jak Clone.
+Context znormalizowany = context.Normalize(session);
+```
+
+Różnica jest istotna wydajnościowo i semantycznie:
+- `Clone(session)` - **zawsze** nowy obiekt (nawet gdy sesja się zgadza),
+- `Normalize(session)` - nowy obiekt **tylko gdy** trzeba zmienić sesję; gdy sesja już pasuje, oddaje
+  oryginał. Używaj `Normalize`, gdy zależy Ci tylko na tym, by kontekst był „w danej sesji", a nie
+  na tym, by koniecznie powstała kopia.
+
+## Tworzenie nowego kontekstu od zera
+
+Gdy potrzebujesz kontekstu, którego nie dostajesz z UI (np. w kodzie biznesowym wywołującym worker),
+masz trzy sposoby utworzenia go od podstaw.
+
+### 1. Sklonowanie pustego kontekstu w sesji
+
+```csharp
+Context cx = Context.Empty.Clone(session);
+```
+
+`Context.Empty` to współdzielony, pusty kontekst-szablon; jego sklonowanie daje świeży, pusty kontekst
+związany z podaną sesją.
+
+### 2. Pusty kontekst powiązany z sesją
+
+```csharp
+Context cx = session.GetEmptyContext();
+```
+
+`GetEmptyContext()` zwraca pusty kontekst powiązany z daną sesją. **Uwaga:** metoda zwraca wciąż
+**ten sam obiekt** - może on być już wypełniony wartościami z wcześniejszych wywołań `GetEmptyContext`
+na tej sesji. Jeśli potrzebujesz gwarancji świeżego, czystego kontekstu, użyj sposobu 1
+(`Context.Empty.Clone(session)`).
+
+### 3. Utworzenie kontekstu wraz z nową sesją (`Login.CreateEmptyContext`)
+
+```csharp
+// sessionReadOnly: true = sesja tylko do odczytu, false = sesja edycyjna
+// sessionName: nazwa tworzonej sesji
+Context cx = login.CreateEmptyContext(sessionReadOnly: true, sessionName: "MójKontekst");
+try
+{
+    // ... praca z kontekstem i jego sesją cx.Session ...
+}
+finally
+{
+    cx.Session.Dispose();   // pamiętaj o zwolnieniu utworzonej sesji
+}
+```
+
+`Login.CreateEmptyContext(bool? sessionReadOnly, string sessionName)` (jest też przeciążenie
+`CreateEmptyContext(bool? sessionReadOnly)`) tworzy nowy, pusty kontekst i przypisuje go do
+**nowo utworzonej sesji** (tylko do odczytu albo edycyjnej, zależnie od `sessionReadOnly`). Ponieważ ta
+metoda tworzy sesję, **odpowiadasz za jej zwolnienie** - nie zapomnij o `Dispose` na `cx.Session`
+(najlepiej w `try/finally` lub przez `using`).
+
 ## Zawartość context
 
 Przykładowa zawartość przy otwartej liście kontrahentów:
@@ -220,6 +302,9 @@ public void Action(Context cx)
 
 1. **Używaj Get<T>, GetOrDefault<T>, GetRequired<T>** zamiast indeksatora - bezpieczniejsze
 2. **Sprawdzaj obecność** obiektów w context przed użyciem
-3. **Klasy parametrów (ContextBase)** - trwałość filtrów, `InvokeChanged`, dziedziczenie `Load`/`Save`,
+3. **Nie mieszaj sesji** - obiekty w kontekście muszą pochodzić z tej samej sesji co kontekst;
+   do przeniesienia kontekstu do innej sesji użyj `Clone(session)` / `Normalize(session)`
+4. **Pamiętaj o Dispose sesji** utworzonej przez `Login.CreateEmptyContext(...)`
+5. **Klasy parametrów (ContextBase)** - trwałość filtrów, `InvokeChanged`, dziedziczenie `Load`/`Save`,
    patrz [contextbase.md](contextbase.md)
-4. **Worker / Extender** - rozszerzanie modelu o logikę UI, patrz [worker-extender.md](worker-extender.md)
+6. **Worker / Extender** - rozszerzanie modelu o logikę UI, patrz [worker-extender.md](worker-extender.md)

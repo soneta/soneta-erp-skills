@@ -12,7 +12,7 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział K (część druga) — RODO/GIODO, struktura organizacyjna, oceny, rekrutacja (receptury K6–K9).
+/// Rozdział K (część druga) — RODO/GIODO, struktura organizacyjna, oceny, rekrutacja (receptury KADRY-K6–KADRY-K9).
 /// <para>
 /// Testy to <b>wykonywalna dokumentacja</b> publicznego kontraktu platformy Soneta dla zaawansowanych
 /// obszarów kadrowych. Wszystkie te obszary łączy jedna cecha: rekordy operacyjne wymagają
@@ -23,14 +23,14 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 /// realnie (odczyt kolekcji, dodanie wpisu przy dostępnej definicji), robimy to na żywych danych.
 /// </para>
 /// <list type="bullet">
-/// <item><b>K6</b> — RODO/GIODO: <c>new GIODOOświadczenie(pracownik, def)</c>, <c>new GIODOUprawnienie(pracownik, def)</c>;
+/// <item><b>KADRY-K6</b> — RODO/GIODO: <c>new GIODOOświadczenie(pracownik, def)</c>, <c>new GIODOUprawnienie(pracownik, def)</c>;
 ///   kolekcje <c>GIODOOświadczenia</c>/<c>GIODOUprawnienia</c>/<c>GIODOUdostępnienia</c>;
 ///   <c>GIODOWymianaDanych</c> bez publicznego ctora → tylko odczyt + [Ignore]; zapis teczki do pliku → [Ignore].</item>
-/// <item><b>K7</b> — struktura organizacyjna: <c>new PowiązanieStrukturyOrganizacyjnej(element, pracownik)</c>,
+/// <item><b>KADRY-K7</b> — struktura organizacyjna: <c>new PowiązanieStrukturyOrganizacyjnej(element, pracownik)</c>,
 ///   <c>Etat.Wydzial</c> (dane historyczne), manager <c>StrukturaOraganizacyjna</c> (odczyt).</item>
-/// <item><b>K8</b> — oceny: <c>new OcenaPracownika(pracownik)</c> + <c>new ElementOcenyPracownika(ocena)</c>,
+/// <item><b>KADRY-K8</b> — oceny: <c>new OcenaPracownika(pracownik)</c> + <c>new ElementOcenyPracownika(ocena)</c>,
 ///   <c>new CelOkresowyPracownika(pracownik)</c>.</item>
-/// <item><b>K9</b> — rekrutacja: <c>new RekrutacjaAplikacja(pracownik, wydziałDefStanowiska)</c>,
+/// <item><b>KADRY-K9</b> — rekrutacja: <c>new RekrutacjaAplikacja(pracownik, wydziałDefStanowiska)</c>,
 ///   <c>new Rekrutacja(pracownik)</c>, <c>new EtapRekrutacji(rekrutacja)</c>.</item>
 /// </list>
 /// <para>
@@ -48,16 +48,16 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     private static T Pierwsza<T>(Table tabela) where T : Row =>
         tabela.Cast<T>().FirstOrDefault();
 
-    // ============================== K6 — RODO/GIODO ==============================
+    // ============================== KADRY-K6 — RODO/GIODO ==============================
 
     [Test]
-    [Description("K6: new GIODOOświadczenie(pracownik, definicja) — Host wynika z ctora (Pracownik implementuje " +
+    [Description("KADRY-K6: new GIODOOświadczenie(pracownik, definicja) — Host wynika z ctora (Pracownik implementuje " +
                  "IGIODOOświadczenieHost), Definicja (GIODODefOswiadcz) jest WYMAGANA przez ctor; pole Data to Date; " +
                  "Rodzaj/Okres są WYLICZANE (read-only) z definicji; wpis trafia do pracownik.GIODOOświadczenia. " +
                  "Gdy w Demo brak definicji oświadczenia lub brak prawa zapisu do obszaru RODO → Ignore.")]
-    public void K6_GIODOOswiadczenie_DodanieZDefinicja_TrafiaDoKolekcji()
+    public void KADRY_K6_GIODOOswiadczenie_DodanieZDefinicja_TrafiaDoKolekcji()
     {
-        // Tabela konfiguracyjna czytana wprost z sesji operacyjnej (jak słowniki w K1).
+        // Tabela konfiguracyjna czytana wprost z sesji operacyjnej (jak słowniki w KADRY-K1).
         var def = Pierwsza<GIODODefinicjaOświadczenia>(Session.GetCore().GIODODefOswiadcz);
         if (def == null)
             Assert.Ignore("Brak definicji oświadczenia GIODO (CoreModule.GIODODefOswiadcz) w bazie Demo — wpisu nie można utworzyć (Definicja jest wymagana w ctorze).");
@@ -89,10 +89,10 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K6: new GIODOUprawnienie(pracownik, definicja) — Uprawniony z ctora (IGIODOUprawnienieHost), " +
+    [Description("KADRY-K6: new GIODOUprawnienie(pracownik, definicja) — Uprawniony z ctora (IGIODOUprawnienieHost), " +
                  "Definicja (GIODODefUprawn) wymagana; pola Data/Przyznane/Odebrane to Date (Okres jest wyliczany, " +
                  "read-only); wpis trafia do pracownik.GIODOUprawnienia. Gdy brak definicji w Demo → Ignore.")]
-    public void K6_GIODOUprawnienie_DodanieZDefinicja_TrafiaDoKolekcji()
+    public void KADRY_K6_GIODOUprawnienie_DodanieZDefinicja_TrafiaDoKolekcji()
     {
         var def = Pierwsza<GIODODefinicjaUprawnienia>(Session.GetCore().GIODODefUprawn);
         if (def == null)
@@ -122,10 +122,10 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K6: GIODOWymianaDanych (pozyskanie/udostępnienie/powierzenie) NIE ma publicznego ctora — " +
+    [Description("KADRY-K6: GIODOWymianaDanych (pozyskanie/udostępnienie/powierzenie) NIE ma publicznego ctora — " +
                  "rekordy tworzą wyłącznie workery (DodajPozyskanieDanychWorker itd.). Kolekcja GIODOUdostępnienia " +
                  "jest jednak dostępna do ODCZYTU jako część publicznego kontraktu.")]
-    public void K6_GIODOUdostepnienia_KolekcjaDostepnaDoOdczytu()
+    public void KADRY_K6_GIODOUdostepnienia_KolekcjaDostepnaDoOdczytu()
     {
         var pracownik = Host();
 
@@ -140,8 +140,8 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
             "DodajPowierzenieDanychWorker) oraz podmiotu (IKontrahent) i — w zależności od kierunku — definicji " +
             "dokumentu/zbioru danych z konfiguracji modułu RODO, których baza Demo może nie mieć. Brak publicznego " +
             "ctora uniemożliwia deterministyczny zapis bez tej konfiguracji.")]
-    [Description("K6: dodanie zapisu wymiany danych GIODO przez DodajPozyskanieDanychWorker (CommitUI + Save).")]
-    public void K6_GIODOWymianaDanych_DodaniePrzezWorker()
+    [Description("KADRY-K6: dodanie zapisu wymiany danych GIODO przez DodajPozyskanieDanychWorker (CommitUI + Save).")]
+    public void KADRY_K6_GIODOWymianaDanych_DodaniePrzezWorker()
     {
     }
 
@@ -149,19 +149,19 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     [Ignore("Zapis teczki personalnej (Pracownik.ZapiszTeczkęDoPlikuWorker.ZapiszTeczkeDoPliku()) to operacja " +
             "plikowa — serializuje dokumentację pracownika do plików/katalogu na dysku. Poza zakresem testów " +
             "jednostkowych (zależność od systemu plików).")]
-    [Description("K6: zapis teczki personalnej RODO do pliku (operacja plikowa).")]
-    public void K6_ZapisTeczkiDoPliku()
+    [Description("KADRY-K6: zapis teczki personalnej RODO do pliku (operacja plikowa).")]
+    public void KADRY_K6_ZapisTeczkiDoPliku()
     {
     }
 
-    // ============================== K7 — Struktura organizacyjna ==============================
+    // ============================== KADRY-K7 — Struktura organizacyjna ==============================
 
     [Test]
-    [Description("K7: new PowiązanieStrukturyOrganizacyjnej(element, pracownik) — Zrodlo z ctora (Pracownik " +
+    [Description("KADRY-K7: new PowiązanieStrukturyOrganizacyjnej(element, pracownik) — Zrodlo z ctora (Pracownik " +
                  "implementuje IŹródłoPowiązaniaStrukturyOrganizacyjnej), Element to istniejący element struktury " +
                  "(CoreModule.ElementyStrOrg — NIE definicja DefElStrukturOrg); Okres to FromTo; wpis trafia do " +
                  "pracownik.PowiązaniaStrOrg. Gdy brak elementów struktury w Demo lub brak prawa zapisu → Ignore.")]
-    public void K7_PowiazanieStruktury_DodanieZElementem_TrafiaDoKolekcji()
+    public void KADRY_K7_PowiazanieStruktury_DodanieZElementem_TrafiaDoKolekcji()
     {
         // Elementy struktury (instancje) są w ElementyStrOrg; DefElStrukturOrg trzyma DEFINICJE elementów.
         var element = Pierwsza<ElementStrukturyOrganizacyjnej>(Session.GetCore().ElementyStrOrg);
@@ -190,9 +190,9 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K7: pracownik.StrukturaOraganizacyjna to manager (StrukturaOraganizacyjnaManager) — API tylko " +
+    [Description("KADRY-K7: pracownik.StrukturaOraganizacyjna to manager (StrukturaOraganizacyjnaManager) — API tylko " +
                  "do odczytu nawigacji przełożeni/podwładni. Jest zawsze dostępny, niezależnie od konfiguracji struktury.")]
-    public void K7_StrukturaOrganizacyjna_ManagerOdczytuJestDostepny()
+    public void KADRY_K7_StrukturaOrganizacyjna_ManagerOdczytuJestDostepny()
     {
         var pracownik = Host();
 
@@ -203,12 +203,12 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K7: Etat.Wydzial to dane HISTORYCZNE (na PracHistoria.Etat) i jednostka organizacyjna pracownika. " +
+    [Description("KADRY-K7: Etat.Wydzial to dane HISTORYCZNE (na PracHistoria.Etat) i jednostka organizacyjna pracownika. " +
                  "Dla etatowego pracownika z Demo wydział na zapisie obowiązującym dziś jest ustawiony (wymagany dla etatu).")]
-    public void K7_EtatWydzial_JestUstawionyDlaEtatowca()
+    public void KADRY_K7_EtatWydzial_JestUstawionyDlaEtatowca()
     {
         var pracownik = Host();
-        var ph = pracownik[Date.Today];   // zapis historii obowiązujący na dzień (A15)
+        var ph = pracownik[Date.Today];   // zapis historii obowiązujący na dzień (KADRY-A15)
 
         ph.Should().NotBeNull("etatowy pracownik z Demo ma zapis historii obowiązujący dziś");
         // Wydzial jest wymagany dla etatu — odczyt jako część kontraktu (referencja do Soneta.Kadry.Wydzial).
@@ -216,13 +216,13 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
         ph.Etat.Wydzial.Should().NotBeNull("Etat.Wydzial (jednostka organizacyjna) jest wymagany dla etatu");
     }
 
-    // ============================== K8 — Oceny okresowe ==============================
+    // ============================== KADRY-K8 — Oceny okresowe ==============================
 
     [Test]
-    [Description("K8: new OcenaPracownika(pracownik) (arkusz, root w HR.OcenyPracownikow) + new ElementOcenyPracownika(ocena) " +
+    [Description("KADRY-K8: new OcenaPracownika(pracownik) (arkusz, root w HR.OcenyPracownikow) + new ElementOcenyPracownika(ocena) " +
                  "gdzie ocena jest IOcenaPracownika; ElementOcenyPracownika.Wartosc to decimal (Typ/Data są wyliczane, read-only). " +
                  "Element wymaga Definicja (HR.DefElemOcenPrac) — gdy brak w Demo, sam arkusz i pusta kolekcja elementów wystarczają.")]
-    public void K8_OcenaPracownika_ArkuszZElementem_TrafiaDoKolekcji()
+    public void KADRY_K8_OcenaPracownika_ArkuszZElementem_TrafiaDoKolekcji()
     {
         var hr = Session.GetHR();
         var pracownik = Host();
@@ -263,10 +263,10 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K8: new CelOkresowyPracownika(pracownik) (root w HR2.CeleOkresowePrac); pola Nazwa/Data/Termin/Opis; " +
+    [Description("KADRY-K8: new CelOkresowyPracownika(pracownik) (root w HR2.CeleOkresowePrac); pola Nazwa/Data/Termin/Opis; " +
                  "Definicja to Soneta.Oceny.DefinicjaElementuOceny (opcjonalna referencja konfiguracyjna); wpis trafia " +
                  "do pracownik.CeleOkresowe.")]
-    public void K8_CelOkresowy_Dodanie_TrafiaDoKolekcji()
+    public void KADRY_K8_CelOkresowy_Dodanie_TrafiaDoKolekcji()
     {
         var pracownik = Host();
         CelOkresowyPracownika cel = null;
@@ -286,13 +286,13 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
         pracownik.CeleOkresowe.Cast<CelOkresowyPracownika>().Should().Contain(cel);
     }
 
-    // ============================== K9 — Rekrutacja ==============================
+    // ============================== KADRY-K9 — Rekrutacja ==============================
 
     [Test]
-    [Description("K9: new RekrutacjaAplikacja(kandydat, wydziałDefStanowiska) — kandydat to Pracownik, ctor przyjmuje " +
+    [Description("KADRY-K9: new RekrutacjaAplikacja(kandydat, wydziałDefStanowiska) — kandydat to Pracownik, ctor przyjmuje " +
                  "WydziałDefinicjiStanowiska (powstaje z new WydziałDefinicjiStanowiska(DefinicjaStanowiska) — typ z Soneta.HR). " +
                  "Stan to StanAplikacji; wpis trafia do kandydat.Aplikacje. Gdy brak definicji stanowiska (HR.DefStanowisk) → Ignore.")]
-    public void K9_RekrutacjaAplikacja_DodanieZeStanowiskiem_TrafiaDoKolekcji()
+    public void KADRY_K9_RekrutacjaAplikacja_DodanieZeStanowiskiem_TrafiaDoKolekcji()
     {
         var hr = Session.GetHR();
         var defStanowiska = Pierwsza<DefinicjaStanowiska>(hr.DefStanowisk);
@@ -318,11 +318,11 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K9: new Rekrutacja(kandydat) (root w HR.Rekrutacje; impl. IOcenaPracownika) ustawia pole Pracownik; " +
+    [Description("KADRY-K9: new Rekrutacja(kandydat) (root w HR.Rekrutacje; impl. IOcenaPracownika) ustawia pole Pracownik; " +
                  "+ new EtapRekrutacji(rekrutacja) wiąże etap przez pole Rekrutacja; Etap.Definicja to HR.DefEtaRekrutacji " +
                  "(wymagana do zapisu etapu), Etap.Lp/Data. Gdy brak definicji etapu w Demo, testujemy samą rekrutację (warn). " +
                  "Gdy brak prawa zapisu → Ignore.")]
-    public void K9_RekrutacjaIEtap_Dodanie_TrafiaDoKolekcji()
+    public void KADRY_K9_RekrutacjaIEtap_Dodanie_TrafiaDoKolekcji()
     {
         var hr = Session.GetHR();
         var kandydat = Host();
@@ -369,9 +369,9 @@ public class RozdzialK2_RodoZzlTest : PracownikTestBase
     }
 
     [Test]
-    [Description("K9: kandydat.Aplikacje / Rekrutacje / EtapyRekrutacji / Kandydatury to kolekcje SubTable dostępne " +
+    [Description("KADRY-K9: kandydat.Aplikacje / Rekrutacje / EtapyRekrutacji / Kandydatury to kolekcje SubTable dostępne " +
                  "do odczytu jako część publicznego kontraktu — niezależnie od stanu konfiguracji rekrutacji.")]
-    public void K9_KolekcjeRekrutacji_DostepneDoOdczytu()
+    public void KADRY_K9_KolekcjeRekrutacji_DostepneDoOdczytu()
     {
         var kandydat = Host();
 

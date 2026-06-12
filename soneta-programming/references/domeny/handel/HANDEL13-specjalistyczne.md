@@ -308,7 +308,12 @@ string symbol = dok.SymbolKasy; // "DRUK1"
   kategorii `Sprzedaż`/`KorektaSprzedaży` (`IsVisibleExecute`).
 - `SymbolKasy` jest przycinany (`Trim`) i ograniczony do 12 znaków; wybór z listy (`SymbolKasyEnum`)
   dostępny tylko, gdy konfiguracja trzyma dane drukarek w bazie (`Config.DrukarkaFiskalna.DaneDrukarkiZapisywaneWBazie`).
-- W teście weryfikuj jedynie ustawienie `dok.SymbolKasy` i warunki `IsEnabled/IsVisible` — nie symuluj wydruku.
+- W teście weryfikuj warunki `IsEnabled/IsVisible` (`dok.SymbolKasy` nie jest publiczną właściwością —
+  nie odczytasz go z dodatku zewnętrznego). **Sam wydruk fiskalny mockuj przez `ReportFormats.TXT`:**
+  zamiast sterować `Fiscalizer` (sprzęt), wyrenderuj dokument do tekstu przez
+  `IReportService.GenerateReportStr(rr)` z `OutputFormat = ReportFormats.TXT` i sprawdź niepustą treść —
+  to nie-sprzętowy zamiennik „paragonu/faktury” (zob. `Rozdzial13_SpecjalistyczneTest.HANDEL_W71_WydrukFiskalny_MockDoTekstu`
+  oraz wzorzec wydruku w HANDEL-W62/HANDEL-W64).
 
 ---
 
@@ -368,6 +373,11 @@ object wynik = worker.Drukuj();   // pyta o potwierdzenie, następnie Fiscalizer
   faktyczny wydruk dzieje się w handlerze `YesHandler` przez `Fiscalizer`.
 - Ponowny wydruk dostępny tylko dla dokumentu z definicji **fiskalizowanej**, zatwierdzonego, z niepustym
   `SymbolKasy` (czyli już raz zafiskalizowanego).
+- **Mock ponownego wydruku przez `ReportFormats.TXT`:** zamiast `PonownyWydrukParagonuWorker.Drukuj()`
+  (sprzęt) wyrenderuj paragon do tekstu — `IReportService.GenerateReportStr(rr)` z
+  `OutputFormat = ReportFormats.TXT` — i sprawdź niepustą treść. `dok.EParagon` nie jest publiczną
+  właściwością do odczytu, więc testuj wejście (`EParagonAdresEmail`) + tekstowy render jako zamiennik
+  wydruku (zob. `Rozdzial13_SpecjalistyczneTest.HANDEL_W72_PonownyWydrukParagonu_MockDoTekstu`).
 
 ---
 

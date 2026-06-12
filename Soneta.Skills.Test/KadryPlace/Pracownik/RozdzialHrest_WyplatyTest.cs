@@ -12,10 +12,10 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
 /// Rozdział H (część rozszerzona) — „Płace: odczyt i operacje na naliczonych wypłatach"
-/// (receptury H5–H11).
+/// (receptury KADRY-H5–KADRY-H11).
 /// <para>
 /// Każdy test najpierw nalicza wypłatę etatową pracownika Demo workerem
-/// <c>Soneta.Place.NaliczanieSeryjne</c> (wzorzec z H1: <c>PracownikParams(Context)</c> +
+/// <c>Soneta.Place.NaliczanieSeryjne</c> (wzorzec z KADRY-H1: <c>PracownikParams(Context)</c> +
 /// <c>DataWypłaty</c> w okresie etatu + <c>Nalicz()</c>), a następnie odczytuje elementy
 /// (<c>Wyplata.Elementy</c> / <c>WypElement.Podatki</c>) albo wykonuje operację publicznym
 /// workerem płacowym (zaliczka, przeliczenie podatków, dochód, storno, bufor).
@@ -30,7 +30,7 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 public class RozdzialHrest_WyplatyTest : PracownikTestBase
 {
     // ====================================================================================
-    // Helpery wspólne (skopiowane z RozdzialH_WyplatyTest — ten sam, sprawdzony wzorzec H1).
+    // Helpery wspólne (skopiowane z RozdzialH_WyplatyTest — ten sam, sprawdzony wzorzec KADRY-H1).
     // ====================================================================================
 
     // Dobiera datę wypłaty mieszczącą się w okresie etatu pracownika: koniec miesiąca początku
@@ -55,7 +55,7 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
         return sb.Length == 0 ? "(brak nienaliczonych)" : sb.ToString();
     }
 
-    // Nalicza pojedynczą wypłatę etatową pracownika (wzorzec H1) i zwraca pierwszą wypłatę.
+    // Nalicza pojedynczą wypłatę etatową pracownika (wzorzec KADRY-H1) i zwraca pierwszą wypłatę.
     // Nalicz() otwiera i commituje własną transakcję — nie owijamy w InTransaction.
     private Wyplata NaliczWyplateEtatowa(Prac pracownik, Date dataWyplaty)
     {
@@ -75,16 +75,16 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     // ====================================================================================
-    // H5 — Odczyt elementów wypłaty (brutto/składki/podatek/netto)
+    // KADRY-H5 — Odczyt elementów wypłaty (brutto/składki/podatek/netto)
     // ====================================================================================
 
     [Test]
-    [Description("H5: składniki naliczonej wypłaty czytamy z Wyplata.Elementy (WypElement). " +
+    [Description("KADRY-H5: składniki naliczonej wypłaty czytamy z Wyplata.Elementy (WypElement). " +
                  "Pola elementu: Wartosc/Netto/DoWypłaty (decimal), Podatki (subrow Podatki). " +
                  "Podatki: ZalFIS (zaliczka PIT), Emerytalna/Rentowa/Chorobowa/Zdrowotna (SkladkaZUS " +
                  "z polami Prac/Firma). Agregaty liczymy ręcznie z elementów; Wyplata.Wartosc to " +
                  "Currency (kwota do wypłaty) -> .Value na decimal.")]
-    public void H5_OdczytElementowWyplaty_WartoscNettoPodatki()
+    public void KADRY_H5_OdczytElementowWyplaty_WartoscNettoPodatki()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();
@@ -96,7 +96,7 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
         var elementy = wyplata.Elementy.Cast<WypElement>().ToList();
         elementy.Should().NotBeEmpty("naliczona wypłata etatowa zawiera składniki Elementy");
 
-        // Ręczna agregacja z elementów (wzorzec z dokumentacji H5).
+        // Ręczna agregacja z elementów (wzorzec z dokumentacji KADRY-H5).
         decimal brutto = 0m, netto = 0m, zalPit = 0m, zusPrac = 0m, zusFirma = 0m;
         foreach (WypElement e in elementy)
         {
@@ -129,10 +129,10 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     [Test]
-    [Description("H5 (worker-agregator): Wyplata.PITInfoWorker (publiczny, [Context] Wypłata) udostępnia " +
+    [Description("KADRY-H5 (worker-agregator): Wyplata.PITInfoWorker (publiczny, [Context] Wypłata) udostępnia " +
                  "gotowe sumy: DoOpodatkowania/Nieopodatkowane (Currency), Razem/NettoRazem/SkładkiZUS/" +
                  "SkładkaZdrow/ZalFIS (decimal). Używamy zamiast ręcznej agregacji elementów.")]
-    public void H5_PITInfoWorker_GotoweAgregaty()
+    public void KADRY_H5_PITInfoWorker_GotoweAgregaty()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
         pracownik.Should().NotBeNull();
@@ -161,17 +161,17 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     // ====================================================================================
-    // H6 — Wypłata zaliczki (worker WypłaćZaliczkęWorker)
+    // KADRY-H6 — Wypłata zaliczki (worker WypłaćZaliczkęWorker)
     // ====================================================================================
 
     [Test]
-    [Description("H6: zaliczkę wypłacamy publicznym workerem WypłaćZaliczkęWorker. Parametry: " +
+    [Description("KADRY-H6: zaliczkę wypłacamy publicznym workerem WypłaćZaliczkęWorker. Parametry: " +
                  "ZalParams(Context) { Data, Kwota } + ZalParams.Definicja (z WypElement.Params) — " +
                  "ISTNIEJĄCA definicja elementu z place.DefElementow o RodzajZrodla == RodzajŹródłaWypłaty.Zaliczka; " +
                  "Pracownicy: Pracownik[]. " +
                  "Akcja WypłataZaliczki() tworzy rekord Zaliczka i nalicza element realizacji; otwiera " +
                  "własną transakcję. Brak definicji zaliczki w Demo => Ignore (kontrakt workera udokumentowany).")]
-    public void H6_WyplataZaliczki_WorkerWyplacZaliczke()
+    public void KADRY_H6_WyplataZaliczki_WorkerWyplacZaliczke()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
         pracownik.Should().NotBeNull();
@@ -186,7 +186,7 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
         if (defZaliczki == null)
             Assert.Ignore("Baza Demo nie zawiera definicji elementu typu zaliczka — " +
                           "worker WypłaćZaliczkęWorker wymaga istniejącej DefinicjaElementu (ZalParams.Definicja). " +
-                          "Kontrakt workera udokumentowany w H6.");
+                          "Kontrakt workera udokumentowany w KADRY-H6.");
 
         var dataWyplaty = DataWyplatyWEtacie(pracownik);
 
@@ -212,16 +212,16 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     // ====================================================================================
-    // H7 — Przelicz składki ZUS i podatki (worker NaliczaniePodatkówMiesięcznie)
+    // KADRY-H7 — Przelicz składki ZUS i podatki (worker NaliczaniePodatkówMiesięcznie)
     // ====================================================================================
 
     [Test]
-    [Description("H7: ponowne przeliczenie składek ZUS i zaliczek PIT na elementach wypłat z bufora " +
+    [Description("KADRY-H7: ponowne przeliczenie składek ZUS i zaliczek PIT na elementach wypłat z bufora " +
                  "za dany miesiąc deklaracji realizuje publiczny worker NaliczaniePodatkówMiesięcznie. " +
                  "ctor przyjmuje YearMonth (miesiąc deklaracji); property Pracownik [Context]; akcja " +
                  "PrzeliczPodatki() działa we własnej transakcji. Przelicza tylko elementy z bufora " +
                  "(Wyplata.Bufor) bez ręcznej korekty podatków.")]
-    public void H7_PrzeliczPodatki_WorkerNaliczaniePodatkowMiesiecznie()
+    public void KADRY_H7_PrzeliczPodatki_WorkerNaliczaniePodatkowMiesiecznie()
     {
         var pracownik = Pracownik(Pracownik_.Strzelecki);
         pracownik.Should().NotBeNull();
@@ -256,16 +256,16 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     // ====================================================================================
-    // H8 — Dochód z wypłaty (PITInfoWorker.Dochód_*) + dochód roczny
+    // KADRY-H8 — Dochód z wypłaty (PITInfoWorker.Dochód_*) + dochód roczny
     // ====================================================================================
 
     [Test]
-    [Description("H8: dochód podatkowy wypłaty czytamy z Wyplata.PITInfoWorker: Dochód_Bez26 + Dochód_26 " +
+    [Description("KADRY-H8: dochód podatkowy wypłaty czytamy z Wyplata.PITInfoWorker: Dochód_Bez26 + Dochód_26 " +
                  "(decimal), Podstawa (podstawa naliczenia zaliczki), DoOpodatkowania (Currency). " +
                  "Dochód roczny sumujemy iterując wypłaty roku (filtr serwerowy po dacie) i sumując " +
                  "Dochód_Bez26+Dochód_26 z PITInfoWorker każdej wypłaty. RozliczanieManager jest internal — " +
                  "nie wywołujemy go bezpośrednio.")]
-    public void H8_DochodZWyplaty_IDochodRoczny()
+    public void KADRY_H8_DochodZWyplaty_IDochodRoczny()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();
@@ -300,26 +300,26 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     [Test]
-    [Ignore("H8.B/C: PobierzDochodRocznyWorker działa tylko dla właściciela (Pracownik is Wlasciciel), " +
+    [Ignore("KADRY-H8.B/C: PobierzDochodRocznyWorker działa tylko dla właściciela (Pracownik is Wlasciciel), " +
             "a RozliczaniePracownikowWorker tylko dla folderu pracowników zewnętrznych — pracownik " +
             "etatowy Demo \"006\" nie spełnia tych warunków. Wewnętrzny Wyplata.RozliczenieManager jest " +
-            "niepubliczny. Dochód standardowego pracownika czytamy z PITInfoWorker (test H8 wyżej).")]
-    public void H8_PobierzDochodRoczny_TylkoWlasciciel()
+            "niepubliczny. Dochód standardowego pracownika czytamy z PITInfoWorker (test KADRY-H8 wyżej).")]
+    public void KADRY_H8_PobierzDochodRoczny_TylkoWlasciciel()
     {
         // Udokumentowane jako niewykonalne dla zwykłego pracownika etatowego — patrz powód w [Ignore].
     }
 
     // ====================================================================================
-    // H9 — Kalkulator wynagrodzeń (przez naliczenie próbne + workery agregujące)
+    // KADRY-H9 — Kalkulator wynagrodzeń (przez naliczenie próbne + workery agregujące)
     // ====================================================================================
 
     [Test]
-    [Description("H9: brak dedykowanej publicznej klasy kalkulatora — brutto/netto/koszt pracodawcy " +
-                 "liczymy z naliczenia próbnego (H1) i workerów agregujących: Wyplata.PITInfoWorker " +
+    [Description("KADRY-H9: brak dedykowanej publicznej klasy kalkulatora — brutto/netto/koszt pracodawcy " +
+                 "liczymy z naliczenia próbnego (KADRY-H1) i workerów agregujących: Wyplata.PITInfoWorker " +
                  "(brutto=Razem, netto=NettoRazem, składki pracownika=SkładkiZUS) oraz Wyplata.WyplataSkładkiWorker " +
                  "(Razem: ZestawienieSkładek z Narzuty = narzuty pracodawcy). " +
                  "Koszt pracodawcy ≈ brutto + Narzuty. Naliczenie próbne nie wymaga Save().")]
-    public void H9_KalkulatorWynagrodzen_NaliczenieProbne()
+    public void KADRY_H9_KalkulatorWynagrodzen_NaliczenieProbne()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
         pracownik.Should().NotBeNull();
@@ -349,17 +349,17 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     // ====================================================================================
-    // H10 — Stornowanie elementów wypłaty
+    // KADRY-H10 — Stornowanie elementów wypłaty
     // ====================================================================================
 
     [Test]
-    [Description("H10: oznaczenie elementu do storna realizuje publiczny worker " +
+    [Description("KADRY-H10: oznaczenie elementu do storna realizuje publiczny worker " +
                  "StornoElementu.ElementDoPrzeliczeniaWorker (na WypElement): ZaznaczElementDoAnulowania()/" +
                  "ZaznaczElementDoPrzeliczenia()/WycofajZaznaczenie(). Oznaczać można tylko elementy wypłaty " +
                  "ZATWIERDZONEJ w stanie StanStorna == NieDotyczy. Najpierw zatwierdzamy wypłatę " +
                  "(Wyplata.ZatwierdźWorker, property Lista), potem oznaczamy i sprawdzamy StanStorna/Storno. " +
                  "Wytworzenie elementu stornującego (Wystornowany/Stornujący) następuje przy ponownym naliczeniu.")]
-    public void H10_StornowanieElementu_WorkerElementDoPrzeliczenia()
+    public void KADRY_H10_StornowanieElementu_WorkerElementDoPrzeliczenia()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
         pracownik.Should().NotBeNull();
@@ -401,15 +401,15 @@ public class RozdzialHrest_WyplatyTest : PracownikTestBase
     }
 
     // ====================================================================================
-    // H11 — Anulowanie/usunięcie naliczonej wypłaty (bufor)
+    // KADRY-H11 — Anulowanie/usunięcie naliczonej wypłaty (bufor)
     // ====================================================================================
 
     [Test]
-    [Description("H11: powrót zatwierdzonej wypłaty do bufora (do ponownego naliczenia) realizuje " +
+    [Description("KADRY-H11: powrót zatwierdzonej wypłaty do bufora (do ponownego naliczenia) realizuje " +
                  "publiczny worker Wyplata.OtwórzWorker (property Wypłata, akcja Otwórz() => Zatwierdzona=false), " +
                  "zatwierdzanie — Wyplata.ZatwierdźWorker (property Lista). CanBufor jest protected (niedostępny " +
-                 "z dodatku). Po Otwórz() wypłata jest znów w buforze i można ją przeliczyć ponownie (H1).")]
-    public void H11_PowrotDoBufora_WorkerOtworz()
+                 "z dodatku). Po Otwórz() wypłata jest znów w buforze i można ją przeliczyć ponownie (KADRY-H1).")]
+    public void KADRY_H11_PowrotDoBufora_WorkerOtworz()
     {
         var pracownik = Pracownik(Pracownik_.Strzelecki);
         pracownik.Should().NotBeNull();

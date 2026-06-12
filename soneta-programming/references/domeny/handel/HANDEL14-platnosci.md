@@ -94,7 +94,7 @@ płatności), `Cykl: WOptions` (`Miesięczny`). Akcja: `PodzielPlatnosci([Contex
 ```csharp
 // Worker działa na dokumencie w BUFORZE z kierunkiem płatności (FV/FZ).
 // Parametry tworzymy przez Context (wzorzec worker-z-Params), patrz worker-extender.md.
-var context = new Context(session);
+var context = Context.Empty.Clone(session);
 context.Set(dok);                              // DokumentHandlowy w kontekście
 
 var wp = new PodzialPlatnosci.WParams(context)
@@ -209,7 +209,7 @@ z domyślnymi warunkami kontrahenta, przez publiczny `WarunkiPłatnościWorker`.
 ```csharp
 // Warunki płatności kontrahenta są przenoszone na płatność przy jej tworzeniu/zmianie podmiotu.
 // Do odczytu/zmiany "zbiorczej" warunków dokumentu służy WarunkiPłatnościWorker:
-var context = new Context(session);
+var context = Context.Empty.Clone(session);
 context.Set(dok);                                  // dok : IDokumentPlatny (DokumentHandlowy)
 
 var warunki = new WarunkiPłatnościWorker { Dokument = dok };

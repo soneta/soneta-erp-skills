@@ -13,9 +13,9 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
 /// Rozdział A (część kartotekowa) — pozostałe receptury danych osobowych/kadrowych pracownika:
-/// A3 (adresy), A4 (kontakt), A5 (rachunki — odczyt), A6 (PIT), A8 (ZUS/NFZ), A11 (wykształcenie/
-/// języki/wojsko), A12 (GUS/kod zawodu), A13 (PFRON), A15 (odczyt „na dzień"), A16 (powiązanie
-/// z kontrahentem), A17 (archiwum — workery), A18 (zwolnienie), A19 (przerejestrowanie — zmiana Tyub4).
+/// KADRY-A3 (adresy), KADRY-A4 (kontakt), KADRY-A5 (rachunki — odczyt), KADRY-A6 (PIT), KADRY-A8 (ZUS/NFZ), KADRY-A11 (wykształcenie/
+/// języki/wojsko), KADRY-A12 (GUS/kod zawodu), KADRY-A13 (PFRON), KADRY-A15 (odczyt „na dzień"), KADRY-A16 (powiązanie
+/// z kontrahentem), KADRY-A17 (archiwum — workery), KADRY-A18 (zwolnienie), KADRY-A19 (przerejestrowanie — zmiana Tyub4).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu Soneta dla domeny Kadry/Płace.
 /// Operujemy wyłącznie na publicznym API — jak dodatek zewnętrzny bez dostępu do kodu źródłowego.
@@ -38,7 +38,7 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
     }
 
     // Helper: pracownik z USTAWIONYM etatem. Cały subrow Etat jest tylko-do-odczytu, dopóki nie
-    // ustawi się Etat.Okres (bramka, patrz B1). Po jego ustawieniu pracownik staje się etatowy, więc
+    // ustawi się Etat.Okres (bramka, patrz KADRY-B1). Po jego ustawieniu pracownik staje się etatowy, więc
     // Save wymaga Etat.Wydzial ORAZ Etat.Stanowisko — ustawiamy oba.
     private Prac NowyPracownikEtatowy(string prefix, out Guid guid)
     {
@@ -50,12 +50,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         return pracownik;
     }
 
-    // ============================== A3 — Adresy ==============================
+    // ============================== KADRY-A3 — Adresy ==============================
 
     [Test]
-    [Description("A3: adresy (zameldowania/zamieszkania/korespondencyjny) to subrowy Soneta.Core.Adres " +
+    [Description("KADRY-A3: adresy (zameldowania/zamieszkania/korespondencyjny) to subrowy Soneta.Core.Adres " +
                  "na zapisie historii (Last) — modyfikujemy ich pola, nie przypisujemy całego obiektu.")]
-    public void A3_Adresy_SaSubrowamiNaZapisieHistorii()
+    public void KADRY_A3_Adresy_SaSubrowamiNaZapisieHistorii()
     {
         var g = Guid.Empty;
         InTransaction(() =>
@@ -84,12 +84,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         adr.Miejscowosc.Should().Be("Kraków");
     }
 
-    // ============================== A4 — Dane kontaktowe ==============================
+    // ============================== KADRY-A4 — Dane kontaktowe ==============================
 
     [Test]
-    [Description("A4: dane kontaktowe (EMAIL/TelefonKomorkowy/WWW) to subrow Soneta.Core.Kontakt " +
+    [Description("KADRY-A4: dane kontaktowe (EMAIL/TelefonKomorkowy/WWW) to subrow Soneta.Core.Kontakt " +
                  "na zapisie historii — pole nazywa się EMAIL (wielkie litery).")]
-    public void A4_Kontakt_EmailTelefonWWW_NaSubrowieKontakt()
+    public void KADRY_A4_Kontakt_EmailTelefonWWW_NaSubrowieKontakt()
     {
         var g = Guid.Empty;
         InTransaction(() =>
@@ -108,20 +108,20 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A4 (dostęp WWW/Pulpity): konto operatora web (IWebOperator) NIE jest zwykłym " +
+    [Description("KADRY-A4 (dostęp WWW/Pulpity): konto operatora web (IWebOperator) NIE jest zwykłym " +
                  "zapisywalnym polem PracHistoria — zarządza nim osobny mechanizm operatorów modułu web.")]
     [Ignore("Dostęp do Pulpitów (IWebOperator) to osobny mechanizm operatorów/uprawnień web, " +
             "nie pole kartoteki kadrowej — poza publicznym kontraktem ustawiania pól na pracowniku.")]
-    public void A4_DostepWWW_PulpityToOsobnyMechanizm()
+    public void KADRY_A4_DostepWWW_PulpityToOsobnyMechanizm()
     {
     }
 
-    // ============================== A5 — Rachunki bankowe (ODCZYT) ==============================
+    // ============================== KADRY-A5 — Rachunki bankowe (ODCZYT) ==============================
 
     [Test]
-    [Description("A5 (odczyt): rachunki pracownika to kolekcja Pracownik.Rachunki " +
+    [Description("KADRY-A5 (odczyt): rachunki pracownika to kolekcja Pracownik.Rachunki " +
                  "(SubTable<RachunekBankowyPodmiotu>); rachunek główny zwraca Pracownik.DomyslnyRachunek.")]
-    public void A5_Rachunki_OdczytKolekcjiIRachunkuGlownego()
+    public void KADRY_A5_Rachunki_OdczytKolekcjiIRachunkuGlownego()
     {
         // Czysty odczyt na pracowniku z Demo — bez tworzenia rachunku (ctor numeru rachunku to typ
         // biznesowy z walidacją IBAN/NRB, poza prostym kontraktem ustawiania pól).
@@ -142,15 +142,15 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
                 _ = r.Priorytet;
             }
         };
-        odczyt.Should().NotThrow("Rachunki/DomyslnyRachunek to publiczny odczyt kontraktu A5");
+        odczyt.Should().NotThrow("Rachunki/DomyslnyRachunek to publiczny odczyt kontraktu KADRY-A5");
     }
 
-    // ============================== A6 — Dane podatkowe (PIT) ==============================
+    // ============================== KADRY-A6 — Dane podatkowe (PIT) ==============================
 
     [Test]
-    [Description("A6: dane PIT to subrow PracHistoria.Podatki — KosztyRodzaj/TypProgow/UlgaCzesc to ENUMY, " +
+    [Description("KADRY-A6: dane PIT to subrow PracHistoria.Podatki — KosztyRodzaj/TypProgow/UlgaCzesc to ENUMY, " +
                  "UlgaMnoznik to decimal (PIT-2). Wartości enumów pobieramy z realnych nazw składowych.")]
-    public void A6_DanePodatkowe_NaSubrowiePodatki()
+    public void KADRY_A6_DanePodatkowe_NaSubrowiePodatki()
     {
         var g = Guid.Empty;
         InTransaction(() =>
@@ -170,12 +170,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         pdt2.TypProgow.Should().Be(TypProgowPodatkowych.Standardowe);
     }
 
-    // ============================== A8 — ZUS / NFZ ==============================
+    // ============================== KADRY-A8 — ZUS / NFZ ==============================
 
     [Test]
-    [Description("A8: oddział NFZ to subrow PracHistoria.OddzialNFZ (OdDnia: Date) — zapisywalny. " +
+    [Description("KADRY-A8: oddział NFZ to subrow PracHistoria.OddzialNFZ (OdDnia: Date) — zapisywalny. " +
                  "DodSwiadczeniaZUS na świeżym zapisie jest tylko-do-odczytu (cały subrow zablokowany).")]
-    public void A8_DodatkoweSwiadczeniaZUS_IOddzialNFZ()
+    public void KADRY_A8_DodatkoweSwiadczeniaZUS_IOddzialNFZ()
     {
         var g = Guid.Empty;
         InTransaction(() =>
@@ -200,12 +200,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         odczyt.Should().NotThrow("dane dodatkowych świadczeń ZUS są dostępne do odczytu");
     }
 
-    // ============================== A11 — Wykształcenie / języki / wojsko ==============================
+    // ============================== KADRY-A11 — Wykształcenie / języki / wojsko ==============================
 
     [Test]
-    [Description("A11: wykształcenie i wojsko to subrowy PracHistoria (Kod/Stosunek/KategoriaZdrowia = " +
+    [Description("KADRY-A11: wykształcenie i wojsko to subrowy PracHistoria (Kod/Stosunek/KategoriaZdrowia = " +
                  "ENUMY); języki obce to kolekcja na rootcie Pracownik.JęzykiObce.")]
-    public void A11_WyksztalcenieWojsko_NaHistorii_JezykiNaRootcie()
+    public void KADRY_A11_WyksztalcenieWojsko_NaHistorii_JezykiNaRootcie()
     {
         var g = Guid.Empty;
         InTransaction(() =>
@@ -236,18 +236,18 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         czytajJezyki.Should().NotThrow("JęzykiObce to publiczna kolekcja na rootcie pracownika");
     }
 
-    // ============================== A12 — GUS / kod zawodu ==============================
+    // ============================== KADRY-A12 — GUS / kod zawodu ==============================
 
     [Test]
-    [Description("A12: dane statystyczne GUS to subrow PracHistoria.GUS (KodWyksztalcenia = enum " +
-                 "KodWykształceniaGUS, INNE niż A11); kod zawodu to Etat.KodWykonywanegoZawodu (int).")]
-    public void A12_DaneGUS_IKodZawodu()
+    [Description("KADRY-A12: dane statystyczne GUS to subrow PracHistoria.GUS (KodWyksztalcenia = enum " +
+                 "KodWykształceniaGUS, INNE niż KADRY-A11); kod zawodu to Etat.KodWykonywanegoZawodu (int).")]
+    public void KADRY_A12_DaneGUS_IKodZawodu()
     {
         var g = Guid.Empty;
         InTransaction(() =>
         {
             // Etat.KodWykonywanegoZawodu jest tylko-do-odczytu, dopóki nie ustawi się Etat.Okres
-            // (bramka subrowa Etat, patrz B1) — używamy więc pracownika z ustawionym etatem.
+            // (bramka subrowa Etat, patrz KADRY-B1) — używamy więc pracownika z ustawionym etatem.
             var ph = NowyPracownikEtatowy("A12", out g).Last;
             ph.GUS.KodWyksztalcenia = KodWykształceniaGUS.Wyższe;   // enum GUS (z diakrytykiem)
             ph.GUS.GlowneMiejscePracy = true;
@@ -262,12 +262,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         ph2.Etat.KodWykonywanegoZawodu.Should().Be(251401);
     }
 
-    // ============================== A13 — PFRON ==============================
+    // ============================== KADRY-A13 — PFRON ==============================
 
     [Test]
-    [Description("A13: dane PFRON/niepełnosprawność to subrow PracHistoria.PFRON — Stopien = enum " +
+    [Description("KADRY-A13: dane PFRON/niepełnosprawność to subrow PracHistoria.PFRON — Stopien = enum " +
                  "StNiepełnosprawności, Okres = FromTo, daty = Soneta.Types.Date.")]
-    public void A13_PFRON_StopienOkresIDaty()
+    public void KADRY_A13_PFRON_StopienOkresIDaty()
     {
         var g = Guid.Empty;
         var okres = new FromTo(new Date(2026, 1, 1), new Date(2028, 12, 31));
@@ -289,12 +289,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         pfron2.DataDostarczenia.Should().Be(new Date(2025, 12, 15));
     }
 
-    // ============================== A15 — Odczyt „na dzień" ==============================
+    // ============================== KADRY-A15 — Odczyt „na dzień" ==============================
 
     [Test]
-    [Description("A15 (odczyt): indeksator pracownik[date] zwraca zapis obowiązujący na datę (Aktualnosc " +
+    [Description("KADRY-A15 (odczyt): indeksator pracownik[date] zwraca zapis obowiązujący na datę (Aktualnosc " +
                  "zawiera date), null dla daty sprzed zatrudnienia; GetFirst()/Last to skrajne zapisy.")]
-    public void A15_OdczytNaDzien_ZwracaZapisLubNull()
+    public void KADRY_A15_OdczytNaDzien_ZwracaZapisLubNull()
     {
         var p = PierwszyPracownik();   // zatrudniony etatowo pracownik z Demo
 
@@ -320,12 +320,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         }
     }
 
-    // ============================== A16 — Powiązanie z kontrahentem ==============================
+    // ============================== KADRY-A16 — Powiązanie z kontrahentem ==============================
 
     [Test]
-    [Description("A16: powiązanie pracownika z istniejącym kontrahentem to zapisywalne pole rootu " +
+    [Description("KADRY-A16: powiązanie pracownika z istniejącym kontrahentem to zapisywalne pole rootu " +
                  "Pracownik.PowiazanyKontrahent (referencja, ta sama sesja); null = brak powiązania.")]
-    public void A16_PowiazanyKontrahent_UstawianyNaRootcie()
+    public void KADRY_A16_PowiazanyKontrahent_UstawianyNaRootcie()
     {
         // Istniejący kontrahent z Demo (z tej samej sesji co pracownik).
         var kontrahent = Session.GetCRM().Kontrahenci.WgKodu.Cast<Soneta.CRM.Kontrahent>().First();
@@ -343,12 +343,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         p2.PowiazanyKontrahent.Guid.Should().Be(kontrahent.Guid);
     }
 
-    // ============================== A17 — Archiwum (workery) ==============================
+    // ============================== KADRY-A17 — Archiwum (workery) ==============================
 
     [Test]
-    [Description("A17 (odczyt): manager Pracownik.Archiwum udostępnia tylko-do-odczytu status archiwizacji " +
+    [Description("KADRY-A17 (odczyt): manager Pracownik.Archiwum udostępnia tylko-do-odczytu status archiwizacji " +
                  "(Status: enum InformacjeOArchiwum) i flagę Anonimizowany; pracownik aktywny = NieDotyczy.")]
-    public void A17_Archiwum_ManagerUdostepniaStatusDoOdczytu()
+    public void KADRY_A17_Archiwum_ManagerUdostepniaStatusDoOdczytu()
     {
         // Aktywny pracownik z Demo — nie jest w archiwum. Manager Archiwum to read-only API:
         // Przenieś/Przywróć dostępne są WYŁĄCZNIE przez workery (patrz test poniżej).
@@ -359,12 +359,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A17 (zmiana stanu): przeniesienie/przywrócenie z archiwum jest dostępne WYŁĄCZNIE przez " +
+    [Description("KADRY-A17 (zmiana stanu): przeniesienie/przywrócenie z archiwum jest dostępne WYŁĄCZNIE przez " +
                  "workery Pracownik.PrzenieśDoArchiwumWorker / PrzywróćZArchiwumWorker (CommitUI). Kod w ciele.")]
     [Ignore("Worker PrzenieśDoArchiwum rzuca NullReferenceException w hoście testowym headless " +
             "(Pracownik.ArchiwumManager) — archiwizacja zależy od stanu operatora/kontekstu UI nieobecnego " +
             "w bazie Demo. Test dokumentuje jedyną publiczną drogę zmiany stanu archiwum (workery).")]
-    public void A17_Archiwum_PrzeniesienieIPrzywroceniePrzezWorkery()
+    public void KADRY_A17_Archiwum_PrzeniesienieIPrzywroceniePrzezWorkery()
     {
         var g = Guid.Empty;
         InTransaction(() => NowyPracownik("A17", out g));
@@ -392,12 +392,12 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         Get<Prac>(g).Archiwum.Status.Should().NotBe(InformacjeOArchiwum.WArchiwum);
     }
 
-    // ============================== A18 — Zwolnienie / wyrejestrowanie ==============================
+    // ============================== KADRY-A18 — Zwolnienie / wyrejestrowanie ==============================
 
     [Test]
-    [Description("A18: zamknięcie zatrudnienia — Etat.Okres.To (ostatni dzień) + subrow Etat.RozwiazanieUmowy " +
+    [Description("KADRY-A18: zamknięcie zatrudnienia — Etat.Okres.To (ostatni dzień) + subrow Etat.RozwiazanieUmowy " +
                  "(Inicjatywa/PodstawaPrawna = enumy; wartości pobierane z realnych nazw składowych).")]
-    public void A18_Zwolnienie_EtatOkresIRozwiazanieUmowy()
+    public void KADRY_A18_Zwolnienie_EtatOkresIRozwiazanieUmowy()
     {
         var g = Guid.Empty;
         var dataRozwiazania = new Date(2026, 6, 30);
@@ -433,20 +433,20 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A18 (ZWUA): wyrejestrowanie z ZUS przez WyrejestrujPracownikaWorker wymaga Params(Context) " +
+    [Description("KADRY-A18 (ZWUA): wyrejestrowanie z ZUS przez WyrejestrujPracownikaWorker wymaga Params(Context) " +
                  "oraz środowiska deklaracji ZUS — poza prostym kontraktem ustawiania pól etatu.")]
     [Ignore("Wyrejestrowanie ZUS (ZWUA) wymaga WyrejestrujPracownikaParams(Context) i kontekstu deklaracji/" +
-            "KEDU; samo ustawienie Etat.Okres/RozwiazanieUmowy (test A18) nie tworzy dokumentu ZWUA.")]
-    public void A18_WyrejestrowanieZUS_WymagaContextIKedu()
+            "KEDU; samo ustawienie Etat.Okres/RozwiazanieUmowy (test KADRY-A18) nie tworzy dokumentu ZWUA.")]
+    public void KADRY_A18_WyrejestrowanieZUS_WymagaContextIKedu()
     {
     }
 
-    // ============================== A19 — Przerejestrowanie (zmiana Tyub4) ==============================
+    // ============================== KADRY-A19 — Przerejestrowanie (zmiana Tyub4) ==============================
 
     [Test]
-    [Description("A19: przerejestrowanie = nowy zapis historii od daty (A14: Update + AddRow) ze zmianą " +
+    [Description("KADRY-A19: przerejestrowanie = nowy zapis historii od daty (KADRY-A14: Update + AddRow) ze zmianą " +
                  "Etat.Ubezpieczenia.Tyub4 (słownik TytulyUbezpiecz4, klucz int); deklaracje ZUS — osobny worker UI.")]
-    public void A19_Przerejestrowanie_ZmianaTyub4OdDaty()
+    public void KADRY_A19_Przerejestrowanie_ZmianaTyub4OdDaty()
     {
         // Tyub4 to słownik o kluczu int — bierzemy dwie różne realne wartości z bazy Demo (nie hardkodujemy).
         var tytuly = Kadry.TytulyUbezpiecz4.Cast<TytulUbezpieczenia4>().Take(2).ToList();
@@ -464,7 +464,7 @@ public class RozdzialArest_KartotekaTest : PracownikTestBase
         {
             var pracownik = NowyPracownik("A19", out g);
 
-            // Nowy zapis historii „od daty" (A14): Update klonuje + skraca poprzedni, AddRow dopina klon.
+            // Nowy zapis historii „od daty" (KADRY-A14): Update klonuje + skraca poprzedni, AddRow dopina klon.
             var nowy = pracownik.Historia.Update(odDnia);
             pracownik.Module.PracHistorie.AddRow(nowy);
 

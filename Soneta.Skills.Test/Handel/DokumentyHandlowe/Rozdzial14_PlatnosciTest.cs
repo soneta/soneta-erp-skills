@@ -8,7 +8,7 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 14 skilla „dokument-handlowy” — Płatności dokumentu handlowego (W75–W82).
+/// Rozdział 14 skilla „dokument-handlowy” — Płatności dokumentu handlowego (HANDEL-W75–HANDEL-W82).
 /// <para>
 /// Płatności (należności / zobowiązania) powstają automatycznie z dokumentu handlowego
 /// płatnego (FV, FZ). Dostęp daje kolekcja <c>dok.Platnosci</c>
@@ -62,13 +62,13 @@ public class Rozdzial14_PlatnosciTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W75 — Przeglądanie płatności dokumentu (dok.Platnosci)
+    // HANDEL-W75 — Przeglądanie płatności dokumentu (dok.Platnosci)
     // ===================================================================================
 
     [Test]
-    [Description("W75: FV w buforze z pozycją ma niepustą kolekcję dok.Platnosci — " +
+    [Description("HANDEL-W75: FV w buforze z pozycją ma niepustą kolekcję dok.Platnosci — " +
                  "dokument płatny automatycznie tworzy płatność (Należność) już w buforze.")]
-    public void W75_FakturaTworzyPlatnosc()
+    public void HANDEL_W75_FakturaTworzyPlatnosc()
     {
         // Arrange + Act: zatwierdzone przyjęcie na stan + FV w buforze (płatność tworzy się automatycznie).
         var guid = UtworzFvWBuforze();
@@ -85,9 +85,9 @@ public class Rozdzial14_PlatnosciTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W75: odczyt podstawowych pól płatności — Kwota (waluta dokumentu, PLN), " +
+    [Description("HANDEL-W75: odczyt podstawowych pól płatności — Kwota (waluta dokumentu, PLN), " +
                  "SposobZaplaty.Nazwa, Termin oraz StanRozliczenia.")]
-    public void W75_OdczytPolPlatnosci()
+    public void HANDEL_W75_OdczytPolPlatnosci()
     {
         var guid = UtworzFvWBuforze();
         var fv = Get<DokumentHandlowy>(guid);
@@ -117,9 +117,9 @@ public class Rozdzial14_PlatnosciTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W75: płatność FV jest należnością — Kierunek == Przychod, CzyNaleznosc == true, " +
+    [Description("HANDEL-W75: płatność FV jest należnością — Kierunek == Przychod, CzyNaleznosc == true, " +
                  "CzyZobowiazanie == false.")]
-    public void W75_PlatnoscFakturySprzedazyToNaleznosc()
+    public void HANDEL_W75_PlatnoscFakturySprzedazyToNaleznosc()
     {
         var guid = UtworzFvWBuforze();
         var fv = Get<DokumentHandlowy>(guid);
@@ -132,14 +132,14 @@ public class Rozdzial14_PlatnosciTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W80 — Stan rozliczenia płatności (nowa, nierozliczona)
+    // HANDEL-W80 — Stan rozliczenia płatności (nowa, nierozliczona)
     // ===================================================================================
 
     [Test]
-    [Description("W80: świeżo wystawiona (nieopłacona) płatność jest nierozliczona — " +
+    [Description("HANDEL-W80: świeżo wystawiona (nieopłacona) płatność jest nierozliczona — " +
                  "StanRozliczenia == Nierozliczony, Rozliczono == false, KwotaRozliczona == 0, " +
                  "DoRozliczenia == Kwota.")]
-    public void W80_NowaPlatnoscJestNierozliczona()
+    public void HANDEL_W80_NowaPlatnoscJestNierozliczona()
     {
         var guid = UtworzFvWBuforze();
         var fv = Get<DokumentHandlowy>(guid);
@@ -158,9 +158,9 @@ public class Rozdzial14_PlatnosciTest : DokumentHandlowyTestBase
     }
 
     [Test]
-    [Description("W80: DataRozliczenia nierozliczonej płatności to Date.MaxValue (sentinel „nierozliczona”), " +
+    [Description("HANDEL-W80: DataRozliczenia nierozliczonej płatności to Date.MaxValue (sentinel „nierozliczona”), " +
                  "a nie realna data.")]
-    public void W80_DataRozliczeniaNierozliczonejToMaxValue()
+    public void HANDEL_W80_DataRozliczeniaNierozliczonejToMaxValue()
     {
         var guid = UtworzFvWBuforze();
         var fv = Get<DokumentHandlowy>(guid);
@@ -172,12 +172,12 @@ public class Rozdzial14_PlatnosciTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W79 — Flaga InnyPłatnik (kalkulowana, read-only)
+    // HANDEL-W79 — Flaga InnyPłatnik (kalkulowana, read-only)
     // ===================================================================================
 
     [Test]
-    [Description("W79: dla zwykłej FV (płatnik = kontrahent) kalkulowana flaga dok.InnyPłatnik == false.")]
-    public void W79_ZwyklyDokumentNieMaInnegoPlatnika()
+    [Description("HANDEL-W79: dla zwykłej FV (płatnik = kontrahent) kalkulowana flaga dok.InnyPłatnik == false.")]
+    public void HANDEL_W79_ZwyklyDokumentNieMaInnegoPlatnika()
     {
         var guid = UtworzFvWBuforze();
         var fv = Get<DokumentHandlowy>(guid);
@@ -193,41 +193,41 @@ public class Rozdzial14_PlatnosciTest : DokumentHandlowyTestBase
     // ===================================================================================
 
     [Test]
-    [Ignore("W76 — podział na raty (PodzialPlatnosciWorker). Worker jest publiczny, ale jego akcja " +
+    [Ignore("HANDEL-W76 — podział na raty (PodzialPlatnosciWorker). Worker jest publiczny, ale jego akcja " +
             "PodzielPlatnosci SAMA otwiera transakcję (Session.Logout(true) + CommitUI) i USUWA istniejące " +
             "płatności, zastępując je wyliczonymi ratami. Poprawne wywołanie wymaga zbudowania Context z " +
             "dokumentem, instancjacji WParams(context) i sterowania własną transakcją workera wewnątrz " +
             "harnessu testowego (który już zarządza sesją i robi rollback) — splot transakcji zewnętrznej i " +
             "wewnętrznej jest tu kruchy i wykracza poza prosty, wiarygodny przypadek. SKIP wg wytycznych " +
             "rozdziału (testuj tylko proste, jednoznaczne zachowania).")]
-    [Description("W76: rozbicie płatności na raty — pominięte (worker steruje własną transakcją i usuwa płatności).")]
-    public void W76_PodzialNaRaty_Skip() { }
+    [Description("HANDEL-W76: rozbicie płatności na raty — pominięte (worker steruje własną transakcją i usuwa płatności).")]
+    public void HANDEL_W76_PodzialNaRaty_Skip() { }
 
     [Test]
-    [Ignore("W77 — ręczne dodanie płatności (new Naleznosc(dok)/Zobowiazanie(dok) + Platnosci.AddRow). " +
+    [Ignore("HANDEL-W77 — ręczne dodanie płatności (new Naleznosc(dok)/Zobowiazanie(dok) + Platnosci.AddRow). " +
             "Konstruktory są publiczne, ale poprawne ułożenie płatności podlega twardym weryfikatorom: suma " +
             "Kwota wszystkich płatności musi równać się wartości brutto dokumentu, symbol waluty musi zgadzać " +
             "się z dokumentem/ewidencją, a dla przelewu wymagany jest Rachunek należący do podmiotu. " +
             "Zbudowanie spójnego, przechodzącego weryfikację układu „część gotówką + reszta przelewem” " +
             "jest zbyt złożone na prosty test jednostkowy. SKIP wg wytycznych rozdziału (zbyt złożone).")]
-    [Description("W77: ręczne dodanie/edycja płatności — pominięte (twarde weryfikatory sumy/waluty/rachunku).")]
-    public void W77_RecznaPlatnosc_Skip() { }
+    [Description("HANDEL-W77: ręczne dodanie/edycja płatności — pominięte (twarde weryfikatory sumy/waluty/rachunku).")]
+    public void HANDEL_W77_RecznaPlatnosc_Skip() { }
 
     [Test]
-    [Ignore("W81 — płatność w walucie obcej (Kwota w walucie vs PLN, Kurs, TabelaKursowa). Wymaga dokumentu " +
+    [Ignore("HANDEL-W81 — płatność w walucie obcej (Kwota w walucie vs PLN, Kurs, TabelaKursowa). Wymaga dokumentu " +
             "walutowego oraz tabeli kursowej z kursem na DataDokumentu. Baza Demo nie ma kursów „na dziś” " +
             "(np. EUR), więc operacja walutowa rzuca KursWalutyNotFoundException. Test wymagałby konfiguracji " +
-            "kursów/ewidencji walutowej, co wykracza poza zakres rozdziału. SKIP wg pułapek W81 (brak kursu w Demo).")]
-    [Description("W81: płatności walutowe — pominięte (wymaga kursu/tabeli kursowej, brak w Demo).")]
-    public void W81_PlatnoscWalutowa_Skip() { }
+            "kursów/ewidencji walutowej, co wykracza poza zakres rozdziału. SKIP wg pułapek HANDEL-W81 (brak kursu w Demo).")]
+    [Description("HANDEL-W81: płatności walutowe — pominięte (wymaga kursu/tabeli kursowej, brak w Demo).")]
+    public void HANDEL_W81_PlatnoscWalutowa_Skip() { }
 
     [Test]
-    [Ignore("W82 — rabat za wcześniejszą zapłatę (skonto). Naliczony Rabat (dok.RabatZaTerminPlatnosci.Rabat) " +
+    [Ignore("HANDEL-W82 — rabat za wcześniejszą zapłatę (skonto). Naliczony Rabat (dok.RabatZaTerminPlatnosci.Rabat) " +
             "jest wyliczany z parametrów rabatu skonfigurowanych NA KONTRAHENCIE (RodzajRabatuZaTerminPlatnosci, " +
             "tryb, progi/wartości, IloscDniDlaRabatu). Kontrahenci bazy Demo nie mają tych parametrów ustawionych, " +
             "więc Rabat pozostałby Percent.Zero — test nie weryfikowałby realnego naliczenia. Ustawienie samego " +
             "terminu skonta wymaga ponadto, by wszystkie płatności miały ten sam termin (inaczej RowException). " +
-            "SKIP wg pułapek W82 (wymaga konfiguracji rabatu na kontrahencie).")]
-    [Description("W82: rabat za termin płatności (skonto) — pominięte (wymaga parametrów rabatu na kontrahencie).")]
-    public void W82_RabatZaTermin_Skip() { }
+            "SKIP wg pułapek HANDEL-W82 (wymaga konfiguracji rabatu na kontrahencie).")]
+    [Description("HANDEL-W82: rabat za termin płatności (skonto) — pominięte (wymaga parametrów rabatu na kontrahencie).")]
+    public void HANDEL_W82_RabatZaTermin_Skip() { }
 }

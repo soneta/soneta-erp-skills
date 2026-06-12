@@ -6,7 +6,7 @@ using Soneta.CRM;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W3 — Tworzenie kontrahenta.
+/// CRM-W3 — Tworzenie kontrahenta.
 /// Testy pokazują utworzenie rekordu z minimalnym kompletem danych w transakcji edycyjnej
 /// oraz trwały zapis (SaveDispose) i ponowny odczyt z nowej sesji. Pokrywają warianty:
 /// podmiot gospodarczy krajowy, podmiot unijny oraz osoba fizyczna (finalny).

@@ -212,7 +212,7 @@ transakcji `CommitUI`.
 var kadry = session.GetKadry();
 var pracownik = kadry.Pracownicy.WgKodu["006"];
 var defAkordu = kadry.DefinicjeAkordow.WgNazwa["Akord prosty"];   // klucz WgNazwa (l.poj.)
-var context = login.CreateEmptyContext().Clone(session);
+var context = Context.Empty.Clone(session);
 
 using (var t = session.Logout(editMode: true))
 {
@@ -399,7 +399,7 @@ var def = session.GetPlace().DefElementow.WgNazwy["Premia"];
 Pracownik[] grupa = kadry.Pracownicy[(Pracownik p) => p.Last.Etat.Okres.Contains(Date.Today)]
                           .Cast<Pracownik>().ToArray();
 
-var context = login.CreateEmptyContext().Clone(session);
+var context = Context.Empty.Clone(session);
 
 using (var t = session.Logout(editMode: true))
 {
@@ -588,7 +588,7 @@ using (var t = session.Logout(editMode: true))
     pozyczka.SplatyOd   = new YearMonth(2026, 2);
 
     // 3) Harmonogram rat (worker bezparametrowy; Params: ctor (Context); PrzeliczRaty read-only)
-    var context = login.CreateEmptyContext().Clone(session);
+    var context = Context.Empty.Clone(session);
     var par = new Pozyczka.UzgodnijRatyWorker.Params(context) { UzgodnijRaty = true };
     new Pozyczka.UzgodnijRatyWorker { Pars = par, Pożyczka = pozyczka }.UzgodnijRaty();
 

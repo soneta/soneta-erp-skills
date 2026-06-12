@@ -10,10 +10,10 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział A — „Pracownik: zatrudnienie i dane kartotekowe" (receptury A1, A2, A7, A9, A10, A14).
+/// Rozdział A — „Pracownik: zatrudnienie i dane kartotekowe" (receptury KADRY-A1, KADRY-A2, KADRY-A7, KADRY-A9, KADRY-A10, KADRY-A14).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta dla domeny
-/// Kadry/Płace. Każda metoda mapuje się 1:1 do receptury z dokumentu skilla <c>pracownik.md</c> i
+/// Kadry/Płace. Każda metoda mapuje się 1:1 do receptury z dokumentu skilla <c>kadry/KADRY01-pracownik.md</c> i
 /// pokazuje realny model „root + historia": <c>Pracownik</c> (tabela <c>Pracownicy</c>) trzyma tylko
 /// nieliczne pola niezmienne, a praktycznie wszystkie dane kadrowe siedzą w zapisach historycznych
 /// <c>PracHistoria</c> (kolekcja <c>Pracownik.Historia</c>), w tym złożone pole <c>Etat</c>.
@@ -27,12 +27,12 @@ namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 [TestFixture]
 public class RozdzialA_PracownikTest : PracownikTestBase
 {
-    // ============================== A1 — Zatrudnienie nowego pracownika ==============================
+    // ============================== KADRY-A1 — Zatrudnienie nowego pracownika ==============================
 
     [Test]
-    [Description("A1: dodanie nowego PracownikFirmy (AddRow) automatycznie tworzy pierwszy zapis " +
+    [Description("KADRY-A1: dodanie nowego PracownikFirmy (AddRow) automatycznie tworzy pierwszy zapis " +
                  "historii (Last); dane osobowe ustawiamy na Last; Save() utrwala pracownika.")]
-    public void A1_ZatrudnienieNowego_TworzyPierwszyZapisHistorii_IZapisuje()
+    public void KADRY_A1_ZatrudnienieNowego_TworzyPierwszyZapisHistorii_IZapisuje()
     {
         Guid guid = Guid.Empty;
         var kod = "A1_" + Guid.NewGuid().ToString("N").Substring(0, 6);
@@ -69,9 +69,9 @@ public class RozdzialA_PracownikTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A1: typ Pracownik jest abstrakcyjny — konkretnym typem zatrudnienia jest PracownikFirmy " +
+    [Description("KADRY-A1: typ Pracownik jest abstrakcyjny — konkretnym typem zatrudnienia jest PracownikFirmy " +
                  "(dziedziczy po Pracownik); to on jest dodawany do kartoteki.")]
-    public void A1_PracownikFirmy_JestKonkretnymTypemPracownika()
+    public void KADRY_A1_PracownikFirmy_JestKonkretnymTypemPracownika()
     {
         // Dokumentujemy regułę z receptury: new Pracownik() jest niemożliwe (typ abstrakcyjny),
         // więc używamy PracownikFirmy. Sprawdzamy relację dziedziczenia bez instancjonowania abstrakta.
@@ -80,12 +80,12 @@ public class RozdzialA_PracownikTest : PracownikTestBase
             .Should().BeTrue("PracownikFirmy jest konkretnym typem pracownika firmy");
     }
 
-    // ============================== A2 — Podstawowe dane kadrowe ==============================
+    // ============================== KADRY-A2 — Podstawowe dane kadrowe ==============================
 
     [Test]
-    [Description("A2: dane ewidencyjno-identyfikacyjne (NazwiskoRodowe, ImieOjca, NIP, Urodzony, " +
+    [Description("KADRY-A2: dane ewidencyjno-identyfikacyjne (NazwiskoRodowe, ImieOjca, NIP, Urodzony, " +
                  "Obywatelstwo, Adres) ustawiamy na zapisie historii (Last) oraz jego subrowach.")]
-    public void A2_DaneKadrowe_UstawianeNaZapisieHistorii_ISubrowach()
+    public void KADRY_A2_DaneKadrowe_UstawianeNaZapisieHistorii_ISubrowach()
     {
         Guid guid = Guid.Empty;
         var kod = "A2_" + Guid.NewGuid().ToString("N").Substring(0, 6);
@@ -133,21 +133,21 @@ public class RozdzialA_PracownikTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A2: Plec to enum PłećOsoby; przy poprawnym numerze PESEL płeć jest wyliczana " +
+    [Description("KADRY-A2: Plec to enum PłećOsoby; przy poprawnym numerze PESEL płeć jest wyliczana " +
                  "automatycznie przez weryfikator (parzysta cyfra przed kontrolną = kobieta).")]
-    public void A2_Plec_WyliczanaZPESEL()
+    public void KADRY_A2_Plec_WyliczanaZPESEL()
     {
         var p = PierwszyPracownik();
         // Pracownik etatowy z Demo ma ustawiony PESEL — płeć powinna być jedną z wartości enuma.
         p.Last.Plec.Should().BeOneOf(PłećOsoby.Kobieta, PłećOsoby.Mężczyzna);
     }
 
-    // ============================== A7 — Ubezpieczenia społeczne i zdrowotne ==============================
+    // ============================== KADRY-A7 — Ubezpieczenia społeczne i zdrowotne ==============================
 
     [Test]
-    [Description("A7: tytuł ubezpieczenia (Tyub4) to rekord słownika TytulyUbezpiecz4 pobierany " +
+    [Description("KADRY-A7: tytuł ubezpieczenia (Tyub4) to rekord słownika TytulyUbezpiecz4 pobierany " +
                  "WgKodu[int]; daty objęcia ubezpieczeniami społecznymi ustawiamy na subrowach Spoleczne.")]
-    public void A7_Ubezpieczenia_UstawiajaTytulIDatyObjecia()
+    public void KADRY_A7_Ubezpieczenia_UstawiajaTytulIDatyObjecia()
     {
         // Tytuł ubezpieczenia jest rekordem słownika KONFIGURACYJNEGO o kluczu int (np. 110 = pracownik).
         // Wymaga, by w bazie Demo istniał wpis o tym kodzie — w przeciwnym razie pomijamy część tytułu.
@@ -194,9 +194,9 @@ public class RozdzialA_PracownikTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A7 (odczyt): tytuł ubezpieczenia obowiązujący na dzień odczytujemy metodą " +
+    [Description("KADRY-A7 (odczyt): tytuł ubezpieczenia obowiązujący na dzień odczytujemy metodą " +
                  "Ubezpieczenia.WyliczTyubNaDzień(Date) — bez modyfikacji danych.")]
-    public void A7_WyliczTyubNaDzien_ZwracaTytulNaDzien()
+    public void KADRY_A7_WyliczTyubNaDzien_ZwracaTytulNaDzien()
     {
         // Odczyt „na dzień" dla istniejącego pracownika z Demo (zatrudniony etatowo).
         var p = PierwszyPracownik();
@@ -215,12 +215,12 @@ public class RozdzialA_PracownikTest : PracownikTestBase
         odczyt.Should().NotThrow("WyliczTyubNaDzień(Date) to publiczny odczyt tytułu na dzień");
     }
 
-    // ============================== A9 — Rodzina pracownika (ZCNA) ==============================
+    // ============================== KADRY-A9 — Rodzina pracownika (ZCNA) ==============================
 
     [Test]
-    [Description("A9: członka rodziny tworzymy konstruktorem CzlonekRodziny(pracownik); zgłoszenie do " +
+    [Description("KADRY-A9: członka rodziny tworzymy konstruktorem CzlonekRodziny(pracownik); zgłoszenie do " +
                  "ubezpieczenia zdrowotnego (ZCNA) to Ubezpieczony=true + UbezpieczenieOkres + StPokrewienstwa.")]
-    public void A9_CzlonekRodziny_ZglaszanyDoUbezpieczeniaZdrowotnego()
+    public void KADRY_A9_CzlonekRodziny_ZglaszanyDoUbezpieczeniaZdrowotnego()
     {
         Guid guidPrac = Guid.Empty;
         var kod = "A9_" + Guid.NewGuid().ToString("N").Substring(0, 6);
@@ -267,12 +267,12 @@ public class RozdzialA_PracownikTest : PracownikTestBase
         ubezpieczeni.Should().ContainSingle("jedyny członek rodziny jest zgłoszony do ubezpieczenia");
     }
 
-    // ============================== A10 — Poprzednie miejsca pracy ==============================
+    // ============================== KADRY-A10 — Poprzednie miejsca pracy ==============================
 
     [Test]
-    [Description("A10: poprzedniego pracodawcę dodajemy konkretnym typem HistoriaZatrudnienia(pracownik) " +
+    [Description("KADRY-A10: poprzedniego pracodawcę dodajemy konkretnym typem HistoriaZatrudnienia(pracownik) " +
                  "do kolekcji HistoriaZatrudnienia (inna niż Historia bieżącego zatrudnienia).")]
-    public void A10_PoprzedniPracodawca_DodawanyDoHistoriiZatrudnienia()
+    public void KADRY_A10_PoprzedniPracodawca_DodawanyDoHistoriiZatrudnienia()
     {
         Guid guidPrac = Guid.Empty;
         var kod = "A10_" + Guid.NewGuid().ToString("N").Substring(0, 6);
@@ -318,12 +318,12 @@ public class RozdzialA_PracownikTest : PracownikTestBase
         wpisy.OfType<UkonczonaSzkola>().Should().ContainSingle("jeden wpis nauki");
     }
 
-    // ============================== A14 — Aktualizacja historyczna „od daty" vs korekta ==============================
+    // ============================== KADRY-A14 — Aktualizacja historyczna „od daty" vs korekta ==============================
 
     [Test]
-    [Description("A14: zmiana warunkow 'od daty' - Historia.Update(date) klonuje zapis i skraca stary; " +
+    [Description("KADRY-A14: zmiana warunkow 'od daty' - Historia.Update(date) klonuje zapis i skraca stary; " +
                  "nowy klon dodajemy do tabeli PracHistorie i ustawiamy na nim zmienione warunki.")]
-    public void A14_AktualizacjaOdDaty_TworzyNowyZapisOdDnia_ISkracaStary()
+    public void KADRY_A14_AktualizacjaOdDaty_TworzyNowyZapisOdDnia_ISkracaStary()
     {
         Guid guidPrac = Guid.Empty;
         var odDnia = new Date(2026, 7, 1);
@@ -369,9 +369,9 @@ public class RozdzialA_PracownikTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A14 (odczyt na dzień): indeksator pracownik[date] zwraca zapis obowiązujący na datę " +
+    [Description("KADRY-A14 (odczyt na dzień): indeksator pracownik[date] zwraca zapis obowiązujący na datę " +
                  "(Aktualnosc zawiera date), a dla daty sprzed zatrudnienia zwraca null.")]
-    public void A14_OdczytNaDzien_ZwracaWlasciwyZapis_INullPrzedZatrudnieniem()
+    public void KADRY_A14_OdczytNaDzien_ZwracaWlasciwyZapis_INullPrzedZatrudnieniem()
     {
         Guid guidPrac = Guid.Empty;
         var odDnia = new Date(2026, 7, 1);
@@ -413,9 +413,9 @@ public class RozdzialA_PracownikTest : PracownikTestBase
     }
 
     [Test]
-    [Description("A14 (korekta): modyfikacja zapisu pracownik[date] BEZ Update/AddRow zmienia dane " +
+    [Description("KADRY-A14 (korekta): modyfikacja zapisu pracownik[date] BEZ Update/AddRow zmienia dane " +
                  "w CAŁYM okresie tego zapisu — nie tworzy nowego okresu.")]
-    public void A14_Korekta_ZmieniaIstniejacyZapis_BezNowegoOkresu()
+    public void KADRY_A14_Korekta_ZmieniaIstniejacyZapis_BezNowegoOkresu()
     {
         Guid guidPrac = Guid.Empty;
 

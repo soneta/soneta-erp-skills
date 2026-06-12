@@ -11,22 +11,22 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział D (część dalsza) — „Nieobecności i czas pracy" (receptury D3–D12).
+/// Rozdział D (część dalsza) — „Nieobecności i czas pracy" (receptury KADRY-D3–KADRY-D12).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta dla zaawansowanej
 /// obsługi nieobecności pracownika: zwolnień ZUS (e-ZLA), deklaracji Z-3/Z-3a, przestoju, parametrów
 /// okresu zasiłkowego, naliczania limitów, podstaw nieobecności, bilansu otwarcia, wniosków urlopowych
-/// i pracy zdalnej. Każda metoda mapuje się 1:1 do receptury z dokumentu skilla <c>pracownik.md</c>:
+/// i pracy zdalnej. Każda metoda mapuje się 1:1 do receptury z dokumentu skilla <c>kadry/KADRY04-nieobecnosci.md</c>:
 /// <list type="bullet">
-/// <item><b>D3</b> — model danych e-ZLA (<c>Nieobecnosc.Zwolnienie: ZwolnienieZUS</c>, <c>Nieobecnosc.ZLA: ZLA</c>); sam import sieciowy → [Ignore];</item>
-/// <item><b>D4</b> — deklaracje Z-3 / Z-3a (workery <c>Z3Worker</c>/<c>Z3aWorker</c> — wymagają naliczonej podstawy);</item>
-/// <item><b>D5</b> — przestój (<c>DodajPrzestojWorker</c>, <c>IndywidualnyProcentWynagrPrzestojowegoWorker</c>);</item>
-/// <item><b>D6</b> — parametry okresu zasiłkowego (<c>Zwolnienie.KontynuacjaOkrZas</c>/<c>PrzedluzenieOkrZas</c>);</item>
-/// <item><b>D8</b> — naliczanie + przeliczanie limitów (<c>NaliczanieLimitow.DodajLimit()</c>, <c>PrzeliczWykorzystaneWorker</c>);</item>
-/// <item><b>D9</b> — podstawy nieobecności (<c>pracownik.PodstawyNieobecności</c> — odczyt; dodawanie → [Ignore]);</item>
-/// <item><b>D10</b> — bilans otwarcia (<c>PracHistoria.ChorobowyBO</c>, <c>PracHistoria.DodatkowyBO</c>);</item>
-/// <item><b>D11</b> — wnioski urlopowe (<c>WniosekUrlopowy</c>, <c>PlanowanaNieobecność</c>);</item>
-/// <item><b>D12</b> — praca zdalna (<c>PracHistoria.PracaZdalna</c>, <c>LokalizacjaPracyZdalnej</c>).</item>
+/// <item><b>KADRY-D3</b> — model danych e-ZLA (<c>Nieobecnosc.Zwolnienie: ZwolnienieZUS</c>, <c>Nieobecnosc.ZLA: ZLA</c>); sam import sieciowy → [Ignore];</item>
+/// <item><b>KADRY-D4</b> — deklaracje Z-3 / Z-3a (workery <c>Z3Worker</c>/<c>Z3aWorker</c> — wymagają naliczonej podstawy);</item>
+/// <item><b>KADRY-D5</b> — przestój (<c>DodajPrzestojWorker</c>, <c>IndywidualnyProcentWynagrPrzestojowegoWorker</c>);</item>
+/// <item><b>KADRY-D6</b> — parametry okresu zasiłkowego (<c>Zwolnienie.KontynuacjaOkrZas</c>/<c>PrzedluzenieOkrZas</c>);</item>
+/// <item><b>KADRY-D8</b> — naliczanie + przeliczanie limitów (<c>NaliczanieLimitow.DodajLimit()</c>, <c>PrzeliczWykorzystaneWorker</c>);</item>
+/// <item><b>KADRY-D9</b> — podstawy nieobecności (<c>pracownik.PodstawyNieobecności</c> — odczyt; dodawanie → [Ignore]);</item>
+/// <item><b>KADRY-D10</b> — bilans otwarcia (<c>PracHistoria.ChorobowyBO</c>, <c>PracHistoria.DodatkowyBO</c>);</item>
+/// <item><b>KADRY-D11</b> — wnioski urlopowe (<c>WniosekUrlopowy</c>, <c>PlanowanaNieobecność</c>);</item>
+/// <item><b>KADRY-D12</b> — praca zdalna (<c>PracHistoria.PracaZdalna</c>, <c>LokalizacjaPracyZdalnej</c>).</item>
 /// </list>
 /// </para>
 /// <para>
@@ -45,13 +45,13 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     // Definicja nieobecności NIEwymagająca naliczonego limitu — bezpieczna dla wniosków bez naliczania limitu.
     private const string DefBezplatny = "Urlop bezpłatny (art 174 kp)";
 
-    // ============================== D3 — Import e-ZLA (model danych) ==============================
+    // ============================== KADRY-D3 — Import e-ZLA (model danych) ==============================
 
     [Test]
-    [Description("D3: dane ZUS zwolnienia leżą w subrowie Nieobecnosc.Zwolnienie typu ZwolnienieZUS, " +
+    [Description("KADRY-D3: dane ZUS zwolnienia leżą w subrowie Nieobecnosc.Zwolnienie typu ZwolnienieZUS, " +
                  "a dane dokumentu ZLA w subrowie Nieobecnosc.ZLA typu ZLA — odwzorowujemy e-ZLA jako " +
                  "NieobecnośćPracownika z definicją zasiłkową i ustawiamy pola subrowów (bez sieci).")]
-    public void D3_ModelDanychEZLA_ZwolnienieIZLAToSubrowyNieobecnosci()
+    public void KADRY_D3_ModelDanychEZLA_ZwolnienieIZLAToSubrowyNieobecnosci()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull("pracownik z Demo istnieje");
@@ -89,28 +89,28 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     [Test]
     [Ignore("Sam import e-ZLA z PUE ZUS jest operacją SIECIOWĄ (uwierzytelnienie + bramka ZUS) — nie da się " +
             "go odtworzyć w teście jednostkowym na bazie Demo. Model danych (subrowy Zwolnienie/ZLA) jest " +
-            "pokryty przez D3_ModelDanychEZLA_ZwolnienieIZLAToSubrowyNieobecnosci.")]
-    [Description("D3: import e-ZLA z PUE — niewykonalny bez sieci.")]
-    public void D3_ImportEZLA_ZPUE_WymagaSieci_Niewykonalne()
+            "pokryty przez KADRY_D3_ModelDanychEZLA_ZwolnienieIZLAToSubrowyNieobecnosci.")]
+    [Description("KADRY-D3: import e-ZLA z PUE — niewykonalny bez sieci.")]
+    public void KADRY_D3_ImportEZLA_ZPUE_WymagaSieci_Niewykonalne()
     {
     }
 
-    // ============================== D4 — Deklaracje Z-3 / Z-3a ==============================
+    // ============================== KADRY-D4 — Deklaracje Z-3 / Z-3a ==============================
 
     [Test]
     [Ignore("Sensowny Z-3 wymaga NALICZONEJ wypłaty/podstawy zasiłku — na czystej Demo z rollbackiem, bez " +
             "pełnego scenariusza naliczenia listy płac, deklaracja powstałaby z pustymi kwotami, a worker " +
             "Z3Worker przyjmuje dane przez Context (KeduContext + Z3ParamContext) i wykonuje logikę KEDU. " +
-            "Testowalny jest jedynie fakt istnienia workera (sprawdzane przez D4_Z3Worker_TypIstnieje).")]
-    [Description("D4: generowanie deklaracji Z-3 przez worker — niewykonalne bez naliczonej podstawy zasiłku.")]
-    public void D4_GenerowanieZ3_PrzezWorker_Niewykonalne()
+            "Testowalny jest jedynie fakt istnienia workera (sprawdzane przez KADRY_D4_Z3Worker_TypIstnieje).")]
+    [Description("KADRY-D4: generowanie deklaracji Z-3 przez worker — niewykonalne bez naliczonej podstawy zasiłku.")]
+    public void KADRY_D4_GenerowanieZ3_PrzezWorker_Niewykonalne()
     {
     }
 
     [Test]
-    [Description("D4: workery deklaracji Z-3 / Z-3a istnieją w publicznym kontrakcie (typy " +
+    [Description("KADRY-D4: workery deklaracji Z-3 / Z-3a istnieją w publicznym kontrakcie (typy " +
                  "Soneta.Deklaracje.ZUS.ZUSZ3.Z3Worker / Z3aWorker) — dokumentujemy ich dostępność.")]
-    public void D4_Z3Worker_TypIstnieje()
+    public void KADRY_D4_Z3Worker_TypIstnieje()
     {
         // Workery są w osobnym assembly Soneta.Deklaracje.ZUS — sprawdzamy obecność typu po pełnej nazwie.
         var z3 = System.Type.GetType("Soneta.Deklaracje.ZUS.ZUSZ3.Z3Worker, Soneta.Deklaracje.ZUS")
@@ -128,13 +128,13 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
             .Select(a => { try { return a.GetType(fullName); } catch { return null; } })
             .FirstOrDefault(t => t != null);
 
-    // ============================== D5 — Przestój ==============================
+    // ============================== KADRY-D5 — Przestój ==============================
 
     [Test]
-    [Description("D5: przestój dodajemy workerem DodajPrzestojWorker — ustawiamy Pracownicy oraz " +
+    [Description("KADRY-D5: przestój dodajemy workerem DodajPrzestojWorker — ustawiamy Pracownicy oraz " +
                  "Pars (DefinicjaStrefy + Okres); worker wykonuje własną transakcję. Strefę przestoju " +
                  "pobieramy dynamicznie ze słownika DefinicjeStref danej bazy.")]
-    public void D5_DodajPrzestoj_PrzezWorker()
+    public void KADRY_D5_DodajPrzestoj_PrzezWorker()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
 
@@ -144,7 +144,7 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
 
         if (defStrefa == null)
         {
-            Assert.Ignore("Brak strefy przestoju w słowniku DefinicjeStref bazy Demo — receptura D5 niewykonalna na tej bazie.");
+            Assert.Ignore("Brak strefy przestoju w słowniku DefinicjeStref bazy Demo — receptura KADRY-D5 niewykonalna na tej bazie.");
             return;
         }
 
@@ -168,10 +168,10 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D5: indywidualny procent wynagrodzenia przestojowego (przestój ekonomiczny) ustawiamy " +
+    [Description("KADRY-D5: indywidualny procent wynagrodzenia przestojowego (przestój ekonomiczny) ustawiamy " +
                  "workerem IndywidualnyProcentWynagrPrzestojowegoWorker — Pars.Data + Pars.Procent (ułamek). " +
                  "Procent jest też trzymany na etacie: PracHistoria.Etat.Postojowe.Procent.")]
-    public void D5_ProcentWynagrPrzestojowego_PrzezWorker_OdkladaSieNaEtacie()
+    public void KADRY_D5_ProcentWynagrPrzestojowego_PrzezWorker_OdkladaSieNaEtacie()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
 
@@ -195,13 +195,13 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
             "procent wynagrodzenia przestojowego został zapisany na etacie jako 50%");
     }
 
-    // ============================== D6 — Parametry okresu zasiłkowego ==============================
+    // ============================== KADRY-D6 — Parametry okresu zasiłkowego ==============================
 
     [Test]
-    [Description("D6: parametry okresu zasiłkowego są bazodanowymi polami subrowa Nieobecnosc.Zwolnienie: " +
+    [Description("KADRY-D6: parametry okresu zasiłkowego są bazodanowymi polami subrowa Nieobecnosc.Zwolnienie: " +
                  "KontynuacjaOkrZas (enum), PrzedluzenieOkrZas (bool), PrzedluzeniaData (Date) oraz " +
                  "flaga PonownieUstalPodstawe ustawiana metodą SetPonownieUstalPodstawe(bool).")]
-    public void D6_ParametryOkresuZasilkowego_ZapisNaSubrowieZwolnienie()
+    public void KADRY_D6_ParametryOkresuZasilkowego_ZapisNaSubrowieZwolnienie()
     {
         var pracownik = Pracownik(Pracownik_.Strzelecki);
         var defChor = Kalend.DefNieobecnosci.WgNazwy[DefZwolnienieChor] as DefinicjaNieobecnosci;
@@ -235,19 +235,19 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
         zapisana.Zwolnienie.PonownieUstalPodstawe.Should().BeTrue("flaga ponownego ustalenia podstawy ustawiona");
     }
 
-    // ============================== D8 — Naliczanie i przeliczanie limitów ==============================
+    // ============================== KADRY-D8 — Naliczanie i przeliczanie limitów ==============================
 
     [Test]
-    [Description("D8: limit naliczamy NaliczanieLimitow.DodajLimit(), a liczbę wykorzystanych dni " +
+    [Description("KADRY-D8: limit naliczamy NaliczanieLimitow.DodajLimit(), a liczbę wykorzystanych dni " +
                  "przeliczamy workerem LimitNieobecnosci.Pracownicy.PrzeliczWykorzystaneWorker " +
                  "(Pars.Definicja + Pars.Okres). Po przeliczeniu arytmetyka limitu pozostaje spójna.")]
-    public void D8_NaliczenieIPrzeliczenieLimitu()
+    public void KADRY_D8_NaliczenieIPrzeliczenieLimitu()
     {
         var defLimit = Kalend.DefinicjeLimitow.WgNazwy[DefUrlopWyp] as DefinicjaLimitu;
         defLimit.Should().NotBeNull($"definicja limitu '{DefUrlopWyp}' istnieje w bazie Demo");
         var rok = FromTo.Year(new Date(2026, 1, 1));
 
-        // 1) Naliczenie limitu (jak D7).
+        // 1) Naliczenie limitu (jak KADRY-D7).
         InTransaction(() =>
         {
             var pracownikE = Pracownik(Pracownik_.Andrzejewski);
@@ -291,13 +291,13 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
         lim.Wykorzystane.Should().BeGreaterThanOrEqualTo(0, "wykorzystane nie jest ujemne");
     }
 
-    // ============================== D9 — Podstawy nieobecności (odczyt) ==============================
+    // ============================== KADRY-D9 — Podstawy nieobecności (odczyt) ==============================
 
     [Test]
-    [Description("D9 (odczyt): podstawy nieobecności ZUS / urlopu leżą w kolekcji child " +
+    [Description("KADRY-D9 (odczyt): podstawy nieobecności ZUS / urlopu leżą w kolekcji child " +
                  "pracownik.PodstawyNieobecności (typ Soneta.Place.PodstawaNieobecnosci); filtrujemy " +
                  "serwerowo po polu Typ (Chorobowa / Wypoczynkowy). Na czystej Demo kolekcja może być pusta.")]
-    public void D9_OdczytPodstawNieobecnosci_FiltrPoTyp()
+    public void KADRY_D9_OdczytPodstawNieobecnosci_FiltrPoTyp()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
 
@@ -319,19 +319,19 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     [Ignore("PodstawaNieobecnosci NIE ma publicznego ctora (jedynie (RowCreator) i (Pracownik, " +
             "TypyPodstawNieobecnosci) — niepubliczne). Rekordy podstaw powstają z NALICZENIA WYPŁATY, " +
             "więc ręczne dodanie podstawy nie jest możliwe przez publiczny kontrakt; testowalny jest " +
-            "wyłącznie odczyt (D9_OdczytPodstawNieobecnosci_FiltrPoTyp).")]
-    [Description("D9: ręczne dodanie podstawy nieobecności — niewykonalne (brak publicznego ctora).")]
-    public void D9_DodanieRecznePodstawy_Niewykonalne()
+            "wyłącznie odczyt (KADRY_D9_OdczytPodstawNieobecnosci_FiltrPoTyp).")]
+    [Description("KADRY-D9: ręczne dodanie podstawy nieobecności — niewykonalne (brak publicznego ctora).")]
+    public void KADRY_D9_DodanieRecznePodstawy_Niewykonalne()
     {
     }
 
-    // ============================== D10 — Bilans otwarcia ==============================
+    // ============================== KADRY-D10 — Bilans otwarcia ==============================
 
     [Test]
-    [Description("D10: bilans otwarcia chorobowy leży w subrowie zapisu PracHistoria.ChorobowyBO " +
+    [Description("KADRY-D10: bilans otwarcia chorobowy leży w subrowie zapisu PracHistoria.ChorobowyBO " +
                  "(okres zasiłkowy, dni). Edytujemy pola subrowa na właściwym zapisie historycznym " +
                  "'na dzień' (pracownik.Historia[data]).")]
-    public void D10_BilansOtwarcia_ChorobowyBO()
+    public void KADRY_D10_BilansOtwarcia_ChorobowyBO()
     {
         var data = new Date(2026, 1, 1);
 
@@ -360,21 +360,21 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
             "zapisie historycznym z Demo (pole 'tylko do odczytu'). BO urlopowy jest zapisywalny tylko na " +
             "zapisie historycznym oznaczonym jako bilans otwarcia / start zatrudnienia — czego nie da się " +
             "odtworzyć na gotowych pracownikach Demo bez ingerencji w historię zatrudnienia. Pole ChorobowyBO " +
-            "jest pokryte przez D10_BilansOtwarcia_ChorobowyBO.")]
-    [Description("D10: bilans otwarcia urlopowy (DodatkowyBO) — niezapisywalny na zwykłym zapisie historii Demo.")]
-    public void D10_BilansOtwarcia_DodatkowyBO_ReadOnlyNaHistoriiDemo()
+            "jest pokryte przez KADRY_D10_BilansOtwarcia_ChorobowyBO.")]
+    [Description("KADRY-D10: bilans otwarcia urlopowy (DodatkowyBO) — niezapisywalny na zwykłym zapisie historii Demo.")]
+    public void KADRY_D10_BilansOtwarcia_DodatkowyBO_ReadOnlyNaHistoriiDemo()
     {
     }
 
-    // ============================== D11 — Wnioski o urlop ==============================
+    // ============================== KADRY-D11 — Wnioski o urlop ==============================
 
     [Test]
-    [Description("D11: wniosek urlopowy tworzymy ctorem WniosekUrlopowy(pracownik, definicja) + AddRow; " +
+    [Description("KADRY-D11: wniosek urlopowy tworzymy ctorem WniosekUrlopowy(pracownik, definicja) + AddRow; " +
                  "ustawiamy Okres, Data, Stan (StanWnioskuUrlopowego). Wniosek trafia do kolekcji " +
                  "pracownik.WnioskiUrlopowe; akceptacja to zmiana Stan na Zaakceptowany + DataDecyzji. " +
                  "Używamy definicji NIEwymagającej limitu — akceptacja wniosku urlopu wypoczynkowego " +
                  "wyzwoliłaby przeliczenie limitu i LimitNotFoundException bez wcześniejszego naliczenia limitu.")]
-    public void D11_WniosekUrlopowy_RejestracjaIAkceptacja()
+    public void KADRY_D11_WniosekUrlopowy_RejestracjaIAkceptacja()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
         var defUrlop = Kalend.DefNieobecnosci.WgNazwy[DefBezplatny] as DefinicjaNieobecnosci;
@@ -411,11 +411,11 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D11: planowana nieobecność (osobny model planu urlopów) — ctor PlanowanaNieobecność(pracownik) " +
+    [Description("KADRY-D11: planowana nieobecność (osobny model planu urlopów) — ctor PlanowanaNieobecność(pracownik) " +
                  "+ AddRow; Definicja, Okres. Pole Stan jest READ-ONLY (StanPlanowanejNieobecności) — zmieniamy " +
                  "je metodami przejść stanu (StanWprowadzona/StanZatwierdzona/StanAnulowana/StanOczekująca). " +
                  "Trafia do kolekcji pracownik.PlanowaneNieobecności (FromToSubTable).")]
-    public void D11_PlanowanaNieobecnosc_Rejestracja()
+    public void KADRY_D11_PlanowanaNieobecnosc_Rejestracja()
     {
         var pracownik = Pracownik(Pracownik_.Strzelecki);
         // Definicja planowanej nieobecności MUSI mieć zaznaczone pole 'Planowana' — pobieramy dynamicznie.
@@ -447,9 +447,9 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D11: wniosek o delegację jest subrowem wniosku urlopowego (WniosekUrlopowy.Delegacja " +
+    [Description("KADRY-D11: wniosek o delegację jest subrowem wniosku urlopowego (WniosekUrlopowy.Delegacja " +
                  "typu WniosekODelegację) — ustawiamy pola delegacji na tym subrowie.")]
-    public void D11_WniosekODelegacje_JestSubrowemWniosku()
+    public void KADRY_D11_WniosekODelegacje_JestSubrowemWniosku()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         var defUrlop = Kalend.DefNieobecnosci.WgNazwy[DefUrlopWyp] as DefinicjaNieobecnosci;
@@ -471,13 +471,13 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
         zapisany.Delegacja.WnioskowanaZaliczka.Should().Be(new Currency(500m));
     }
 
-    // ============================== D12 — Praca zdalna ==============================
+    // ============================== KADRY-D12 — Praca zdalna ==============================
 
     [Test]
-    [Description("D12: parametry pracy zdalnej (model pracy, oświadczenie o warunkach) leżą na " +
+    [Description("KADRY-D12: parametry pracy zdalnej (model pracy, oświadczenie o warunkach) leżą na " +
                  "historycznym zapisie etatu: PracHistoria.PracaZdalna (typ PracZdalna). Edytujemy je " +
                  "na właściwym zapisie 'na dzień' (pracownik.Historia[data]).")]
-    public void D12_ModelPracyZdalnej_NaHistoriiEtatu()
+    public void KADRY_D12_ModelPracyZdalnej_NaHistoriiEtatu()
     {
         var data = new Date(2026, 6, 1);
 
@@ -497,10 +497,10 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D12: lokalizacja pracy zdalnej ma publiczny ctor LokalizacjaPracyZdalnej(pracownik) — " +
+    [Description("KADRY-D12: lokalizacja pracy zdalnej ma publiczny ctor LokalizacjaPracyZdalnej(pracownik) — " +
                  "tworzymy ją + AddRow i ustawiamy adres (subrow Adres). Trafia do kolekcji " +
                  "pracownik.LokalizacjePracyZdalnej.")]
-    public void D12_LokalizacjaPracyZdalnej_PublicznyCtor()
+    public void KADRY_D12_LokalizacjaPracyZdalnej_PublicznyCtor()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
 
@@ -519,11 +519,11 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     }
 
     [Test]
-    [Description("D12 (odczyt): ewidencję pracy zdalnej okazjonalnej prezentuje worker ODCZYTOWY " +
+    [Description("KADRY-D12 (odczyt): ewidencję pracy zdalnej okazjonalnej prezentuje worker ODCZYTOWY " +
                  "Soneta.Kadry.Pracownik.PracaZdalnaWorker (property bez akcji modyfikującej): " +
                  "DniPracyZdalnejRazem, LimitPracaZdalnaOkazjonalna, PozostaloPracaZdalnaOkazjonalna. " +
                  "Inicjujemy Pracownik + Okres i odczytujemy spójne, nieujemne wartości.")]
-    public void D12_PracaZdalnaWorker_OdczytEwidencji()
+    public void KADRY_D12_PracaZdalnaWorker_OdczytEwidencji()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
 
@@ -544,10 +544,10 @@ public class RozdzialDrest_NieobecnosciTest : PracownikTestBase
     [Ignore("WniosekPracyZdalnej ma NIEPUBLICZNE ctory — w teście jednostkowym nie utworzysz go przez new; " +
             "zlecenie pracy zdalnej idzie przez worker GrupoweZleceniePracyZdalnejWorker (czynność Net/UI " +
             "wymagająca pełnego Contextu Pulpitu). Testowalne wprost: ModelPracy/OswiadczenieWarunki na " +
-            "PracHistoria.PracaZdalna (D12_ModelPracyZdalnej_NaHistoriiEtatu) oraz LokalizacjaPracyZdalnej " +
-            "(D12_LokalizacjaPracyZdalnej_PublicznyCtor).")]
-    [Description("D12: rejestracja wniosku o pracę zdalną — niewykonalna przez new (ctory niepubliczne).")]
-    public void D12_WniosekPracyZdalnej_NiepublicznyCtor_Niewykonalne()
+            "PracHistoria.PracaZdalna (KADRY_D12_ModelPracyZdalnej_NaHistoriiEtatu) oraz LokalizacjaPracyZdalnej " +
+            "(KADRY_D12_LokalizacjaPracyZdalnej_PublicznyCtor).")]
+    [Description("KADRY-D12: rejestracja wniosku o pracę zdalną — niewykonalna przez new (ctory niepubliczne).")]
+    public void KADRY_D12_WniosekPracyZdalnej_NiepublicznyCtor_Niewykonalne()
     {
     }
 }

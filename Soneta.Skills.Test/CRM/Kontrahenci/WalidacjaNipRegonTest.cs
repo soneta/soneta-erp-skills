@@ -5,10 +5,10 @@ using Soneta.Core;
 namespace Soneta.Skills.Test.CRM.Kontrahenci;
 
 /// <summary>
-/// W2 — Walidacja NIP / REGON / EU VAT przed zapisem.
+/// CRM-W2 — Walidacja NIP / REGON / EU VAT przed zapisem.
 /// Testy weryfikują publiczne, statyczne walidatory z <c>Soneta.Core</c>
 /// (<see cref="Nip"/>, <see cref="Regon"/>, <see cref="EuVat"/>) oraz normalizację numerów.
-/// Walidatory sprawdzają format i sumę kontrolną — to NIE jest weryfikacja w MF/VIES (patrz W15).
+/// Walidatory sprawdzają format i sumę kontrolną — to NIE jest weryfikacja w MF/VIES (patrz CRM-W15).
 /// </summary>
 [TestFixture]
 public class WalidacjaNipRegonTest : KontrahentTestBase

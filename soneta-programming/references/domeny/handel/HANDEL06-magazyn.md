@@ -30,6 +30,28 @@
 > Dostęp do modułu: `var mag = session.GetMagazyny();` → `mag.Zasoby`, `mag.Obroty`,
 > `mag.GrupyDostaw`, `mag.OkresyMag`, `mag.Magazyny`.
 
+> **Model magazynu: zasób (partia) → obrót (przychód + rozchód) → marża.**
+> - **Przyjęcie tworzy ZASOBY.** Towar przyjmowany na magazyn (PW/PZ/FZ) trafia na stan jako
+>   **zasoby magazynowe** — i to z nich wyliczany jest **stan magazynu** (suma ilości zasobów danego
+>   towaru/magazynu/okresu). Czyste przyjęcie **nie tworzy obrotu**, tylko zasoby (por. HANDEL-W31/W32).
+> - **Każdy zasób = jedna PARTIA towaru** opisana przez: **datę przychodu**, **towar**, **magazyn**,
+>   **ilość** i **wartość**. Bezpośrednio na `Zasob`: `Towar`, `Magazyn`, `Ilosc`; datę przychodu
+>   i wartość niesie subrow **`Zasob.Partia` (`PartiaTowaru`)** — `Partia.Data` i `Partia.Wartosc`
+>   (rekord partii: `Partia.PartiaTowaru: GrupaDostaw`). Partia przychodowa ma swoją wartość (koszt nabycia/wytworzenia).
+> - **Rozchód zamienia zasób na OBRÓT.** Przy realizacji dokumentu rozchodowego (FV/WZ/RW) **cały
+>   zasób albo jego część** jest „zdejmowany" ze stanu i przetwarzany na **obrót magazynowy**
+>   (`Obrot`). Algorytm magazynu (FIFO/LIFO/WgDostawy/WgCechy) decyduje, z których zasobów schodzi towar.
+> - **Obrót łączy DWIE partie tego samego towaru:** **partię przychodową** (`Obrot.Przychod` — źródło,
+>   z którego zszedł towar) i **partię rozchodową** (`Obrot.Rozchod` — strona wydania). Obie dotyczą
+>   tego samego towaru, ale **różnią się wartością**: przychodowa niesie **koszt**, rozchodowa —
+>   **wartość sprzedaży/wydania**. Różnica wartości tych partii to **marża** obrotu — stąd marża na
+>   dokumentach rozchodowych, których obroty te należą (raporty marży agregują `Obrot.Rozchod.Wartosc`
+>   − `Obrot.Przychod.Wartosc`).
+>
+> Konsekwencja praktyczna: stronę/partię **przychodową** czytasz z **zasobu** (przyjęcie) albo ze
+> strony `Obrot.Przychod` (po rozchodzie); marżę i koszt własny — wyłącznie z **obrotu** (rozchód),
+> bo dopiero rozchód zestawia obie wartości.
+
 ---
 
 ### HANDEL-W31 — Przeglądanie zasobów utworzonych przez dokument przychodowy (`dok.Zasoby`)
@@ -87,7 +109,7 @@ foreach (Zasob z in dok.Zasoby)
 
 | Wariant | Property | Co zwraca |
 |---|---|---|
-| Obroty związane bezpośrednio z dokumentem | `dok.Obroty` (`SubTable`) | dla przychodu: po stronie przychodowej; dla rozchodu: po stronie rozchodowej |
+| Obroty związane bezpośrednio z dokumentem | `dok.Obroty` (`SubTable`) | **tylko ruchy ROZCHODOWE**: dla rozchodu (FV/WZ/RW) zwraca obroty; dla **czystego przychodu (PW) jest puste** — przychód księguje **zasób**, nie obrót (patrz pułapki) |
 | Wszystkie obroty (z dok. zależnymi, bez storna zasobu) | `dok.ObrotyWszystkie` (`ListWithView`) | obroty wszystkich powiązanych dok. magazynowych |
 | Obroty wszystkich pozycji | `dok.ObrotyWszystkiePozycji` (`ListWithView`) | po pozycjach (z pozycjami zależnymi) |
 | Z korektami, wg partii pierwotnej | `dok.ObrotyWszystkieWgPartiiPierwotnej` (`ListWithView`) | uwzględnia dok. korygujące |
@@ -119,6 +141,15 @@ foreach (Obrot o in dok.ObrotyWszystkie.Cast<Obrot>())
 ```
 
 **Pułapki:**
+- **Czysty przychód (PW) NIE generuje obrotu — generuje ZASÓB.** Obrót magazynowy powstaje dopiero przy
+  **rozchodzie** (FV/WZ/RW), który zdejmuje towar z partii (stąd na obrocie rozchodowym wypełniona jest
+  strona `Rozchod` i — jako źródło — `Przychod`). Dla samego przyjęcia `dok.Obroty` jest **puste**.
+  Stronę i partię **przychodową** odczytuj więc z **przychodowego zasobu**, nie z obrotu:
+  `dok.Zasoby` → `Zasob` z `Kierunek == KierunekPartii.Przychód`, `Zasob.Ilosc` (cała przyjęta ilość)
+  oraz `Zasob.PartiaTowaru: GrupaDostaw` (partia). Dla towaru **bez śledzenia partii** `PartiaTowaru`
+  jest `null`; dla towaru partiowanego wskazuje konkretną `GrupaDostaw` utworzoną przez przyjęcie.
+  (Por. testy `Rozdzial06_MagazynTest.HANDEL_W31_PrzyjecieKsiegujeZasobPrzychodowy` oraz
+  `HANDEL_W32_ZasobPrzychodowyWskazujePartie`.)
 - `dok.Obroty` automatycznie dobiera stronę (przychodowa vs rozchodowa) na podstawie
   kierunku magazynowego dokumentu — nie filtruj jej ręcznie po kierunku.
 - `ObrotyWszystkie`/`ObrotyWszystkiePozycji`/`ObrotyWszystkieWgPartiiPierwotnej` zwracają
@@ -229,6 +260,12 @@ foreach (GrupaDostaw g in mag.GrupyDostaw.WgData[Date.Today]) { /* ... */ }
   niezdefiniowanej cechy rzuca wyjątek (patrz `features.md`).
 - `Numer` partii bywa **nadawany automatycznie** (autonumerowanie wg karty towaru lub wg
   cechy) — nie zakładaj, że zawsze ustawisz go ręcznie.
+- Gdy towar **nie jest partiowany**, `GrupyDostaw` go nie zawiera — partii szukaj nie przez
+  `GrupaDostaw`, lecz przez przychodowy **zasób** (cecha pozycji + `Zasob.Kierunek == Przychód`,
+  HANDEL-W34/HANDEL-W37). Filtr zasobów po polu bazodanowym rób serwerowo: na podzbiorze
+  `Magazyny.Zasoby.WgTowar[towar, okres, magazyn]` zawężaj przez
+  `.GetFilteredSubTable<Zasob>(z => z.Kierunek == KierunekPartii.Przychód)` — serwer liczy
+  warunek, nie ładujesz całej tabeli `Zasoby` (zweryfikowane HANDEL-W34).
 
 ---
 
@@ -370,8 +407,29 @@ session.Save();
 ### HANDEL-W37 — Dokument przyjęcia (PW/PZ) z numerem serii — zapis numeru serii jako cecha
 
 **Cel:** zarejestrować przyjęcie towaru i zapisać **numer serii / partii**. Jeśli nie ma
-dedykowanego pola na serię, numer przenosimy jako **cechę** (`Features`) pozycji/dokumentu,
-skąd platforma przenosi go na partię (`GrupaDostaw`) i obrót.
+dedykowanego pola na serię, numer przenosimy jako **cechę** (`Features`) pozycji/dokumentu.
+Dla towaru ze **śledzeniem partii** platforma przenosi cechę na partię (`GrupaDostaw`) i obrót;
+dla towaru **bez** śledzenia partii (np. `BIKINI` w Demo — `GrupyDostaw` puste) cecha pozostaje
+na pozycji i to ona — wraz z przychodowym zasobem (`Zasob.Kierunek == Przychód`) — reprezentuje
+serię/partię (zweryfikowane HANDEL-W34/HANDEL-W37).
+
+**Definicja cechy to dane KONFIGURACYJNE:** zanim zapiszesz numer serii na pozycji, w sesji
+**konfiguracyjnej** musi istnieć definicja cechy dla tabeli pozycji `PozycjeDokHan`:
+
+```csharp
+// sesja konfiguracyjna (idempotentnie — tylko gdy brak):
+if (cfg.GetBusiness().FeatureDefs.ByName["PozycjeDokHan", "NumerSerii"] == null)
+    cfg.AddRow(new FeatureDefinition("PozycjeDokHan") {   // Soneta.Business
+        Name = "NumerSerii", TypeNumber = FeatureTypeNumber.String });
+cfg.Save();
+// po utworzeniu definicji ODŚWIEŻ sesję operacyjną (świeża sesja wczyta konfigurację) — inaczej
+// cecha nie będzie widoczna na pozycji.
+```
+
+Istnienie definicji sprawdzasz przez `session.GetBusiness().FeatureDefs.ByName["PozycjeDokHan",
+"NumerSerii"]` (`using Soneta.Business.Db;` — `GetBusiness`/`FeatureDefs`;
+`using Soneta.Business;` — `FeatureDefinition`/`FeatureTypeNumber`). Odczyt wartości na pozycji:
+`(string)poz.Features["NumerSerii"]`.
 
 **Warianty:**
 
@@ -418,11 +476,15 @@ GrupaDostaw partia = mag.GrupyDostaw.WgTowar[towar].Cast<GrupaDostaw>()
 ```
 
 **Pułapki:**
-- Cecha musi być **wcześniej zdefiniowana** (`FeatureSetDefinition`) i — by przenosiła się
-  na partię — odpowiednio skonfigurowana w module magazynowym. Odwołanie do niezdefiniowanej
-  cechy rzuca wyjątek.
-- Partia powstaje dopiero **po `Session.Save()`** przyjęcia — przed zapisem
-  `mag.GrupyDostaw` jej nie zawiera.
+- Cecha musi być **wcześniej zdefiniowana** (`FeatureDefinition` na tabeli `PozycjeDokHan`,
+  dane konfiguracyjne). Odwołanie do niezdefiniowanej cechy rzuca wyjątek. Po utworzeniu
+  definicji odśwież sesję operacyjną — świeża sesja wczyta konfigurację.
+- **Przeniesienie cechy na `GrupaDostaw`/obrót następuje tylko dla towaru ze śledzeniem partii.**
+  Dla towaru bez śledzenia (`BIKINI` w Demo) `GrupyDostaw` pozostaje puste — numer serii żyje
+  wyłącznie jako cecha pozycji, a stronę przychodową reprezentuje zasób `Zasob.Kierunek ==
+  Przychód` (zweryfikowane HANDEL-W34). Nie zakładaj, że po `Save` zawsze powstanie `GrupaDostaw`.
+- Partia (dla towaru partiowanego) powstaje dopiero **po `Session.Save()`** przyjęcia — przed
+  zapisem `mag.GrupyDostaw` jej nie zawiera.
 - Gdy magazyn ma autonumerowanie `WgCechy`, `GrupaDostaw.Numer` jest **wyliczany z cechy** —
   nie ustawiaj go ręcznie sprzecznie z cechą.
 - Filtr partii po wartości cechy rób **po materializacji** (jak w snippetcie) — wartości

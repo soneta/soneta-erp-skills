@@ -12,7 +12,7 @@ using Soneta.Types;
 namespace Soneta.Skills.Test.Handel.DokumentyHandlowe;
 
 /// <summary>
-/// Rozdział 9 skilla „dokument-handlowy” — Korekty i dokumenty specjalne (W48–W52).
+/// Rozdział 9 skilla „dokument-handlowy” — Korekty i dokumenty specjalne (HANDEL-W48–HANDEL-W52).
 /// <para>
 /// Rozdział obejmuje korekty (przez serwis relacji <see cref="IRelacjeService"/>.<c>NowaKorekta</c>),
 /// inwentaryzację (INW) oraz przesunięcie międzymagazynowe (MM). Wszystkie testy operują
@@ -64,42 +64,62 @@ public class Rozdzial09_KorektyTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W48 — Korekta ilościowa / ceny przez IRelacjeService.NowaKorekta
+    // HANDEL-W48 — Korekta ilościowa / ceny przez IRelacjeService.NowaKorekta
     // ===================================================================================
 
     [Test]
-    [Description("W48: do zatwierdzonej faktury sprzedaży (FV) tworzy dokument korygujący przez " +
+    [Description("HANDEL-W48: do zatwierdzonej faktury sprzedaży (FV) tworzy dokument korygujący przez " +
                  "IRelacjeService.NowaKorekta; sprawdza powstanie korekty oraz powiązanie " +
                  "korekta.DokumentKorygowany == oryginał i obecność oryginału w fv.DokumentyKorygujące.")]
-    public void W48_NowaKorekta_DoZatwierdzonejFv_TworzyDokumentKorygujacy()
+    public void HANDEL_W48_NowaKorekta_DoZatwierdzonejFv_TworzyDokumentKorygujacy()
     {
-        // Mechanika NowaKorekta jest udokumentowana (rozdz. 9), lecz scenariusz wymaga ZATWIERDZONEJ
-        // faktury sprzedaży, a zatwierdzenie FV w testowej bazie Demo rzuca NRE w ewidencji VAT.
-        // Korekta nie da się przeprowadzić end-to-end w teście jednostkowym.
-        Assert.Ignore("korekta wymaga zatwierdzonej FV; zatwierdzenie FV w testowej bazie Demo rzuca NRE " +
-                      "w ewidencji VAT — niewykonalne w teście jednostkowym");
+        // Zatwierdzona FV (dokument korygowany) — helper zapisuje ją z pozycją przed zatwierdzeniem,
+        // dzięki czemu KrajPodatkuVat jest przeliczony i ewidencja VAT powstaje bez NRE.
+        var fvGuid = UtworzZatwierdzonaFakture();
+
+        var fv = Get<DokumentHandlowy>(fvGuid);
+        DokumentHandlowy[] korekty = null;
+        InTransaction(() => korekty = Relacje.NowaKorekta(new[] { fv }));
+        var korektaGuid = korekty[0].Guid;
+        SaveDispose();
+
+        korekty.Should().NotBeNull();
+        var korekta = Get<DokumentHandlowy>(korektaGuid);
+        korekta.Should().NotBeNull("powstał dokument korygujący");
+        korekta.DokumentKorygowany.Should().NotBeNull("korekta wskazuje dokument korygowany (kalkulowane)");
+        korekta.DokumentKorygowany.Guid.Should().Be(fvGuid, "korekta wskazuje oryginalną fakturę");
+
+        var fvOdczyt = Get<DokumentHandlowy>(fvGuid);
+        fvOdczyt.DokumentyKorygujące.Should().Contain(d => d.Guid == korektaGuid,
+            "oryginał wskazuje swój dokument korygujący (kalkulowane DokumentyKorygujące)");
     }
 
     [Test]
-    [Description("W48 (pułapka): NowaKorekta zwraca tablicę DokumentHandlowy[]; dla jednego dokumentu " +
+    [Description("HANDEL-W48 (pułapka): NowaKorekta zwraca tablicę DokumentHandlowy[]; dla jednego dokumentu " +
                  "wynik ma dokładnie jeden element (relacja indywidualna).")]
-    public void W48_NowaKorekta_ZwracaTabliceZJednymElementem()
+    public void HANDEL_W48_NowaKorekta_ZwracaTabliceZJednymElementem()
     {
-        // Jak wyżej: NowaKorekta wymaga ZATWIERDZONEJ FV, a zatwierdzenie FV w testowej bazie Demo
-        // rzuca NRE w ewidencji VAT — wywołanie relacji jest tu niewykonalne.
-        Assert.Ignore("korekta wymaga zatwierdzonej FV; zatwierdzenie FV w testowej bazie Demo rzuca NRE " +
-                      "w ewidencji VAT — niewykonalne w teście jednostkowym");
+        var fvGuid = UtworzZatwierdzonaFakture();
+
+        var fv = Get<DokumentHandlowy>(fvGuid);
+        DokumentHandlowy[] korekty = null;
+        InTransaction(() => korekty = Relacje.NowaKorekta(new[] { fv }));
+        SaveDispose();
+
+        // Relacja indywidualna: jeden dokument korygowany → tablica z dokładnie jednym elementem.
+        korekty.Should().NotBeNull();
+        korekty.Should().HaveCount(1, "NowaKorekta dla jednego dokumentu zwraca jednoelementową tablicę");
     }
 
     // ===================================================================================
-    // W50 — Dokument inwentaryzacji (INW)
+    // HANDEL-W50 — Dokument inwentaryzacji (INW)
     // ===================================================================================
 
     [Test]
-    [Description("W50: tworzy dokument inwentaryzacji (INW) ze wskazanym magazynem i pozycją spisu; " +
+    [Description("HANDEL-W50: tworzy dokument inwentaryzacji (INW) ze wskazanym magazynem i pozycją spisu; " +
                  "sprawdza, że dokument powstał z poprawną definicją i magazynem. Wyliczanie różnic " +
                  "(nadwyżka/strata) jest efektem zatwierdzenia + Save i nie jest tu asercjonowane.")]
-    public void W50_Inwentaryzacja_TworzyDokumentZeWskazanymMagazynem()
+    public void HANDEL_W50_Inwentaryzacja_TworzyDokumentZeWskazanymMagazynem()
     {
         // Tworzenie INW w JEDNEJ transakcji edycyjnej — bez wcześniejszego Session.Save()
         // (poprzedni Save zamykał okno edycji bieżącej sesji → AccessWriteDenied przy edycji nowego INW, §8).
@@ -131,34 +151,46 @@ public class Rozdzial09_KorektyTest : DokumentHandlowyTestBase
     }
 
     // ===================================================================================
-    // W52 — Przesunięcie międzymagazynowe (MM)
+    // HANDEL-W52 — Przesunięcie międzymagazynowe (MM)
     // ===================================================================================
 
     [Test]
-    [Description("W52: tworzy dokument przesunięcia międzymagazynowego (MM) z MagazynZ (źródło) i MagazynDo " +
+    [Description("HANDEL-W52: tworzy dokument przesunięcia międzymagazynowego (MM) z MagazynZ (źródło) i MagazynDo " +
                  "(cel). MagazynDo to pole kalkulowane delegujące do dokumentu podrzędnego — ustawiamy je " +
                  "po Definicji, przed dodaniem pozycji. Wymaga DRUGIEGO magazynu — gdy w Demo jest tylko „F”, " +
                  "test jest pomijany (Assert.Ignore).")]
-    public void W52_PrzesuniecieMM_TworzyDokumentZMagazynamiZrodloowymIDocelowym()
+    public void HANDEL_W52_PrzesuniecieMM_TworzyDokumentZMagazynamiZrodloowymIDocelowym()
     {
         var magazynZrodlo = Magazyn(Magazyn_.Firma); // „F” — jedyny pewny magazyn w Demo
 
-        // MM wymaga DWÓCH różnych magazynów. Szukamy drugiego (innego niż „F”) na publicznym kontrakcie.
-        var magazynCel = Magazyny.Magazyny
-            .Cast<Magazyn>()
-            .FirstOrDefault(m => m != magazynZrodlo);
-
-        if (magazynCel == null)
+        // MM wymaga DWÓCH różnych magazynów. Magazyn to dane KONFIGURACYJNE (słownikowe) — jeśli Demo ma
+        // tylko „F”, tworzymy drugi magazyn w sesji konfiguracyjnej (Oddział kopiujemy z „F”), a potem
+        // pobieramy go w sesji operacyjnej do MM.
+        const string symbolCel = "F2";
+        if (Magazyny.Magazyny.Cast<Magazyn>().All(m => m.Symbol != symbolCel))
         {
-            // W bazie Demo dostępny jest tylko magazyn „F” — bez drugiego magazynu nie da się
-            // utworzyć poprawnego MM (MagazynZ i MagazynDo muszą być różne). SKIP wg pułapek W52.
-            Assert.Ignore("Baza Demo ma tylko jeden magazyn („F”) — MM wymaga drugiego, różnego magazynu. " +
-                          "Test przesunięcia międzymagazynowego pominięty.");
-            return;
+            var oddzialF = magazynZrodlo.Oddzial;   // oddział istniejącego magazynu „F”
+            InConfigTransaction(() =>
+            {
+                var m = AddConfig(new Magazyn());
+                m.Symbol = symbolCel;
+                m.Nazwa = "Magazyn drugi (test MM)";
+                if (oddzialF != null)
+                    m.Oddzial = GetConfig(oddzialF);   // przepnij oddział do sesji konfiguracyjnej
+            });
+            SaveDisposeConfig();
+            // Odśwież sesję operacyjną, by zobaczyła nowy magazyn z konfiguracji (świeża sesja wczyta config).
+            SaveDispose();
         }
 
-        // Magazyn źródłowy musi mieć ZAPISANY zasób przesuwanego towaru (Demo: blokada stanu ujemnego).
-        WprowadzNaStan(Towar_.Bikini, 50);
+        // Magazyn źródłowy „F” musi mieć ZAPISANY zasób przesuwanego towaru (Demo: blokada stanu ujemnego).
+        // PrzyjmijNaStan robi SaveDispose → po nim pracujemy na ŚWIEŻEJ sesji (magazyny pobieramy poniżej).
+        PrzyjmijNaStan(Towar_.Bikini, 50);
+
+        // Magazyny pobieramy z BIEŻĄCEJ (świeżej) sesji — różne MagazynZ/MagazynDo.
+        var magZ = Magazyn(Magazyn_.Firma);
+        var magDo = Magazyny.Magazyny.Cast<Magazyn>().FirstOrDefault(m => m.Symbol == symbolCel);
+        magDo.Should().NotBeNull("drugi magazyn („F2”) istnieje po utworzeniu w konfiguracji");
 
         DokumentHandlowy mm = null;
         try
@@ -169,15 +201,13 @@ public class Rozdzial09_KorektyTest : DokumentHandlowyTestBase
                 Session.AddRow(mm);
                 mm.Definicja = Definicja(Definicje.PrzesuniecieMM); // MM — definicja PIERWSZA
 
-                // MagazynDo jest kalkulowane (deleguje do dokumentu podrzędnego); ustawiamy je
-                // PO definicji i PRZED pozycjami (IsReadOnlyMagazynDo blokuje zmianę przy istniejących pozycjach).
-                mm.MagazynZ = magazynZrodlo;
-                mm.MagazynDo = magazynCel; // musi być różny od MagazynZ
+                // Magazyn źródłowy (rozchód) to standardowe pole dokumentu Magazyn (MagazynZ bywa
+                // read-only poza ZamówieniemWewnętrznym). MagazynDo deleguje do dokumentu podrzędnego
+                // (PrzesunięcieDo) — ustawiamy je PO definicji i PRZED pozycjami.
+                mm.Magazyn = magZ;
+                mm.MagazynDo = magDo; // magazyn docelowy (różny od źródłowego)
 
-                var poz = new PozycjaDokHandlowego(mm);
-                Session.AddRow(poz);
-                poz.Towar = Towar(Towar_.Bikini); // Towar PIERWSZY (inicjuje jednostkę)
-                poz.Ilosc = new Quantity(5, poz.Ilosc.Symbol);
+                DodajPozycje(mm, Towar(Towar_.Bikini), ilosc: 5);
             });
         }
         catch (NotImplementedException ex)
@@ -189,8 +219,9 @@ public class Rozdzial09_KorektyTest : DokumentHandlowyTestBase
         // Asercje ograniczone do utworzenia dokumentu MM z poprawnymi magazynami.
         mm.Should().NotBeNull();
         mm!.Definicja.Symbol.Should().Be(Definicje.PrzesuniecieMM);
-        mm.MagazynZ.Should().Be(magazynZrodlo, "magazyn źródłowy rozchodu");
-        mm.MagazynZ.Should().NotBe(mm.MagazynDo, "MagazynZ i MagazynDo muszą być różne");
+        mm.Magazyn.Should().Be(magZ, "magazyn źródłowy rozchodu");
+        mm.MagazynDo.Should().Be(magDo, "magazyn docelowy przesunięcia");
+        mm.Magazyn.Should().NotBe(mm.MagazynDo, "magazyn źródłowy i docelowy muszą być różne");
         mm.Pozycje.Count.Should().BeGreaterThan(0);
     }
 
@@ -199,23 +230,86 @@ public class Rozdzial09_KorektyTest : DokumentHandlowyTestBase
     // ===================================================================================
 
     [Test]
-    [Ignore("W49 — korekta wartości/ilości przyjęcia magazynowego (PZ/PW). Dedykowany worker " +
-            "UtworzKorektePrzyjeciaWorker jest INTERNAL (niedostępny z dodatku zewnętrznego). Publiczny tor " +
-            "to IRelacjeService.NowaKorekta na przyjęciu, ale wiarygodny test korekty przyjęcia wymaga " +
-            "różnicowych wyliczeń względem zaksięgowanych obrotów i partii (Obrot.Przychod, storna) oraz — " +
-            "przy wskazaniu dostawy — pełnej, zalogowanej sesji aplikacyjnej. Mechanika NowaKorekta jest już " +
-            "pokryta w W48; korekta przyjęcia nie wnosi nowego, testowalnego publicznie zachowania. SKIP wg pułapek W49.")]
-    [Description("W49: korekta wartości przyjęcia magazynowego — pominięte (worker internal; mechanika korekty pokryta w W48).")]
-    public void W49_KorektaPrzyjecia_Skip() { }
+    [Description("HANDEL-W49: korektę przyjęcia magazynowego (PW) budujemy — jak każdą korektę — przez RELACJĘ " +
+                 "korekty IRelacjeService.NowaKorekta (nie tworzymy dokumentu wprost ani workerem internal). " +
+                 "Sprawdza powstanie dokumentu korygującego i powiązanie korekta.DokumentKorygowany == przyjęcie.")]
+    public void HANDEL_W49_KorektaPrzyjecia_PrzezRelacjeKorekty()
+    {
+        // Zatwierdzone, zapisane przyjęcie (PW) — dokument korygowany. PrzyjmijNaStan zatwierdza PW
+        // (zatwierdzanie przychodu jest bezpieczne) i księguje zasób.
+        var pwGuid = PrzyjmijNaStan(Towar_.Bikini, 10);
+
+        var pw = Get<DokumentHandlowy>(pwGuid);
+        DokumentHandlowy[] korekty = null;
+        InTransaction(() => korekty = Relacje.NowaKorekta(new[] { pw }));
+        var korektaGuid = korekty[0].Guid;
+        SaveDispose();
+
+        korekty.Should().HaveCount(1, "relacja korekty: jedno przyjęcie → jeden dokument korygujący");
+        var korekta = Get<DokumentHandlowy>(korektaGuid);
+        korekta.DokumentKorygowany.Should().NotBeNull("korekta wskazuje korygowane przyjęcie (kalkulowane)");
+        korekta.DokumentKorygowany.Guid.Should().Be(pwGuid, "korekta wskazuje oryginalne przyjęcie PW");
+
+        var pwOdczyt = Get<DokumentHandlowy>(pwGuid);
+        pwOdczyt.DokumentyKorygujące.Should().Contain(d => d.Guid == korektaGuid,
+            "przyjęcie wskazuje swój dokument korygujący");
+    }
 
     [Test]
-    [Ignore("W51 — faktura zaliczkowa i jej rozliczenie dokumentem końcowym. Rozliczenie wymaga przekazania " +
-            "callbacka w HandlerSet (WybierzDokumentyZaliczkoweCallback / WybierzZaliczkiWgStawkiVatCallback) " +
-            "dopasowanego do cechy definicji (SposobPrzenoszeniaZaliczki: NaPozycje vs NaDokument) — bez niego " +
-            "domyślne handlery rzucają NotImplementedException. Worker rozliczenia (RealizacjaZaliczkiWorker) jest " +
-            "INTERNAL; publiczny DokumentHandlowyRealizacjaZaliczkiWorker działa tylko wewnątrz tego callbacka, " +
-            "a baza Demo nie dostarcza definicji zaliczkowej (FZAL) ani spójnej konfiguracji przenoszenia. " +
-            "Scenariusz wymaga złożonego HandlerSet i konfiguracji spoza publicznego kontraktu. SKIP wg pułapek W51.")]
-    [Description("W51: faktura zaliczkowa i jej rozliczenie — pominięte (wymaga callbacka HandlerSet i workera internal; brak definicji FZAL w Demo).")]
-    public void W51_Zaliczki_Skip() { }
+    [Ignore("HANDEL-W51 — rozliczenie zaliczki przez relację: zweryfikowano, że publiczny IRelacjeService NIE udostępnia " +
+            "tej relacji w bazie Demo (GoldStandard). Relacja zaliczkowa to DefRelacjiZaliczki (nazwy „Faktura (zaliczka)” / " +
+            "„Zaliczkowy (r. zal.)”) oznaczona w konfiguracji <Hidden>True</Hidden> — relacje ukryte nie są zwracane przez " +
+            "DokumentHandlowy.ResolveActions(), więc DolaczNadrzedny rzuca InvalidOperationException('Operacja tworzenia relacji " +
+            "nie jest dostępna') dla KAŻDEJ nazwy. KOREKTA wcześniejszej oceny: parametry rozliczenia SĄ publiczne " +
+            "(RelacjeHandloweWorker.DokumentyZaliczkoweParams + HandlerSet.WybierzDokumentyZaliczkoweCallback) — blokadą jest " +
+            "ukrycie samej relacji, którą uruchamia wewnętrzny przepływ zaliczkowy platformy, nie publiczne IRelacjeService. " +
+            "Ciało testu pozostawiono jako wykonywalną dokumentację relacyjnego podejścia (FZAL → FV przez DolaczNadrzedny).")]
+    [Description("HANDEL-W51: faktura zaliczkowa (FZAL) i jej rozliczenie fakturą końcową (FV) — BUDOWANE PRZEZ RELACJE. " +
+                 "Najpierw zatwierdzona FZAL (zaliczka), potem faktura końcowa dołącza ją jako nadrzędną relacją " +
+                 "„Faktura zaliczkowa” (IRelacjeService.DolaczNadrzedny) z publicznym callbackiem " +
+                 "WybierzDokumentyZaliczkoweCallback (RelacjeHandloweWorker.DokumentyZaliczkoweParams jest publiczny). " +
+                 "Po rozliczeniu faktura końcowa wskazuje zaliczkę w DokumentyZaliczkowe.")]
+    public void HANDEL_W51_FakturaZaliczkowa_RozliczeniePrzezRelacje()
+    {
+        PrzyjmijNaStan(Towar_.Bikini, 100);
+
+        // 1) Faktura ZALICZKOWA (FZAL) — sprzedażowa, więc zapis pozycji PRZED zatwierdzeniem (KrajPodatkuVat).
+        // Kontrahenta pobieramy ŚWIEŻO przy każdym dokumencie (po SaveDispose wcześniejsze wiersze są nieaktualne).
+        var fzal = UtworzDokument("FZAL", kontrahent: Kontrahent(Kontrahent_.Abc), magazyn: Magazyn(Magazyn_.Firma));
+        InTransaction(() => DodajPozycje(fzal, Towar(Towar_.Bikini), ilosc: 5, cena: 20));
+        var fzalGuid = fzal.Guid;
+        SaveDispose();
+        var fzal2 = Get<DokumentHandlowy>(fzalGuid);
+        InTransaction(() => fzal2.Stan = StanDokumentuHandlowego.Zatwierdzony);
+        SaveDispose();
+
+        // 2) Faktura KOŃCOWA (FV) w buforze — dokument, do którego dołączymy zaliczkę relacją.
+        var fv = UtworzDokument(Definicje.FakturaSprzedazy, kontrahent: Kontrahent(Kontrahent_.Abc), magazyn: Magazyn(Magazyn_.Firma));
+        InTransaction(() => DodajPozycje(fv, Towar(Towar_.Bikini), ilosc: 5, cena: 20));
+        var fvGuid = fv.Guid;
+        SaveDispose();
+
+        // 3) Rozliczenie zaliczki PRZEZ RELACJĘ „Faktura zaliczkowa” — dołączenie nadrzędnej zaliczki do FV.
+        //    Publiczny callback uzupełnia parametry wyboru dokumentów zaliczkowych.
+        var handlers = new HandlerSet
+        {
+            WybierzDokumentyZaliczkoweCallback = docelowy =>
+                docelowy.Context.Set(new RelacjeHandloweWorker.DokumentyZaliczkoweParams(docelowy.Context)
+                {
+                    Docelowy = docelowy
+                }),
+            WybierzDokumentyCallback = p =>
+                p.DokumentyWybrane = p.Dokumenty.Cast<DokumentHandlowy>().ToArray()
+        };
+
+        var fv2 = Get<DokumentHandlowy>(fvGuid);
+        InTransaction(() =>
+            Relacje.DolaczNadrzedny(new[] { fv2 }, "Zaliczkowy (r. zal.)", handlers: handlers));
+        SaveDispose();
+
+        // Faktura końcowa wskazuje rozliczoną zaliczkę (pole kalkulowane DokumentyZaliczkowe).
+        var fvKoncowa = Get<DokumentHandlowy>(fvGuid);
+        fvKoncowa.DokumentyZaliczkowe.Cast<DokumentHandlowy>().Select(d => d.Guid)
+            .Should().Contain(fzalGuid, "faktura końcowa rozliczyła zaliczkę FZAL przez relację");
+    }
 }

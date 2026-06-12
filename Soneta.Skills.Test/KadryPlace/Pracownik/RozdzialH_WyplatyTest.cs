@@ -11,7 +11,7 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział H — „Płace: naliczanie wypłat" (receptury H1, H2, H3, H4).
+/// Rozdział H — „Płace: naliczanie wypłat" (receptury KADRY-H1, KADRY-H2, KADRY-H3, KADRY-H4).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu naliczania płac w Soneta.
 /// Naliczanie realizuje worker <c>Soneta.Place.NaliczanieSeryjne</c> z zagnieżdżonymi klasami
@@ -56,15 +56,15 @@ public class RozdzialH_WyplatyTest : PracownikTestBase
         return sb.Length == 0 ? "(brak nienaliczonych)" : sb.ToString();
     }
 
-    // ============================== H1 — Naliczanie wypłat etatowych ==============================
+    // ============================== KADRY-H1 — Naliczanie wypłat etatowych ==============================
 
     [Test]
-    [Description("H1: wypłatę etatową naliczamy workerem NaliczanieSeryjne. Parametry: " +
+    [Description("KADRY-H1: wypłatę etatową naliczamy workerem NaliczanieSeryjne. Parametry: " +
                  "new NaliczanieSeryjne.PracownikParams(Context); DataWypłaty (ustawia Okres i " +
                  "MiesiącDeklaracji automatycznie); DataListy; TypWypłaty = Etat. NIE ustawiamy " +
                  "Naliczanie (domyślnie PłatnaZDołu). Wykonawca: new NaliczanieSeryjne.Pracownika(pars) " +
                  "{ Pracownik = p }.Nalicz() — sam commituje w sesji. Wynik: WszystkieWypłaty (IList).")]
-    public void H1_WyplataEtatowa_NaliczanaWorkeremNaliczanieSeryjne()
+    public void KADRY_H1_WyplataEtatowa_NaliczanaWorkeremNaliczanieSeryjne()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         pracownik.Should().NotBeNull();
@@ -98,15 +98,15 @@ public class RozdzialH_WyplatyTest : PracownikTestBase
         SaveDispose();   // utrwalenie w bazie (rollback po teście i tak wycofa)
     }
 
-    // ============================== H2 — Naliczanie wypłat z umów ==============================
+    // ============================== KADRY-H2 — Naliczanie wypłat z umów ==============================
 
     [Test]
-    [Description("H2: wypłatę z umowy cywilnoprawnej naliczamy wykonawcą NaliczanieSeryjne.Umowy. " +
-                 "Najpierw tworzymy umowę zlecenie (jak w G1), potem: " +
+    [Description("KADRY-H2: wypłatę z umowy cywilnoprawnej naliczamy wykonawcą NaliczanieSeryjne.Umowy. " +
+                 "Najpierw tworzymy umowę zlecenie (jak w KADRY-G1), potem: " +
                  "new NaliczanieSeryjne.Umowy(new UmowaParams(Context)) { Umowa = u }.Nalicz(). " +
                  "Ustawienie Umowa nadpisuje Pracownik. NIE ustawiamy UmowaParams.Naliczanie " +
                  "(setter rzuca NotSupportedException — umowy zawsze płatne z dołu).")]
-    public void H2_WyplataZUmowy_NaliczanaWykonawcaUmowy()
+    public void KADRY_H2_WyplataZUmowy_NaliczanaWykonawcaUmowy()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
         pracownik.Should().NotBeNull();
@@ -124,7 +124,7 @@ public class RozdzialH_WyplatyTest : PracownikTestBase
             u.Element = Place.DefElementow[DefinicjaElementu.UmowaZlecenie] as DefinicjaElementu;
             u.Data = okresUmowy.From;
             u.Okres = okresUmowy;
-            u.Tytul = "Umowa zlecenie - naliczanie H2";
+            u.Tytul = "Umowa zlecenie - naliczanie KADRY-H2";
             u.RodzajRozliczenia = RodzajeRozliczeniaUmowy.KwotaDoWypłaty;
             u.TypWartosci = TypWartosciUmowy.Brutto;
             u.Wydzial = Kadry.Wydzialy.Firma;       // jednostka organizacyjna wymagana przy zapisie
@@ -158,14 +158,14 @@ public class RozdzialH_WyplatyTest : PracownikTestBase
         SaveDispose();
     }
 
-    // ============================== H3 — Naliczanie pozostałych wypłat ==============================
+    // ============================== KADRY-H3 — Naliczanie pozostałych wypłat ==============================
 
     [Test]
-    [Description("H3: pozostałe wypłaty naliczamy tym samym wykonawcą co etat " +
+    [Description("KADRY-H3: pozostałe wypłaty naliczamy tym samym wykonawcą co etat " +
                  "(NaliczanieSeryjne.Pracownika), sterując PracownikParams.TypWypłaty = Inne. " +
                  "Opcjonalnie PracownikParams.Dodatek = DefinicjaElementu zawęża do jednego składnika. " +
                  "Wynik czytamy przez Wyplata.Elementy (WypElement: Definicja, Nazwa, Wartosc).")]
-    public void H3_PozostaleWyplaty_TypWyplatyInne()
+    public void KADRY_H3_PozostaleWyplaty_TypWyplatyInne()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
         pracownik.Should().NotBeNull();
@@ -200,22 +200,22 @@ public class RozdzialH_WyplatyTest : PracownikTestBase
         SaveDispose();
     }
 
-    // ============================== H4 — Odczyt wypłat za rok ==============================
+    // ============================== KADRY-H4 — Odczyt wypłat za rok ==============================
 
     [Test]
-    [Description("H4: po naliczeniu wypłaty etatowej (H1) odczytujemy wypłaty pracownika za rok " +
+    [Description("KADRY-H4: po naliczeniu wypłaty etatowej (KADRY-H1) odczytujemy wypłaty pracownika za rok " +
                  "filtrem serwerowym pracownik.Wyplaty[(Wyplata x) => x.Data >= od && x.Data <= doD]. " +
                  "Sumujemy Wartosc (Currency, kwota do wypłaty) oraz składniki Elementy " +
                  "(WypElement.Wartosc/.Netto, decimal). UWAGA: WyplataEtat nie ma CLR-property " +
                  "Brutto/Netto (wbrew dokumentacji) — agregujemy przez Wartosc i składniki Elementy.")]
-    public void H4_OdczytWyplatZaRok_FiltrSerwerowyPoDacie()
+    public void KADRY_H4_OdczytWyplatZaRok_FiltrSerwerowyPoDacie()
     {
         var pracownik = Pracownik(Pracownik_.Strzelecki);
         pracownik.Should().NotBeNull();
 
         var dataWyplaty = DataWyplatyWEtacie(pracownik);
 
-        // Najpierw nalicz wypłatę etatową, by mieć co odczytywać (H1 jako warunek wstępny H4).
+        // Najpierw nalicz wypłatę etatową, by mieć co odczytywać (KADRY-H1 jako warunek wstępny KADRY-H4).
         var pars = new NaliczanieSeryjne.PracownikParams(Context);
         pars.DataWypłaty = dataWyplaty;
         pars.DataListy = pars.DataWypłaty;
@@ -224,7 +224,7 @@ public class RozdzialH_WyplatyTest : PracownikTestBase
         var naliczanie = new NaliczanieSeryjne.Pracownika(pars) { Pracownik = pracownik };
         var wynikNaliczania = naliczanie.Nalicz();
         wynikNaliczania.WszystkieWypłaty.Cast<Wyplata>().Should().NotBeEmpty(
-            $"warunek wstępny H4: wypłata etatowa musi się naliczyć; data={dataWyplaty}, " +
+            $"warunek wstępny KADRY-H4: wypłata etatowa musi się naliczyć; data={dataWyplaty}, " +
             $"nienaliczeni: {OpisNienaliczonych(wynikNaliczania)}");
         SaveDispose();
 

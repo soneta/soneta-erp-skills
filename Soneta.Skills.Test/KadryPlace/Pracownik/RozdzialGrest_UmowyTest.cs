@@ -10,12 +10,12 @@ using Prac = Soneta.Kadry.Pracownik;
 namespace Soneta.Skills.Test.KadryPlace.Pracownik;
 
 /// <summary>
-/// Rozdział G (reszta) — „Umowy cywilnoprawne" (receptury G3, G4, G5).
+/// Rozdział G (reszta) — „Umowy cywilnoprawne" (receptury KADRY-G3, KADRY-G4, KADRY-G5).
 /// <para>
 /// Testy są <b>wykonywalną dokumentacją</b> publicznego kontraktu platformy Soneta dla operacji na
-/// umowach cywilnoprawnych: operacja seryjna „Dodaj umowy" dla grupy osób (G3), rachunek/rozliczenie
-/// umowy = wypłata <c>WyplataUmowa</c> naliczana mechanizmem płac (G4), oraz zgłoszenia ZUS
-/// zleceniobiorców na podstawie schematu ubezpieczeń umowy (G5).
+/// umowach cywilnoprawnych: operacja seryjna „Dodaj umowy" dla grupy osób (KADRY-G3), rachunek/rozliczenie
+/// umowy = wypłata <c>WyplataUmowa</c> naliczana mechanizmem płac (KADRY-G4), oraz zgłoszenia ZUS
+/// zleceniobiorców na podstawie schematu ubezpieczeń umowy (KADRY-G5).
 /// </para>
 /// <para>
 /// Wszystko działa na bazie Demo (GoldStandard) z automatycznym rollbackiem po teście. Pracownicy
@@ -43,14 +43,14 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
         return koniecMiesiaca;
     }
 
-    // ====================== G3 — Operacja seryjna „Dodaj umowy" dla grupy osób ======================
+    // ====================== KADRY-G3 — Operacja seryjna „Dodaj umowy" dla grupy osób ======================
 
     [Test]
-    [Description("G3 (wariant B - petla, jak G1): operacja seryjna 'Dodaj umowy' = G1 powtorzone dla " +
+    [Description("KADRY-G3 (wariant B - petla, jak KADRY-G1): operacja seryjna 'Dodaj umowy' = KADRY-G1 powtorzone dla " +
                  "każdej osoby z grupy. Dla każdego pracownika tworzymy Session.AddRow(new Umowa(p)) " +
                  "z tymi samymi danymi nagłówkowymi (Element, Okres, RodzajRozliczenia, TypWartosci, " +
                  "Wydzial) i kwotą na umowa.Last.Wartosc. Każda osoba dostaje osobny rekord Umowa.")]
-    public void G3_DodajUmowySeryjnie_PetlaPoGrupie_TworzyUmoweKazdejOsobie()
+    public void KADRY_G3_DodajUmowySeryjnie_PetlaPoGrupie_TworzyUmoweKazdejOsobie()
     {
         var defZlecenie = DefUmowy(DefinicjaElementu.UmowaZlecenie);
         defZlecenie.Should().NotBeNull("baza Demo zawiera definicję umowy zlecenie");
@@ -67,7 +67,7 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
                 p.Should().NotBeNull();
                 p.Umowy.Cast<Umowa>().Should().BeEmpty("pracownik Demo nie ma jeszcze umów");
 
-                // Jawne tworzenie jak w G1 — operacja seryjna to to samo powtórzone w pętli.
+                // Jawne tworzenie jak w KADRY-G1 — operacja seryjna to to samo powtórzone w pętli.
                 var umowa = Session.AddRow(new Umowa(p));
                 umowa.Element = defZlecenie;
                 umowa.Data = okres.From;
@@ -97,11 +97,11 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
     }
 
     [Test]
-    [Description("G3 (wariant A — worker platformy): Pracownik.DodajUmowęWorker (DataType Pracownik, " +
+    [Description("KADRY-G3 (wariant A — worker platformy): Pracownik.DodajUmowęWorker (DataType Pracownik, " +
                  "ctor przyjmuje Session) z ustawionymi Pracownicy (grupa) i Pars " +
                  "(DodajUmowęWorker.Params(Context): Element, Okres, Data, Tytuł, RodzajRozliczenia, " +
                  "TypWartości, Wartość, Wydział). Akcja DodajUmowę() (void) tworzy umowę każdej osobie.")]
-    public void G3_DodajUmowyWorker_TworzyUmoweKazdejZaznaczonejOsobie()
+    public void KADRY_G3_DodajUmowyWorker_TworzyUmoweKazdejZaznaczonejOsobie()
     {
         var defZlecenie = DefUmowy(DefinicjaElementu.UmowaZlecenie);
         var okres = new FromTo(new Date(2026, 1, 1), new Date(2026, 12, 31));
@@ -143,15 +143,15 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
         }
     }
 
-    // ====================== G4 — Rachunek do umowy (rozliczenie = WyplataUmowa) ======================
+    // ====================== KADRY-G4 — Rachunek do umowy (rozliczenie = WyplataUmowa) ======================
 
     [Test]
-    [Description("G4: 'rachunek do umowy zlecenia' = wyplata WyplataUmowa naliczana mechanizmem plac " +
-                 "(jak H2), NIE rekord w pracownik.Rachunki (to rachunki bankowe). Tworzymy umowę " +
-                 "(G1), potem new NaliczanieSeryjne.Umowy(new UmowaParams(Context)) { Umowa = u }." +
+    [Description("KADRY-G4: 'rachunek do umowy zlecenia' = wyplata WyplataUmowa naliczana mechanizmem plac " +
+                 "(jak KADRY-H2), NIE rekord w pracownik.Rachunki (to rachunki bankowe). Tworzymy umowę " +
+                 "(KADRY-G1), potem new NaliczanieSeryjne.Umowy(new UmowaParams(Context)) { Umowa = u }." +
                  "Nalicz(); wynik to WyplataUmowa (Typ == Umowa). Stan rozliczenia: Umowa.Stan, " +
                  "Umowa.Splacono, Umowa.Pozostało.")]
-    public void G4_RachunekDoUmowy_NaliczanieTworzyWyplateUmowa_IZmieniaStan()
+    public void KADRY_G4_RachunekDoUmowy_NaliczanieTworzyWyplateUmowa_IZmieniaStan()
     {
         var pracownik = Pracownik(Pracownik_.Strzelecki);
         pracownik.Should().NotBeNull();
@@ -159,7 +159,7 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
         var data = DataWEtacie(pracownik);
         var okresUmowy = new FromTo(new Date(data.Year, data.Month, 1), data);
 
-        // 1) Umowa zlecenie (jak G1) — dane operacyjne tworzymy w trybie edycji.
+        // 1) Umowa zlecenie (jak KADRY-G1) — dane operacyjne tworzymy w trybie edycji.
         Guid guidUmowy = Guid.Empty;
         InTransaction(() =>
         {
@@ -167,7 +167,7 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
             u.Element = DefUmowy(DefinicjaElementu.UmowaZlecenie);
             u.Data = okresUmowy.From;
             u.Okres = okresUmowy;
-            u.Tytul = "Umowa zlecenie - rachunek G4";
+            u.Tytul = "Umowa zlecenie - rachunek KADRY-G4";
             u.RodzajRozliczenia = RodzajeRozliczeniaUmowy.KwotaDoWypłaty;
             u.TypWartosci = TypWartosciUmowy.Brutto;
             u.Wydzial = Kadry.Wydzialy.Firma;
@@ -180,7 +180,7 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
         // Przed rozliczeniem umowa jest niewypłacona.
         umowa.Stan.Should().Be(StanUmowy.Niewypłacona, "świeżo dodana umowa nie ma rachunku");
 
-        // 2) Rachunek = naliczenie wypłaty z umowy (jak H2). UmowaParams NIE ustawia Naliczanie.
+        // 2) Rachunek = naliczenie wypłaty z umowy (jak KADRY-H2). UmowaParams NIE ustawia Naliczanie.
         var pars = new NaliczanieSeryjne.UmowaParams(Context);
         pars.DataWypłaty = data;
         pars.DataListy = pars.DataWypłaty;
@@ -208,10 +208,10 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
     }
 
     [Test]
-    [Description("G4 (odczyt): rachunki (wypłaty) wystawione do umowy odczytujemy przez " +
+    [Description("KADRY-G4 (odczyt): rachunki (wypłaty) wystawione do umowy odczytujemy przez " +
                  "pracownik.Wyplaty.OfType<WyplataUmowa>().Where(x => x.Umowa == umowa); składniki " +
                  "rachunku to WypElement (Wartosc). pracownik.Rachunki to rachunki BANKOWE — nie umowy.")]
-    public void G4_OdczytRachunkowUmowy_PrzezWyplatyUmowa()
+    public void KADRY_G4_OdczytRachunkowUmowy_PrzezWyplatyUmowa()
     {
         var pracownik = Pracownik(Pracownik_.Andrzejewski);
         var data = DataWEtacie(pracownik);
@@ -258,15 +258,15 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
             "naliczony rachunek wiąże składniki z umową (Umowa.Elementy)");
     }
 
-    // ====================== G5 — Zgłoszenia ZUS zleceniobiorców (ZUA / ZZA / ZWUA) ======================
+    // ====================== KADRY-G5 — Zgłoszenia ZUS zleceniobiorców (ZUA / ZZA / ZWUA) ======================
 
     [Test]
-    [Description("G5 (schemat ubezpieczeń): typ zgłoszenia (ZUA vs ZZA) wynika ze schematu " +
+    [Description("KADRY-G5 (schemat ubezpieczeń): typ zgłoszenia (ZUA vs ZZA) wynika ze schematu " +
                  "UmowaHistoria.Ubezpieczenia (umowa.Last.Ubezpieczenia), nie z parametru workera. " +
                  "ZUA = społeczne obowiązkowe (Emerytalne/Rentowe) + zdrowotne; Tyub4 pobierany ze " +
                  "słownika konfiguracyjnego Kadry.TytulyUbezpiecz4. Spoleczne.Od jest read-only — " +
                  "datę objęcia ustawiamy zbiorczo przez Ubezpieczenia.ObowiazkoweOd.")]
-    public void G5_SchematUbezpieczenUmowy_ZUA_SpoleczneObowiazkoweIZdrowotne()
+    public void KADRY_G5_SchematUbezpieczenUmowy_ZUA_SpoleczneObowiazkoweIZdrowotne()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
         var okres = new FromTo(new Date(2026, 1, 1), new Date(2026, 12, 31));
@@ -310,10 +310,10 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
     }
 
     [Test]
-    [Description("G5 (ZZA): zleceniobiorca podlegający TYLKO zdrowotnemu (np. uczeń/student/zbieg " +
+    [Description("KADRY-G5 (ZZA): zleceniobiorca podlegający TYLKO zdrowotnemu (np. uczeń/student/zbieg " +
                  "tytułów) → ZZA. Na schemacie UmowaHistoria.Ubezpieczenia zostawiamy Emerytalne/" +
                  "Rentowe.Obowiazkowe = false, ustawiamy tylko Zdrowotne.ObowiazkoweOd.")]
-    public void G5_SchematUbezpieczenUmowy_ZZA_TylkoZdrowotne()
+    public void KADRY_G5_SchematUbezpieczenUmowy_ZZA_TylkoZdrowotne()
     {
         var pracownik = Pracownik(Pracownik_.Bujak);
         var okres = new FromTo(new Date(2026, 1, 1), new Date(2026, 6, 30));
@@ -355,12 +355,12 @@ public class RozdzialGrest_UmowyTest : PracownikTestBase
             "kompletnej konfiguracji płatnika/KEDU i kontekstu deklaracji ZUS, niedostępnego w " +
             "izolowanym środowisku testów Demo (bez sieci). Dokumentujemy kontrakt workera bez " +
             "uruchamiania generowania (ZarejestrujUmowy() / WyrejestrujUmowy()).")]
-    [Description("G5 (worker — kontrakt): Soneta.Deklaracje.ZUS.ZarejestrujUmowyWorker (DataType " +
+    [Description("KADRY-G5 (worker — kontrakt): Soneta.Deklaracje.ZUS.ZarejestrujUmowyWorker (DataType " +
                  "Umowa, ctor bezparametrowy, Umowy: Umowa[]). Zgłoszenie: zagnieżdżona Rejestracja " +
                  "(Pars: ParamsZ — Okres, DataDokumentu, DataWypełnienia, ZarejestrujRodzinę) i akcja " +
                  "ZarejestrujUmowy(): object generująca ZUA/ZZA wg schematu ubezpieczeń umowy. " +
                  "Wyrejestrowanie analogicznie WyrejestrujUmowy() → ZWUA. KEDU/wysyłka → sieć.")]
-    public void G5_ZgloszenieZUS_Worker_KontraktBezGenerowania()
+    public void KADRY_G5_ZgloszenieZUS_Worker_KontraktBezGenerowania()
     {
         var pracownik = Pracownik(Pracownik_.Bednarek);
         var okres = new FromTo(new Date(2026, 1, 1), new Date(2026, 12, 31));
