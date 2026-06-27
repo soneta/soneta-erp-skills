@@ -257,6 +257,101 @@ Path `"Features.NazwaCechy"` działa też w `LikeConditionProvider`, `OrderBy` w
 
 Pełen opis `RowCondition` (rodzaje, `Exists`, `Or`/`And`, użycie w `SubTable`) — patrz [rowcondition.md](rowcondition.md).
 
+### Filtr po obiekcie (`Row`) — uważaj, z której sesji pochodzi
+
+Filtr LINQ/`FieldCondition` porównuje `Row` z polem tabeli, więc porównywany obiekt musi
+należeć do **tej samej sesji** co budowany widok. Kluczowe jest, skąd pochodzi obiekt filtra:
+
+```csharp
+// Obiekt z tej samej sesji co widok (np. pobrany z args.Session lub z
+// args.Session.AuthorizationInfo.Operator) — używaj wprost:
+view.AddExpression<Faktura>(f => f.Operator == pars.Operator);
+
+// Obiekt z INNEJ sesji (przekazany z zewnątrz, z konfiguracji) — przepuść przez
+// indeksator sesji widoku (odpowiednik session.Get):
+var op = args.Session[pars.Operator];   // indeksator jest generyczny — bez rzutowania
+view.AddExpression<Faktura>(f => f.Operator == op);
+```
+
+Niepotrzebny remap, gdy obiekt już jest z właściwej sesji, to szum; pominięty remap, gdy
+obiekt jest z innej sesji, daje pusty/niepoprawny wynik. Reguła = rozpoznać źródło sesji
+(zob. też zasadę „nie mieszaj sesji" w [safe-code.md](safe-code.md)).
+
+---
+
+## ViewInfo inline — jako property (lista osadzona na oknie/formularzu)
+
+Obok wzorca „osobna klasa dziedzicząca `ViewInfo` + `[assembly: FolderView]`" istnieje
+**lekki wariant inline**: zwykła property typu `ViewInfo` na obiekcie sterującym oknem
+(DataSource) lub extenderze, z handlerem `CreateView` podpiętym w getterze. To naturalny
+wybór dla list z nietrywialnym filtrowaniem **osadzonych na formularzu/oknie** (a nie
+rejestrowanych jako samodzielny folder) — np. listy diagnostyczne, konfiguracyjne, podglądy.
+
+```csharp
+public ViewInfo MojeWpisyView {
+    get {
+        var vi = new ViewInfo();
+        vi.CreateView += (sender, args) => {
+            // start z klucza dobranego pod sortowanie/zakres (wykorzystuje indeks),
+            // warunki dokładamy przez AddExpression (LINQ → WHERE, walidowane przy kompilacji)
+            View view = args.Session.GetHandel().Faktury.WgDaty.CreateView();
+
+            if (pars.Okres != FromTo.All) {
+                DateTime od = (DateTime)pars.Okres.From;
+                DateTime doD = (DateTime)(pars.Okres.To + 1);
+                view.AddExpression<Faktura>(f => f.Data >= od && f.Data < doD);
+            }
+
+            args.DataSource = view;        // patrz niżej
+        };
+        return vi;
+    }
+}
+```
+
+W `pageform.xml`/`viewform.xml` `Grid` wiąże się z tą property: `EditValue="{MojeWpisyView}"`
+(zob. skill `/soneta-form-xml`).
+
+**Zwracanie wyniku i kontekst:**
+- Gotowy `View` zwracaj przez **`args.DataSource = view;`** — to kanał domyślny i ogólniejszy.
+  (Istnieje też `args.View`; oba sprowadzają się do tego samego, więc dla spójności używaj
+  `args.DataSource`.)
+- **Nie ustawiaj `view.Context` ani `args.Context` ręcznie**, jeśli kontekst ma być
+  standardowy dla okna — framework przypisuje go automatycznie. Jawne ustawienie potrzebne
+  tylko, gdy świadomie chcesz **inny** kontekst niż domyślny okna.
+
+**Dobór klucza + `AddExpression`.** Twórz `View` z klucza najlepszego do sortowania/zakresu
+(np. `WgDaty` dla danych operacyjnych z datą), a warunki dokładaj `AddExpression`. Łączy to
+indeks klucza (porządek, zakres czasowy — ważne dla tabel operacyjnych guided, zob.
+[safe-code.md](safe-code.md) §6.3) z czytelnym, kompilowanym filtrem LINQ.
+
+**Stan filtrów + automatyczne odświeżanie (`[Accessor(AutoChange = true)]`).** Filtry można
+trzymać w klasie `Params : ContextBase` (persistencja przez `SaveProperty`/`LoadProperty`,
+zob. [contextbase.md](contextbase.md)) **albo** jako property wprost na obiekcie sterującym
+oknem, gdy persistencja jest zbędna. W tym drugim przypadku, zamiast ręcznie wołać
+`Session.InvokeChanged()` w setterze, oznacz property atrybutem `[Accessor(AutoChange = true)]`
+— framework sam odświeży UI przy zmianie wartości, więc property może być zwykłą
+auto-property:
+
+```csharp
+[Accessor(AutoChange = true)]
+[Caption("Okres")]
+public FromTo Okres { get; set; } = FromTo.Day(Date.Today);
+
+[Accessor(AutoChange = true)]
+[Caption("Operator")]
+public Operator Operator { get; set; }   // default ustaw w konstruktorze z AuthorizationInfo
+```
+
+Ręczny `InvokeChanged` w setterze ma sens tylko, gdy oprócz odświeżenia trzeba wykonać
+dodatkowe przeliczenie. Property bindowane do `SelectedValue`/`FocusedValue` gridu **nie**
+wymagają nawet `AutoChange` — sama zmiana zaznaczenia/fokusu przelicza pola zależne.
+
+Wybór nośnika stanu filtrów wpływa na bindowanie paska filtra (`Flow Class="DataBar"`
+wewnątrz `Grid`, zob. skill `/soneta-form-xml`): filtry w `Params` (kontekst) → pasek z
+`DataContext="{Context}"` i bindy `{Params.Pole}`; filtry na obiekcie sterującym → pasek bez
+`DataContext` (dziedziczy `{DataSource}`) i bindy wprost `{Pole}`.
+
 ---
 
 ## Powiązanie z `viewform.xml`

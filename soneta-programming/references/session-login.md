@@ -113,6 +113,16 @@ Login login = db.Login(new LoginParameters
 
 **WAŻNE:** Właściwości `Operator` i `Entitle` w klasie `Login` nie należy stosować, ponieważ używają obiektu z `ConfigSession` w sposób niekontrolowany.
 
+Operator, WebOperator, Entitle i pokrewne dane autoryzacyjne pobieraj **z sesji**, przez
+`Session.AuthorizationInfo` — rozwiązuje on operatora właściwego dla danej sesji
+(uwzględniając podstawienia/zastępstwa i operatora pulpitu webowego):
+
+| Z `Session.AuthorizationInfo` | Znaczenie |
+|---|---|
+| `.Operator` | Operator właściwy dla tej sesji |
+| `.WebOperator` | Operator pulpitu webowego (jeśli dotyczy) |
+| `.LoggedWebOperator` | Fizycznie zalogowany operator pulpitu |
+
 ```csharp
 // NIE ZALECANE:
 // var op = login.Operator;  // unikać!
@@ -125,6 +135,12 @@ using (var session = login.CreateSession(readOnly: true, config: false, name: "O
     Console.WriteLine($"Zalogowany: {op.Name} - {op.FullName}");
 }
 ```
+
+**Nie buforuj operatora z `Login` na stałe.** `Login` jest współdzielony i wielowątkowy,
+a jego „operator" nie zawsze odpowiada operatorowi danej sesji. Jeśli potrzebujesz domyślnej
+wartości (np. filtr „bieżący operator" w oknie/widoku), zainicjuj ją z
+`Session.AuthorizationInfo.Operator` — nie z `Login.Operator`. `AuthorizationInfo` liczy
+operatora leniwie i dla właściwej sesji.
 
 ### Właściwości informacyjne
 

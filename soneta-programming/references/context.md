@@ -86,6 +86,8 @@ finally
 }
 ```
 
+Nie używaj tej metody tylko do tworzenia sesji, jeżeli kontekst jest niepotrzebny. Wtedy lepiej użyć `Login.CreateSession()`.
+
 `Login.CreateEmptyContext(bool? sessionReadOnly, string sessionName)` (jest też przeciążenie
 `CreateEmptyContext(bool? sessionReadOnly)`) tworzy nowy, pusty kontekst i przypisuje go do
 **nowo utworzonej sesji** (tylko do odczytu albo edycyjnej, zależnie od `sessionReadOnly`). Ponieważ ta
@@ -305,6 +307,7 @@ public void Action(Context cx)
 3. **Nie mieszaj sesji** - obiekty w kontekście muszą pochodzić z tej samej sesji co kontekst;
    do przeniesienia kontekstu do innej sesji użyj `Clone(session)` / `Normalize(session)`
 4. **Pamiętaj o Dispose sesji** utworzonej przez `Login.CreateEmptyContext(...)`
+5. **Pamiętaj o Dispose sesji** również w przypadku, gdy używasz `Login.CreateEmptyContext(sessionReadOnly: true/false)` 
 5. **Klasy parametrów (ContextBase)** - trwałość filtrów, `InvokeChanged`, dziedziczenie `Load`/`Save`,
    patrz [contextbase.md](contextbase.md)
 6. **Worker / Extender** - rozszerzanie modelu o logikę UI, patrz [worker-extender.md](worker-extender.md)
