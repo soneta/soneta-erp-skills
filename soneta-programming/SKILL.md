@@ -5,14 +5,18 @@ description: >
   Row/Table/Module, sesja i transakcje (Session, Commit/CommitUI, Save,
   optimistic lock), Login/Database/BusApplication, Datapack/GuidedRow/ExportedRow,
   serwerowy LINQ (RowCondition, SubTable[condition]), Context, Worker/Extender/[Action],
-  ViewInfo/FolderView, Features, Translate/ILogger oraz zasady bezpiecznego kodu
+  ViewInfo/FolderView, Features, typy wierszy w jednej tabeli (selector, [BusinessRow],
+  [NewRow], [DefaultConstructor], konstruktory Row, enum z jawnymi wartościami),
+  Translate/ILogger oraz zasady bezpiecznego kodu
   (safe-code, code review). Używaj gdy użytkownik: (1) pisze, modyfikuje lub
   refaktoruje kod biznesowy enova365/Soneta/Triva; (2) pyta o Session, Row, Table,
   Module, Login, Database, Context, Datapack, Worker, Extender, ViewInfo,
   RowCondition; (3) wspomina sesje, transakcje, Commit, Save, optimistic lock,
   blokady wierszy; (4) prosi o code review kodu biznesowego Soneta; (5) pisze
   dodatek, worker, extender, akcję w menu Czynności, folder/listę; (6) pyta
-  o thread-safety, ExecuteConfig, dane konfiguracyjne vs operacyjne.
+  o thread-safety, ExecuteConfig, dane konfiguracyjne vs operacyjne; (7) implementuje
+  klasy Row/Table, selector (selektor), podtypy [BusinessRow], pozycje menu [NewRow],
+  konstruktory z polami readonly lub RowCreator.
 ---
 
 # Soneta Programming Basics - Podstawowe klasy ORM
@@ -28,6 +32,8 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Temat                                                                                             | Gdzie szukać |
 |---------------------------------------------------------------------------------------------------|---|
 | Hierarchia ORM, Row / Table / Module, klucze, ISessionable                                        | sekcje poniżej |
+| Implementacja klas Row/Table, konstruktory (pola readonly, `RowCreator`), selector + `[BusinessRow]`, `[NewRow]`, `[DefaultConstructor]`, jawne wartości enum'ów | [references/row-types.md](references/row-types.md) |
+| `AssemblyAttributes` - odczyt atrybutów z załadowanych modułów (`GetCustom<T>`, `Find`, iteracja po assembly, cache, analiza DLL w runtime) | [references/assembly-attributes.md](references/assembly-attributes.md) |
 | Sesje, transakcje, Login, Database, BusApplication, optimistic locking                            | [references/session-login.md](references/session-login.md) |
 | Paczki danych, Datapack, GuidedRow, ExportedRow, synchronizacja, blokady                          | [references/datapack-guidedrow.md](references/datapack-guidedrow.md) |
 | Klasa Context - dane z UI, zaznaczenia, parametry workera                                         | [references/context.md](references/context.md) |
@@ -40,6 +46,8 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | ViewInfo - definicja widoków list (folderów i inline jako property), CreateView, args.DataSource, klasa Params, `[Accessor(AutoChange)]`, powiązanie z viewform.xml | [references/viewinfo.md](references/viewinfo.md) |
 | ChangeInfos - dziennik zmian / audyt (`session.ChangeInfos.Add`, pola Info/Data, pułapka 255 znaków, ChangeInfoType, prezentacja listy) | [references/changeinfos.md](references/changeinfos.md) |
 | Cechy (Features) - tabela Features, typy cech, dostęp typowany/nietypowany, bindowanie w form.xml | [references/features.md](references/features.md) |
+| Źródła praw (`IRightsSource`) - obiekt sterujący dostępem do danych operacyjnych, `AccessRight`, `Login.GetObjectRight` | sekcja poniżej |
+| Notacja klamrowa (`AccessorFormatter`) - wstawki `{ścieżka}` / `{ścieżka:format}` w captionach, szablonach, promptach | sekcja poniżej |
 | Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów)                                      | [references/examples.md](references/examples.md) |
 | Receptury kodu per obiekt biznesowy (domena CRM) — `Kontrahent` (pola, kolekcje, workery, finanse, RODO, KSeF). Indeks + mapa receptur (CRM-W1–W18); rozdziały `references/domeny/crm/CRM01..CRM10` | [references/domeny/crm.md](references/domeny/crm.md) |
 | Receptury kodu per obiekt biznesowy (domena Handel) — `DokumentHandlowy` (faktury/magazynowe/zamówienia/korekty, relacje `IRelacjeService`, cykl życia, magazyn/partie/obroty, VAT/waluty, płatności, KSeF/fiskal/Intrastat, wydruki). Indeks + mapa receptur (HANDEL-W1–W82); rozdziały `references/domeny/handel/HANDEL01..HANDEL14` | [references/domeny/handel.md](references/domeny/handel.md) |
@@ -70,6 +78,12 @@ BusApplication.Instance (singleton) - multithreaded
 | **3. Implementowane** | Klasy konkretne tworzone przez programistę | `Towar`, `Towary` (bez sufiksów) |
 
 **BusinessGenerator** jest automatycznie uruchamiany podczas kompilacji dla plików `*.business.xml`. Szczegółowy opis definiowania business.xml znajduje się w skill **soneta-business-xml**.
+
+Klasy poziomu 3 (`Towar`, `Towary`) pisze programista, dziedzicząc po klasach generowanych.
+Gdy tabela ma pola `readonly` (w tym **selector**), klasa obiektu biznesowego wymaga
+dodatkowych konstruktorów; selector pozwala też przechowywać **wiele typów obiektów w jednej
+tabeli**. Wzorce implementacji (konstruktory, `[BusinessRow]`, `[NewRow]`) —
+[references/row-types.md](references/row-types.md).
 
 ## Hierarchia głównych klas
 
@@ -254,6 +268,44 @@ Kod UI to np.:
 - Nie należy stosować warunków na prawa dostępu (np. `if (Table.AccessRight == AccessRights.Denied) {...}`).
 
 Szczegóły konstruowania ViewInfo (atrybut `FolderView`, eventy `CreateView`/`InitContext`, klasa `Params`, powiązanie z `viewform.xml`) opisuje [references/viewinfo.md](references/viewinfo.md).
+
+## Źródła praw (`IRightsSource`)
+
+Obiekt (zwykle **konfiguracyjny**, np. magazyn, rejestr, definicja) może być **źródłem praw**:
+operatorowi/roli przypisuje się uprawnienia do tego obiektu, co steruje dostępem do **danych
+operacyjnych referujących** do niego — a nie tylko do samego obiektu konfiguracyjnego. Przykład:
+operator z prawem do danego magazynu widzi tylko dokumenty przypisane do tego magazynu, a do
+dokumentów z innych magazynów dostępu nie ma.
+
+- Włączenie: w `business.xml` dodaj do tabeli `<interface>IRightsSource</interface>`. Od tego momentu
+  system sam dba o widoczność obiektów i propagację praw. (`IRightsSourceEx` dokłada pod-kategorię,
+  `IsRightsSourceEnable()`, `IsRightsSourceVisible()`.)
+- Odczyt uprawnień: `Row.AccessRight`, `Table.AccessRight`, `Login.GetObjectRight(source)` →
+  `AccessRights` (`Granted`/`Denied`/…).
+- **Listy/`View` automatycznie filtrują** dane po prawach — pokazują tylko rekordy ze źródeł, do
+  których operator ma dostęp. Na formularzu definicji pojawia się zakładka z przypisaniami uprawnień.
+- W **kodzie biznesowym nie sprawdzaj** `AccessRight` warunkami — system egzekwuje prawa sam
+  (patrz [references/safe-code.md](references/safe-code.md) §7.2).
+
+## Notacja klamrowa (`AccessorFormatter`)
+
+Tekst z **wstawkami danych** (captiony, szablony, opisy, treści promptów) komponuje się notacją
+klamrową obsługiwaną przez `AccessorFormatter`. Wartości pól pobierane są przez `Accessor` obiektu
+kontekstu — bez ręcznego sklejania stringów.
+
+- `{ścieżka}` — wartość accessora, np. `{Kontrahent.Nazwa}`,
+- `{ścieżka:format}` — z formatem po dwukropku, np. `{Data:yyyy-MM-dd}`,
+- `{{` / `}}` — literalna klamra (escape).
+
+```csharp
+var f = new AccessorFormatter { UseHtmlEncoding = false };
+f.Compile("Faktura dla {Kontrahent.Nazwa} z dnia {Data:yyyy-MM-dd}", accessor);
+string text = f.ToString();
+```
+
+Bez accessora można podać własne źródło wartości przez `GetValueHandler`. Obsługuje też pola
+Html/Markdown (kodowanie wyniku). Tej samej notacji używaj zamiast definiowania osobnych
+„parametrów" tekstu.
 
 ## Metadane modułów, tabel, kluczy, pól
 

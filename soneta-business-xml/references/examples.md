@@ -126,8 +126,7 @@
 
 ```xml
 <!-- MASTER: Definicja przeceny -->
-<table name="PrzecenaOkresowa" tablename="PrzecenyOkres" name8="PrzcOkr" 
-       guided="Root">
+<table name="PrzecenaOkresowa" tablename="PrzecenyOkres" guided="Root">
   <key keyunique="true" name="WgNazwy" keyprimary="true">
     <keycol name="Cel"/>
     <keycol name="Nazwa"/>
@@ -150,8 +149,7 @@
 </table>
 
 <!-- DETAIL: Pozycje przeceny -->
-<table name="PrzecenaOkresowaTowaru" tablename="PrzecenyOkresTwr" 
-       name8="PrzcOkrT">
+<table name="PrzecenaOkresowaTowaru" tablename="PrzecenyOkresTwr">
   <col name="PrzecenaOkresowa" type="PrzecenaOkresowa"
        children="PrzecenyTowarow"
        delete="cascade"

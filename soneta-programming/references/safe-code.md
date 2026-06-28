@@ -204,6 +204,18 @@ if (Table.AccessRight == AccessRights.Denied) return;
 
 Prawa dostępu są warstwą UI / autoryzacji. Logika biznesowa zakłada poprawne wywołanie; egzekucja praw jest gdzie indziej.
 
+**Wynik obliczeń nie zależy od praw.** Logika biznesowa zwraca **te same dane** niezależnie od tego,
+czy operator ma uprawnienia do obiektów. Praw nie sprawdza się, by zwrócić inny wynik (np. zero,
+pustą listę, ukryte pole). Jeśli operacja faktycznie wymaga dostępu, którego brak — kończy się
+**wyjątkiem**, a nie zmienionym wynikiem:
+
+- `AccessDeniedException` — brak prawa odczytu obiektu,
+- `AccessWriteDeniedException` — brak prawa zapisu,
+- `ReadOnlyException` — próba modyfikacji obiektu/sesji tylko do odczytu.
+
+(Wszystkie dziedziczą po `AccessException : RowException`.) Te wyjątki rzuca i obsługuje sam ORM —
+nie „połykaj" ich w logice ani nie zastępuj cichym `return`.
+
 ---
 
 ## 8. ExecuteConfig - dane konfiguracyjne
@@ -375,7 +387,7 @@ Do szybkiej weryfikacji PR-a / refaktoringu:
 - [ ] Brak `View` w kodzie biznesowym (§6.2)
 - [ ] Brak pełnego skanu tabel kartotekowych; tabele operacyjne guided z zakresem czasowym; nie-guided w zakresie roota (§6.3)
 - [ ] Brak referencji do UI (`IsXxx`, `GetXxx`, `MessageBox`, `IUIServices`) w kodzie biznesowym (§7.1)
-- [ ] Brak sprawdzania `AccessRight` w logice biznesowej (§7.2)
+- [ ] Brak sprawdzania `AccessRight` w logice biznesowej; wynik niezależny od praw, brak dostępu → wyjątek `AccessDeniedException`/`AccessWriteDeniedException`/`ReadOnlyException`, nie inny wynik (§7.2)
 - [ ] Z `ExecuteConfig` wracają tylko prymitywy / kopie, nie obiekty sesyjne (§8.1)
 - [ ] Brak `Session.ConfigSession` — dostęp do konfiguracji przez `Session.ExecuteConfig()` (§8.2)
 

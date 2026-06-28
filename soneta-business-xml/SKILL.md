@@ -47,11 +47,19 @@ Pliki te definiują obiekty biznesowe (encje ORM), które platforma automatyczni
 | Atrybut | Wymagany | Opis |
 |---------|----------|------|
 | `name` | ✓ | Nazwa klasy C# (PascalCase, l.poj.) |
-| `tablename` | ✓ | Nazwa tabeli w bazie danych (PascalCase, l.mn.) |
+| `tablename` | ✓ | Nazwa tabeli w bazie danych (PascalCase, l.mn.). **Maks. 16 znaków** |
+| `description` | | Krótki (2–3 zdania) opis zastosowania tabeli — patrz niżej |
 | `guided` | | `Root` = główna tabela programu (dokument, kartoteka) |
 | `config` | | `true` = tabela konfiguracyjna (tworzona podczas wdrożenia) |
 | `caption` | | Etykieta pojedynczego rekordu |
 | `tablecaption` | | Etykieta listy rekordów |
+
+> **`tablename` ≤ 16 znaków** — w relacjach interfejsowych identyfikatorem tabeli jest
+> 16-znakowe pole bazodanowe, dłuższe nazwy trzeba skracać **z zachowaniem liczby mnogiej**
+> (np. `DokumentyHandlowe` → `DokHandlowe`). `name` (klasa C#) nie ma tego limitu.
+>
+> **`description`** — 2–3 zdania o przeznaczeniu tabeli, do szybkiej orientacji w strukturze
+> programu (również dla modeli językowych). Opisuje, po co tabela powstała, nie pojedyncze pola.
 
 ### Rodzaje tabel
 
@@ -101,6 +109,11 @@ Pliki te definiują obiekty biznesowe (encje ORM), które platforma automatyczni
 
 Enum musi być zdefiniowany w osobnym pliku C# - tutaj tylko deklaracja.
 
+> **Jawne wartości liczbowe.** Enum używany w kolumnie bazy danych powinien mieć w C#
+> **explicite przypisane numery** (`Reklamacja = 1, Naprawa = 2`). Wartość trafia do bazy,
+> więc nowe pozycje dopisuje się **na końcu** — bez zmiany istniejących, by uniknąć
+> renumeracji i rozjazdu z zapisanymi danymi. Dotyczy to zwłaszcza pól selector'a.
+
 ### 3. Interface - relacje polimorficzne
 
 Interface może być implementowany przez wiele tabel. Deklaracja samego interfejsu (jego metody/właściwości) jest w kodzie C#. W business.xml deklarujemy tylko nazwę interfejsu, aby móc tworzyć **relacje interface'owe**.
@@ -109,6 +122,12 @@ Interface może być implementowany przez wiele tabel. Deklaracja samego interfe
 <interface name="IKontrahent"/>
 <interface name="IPodmiotKasowy"/>
 ```
+
+> **`IRightsSource` — obiekt jako źródło praw.** Dodanie do tabeli `<interface>IRightsSource</interface>`
+> czyni obiekt (zwykle konfiguracyjny, np. magazyn) **źródłem uprawnień**: operatorowi przypisuje się
+> prawa do tego obiektu, co steruje dostępem do **danych operacyjnych referujących** do niego (np.
+> dokumentów z danego magazynu). System sam dba o widoczność i filtrowanie list. Mechanizm po stronie
+> kodu (`AccessRight`, `Login.GetObjectRight`) — patrz skill **soneta-programming**.
 
 **Relacja interface'owa** - kolumna typu interface może wskazywać na obiekt z dowolnej tabeli implementującej ten interface. W bazie danych zapisywana jest para: `(nazwa_tabeli, ID)`.
 
@@ -158,6 +177,23 @@ Pełna dokumentacja: [references/table-reference.md](references/table-reference.
 </table>
 ```
 
+## Klasy biznesowe (generowane obok)
+
+Plik `business.xml` to **połowa** definicji — druga to **klasy C#** tworzone równolegle.
+Z każdej `<table name="X" tablename="Xs">` generator tworzy bazy `XRow`/`XTable`, a programista
+dopisuje klasy konkretne: rekord `class X : <Moduł>Module.XRow` i tabelę
+`sealed partial class Xs : <Moduł>Module.XTable`.
+
+- **Pola `readonly`** (w tym selector) wymagają konstruktora inicjującego oraz konstruktora
+  `(RowCreator creator)` dla ORM; bez pól readonly wystarcza konstruktor domyślny.
+- **Selector** (`selector="true"`, pole `int`/enum) pozwala przechowywać wiele typów obiektów
+  w jednej tabeli: klasa obiektu biznesowego jest `abstract`, a warianty to podtypy rejestrowane
+  atrybutem `[BusinessRow]`.
+- Atrybut `[NewRow]` wyznacza pozycje menu „Nowy..."; jego brak blokuje dodawanie obiektu z UI.
+
+Pełny wzorzec (XML ↔ klasy, selector'y, konstruktory, `[BusinessRow]`, `[NewRow]`):
+[references/generated-classes.md](references/generated-classes.md).
+
 ## Typy danych kolumn
 
 ### Typy proste
@@ -195,28 +231,41 @@ Pełna dokumentacja: [references/table-reference.md](references/table-reference.
 - **`string length="max"`**: Tekst bez ograniczenia rozmiaru, ale wczytywany razem z rekordem.
 - **`text` i `binary`**: Nie mogą być używane jako klucze (`keyprimary`, `keyunique`).
 
+> **`text` vs `string length="max"` w tabelach konfiguracyjnych (cache).** Tabele konfiguracyjne
+> są cache'owane — z wyjątkiem kolumn `text`, których dane **nie trafiają do cache** i są wczytywane
+> osobnym zapytaniem SQL na żądanie. Dlatego:
+> - **`type="text"`** ma sens tylko dla danych **bardzo dużych** i odczytywanych **sporadycznie /
+>   jednokrotnie** (np. duży załącznik, log).
+> - dla pól odczytywanych **wielokrotnie** (nawet jeśli bywają długie) użyj **`type="string" length="max"`**
+>   — też bez limitu rozmiaru, ale wczytywane **razem z rekordem** (są w cache), co ogranicza liczbę
+>   zapytań SQL. Dotyczy to np. szablonów, instrukcji, treści wstrzykiwanych przy każdym użyciu.
+
 ## Workflow tworzenia business.xml
 
 1. **Analiza wymagań** - określ jakie obiekty i relacje są potrzebne
-2. **Zdefiniuj enumy** - typy wyliczeniowe używane w kolumnach
+2. **Zdefiniuj enum'y** - typy wyliczeniowe używane w kolumnach
 3. **Zdefiniuj interfejsy** - dla relacji polimorficznych (gdy kolumna może wskazywać na różne typy obiektów)
 4. **Zdefiniuj subrow** - typy złożone (adresy, numery dokumentów)
 5. **Zdefiniuj tabele** - główne obiekty biznesowe
 6. **Dodaj relacje** - powiązania między tabelami (zwykłe i interface'owe)
 7. **Dodaj indeksy** - klucze dla wyszukiwania
-8. **Waliduj** - sprawdź zgodność ze schematem XSD
+8. **Utwórz klasy biznesowe obok** - dla każdej tabeli klasa obiektu biznesowego i klasa tabeli;
+   przy polach `readonly` konstruktory; dla tabel z selector'em - `abstract` baza, podtypy
+   z `[BusinessRow]` i `[DefaultConstructor]`, pozycje `[NewRow]` (patrz [references/generated-classes.md](references/generated-classes.md))
+9. **Waliduj** - sprawdź zgodność ze schematem XSD
 
 ## Szczegółowa dokumentacja
 
 - **[references/modules-catalog.md](references/modules-catalog.md)** - katalog 34 modułów Soneta, tabele i interfejsy do relacji
 - **[references/table-reference.md](references/table-reference.md)** - kompletna dokumentacja atrybutów table i col
+- **[references/generated-classes.md](references/generated-classes.md)** - klasy biznesowe tworzone obok XML (Row/Table, konstruktory, selector, `[BusinessRow]`, `[NewRow]`)
 - **[references/relations-guide.md](references/relations-guide.md)** - tworzenie relacji między obiektami
 - **[references/examples.md](references/examples.md)** - przykłady z rzeczywistych modułów Soneta
 
 ## Konwencje nazewnicze Soneta
 
 - **Nazwa tabeli (name)**: PascalCase, liczba pojedyncza (np. `Towar`, `DokumentHandlowy`)
-- **Nazwa w bazie (tablename)**: PascalCase, liczba mnoga (np. `Towary`, `DokHandlowe`)
+- **Nazwa w bazie (tablename)**: PascalCase, liczba mnoga, **maks. 16 znaków** (np. `Towary`, `DokHandlowe`)
 - **Nazwa kolumny**: PascalCase (np. `KodPocztowy`, `DataWystawienia`)
 - **Klucz**: `Wg` + nazwa kolumny (np. `WgKodu`, `WgNazwy`)
 - **Namespace**: `Soneta.NazwaModulu`

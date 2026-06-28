@@ -15,18 +15,39 @@
 | Atrybut | Wymagany | Typ | Opis |
 |---------|----------|-----|------|
 | `name` | ✓ | string | Nazwa klasy C# (PascalCase, l.poj.) |
-| `tablename` | ✓ | string | Nazwa tabeli w bazie (PascalCase, l.mn.) |
+| `tablename` | ✓ | string | Nazwa tabeli w bazie (PascalCase, l.mn.). **Maks. 16 znaków** (patrz niżej) |
+| `description` | | string | Krótki (2–3 zdania) opis **zastosowania** tabeli — patrz niżej |
 | `guided` | | string | `Root` = główna tabela (dokument, kartoteka) |
 | `config` | | boolean | `true` = tabela konfiguracyjna (wdrożeniowa) |
 | `caption` | | string | Etykieta pojedynczego rekordu |
 | `tablecaption` | | string | Etykieta listy rekordów |
 | `namespace` | | string | Nadpisuje namespace z modułu |
-| `name8` | | string | Skrócona nazwa (max 8 znaków, legacy) |
+| `name8` | | string | **Obsolete** — nie stosować (pozostałość legacy) |
 | `cached` | | boolean | `true` = cache'owanie w pamięci |
 | `timestamp` | | boolean | `true` = automatyczne pole timestamp |
 | `optimisticlocking` | | boolean | `true` = optymistyczne blokowanie |
 | `lock` | | string | Tryb blokowania |
 | `warnings` | | string | `Off` = wyłącza ostrzeżenia |
+
+### Atrybut `tablename` — limit 16 znaków
+
+`tablename` może mieć **maksymalnie 16 znaków**. Wynika to z relacji interfejsowych, w których
+identyfikatorem wskazywanej tabeli jest 16-znakowe pole bazodanowe. Dłuższe nazwy skraca się,
+ale **skrócona forma nadal musi być w liczbie mnogiej** (to wciąż nazwa tabeli/kolekcji), np.
+`DokumentyHandlowe` → `tablename="DokHandlowe"`, `PozycjeDokumentow` → `tablename="PozDokumentow"`.
+Nazwa klasy C# (`name`, l. poj.) nie ma tego ograniczenia.
+
+### Atrybut `description` — opis zastosowania tabeli
+
+Krótki, **dwu- trzyzdaniowy** opis tego, po co tabela powstała. Pozwala szybko zorientować się
+w strukturze programu (również modelom językowym analizującym schemat). Opisuje przeznaczenie
+tabeli, nie pojedyncze pola; dla tabel szczegółów warto wskazać tabelę nadrzędną.
+
+```xml
+<table name="Zgloszenie" tablename="Zgloszenia" guided="Root"
+       description="Zgłoszenie serwisowe od klienta. Rejestruje reklamacje, naprawy
+                    i przeglądy wraz z opisem i datą przyjęcia.">
+```
 
 ### Rodzaje tabel
 
@@ -55,11 +76,11 @@
 ```xml
 <table name="Towar" 
        tablename="Towary" 
-       name8="Towar"
        guided="Root" 
        config="false"
        caption="Towar" 
        tablecaption="Towary"
+       description="Kartoteka towarów i usług. Podstawa dokumentów handlowych i magazynowych."
        cached="false"
        timestamp="false"
        optimisticlocking="true">
@@ -96,10 +117,29 @@
 |---------|-----|------|
 | `modifier` | string | Modyfikator C#: `public virtual`, `protected`, `internal` |
 | `important` | boolean | `true` = pole wyświetlane na liście |
-| `selector` | boolean | `true` = pole selektor typu |
+| `selector` | boolean | `true` = pole selector typu (patrz niżej) |
 | `batchfield` | boolean | `false` = pomijane przy batch operations |
 | `fulltext` | boolean | `true` = indeksowanie pełnotekstowe |
 | `specialaccess` | boolean | `true` = specjalne uprawnienia |
+
+#### Pole selector (`selector="true"`)
+
+Selector pozwala przechowywać **wiele typów obiektów w jednej tabeli** — jego wartość
+decyduje, którą klasę C# ORM zbuduje dla danego wiersza. Jest to pole typu **`int`**,
+najczęściej zadeklarowane jako **enum** (bardziej opisowy, zalecany), choć dopuszczalny jest
+też zwykły `int`. Typowa deklaracja:
+
+```xml
+<col name="Typ" type="TypZgloszenia" selector="true" readonly="true" required="true"/>
+```
+
+- `type` = enum lub `int` (dla enum'a — wartości w C# z jawnymi numerami),
+- `readonly="true"` — typ ustala się przy tworzeniu obiektu i nie zmienia,
+- `required="true"` — obiekt musi mieć określony typ.
+
+Po stronie C# klasa obiektu biznesowego jest `abstract`, a warianty to podtypy rejestrowane
+atrybutem `[BusinessRow]`; pozycje menu „Nowy" wyznacza `[NewRow]`. Pełny wzorzec:
+[generated-classes.md](generated-classes.md).
 
 ### Relacje
 

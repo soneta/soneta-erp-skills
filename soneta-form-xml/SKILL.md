@@ -5,6 +5,23 @@ description: "Specjalistyczna wiedza o WŁASNOŚCIOWYM formacie plików form.xml
 
 # Soneta Form XML - Formularze UI
 
+## Lokalizacja plików — biblioteka `.UI`
+
+Wszystkie definicje interfejsu użytkownika (`pageform.xml`, `viewform.xml`, `gridform.xml`,
+`lookupform.xml`, `form.xml`, a także ViewInfo i extendery UI) umieszcza się w **bibliotece UI**
+odpowiadającej modułowi biznesowemu — o nazwie modułu z sufiksem **`.UI`**:
+
+| Moduł biznesowy | Biblioteka UI |
+|---|---|
+| `Soneta.Handel` | `Soneta.Handel.UI` |
+| `Soneta.Business` | `Soneta.Business.UI` |
+| `Soneta.CRM` | `Soneta.CRM.UI` |
+
+Cel: **rozdzielenie logiki biznesowej od prezentacji**. Moduł biznesowy nie ma (i nie może mieć)
+referencji do warstwy UI ani do innych modułów biznesowych; biblioteka `.UI` **może** referować
+wiele modułów biznesowych, dzięki czemu formularz sięga po typy z różnych obszarów. Dlatego
+formularze obiektów z `Soneta.X` zapisuj w projekcie `Soneta.X.UI`, nie obok klas biznesowych.
+
 ## Typy plików formularzy
 
 | Typ pliku | Wzorzec nazwy | Przeznaczenie |
@@ -166,11 +183,22 @@ Jest generowany **dynamicznie** — typ właściwości decyduje o kontrolce (int
 | `Width` | Szerokość pola (`*` = wypełnij) |
 | `Height` | Wysokość (dla pól wieloliniowych) |
 | `Important` | `true` — pole oznaczone jako ważne (wyróżnione w widoku) |
-| `IsReadOnly` | Warunek tylko do odczytu (bindowalne) |
+| `IsReadOnly` | Warunek tylko do odczytu (bindowalne) — **zwykle zbędny**, patrz niżej |
 | `Format` | Formatowanie w standardzie .NET: `N2`, `d`, `C` |
 | `Footer` | Agregacja w stopce listy: `Sum`, `Count`, `Average`, `Min`, `Max` |
 | `CheckedValue` | Wartość dla RadioButton |
 | `Class` | Klasy stylów |
+
+**Kiedy NIE dodawać `IsReadOnly`.** Tryb tylko-do-odczytu jest wyliczany automatycznie — nie
+dokładaj `IsReadOnly="true"`, gdy pole i tak ma być nieedytowalne z jednego z poniższych powodów:
+- **property bez settera** (tylko `get`) — np. pole `readonly`/selektor z business.xml lub property
+  kalkulowana — jest read-only z definicji;
+- **prawa do obiektu biznesowego** — brak prawa zapisu blokuje edycję automatycznie;
+- **metoda `IsReadOnlyX()`** obok property `X` w klasie biznesowej — zwraca warunek, czy edytor ma
+  być zablokowany (to preferowany sposób sterowania read-only, bo logika zostaje przy danych).
+
+`IsReadOnly` na `Field` stosuj **tylko** gdy chcesz **nadpisać** ten standardowy mechanizm
+(np. zablokować w UI property, która ma setter i nie jest objęta `IsReadOnlyX()`).
 
 **RadioButton** — pola z tym samym `EditValue` i różnymi `CheckedValue`:
 ```xml
