@@ -249,11 +249,35 @@ Definicje kluczowych terminów biznesowych i technicznych używanych w kontekśc
 
 
 ## Otwarte kwestie
-Miejsce na nierozstrzygnięte pytania i decyzje do podjęcia w trakcie planowania. Kwestie mogą pojawiać się na każdym etapie — od wizji po specyfikację szczegółową:
+Otwarte kwestie to centralne miejsce, w którym gromadzone są **wszystkie decyzje projektowe pozostające do podjęcia**. Pełni rolę jednego źródła prawdy o tym, co jeszcze trzeba ustalić — dzięki niej zarówno autor planu, jak i pozostali odbiorcy dokumentu (zespół projektowy, implementacyjny, marketing, sprzedaż) widzą w każdym momencie, co blokuje dalsze prace i czego brakuje do zamknięcia danego etapu. Kwestie mogą pojawiać się na każdym etapie — od wizji po specyfikację szczegółową.
 
-| Nr | Etap | Kwestia | Status | Decyzja |
-|----|------|---------|--------|---------|
-| 1 | | [Opis problemu do rozstrzygnięcia] | Otwarta/Zamknięta | [Podjęta decyzja] |
+### Co trafia na listę
+Wpis zakładamy zawsze, gdy:
+- pojawia się pytanie projektowe bez jednoznacznej odpowiedzi — zapisujemy je zamiast przyjmować domysł,
+- istnieje kilka wariantów rozwiązania i wybór wymaga decyzji,
+- brakuje informacji od osoby trzeciej (klient, inny zespół, dział prawny, kwestie licencyjne),
+- decyzję świadomie odkładamy, aby nie blokować bieżącego etapu.
+
+Każde nierozstrzygnięte założenie ukryte w treści dokumentu powinno mieć odpowiadający mu wpis na liście otwartych kwestii.
+
+### Struktura tabeli
+
+| Nr | Etap | Obszar | Kwestia | Wpływ | Blokująca | Status | Decyzja i uzasadnienie | Data |
+|----|------|--------|---------|-------|-----------|--------|------------------------|------|
+| 1 | 2 | Dane | [Opis problemu do rozstrzygnięcia] | Wysoki/Średni/Niski | Tak/Nie | Otwarta / W trakcie / Zamknięta | [Podjęta decyzja + uzasadnienie] | RRRR-MM-DD |
+
+- **Obszar** — czego kwestia dotyczy (dane, UI, integracje, uprawnienia, wydajność, licencje, proces…).
+- **Wpływ** — skala konsekwencji decyzji dla projektu.
+- **Blokująca** — czy kwestia uniemożliwia zatwierdzenie etapu lub rozpoczęcie implementacji.
+- **Status** — cykl życia kwestii: *Otwarta* → *W trakcie* → *Zamknięta*.
+- **Decyzja i uzasadnienie** — przy zamknięciu zapisujemy *co* postanowiono oraz *dlaczego*. Zamkniętych kwestii nie usuwamy — stanowią historię decyzji projektowych.
+
+### Zasady prowadzenia
+1. Numeracja jest stała — raz nadany numer nie zmienia się, a zamknięte pozycje pozostają na liście.
+2. Lista jest aktualizowana na bieżąco — decyzja podjęta w trakcie rozmowy od razu zmienia status na *Zamknięta* wraz z uzupełnieniem decyzji.
+3. Pełną listę prezentujemy na końcu każdego etapu, wyraźnie wskazując kwestie wciąż otwarte oraz blokujące.
+4. Bramka jakości — nie przechodzimy do kolejnego etapu z otwartymi kwestiami blokującymi dla tego etapu; kwestie nieblokujące można przenieść dalej, ale pozostają widoczne.
+5. Powiązanie z TODO — „Zamknięcie otwartych kwestii" jest pozycją dokumentu TODO; do implementacji nie wchodzimy z otwartymi kwestiami blokującymi.
 
 
 ## Przygotowanie dokumentu TODO
