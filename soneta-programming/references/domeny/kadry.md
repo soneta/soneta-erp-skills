@@ -96,3 +96,12 @@ Każdy wzorzec (`KADRY-Xn`, gdzie `X` = litera sekcji z listy zadań) ma stałą
 | KADRY10 — Deklaracje (ZUS, PIT, PFRON, PPK) | [kadry/KADRY10-deklaracje.md](kadry/KADRY10-deklaracje.md) | KADRY-J* |
 | KADRY11 — Ewidencje pracownicze | [kadry/KADRY11-ewidencje.md](kadry/KADRY11-ewidencje.md) | KADRY-K* |
 
+## Powiązane dokumenty
+
+- [`safe-code.md`](../safe-code.md) — sesja, transakcje, blokada optymistyczna, zasady bezpiecznego kodu.
+- [`session-login.md`](../session-login.md) — `Session`, `Login`, `Database`.
+- [`worker-extender.md`](../worker-extender.md) — workery, akcje menu Czynności, bindowanie.
+- [`rowcondition.md`](../rowcondition.md) — serwerowy LINQ, `RowCondition`, `SubTable[condition]`.
+- [`features.md`](../features.md) — cechy (`Features`), typy, dostęp typowany/nietypowany.
+- [`scan-props.md`](../scan-props.md) / [`scan-workers.md`](../scan-workers.md) — inwentaryzacja pól i workerów; weryfikacja dokładnych nazw i typów pól obiektu z DLL.
+

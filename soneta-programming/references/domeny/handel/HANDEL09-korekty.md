@@ -4,7 +4,7 @@
 
 Rozdział obejmuje korekty (ilościowe, ceny, wartości przyjęcia) oraz dokumenty „specjalne": inwentaryzację (INW), fakturę zaliczkową wraz z jej rozliczeniem oraz przesunięcie międzymagazynowe (MM). Wszystkie wzorce operują **wyłącznie na publicznym kontrakcie** platformy. Kluczowym narzędziem jest serwis relacji `IRelacjeService` (namespace `Soneta.Handel.RelacjeDokumentow.Api`), opisany w rozdziale o relacjach — tutaj koncentrujemy się na metodzie `NowaKorekta` oraz na specyfice każdego typu dokumentu.
 
-> **Wspólne reguły** (powtórzone z fundamentów, [`safe-code.md`](../safe-code.md)):
+> **Wspólne reguły** (powtórzone z fundamentów, [`safe-code.md`](../../safe-code.md)):
 > - Dostęp do serwisu: `var rel = session.GetRequiredService<IRelacjeService>();` (wymaga `using Microsoft.Extensions.DependencyInjection;`).
 > - Dokument **nadrzędny / korygowany musi być zatwierdzony** (`StanDokumentuHandlowego.Zatwierdzony`) przed wywołaniem relacji.
 > - Każda modyfikacja w transakcji (`session.Logout(editMode: true)` + `Commit()` / `CommitUI()` w workerze), potem `session.Save()`. Magazyn księguje się dopiero po `Save()`.

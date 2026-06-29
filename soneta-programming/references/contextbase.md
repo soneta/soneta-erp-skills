@@ -39,6 +39,7 @@ public class TowaryParams(Context context) : ContextBase(context)
 * Bindowanie we viewform.xml wewnątrz `FilterPanel` nie wymaga użycia `Context.` (np `TowaryParams`), ponieważ 
   `Context` jest dostępne bezpośrednio wewnątrz `FilterPanel`
 * Bindowanie w pageform.xml wymaga użycia `Context.` (np `Context.TowaryParams`)
+* składnię panelu filtrów (`Flow Class="DataBar"`, bindy `{XParams.Pole}`) po stronie form.xml opisuje skill `/soneta-form-xml`
 * Gdy property nie używa context -> stosuj `[Accessor(AutoChange = true)]` - zamiennie w kodzie set property można 
   również użyć `Session.InvokeChanged()` lub `Context.InvokeChanged()`
 

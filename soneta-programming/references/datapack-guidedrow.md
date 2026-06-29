@@ -23,7 +23,8 @@ Hierarchię ogólną opisuje [SKILL.md](../SKILL.md#hierarchia-głównych-klas).
 
 ## Atrybut guided w business.xml
 
-Atrybut `guided` w definicji tabeli określa rolę obiektu w strukturze Datapack.
+Atrybut `guided` w definicji tabeli określa rolę obiektu w strukturze Datapack. Deklarację
+`guided`/`relguided` w definicji tabeli opisuje skill `/soneta-business-xml`.
 
 | Wartość | Klasa bazowa | Opis |
 |---------|--------------|------|

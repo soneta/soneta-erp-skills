@@ -1,8 +1,9 @@
 # Typy wierszy: klasy Row/Table, konstruktory, selector
 
 Ten dokument opisuje, jak programista **implementuje klasy** dla tabeli zdefiniowanej w
-`business.xml` — od strony kodu i działania ORM. Definiowanie samego pliku XML opisuje skill
-**soneta-business-xml** (tam też pełny wzorzec „XML ↔ klasy").
+`business.xml` — od strony kodu i działania ORM. Definicję tabeli, kolumn, selektora i atrybutów
+(`guided`, `selector`, `[BusinessRow]`/`[NewRow]` po stronie XML) opisuje skill `/soneta-business-xml`
+(generated-classes.md, table-reference.md) — tam też pełny wzorzec „XML ↔ klasy".
 
 ## Klasy obiektu biznesowego i tabeli (poziom 3)
 

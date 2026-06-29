@@ -6,7 +6,8 @@ operacyjnych referujących** do niego — a nie tylko do samego obiektu konfigur
 operator z prawem do danego magazynu widzi tylko dokumenty przypisane do tego magazynu, a do
 dokumentów z innych magazynów dostępu nie ma.
 
-- Włączenie: w `business.xml` dodaj do tabeli `<interface>IRightsSource</interface>`. Od tego momentu
+- Włączenie: w `business.xml` dodaj do tabeli `<interface>IRightsSource</interface>` (deklarację
+  `<interface>` opisuje skill `/soneta-business-xml`). Od tego momentu
   system sam dba o widoczność obiektów i propagację praw. (`IRightsSourceEx` dokłada pod-kategorię,
   `IsRightsSourceEnable()`, `IsRightsSourceVisible()`.)
 - Odczyt uprawnień: `Row.AccessRight`, `Table.AccessRight`, `Login.GetObjectRight(source)` →

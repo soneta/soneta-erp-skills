@@ -127,7 +127,7 @@ Interface może być implementowany przez wiele tabel. Deklaracja samego interfe
 > czyni obiekt (zwykle konfiguracyjny, np. magazyn) **źródłem uprawnień**: operatorowi przypisuje się
 > prawa do tego obiektu, co steruje dostępem do **danych operacyjnych referujących** do niego (np.
 > dokumentów z danego magazynu). System sam dba o widoczność i filtrowanie list. Mechanizm po stronie
-> kodu (`AccessRight`, `Login.GetObjectRight`) — patrz skill **soneta-programming**.
+> kodu (`AccessRight`, `Login.GetObjectRight`) — patrz skill `/soneta-programming` (rights-source.md).
 
 **Relacja interface'owa** - kolumna typu interface może wskazywać na obiekt z dowolnej tabeli implementującej ten interface. W bazie danych zapisywana jest para: `(nazwa_tabeli, ID)`.
 
@@ -182,7 +182,8 @@ Pełna dokumentacja: [references/table-reference.md](references/table-reference.
 Plik `business.xml` to **połowa** definicji — druga to **klasy C#** tworzone równolegle.
 Z każdej `<table name="X" tablename="Xs">` generator tworzy bazy `XRow`/`XTable`, a programista
 dopisuje klasy konkretne: rekord `class X : <Moduł>Module.XRow` i tabelę
-`sealed partial class Xs : <Moduł>Module.XTable`.
+`class Xs : <Moduł>Module.XTable`. Klasy te **nie muszą** być `partial` ani `sealed`
+(`partial` stosuje się tylko, gdy faktycznie dzielisz klasę na kilka plików).
 
 - **Pola `readonly`** (w tym selector) wymagają konstruktora inicjującego oraz konstruktora
   `(RowCreator creator)` dla ORM; bez pól readonly wystarcza konstruktor domyślny.
@@ -192,7 +193,8 @@ dopisuje klasy konkretne: rekord `class X : <Moduł>Module.XRow` i tabelę
 - Atrybut `[NewRow]` wyznacza pozycje menu „Nowy..."; jego brak blokuje dodawanie obiektu z UI.
 
 Pełny wzorzec (XML ↔ klasy, selector'y, konstruktory, `[BusinessRow]`, `[NewRow]`):
-[references/generated-classes.md](references/generated-classes.md).
+[references/generated-classes.md](references/generated-classes.md). Implementację klas po stronie
+kodu opisuje skill `/soneta-programming` (row-types.md).
 
 ## Typy danych kolumn
 
@@ -261,6 +263,9 @@ Pełny wzorzec (XML ↔ klasy, selector'y, konstruktory, `[BusinessRow]`, `[NewR
 - **[references/generated-classes.md](references/generated-classes.md)** - klasy biznesowe tworzone obok XML (Row/Table, konstruktory, selector, `[BusinessRow]`, `[NewRow]`)
 - **[references/relations-guide.md](references/relations-guide.md)** - tworzenie relacji między obiektami
 - **[references/examples.md](references/examples.md)** - przykłady z rzeczywistych modułów Soneta
+
+> Po zdefiniowaniu struktury danych w business.xml kolumny prezentuje się w formularzach
+> (elementy Field, Grid) — patrz skill `/soneta-form-xml` (ELEMENTS.md).
 
 ## Konwencje nazewnicze Soneta
 

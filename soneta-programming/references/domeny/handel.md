@@ -140,4 +140,4 @@ Każdy wzorzec (`HANDEL-Wn`) ma stałą strukturę:
 - [`features.md`](../features.md) — cechy (`Features`), typy, dostęp typowany/nietypowany.
 - [`datapack-guidedrow.md`](../datapack-guidedrow.md) — eksport/import, `GuidedRow`.
 - [`crm.md`](crm.md) — receptury dla `Kontrahent` (nabywca/odbiorca/płatnik dokumentu).
-- [`scan-props.md`](../scan-props.md) / [`scan-workers.md`](../scan-workers.md) — inwentaryzacja pól i workerów.
+- [`scan-props.md`](../scan-props.md) / [`scan-workers.md`](../scan-workers.md) — inwentaryzacja pól i workerów; weryfikacja dokładnych nazw i typów pól obiektu z DLL.

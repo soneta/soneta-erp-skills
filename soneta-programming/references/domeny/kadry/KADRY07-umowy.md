@@ -203,7 +203,7 @@ pracowników.
 
 **Wariant A — wywołanie workera platformy (zalecane):** zainicjuj `DodajUmowęWorker`, ustaw
 `Pracownicy` i `Pars`, wywołaj `DodajUmowę()` (worker uruchamia się jak każdy worker — patrz
-[`worker-extender.md`](../worker-extender.md), sekcja *Programowe użycie workera*).
+[`worker-extender.md`](../../worker-extender.md), sekcja *Programowe użycie workera*).
 
 ```csharp
 var kadry = session.GetKadry();

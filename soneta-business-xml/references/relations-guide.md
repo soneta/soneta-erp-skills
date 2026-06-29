@@ -21,6 +21,9 @@
 | Historia | Wersjonowanie temporalne | FK + okres | Ceny towaru w czasie |
 | Zwrotna | Do tej samej tabeli | FK (ID) | Kategoria nadrzędna |
 
+> Jak korzystać z relacji w kodzie (nawigacja, LINQ, RowCondition) opisuje skill
+> `/soneta-programming` (rowcondition.md).
+
 ---
 
 ## Relacja jeden-do-wielu

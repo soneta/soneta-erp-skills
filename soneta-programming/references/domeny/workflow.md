@@ -119,3 +119,12 @@ Znacznik ★ przy kodzie wzorca oznacza, że wzorzec ma własny, dedykowany test
 | WORKFLOW08 — Zadania CRM (aktywności) | [workflow/WORKFLOW08-zadania-crm.md](workflow/WORKFLOW08-zadania-crm.md) | WORKFLOW-H* |
 | WORKFLOW09 — Powiadomienia, triggery i automatyzacja | [workflow/WORKFLOW09-automatyzacja.md](workflow/WORKFLOW09-automatyzacja.md) | WORKFLOW-I* |
 | WORKFLOW10 — Sprawy (DMS) i rejestr | [workflow/WORKFLOW10-sprawy-dms.md](workflow/WORKFLOW10-sprawy-dms.md) | WORKFLOW-J* |
+
+## Powiązane dokumenty
+
+- [`safe-code.md`](../safe-code.md) — sesja, transakcje, blokada optymistyczna, zasady bezpiecznego kodu.
+- [`session-login.md`](../session-login.md) — `Session`, `Login`, `Database`.
+- [`worker-extender.md`](../worker-extender.md) — workery, akcje menu Czynności, bindowanie.
+- [`rowcondition.md`](../rowcondition.md) — serwerowy LINQ, `RowCondition`, `SubTable[condition]`.
+- [`features.md`](../features.md) — cechy (`Features`), typy, dostęp typowany/nietypowany.
+- [`scan-props.md`](../scan-props.md) / [`scan-workers.md`](../scan-workers.md) — inwentaryzacja pól i workerów; weryfikacja dokładnych nazw i typów pól obiektu z DLL.

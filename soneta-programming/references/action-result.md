@@ -6,6 +6,10 @@ Akcje (metody worker, akcje extender, handlery Command, callbacki) zwracają **a
 sterujący tym, co stanie się w UI po wykonaniu logiki biznesowej. Typ zwróconego obiektu decyduje
 o sposobie obsługi.
 
+> Akcje zwracające action result tworzy się w workerze/extenderze — patrz [worker-extender.md](worker-extender.md).
+> Element `Command` (`MethodName`/`OpenMethodName`) wywołujący taką akcję definiuje się po stronie
+> form.xml — opisuje to skill `/soneta-form-xml`.
+
 ## Spis treści
 
 - [Najważniejsza zasada](#najważniejsza-zasada)

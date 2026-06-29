@@ -9,8 +9,8 @@ wyłącznie pasujące wiersze. `DokHandlowe` to duża tabela **operacyjna** (`gu
 nigdy nie iteruj jej w całości z `if` w pamięci; zawsze zawężaj zakres (okres, kontrahent, definicja)
 przez SQL i — przy analizach poprzecznych — ogranicz przedział czasowy.
 
-> **Fundamenty** (sesja, transakcja, blokada optymistyczna) opisuje [`safe-code.md`](../safe-code.md),
-> a mechanikę warunków serwerowych [`rowcondition.md`](../rowcondition.md) — tu się do nich
+> **Fundamenty** (sesja, transakcja, blokada optymistyczna) opisuje [`safe-code.md`](../../safe-code.md),
+> a mechanikę warunków serwerowych [`rowcondition.md`](../../rowcondition.md) — tu się do nich
 > odwołujemy, nie powtarzamy. Cały kod jest zgodny z **C# 10** i operuje wyłącznie na **publicznym
 > kontrakcie** platformy. W wyrażeniu LINQ wolno użyć **tylko pól bazodanowych**; pole kalkulowane
 > rzuci `LinqConditionException`.
@@ -262,7 +262,7 @@ foreach (DokumentHandlowy dok in hm.DokHandlowe.WgDaty[cond]) { /* ... */ }
 
 **Pułapki:**
 - **Nie używaj `View`** w kodzie biznesowym (to obiekt UI) — filtruj `SubTable[expression]` lub
-  `RowCondition.FromExpression` ([`rowcondition.md`](../rowcondition.md)).
+  `RowCondition.FromExpression` ([`rowcondition.md`](../../rowcondition.md)).
 - Porównuj definicję/magazyn po **rekordzie** (`dok.Definicja == def`), nie po stringu symbolu —
   rekord pobierz raz przez `WgSymbolu[...]`/`WgSymbol[...]` poza pętlą.
 - Stan porównuj enumem (`dok.Stan == StanDokumentuHandlowego.Zatwierdzony`); skróty `dok.Zatwierdzony`

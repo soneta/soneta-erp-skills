@@ -191,8 +191,9 @@ Jest generowany **dynamicznie** — typ właściwości decyduje o kontrolce (int
 
 **Kiedy NIE dodawać `IsReadOnly`.** Tryb tylko-do-odczytu jest wyliczany automatycznie — nie
 dokładaj `IsReadOnly="true"`, gdy pole i tak ma być nieedytowalne z jednego z poniższych powodów:
-- **property bez settera** (tylko `get`) — np. pole `readonly`/selektor z business.xml lub property
-  kalkulowana — jest read-only z definicji;
+- **property bez settera** (tylko `get`) — np. pole `readonly`/selektor z definicji danych lub
+  property kalkulowana — jest read-only z definicji (definicję pól tabeli opisuje skill
+  **`/soneta-business-xml`**, table-reference.md);
 - **prawa do obiektu biznesowego** — brak prawa zapisu blokuje edycję automatycznie;
 - **metoda `IsReadOnlyX()`** obok property `X` w klasie biznesowej — zwraca warunek, czy edytor ma
   być zablokowany (to preferowany sposób sterowania read-only, bo logika zostaje przy danych).
@@ -229,6 +230,10 @@ potrzeba `Class` ani specjalnego edytora:
 <!-- Dynamiczny element z kodu C# -->
 <Include Source="{DynamicznyFormularz}" />
 ```
+
+`Command` wywołuje metodę (`MethodName`) lub otwiera obiekt (`OpenMethodName`) z kontekstu —
+zwykle z extendera/workera. Co taka akcja zwraca (action result: zamknięcie okna, otwarcie
+formularza, komunikat) opisuje skill **`/soneta-programming`** (action-result.md, worker-extender.md).
 
 ## Kolekcje i listy
 
@@ -286,8 +291,8 @@ formularzu lub w oknie:
 </Grid>
 ```
 
-Stronę logiki (jak zbudować `ViewInfo` jako property i filtrować widok) opisuje skill
-**`/soneta-programming`** (rozdz. ViewInfo i RowCondition).
+Stronę logiki (jak zbudować `ViewInfo` jako property/folder i filtrować widok) opisuje skill
+**`/soneta-programming`** (viewinfo.md, rowcondition.md).
 
 ### Multi-select — `SelectedValue` i reaktywne pole pochodne
 
@@ -343,8 +348,8 @@ leżą wprost na obiekcie sterującym oknem (`{DataSource}`), **nie ustawiaj `Da
 </Grid>
 ```
 
-Stronę C# (klasa `Params : ContextBase` vs property na obiekcie głównym z
-`[Accessor(AutoChange = true)]`) opisuje skill **`/soneta-programming`** (rozdz. ViewInfo).
+Stronę C# (klasę parametrów `Params : ContextBase` vs property na obiekcie głównym z
+`[Accessor(AutoChange = true)]`) opisuje skill **`/soneta-programming`** (contextbase.md, context.md).
 
 ## Bindowanie danych
 
@@ -402,6 +407,14 @@ bez osobnego obiektu kontekstu:
 | `{Licence.HAN}` | Warunek licencji (używany w `Renderable`) |
 | `{.}` | Aktualna wartość w kontekście elementu |
 
+- Czym są **workery i extendery** (`{Workers.Alias.Pole}`, `{new Extender.Pole}`) — obiekty
+  doczepiane do Row z dodatkowymi property — opisuje skill **`/soneta-programming`**
+  (worker-extender.md).
+- Mechanizm **cech** (`{Features.NazwaCechy}`, `VisibleFeatures` na `Grid`) opisuje skill
+  **`/soneta-programming`** (features.md).
+- Klasę parametrów stojącą za `{Context...}` (`Params : ContextBase`) opisuje skill
+  **`/soneta-programming`** (contextbase.md, context.md).
+
 ### Wyrażenia warunkowe (RowCondition)
 
 ```xml
@@ -410,6 +423,11 @@ Visibility="{?!State=Added}"            <!-- negacja -->
 Visibility="{?Typ=Towar or Typ=Usługa}" <!-- OR -->
 Visibility="{?Aktywny and Widoczny}"    <!-- AND -->
 ```
+
+> **Dwie strony tego samego pojęcia.** RowCondition w form.xml to tekstowe wyrażenie `{?...}`
+> rozwiązywane po stronie UI; jego odpowiednikiem w kodzie biznesowym jest serwerowy warunek
+> `Expression<Predicate<TRow>>`. Stronę kodu opisuje skill **`/soneta-programming`**
+> (rowcondition.md) — tam te same warunki buduje się i komponuje w C#.
 
 ## Atrybut Class — najważniejsze wartości
 
@@ -442,6 +460,10 @@ Składnia `Condition` może używać nawiasów kwadratowych gdy nazwa pola zawie
 ```xml
 <Appearance Condition="{?[Typ] = 'usługa'}" ForeColor="#800080" />
 ```
+
+Warunek `Appearance.Condition` to ta sama składnia co RowCondition w `Visibility` — jego
+odpowiednikiem po stronie kodu jest `Expression<Predicate<TRow>>`; patrz skill
+**`/soneta-programming`** (rowcondition.md).
 
 ## Przykład: pageform.xml
 
@@ -527,3 +549,17 @@ Dołączanie: `<Include Source="Adres.form.xml" DataContext="{Adres}" />`
 - Przykład pageform.xml: [assets/MojObiekt.Ogolne.pageform.xml](assets/MojObiekt.Ogolne.pageform.xml)
 - Przykład pageform.xml (warunki handlowe): [assets/Kontrahent.WarunkiHandlowe.pageform.xml](assets/Kontrahent.WarunkiHandlowe.pageform.xml)
 - Przykład form.xml (adres): [assets/Adres.form.xml](assets/Adres.form.xml)
+
+## Powiązane skille — gdzie szukać strony kodu
+
+Form.xml opisuje **prezentację**; logikę i dane opisują skille obok. Mapa pojęcie → artykuł:
+
+| Pojęcie w form.xml | Strona kodu / danych |
+|---|---|
+| `Visibility="{?...}"`, `Appearance.Condition` | skill `/soneta-programming` — rowcondition.md (`Expression<Predicate<TRow>>`) |
+| `Grid EditValue="{...View}"` (ViewInfo) | skill `/soneta-programming` — viewinfo.md |
+| `Flow Class="DataBar"`, `{XParams.Pole}` | skill `/soneta-programming` — contextbase.md, context.md |
+| `{Features.NazwaCechy}`, `VisibleFeatures` | skill `/soneta-programming` — features.md |
+| `{Workers.Alias.Pole}`, `{new Extender.Pole}` | skill `/soneta-programming` — worker-extender.md |
+| `Command MethodName`/`OpenMethodName` | skill `/soneta-programming` — action-result.md, worker-extender.md |
+| pole `readonly`/selektor, definicja pól | skill `/soneta-business-xml` — table-reference.md |

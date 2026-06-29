@@ -21,7 +21,7 @@
 
 **Nadawanie kodu / numeracji:** `Kod` jest polem tekstowym ustawianym jawnie. Może być wymagana jego
 unikalność (zależnie od konfiguracji modułu CRM); w razie kolizji `Save()` zgłosi `RowException` z
-`DuplicateKeyException` w `InnerException`.
+`DuplicateKeyException` w `InnerException` (obsługa wyjątków zapisu — patrz [../../safe-code.md](../../safe-code.md)).
 
 **Snippet:**
 
@@ -49,7 +49,7 @@ session.Save();                                // zapis do bazy; tu wykryte konf
 - Tworzenie **wyłącznie w transakcji** (`session.Logout(editMode: true)`). `AddRow` przed
   ustawianiem pól.
 - W workerze/extenderze (uruchamianym z UI) używaj `t.CommitUI()` zamiast `t.Commit()`
-  (safe-code, [`worker-extender.md`](../worker-extender.md)).
+  (safe-code, [`worker-extender.md`](../../worker-extender.md)).
 - `Nazwa` jest zapisywalna; `NazwaFormatowana`/`NazwaPierwszaLinia` są kalkulowane — nie ustawiaj.
 - Dla podmiotu unijnego ustaw `EuVAT` (z prefiksem kraju) — platforma sama dostosuje `RodzajPodmiotu`.
 - Brak `Commit()` = automatyczny rollback przy `Dispose()`.

@@ -8,7 +8,7 @@ powiązań oraz odczyt łańcucha relacji i stanu pokrycia zamówienia.
 
 > **Punkt wejścia — `IRelacjeService`.** Cała logika relacji handlowych jest udostępniona dodatkom
 > zewnętrznym **wyłącznie** przez serwis `Soneta.Handel.RelacjeDokumentow.Api.IRelacjeService`
-> (scope: `Session`). Workery wykonawcze (`PowiazDokumentyWorker`, `UsunPowiazanieDokumentowWorker`,
+> (scope: `Session`; pobieranie serwisów z DI — patrz [../../services.md](../../services.md)). Workery wykonawcze (`PowiazDokumentyWorker`, `UsunPowiazanieDokumentowWorker`,
 > akcje menu „Relacje”) są **internal** — nie instancjonuj ich z dodatku. Pobranie serwisu:
 >
 > ```csharp

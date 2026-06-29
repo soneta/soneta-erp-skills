@@ -10,12 +10,12 @@
 
 | Wariant | Mechanizm |
 |---|---|
-| Iteracja z warunkiem | serwerowy LINQ `crm.Kontrahenci[(Kontrahent k) => …]` (patrz [`rowcondition.md`](../rowcondition.md)) |
-| Masowa aktualizacja | jedna transakcja, paczki (patrz [`safe-code.md`](../safe-code.md)) |
+| Iteracja z warunkiem | serwerowy LINQ `crm.Kontrahenci[(Kontrahent k) => …]` (patrz [`rowcondition.md`](../../rowcondition.md)) |
+| Masowa aktualizacja | jedna transakcja, paczki (patrz [`safe-code.md`](../../safe-code.md)) |
 | Masowa zmiana formy prawnej | worker `ZmienFormePrawnaKontrahentowWorker` |
 | Masowe przypisanie kategorii | worker `KontrahenciPrzypiszKategorieWorker` |
 | Masowa weryfikacja VAT/VIES (online) | `KontrahenciBialaListaWorker`, `KontrahenciDaneZMfWorker`, `KontrahenciDaneZViesWorker` |
-| Eksport / import | datapack / business.xml (patrz [`datapack-guidedrow.md`](../datapack-guidedrow.md)) |
+| Eksport / import | datapack / business.xml (patrz [`datapack-guidedrow.md`](../../datapack-guidedrow.md)) |
 
 **Snippet:**
 

@@ -5,8 +5,8 @@
 Rozdział zbiera wzorce „okołodokumentowe": bezpieczne pozyskanie kontrahenta i towaru do pozycji,
 przeliczanie jednostek, walidację przed zatwierdzeniem, obsługę błędów i blokady optymistycznej,
 odczyt metadanych (`ChangeInfos`) oraz pracę z definicjami i numeracją dokumentu. Fundamenty (sesja,
-transakcja, `Save`, blokada optymistyczna) opisuje [`safe-code.md`](../safe-code.md) i
-[`session-login.md`](../session-login.md) — tutaj się do nich odwołujemy.
+transakcja, `Save`, blokada optymistyczna) opisuje [`safe-code.md`](../../safe-code.md) i
+[`session-login.md`](../../session-login.md) — tutaj się do nich odwołujemy.
 
 > Cały kod jest zgodny z C# 10 (target-typed `new`, `var`, file-scoped namespace, wyrażenia `switch`,
 > nazwane parametry `bool`) i operuje **wyłącznie na publicznym kontrakcie** platformy.

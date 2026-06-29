@@ -177,6 +177,7 @@ otwierania konkretnego dokumentu — np. do walidacji dostępności przed rozcho
 
 **Pola i typy:** `mag.Zasoby: Zasoby` (tabela). Indeksy zwracają `SubTable<Zasob>`.
 `OkresMagazynowy` z `mag.OkresyMag` (patrz HANDEL-W39). Ilości to `Quantity`.
+Indeksy kolekcji (`WgTowar`, `WgMagazyn`, …) i wybór klucza opisuje [../../row-types.md](../../row-types.md).
 
 **Snippet:**
 

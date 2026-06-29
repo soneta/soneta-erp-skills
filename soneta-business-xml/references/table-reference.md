@@ -60,6 +60,9 @@ tabeli, nie pojedyncze pola; dla tabel szczegółów warto wskazać tabelę nadr
 - Najważniejsze tabele transakcyjne (DokumentHandlowy, Platnosc)
 - Używaj dla dokumentów wymagających integracji
 
+> Semantykę paczek danych/eksportu (Datapack, ExportedRow) opisuje skill `/soneta-programming`
+> (datapack-guidedrow.md).
+
 **Bez `guided`** - Tabele szczegółów:
 - Pozycje dokumentu, kody towaru, adresy
 - Muszą mieć dokładnie jedną relację `relguided="inner"`
@@ -139,7 +142,8 @@ też zwykły `int`. Typowa deklaracja:
 
 Po stronie C# klasa obiektu biznesowego jest `abstract`, a warianty to podtypy rejestrowane
 atrybutem `[BusinessRow]`; pozycje menu „Nowy" wyznacza `[NewRow]`. Pełny wzorzec:
-[generated-classes.md](generated-classes.md).
+[generated-classes.md](generated-classes.md). Wzorzec selektora po stronie kodu opisuje też
+skill `/soneta-programming` (row-types.md).
 
 ### Relacje
 
@@ -248,6 +252,9 @@ Walidator pola wywoływany przy zapisie.
 |---------|----------|-----|------|
 | `name` | ✓ | string | Pełna nazwa klasy weryfikatora |
 | `onadded` | | boolean | `true` = tylko przy dodawaniu |
+
+> `business.xml` deklaruje jedynie nazwę weryfikatora — **kod** weryfikatora pisze się po
+> stronie klasy obiektu biznesowego (skill `/soneta-programming`).
 
 ---
 

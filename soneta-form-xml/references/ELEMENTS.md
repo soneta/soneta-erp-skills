@@ -225,6 +225,8 @@ Przycisk/polecenie.
 | `CommandStyle` | enum | `Default`, `Important`, `Red`, `Green`, `Blue` |
 | `Key` | string | Skrót klawiszowy |
 
+`MethodName`/`OpenMethodName` wskazują metodę w kontekście (zwykle extender/worker). Co taka akcja zwraca (action result) opisuje skill `/soneta-programming` (action-result.md, worker-extender.md).
+
 ---
 
 ## Elementy kolekcji
@@ -284,6 +286,8 @@ Tabela danych.
   <UserFilter Value="filtr" />
 </Grid>
 ```
+
+Gdy `EditValue` wskazuje property zwracającą `ViewInfo` (a nie prostą kolekcję), zawartość, filtr i blokady listy buduje kod — jak zbudować ViewInfo jako property/folder opisuje skill `/soneta-programming` (viewinfo.md). `VisibleFeatures` odwołuje się do mechanizmu cech — patrz skill `/soneta-programming` (features.md).
 
 #### Atrybuty przyciski (enumCollectionButtonState)
 - `Auto` - automatycznie
@@ -780,6 +784,8 @@ Wszystkie elementy UI dziedziczą następujące atrybuty z `uiElement`:
 <Appearance Condition="{?[Typ] = 'usługa'}" ForeColor="#800080" />
 ```
 
+Wyrażenie `Condition` (jak `Visibility="{?...}"`) to forma RowCondition; stronę kodu (`Expression<Predicate<TRow>>`) opisuje skill `/soneta-programming` (rowcondition.md) — to dwie strony tego samego pojęcia: XML vs C#.
+
 ---
 
 ## Składnia wyrażeń bindowania
@@ -795,6 +801,8 @@ Stosowany gdy widok listy (`viewform.xml`) korzysta z obiektu ViewInfo który ag
 ```
 
 Wzorzec `{ObiektViewInfo+TypParams.Właściwość}` jest typowy dla paneli filtrów w viewform.xml — gdzie `+` łączy obiekt ViewInfo z typem jego pola będącego obiektem parametrów.
+
+Stronę kodu opisuje skill `/soneta-programming`: budowę ViewInfo (viewinfo.md) oraz klasę parametrów `Params : ContextBase` (contextbase.md, context.md). Workery i extendery z bindów `{Workers.X.Y}` / `{new Ext.Y}` — worker-extender.md; cechy `{Features.X}` — features.md.
 
 ---
 

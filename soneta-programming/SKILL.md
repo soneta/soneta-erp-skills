@@ -313,6 +313,11 @@ sekcja [Klasa Session - fundamenty](#klasa-session---fundamenty) powyżej. Gotow
 end-to-end (odczyt, tworzenie, modyfikacja, kasowanie, obsługa błędów, pełny import) -
 patrz [references/examples.md](references/examples.md).
 
+Gotowe **receptury per obiekt biznesowy** (realne pola, kolekcje i workery) są w `references/domeny/`:
+[crm.md](references/domeny/crm.md) (`Kontrahent`), [handel.md](references/domeny/handel.md)
+(`DokumentHandlowy`), [kadry.md](references/domeny/kadry.md) (`Pracownik`),
+[workflow.md](references/domeny/workflow.md) (procesy i zadania).
+
 ## Narzędzia pomocnicze
 
 Skill udostępnia trzy skrypty `dotnet script` (`scripts/`) do statycznej inwentaryzacji bibliotek Soneta — bez ładowania IL do CLR (Roslyn `MetadataReference.CreateFromFile`):

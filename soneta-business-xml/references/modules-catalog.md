@@ -208,6 +208,9 @@ Zawiera: From (data od), To (data do)
 | `IDokumentPlatny` | Core | Dokument płatny |
 | `IDokumentKsiegowalny` | Core | Dokument księgowalny |
 
+> `IRightsSource` po stronie kodu (obiekt jako źródło uprawnień) — skill `/soneta-programming`
+> (rights-source.md).
+
 ---
 
 ## Moduły szczegółowo

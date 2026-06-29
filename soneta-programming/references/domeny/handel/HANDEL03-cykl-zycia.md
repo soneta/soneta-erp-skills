@@ -8,7 +8,7 @@ płatności, blokada większości pól), aż po anulowanie. Stanem steruje **jed
 `dok.Stan`, a dodatkowe operacje serwisowe (naprawa, przeliczenie) wykonują publiczne workery.
 
 > **Fundamenty** (sesja, transakcja edycyjna `session.Logout(editMode: true)`, `Commit`/`CommitUI`,
-> blokada optymistyczna w `Save()`) opisuje [`safe-code.md`](../safe-code.md) — tu się do nich
+> blokada optymistyczna w `Save()`) opisuje [`safe-code.md`](../../safe-code.md) — tu się do nich
 > odwołujemy, nie powtarzamy. Cały kod jest zgodny z **C# 10** i operuje wyłącznie na **publicznym
 > kontrakcie** platformy.
 
@@ -81,7 +81,7 @@ if (dok.Zatwierdzony)
 - Zatwierdzenie uruchamia walidatory dokumentu (kompletność pozycji, magazyn, kontrahent, tabela
   VAT). Błędy wychodzą w `Commit()`/`Save()` jako `RowException` — nie połykaj ich (safe-code §4).
 - W workerze/extenderze użyj `t.CommitUI()` zamiast `t.Commit()`
-  ([`worker-extender.md`](../worker-extender.md)).
+  ([`worker-extender.md`](../../worker-extender.md)).
 - Po `Save()` w środku jednej sesji zamyka się okno edycji; kolejna edycja na **tym samym** obiekcie
   bez ponownego `Logout` rzuci `AccessWriteDenied`. Wzorzec: zapis → odczyt na świeżej sesji.
 - Nie ustawiaj `Stan = Zablokowany` z dodatku — to stan wewnętrzny platformy (np. po zaksięgowaniu w

@@ -84,7 +84,7 @@ Dla cech algorytmicznych przypisanie wartości wywołuje algorytm zdefiniowany w
 
 ## Bindowanie do cech w form.xml
 
-W formularzach UI cechy adresuje się przez ścieżkę `Features.NazwaCechy` — bezpośrednio na bieżącym Row lub przez relację do innego obiektu:
+W formularzach UI cechy adresuje się przez ścieżkę `Features.NazwaCechy` — bezpośrednio na bieżącym Row lub przez relację do innego obiektu. Bindowanie cech w polach/kolumnach (`{Features.X}`, `VisibleFeatures`, `Appearance`) po stronie form.xml opisuje skill `/soneta-form-xml`:
 
 ```xml
 <Field EditValue="{Features.CechaBool}"   CaptionHtml="Cecha Bool" />

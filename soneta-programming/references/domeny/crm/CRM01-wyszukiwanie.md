@@ -55,7 +55,7 @@ bool juzIstnieje = crm.Kontrahenci.WgNIP[(Kontrahent k) => k.NIP == nip].Any();
   biznesem). Filtruj przez warunek aplikowany **na indeksie**, np.
   `crm.Kontrahenci.WgKodu[(Kontrahent k) => …]` (warunek wykonywany przez SQL). Indeksator samej
   tabeli (`crm.Kontrahenci[…]`) służy do dostępu po `ID`/kluczu, nie przyjmuje wyrażenia LINQ.
-  Patrz [`rowcondition.md`](../rowcondition.md) i [`safe-code.md`](../safe-code.md) §6.
+  Patrz [`rowcondition.md`](../../rowcondition.md) i [`safe-code.md`](../../safe-code.md) §6.
 - W `RowCondition` (wyrażeniu LINQ) wolno użyć **tylko pól bazodanowych**. `NazwaFormatowana`,
   `KodKraju`, `Platnik` są kalkulowane → rzucą `LinqConditionException`.
 - Porównania tekstowe w warunku są **case-insensitive** — nie dubluj `ToLower()`.

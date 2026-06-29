@@ -4,6 +4,8 @@
 
 Najwygodniejsze API to budowa warunku z wyrażeń LINQ (`Expression<Predicate<TRow>>`) przez `RowCondition.FromExpression(...)` oraz aplikowanie wyrażeń bezpośrednio do `SubTable` i `View` przez indeksator i `AddExpression(...)`.
 
+> **To samo zagadnienie po stronie prezentacji.** Warunki w warstwie UI (`Visibility`, `Appearance.Condition`, tekstowa składnia `{?...}` w form.xml) opisuje skill `/soneta-form-xml`. To dwie strony tego samego tematu, ale różne byty: tutaj `Expression<Predicate<TRow>>` w kodzie C# (kompilowany do SQL), tam **wyrażenie tekstowe** ewaluowane w XML formularza. Tych samych wyrażeń LINQ używa się też do filtrowania widoków list — patrz [viewinfo.md](viewinfo.md).
+
 ## Spis treści
 
 - [Najważniejsze zasady](#najważniejsze-zasady)
@@ -285,7 +287,10 @@ e => e.Okres.IsIntersected(new YearMonth(2020, 2).ToFromTo())
 
 ### Kolekcje powiązane (podlisty)
 
-Dla pól reprezentujących powiązaną podlistę:
+Relacje (kolekcje `children`, referencje `relname`/`relguided`) definiuje się po stronie XML —
+opisuje to skill `/soneta-business-xml`. W kodzie biznesowym używa się ich właśnie tu: jako pola
+podlisty w wyrażeniach LINQ (`Any`/`All`) oraz referencje w warunkach. Dla pól reprezentujących
+powiązaną podlistę:
 
 ```csharp
 // Podlista pusta / niepusta

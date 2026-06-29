@@ -114,6 +114,9 @@ public class Zgloszenie : SerwisModule.ZgloszenieRow {
 > **Reguła kciuka:** są pola `readonly` (w szczególności **selector**, patrz niżej) →
 > musisz napisać konstruktor `(RowCreator creator)`. Brak pól `readonly` → nie musisz.
 
+> Pełną dokumentację klas Row/Table i wzorca selektora (`[BusinessRow]`, `[NewRow]`,
+> konstruktor `RowCreator`, pola readonly) zawiera skill `/soneta-programming` (row-types.md).
+
 ## Tabela z selector'em — wiele typów obiektów w jednej tabeli
 
 **Selector** (`selector="true"`) to kolumna decydująca, **który typ obiektu** reprezentuje
@@ -239,4 +242,4 @@ Atrybut **assembly-level** `[NewRow]` decyduje, które typy operator może **dod
 5. `[assembly: NewRow(...)]` dla typów dostępnych w menu „Nowy" (pomiń, by zablokować dodawanie z UI).
 
 > Perspektywę kodu/runtime tego samego mechanizmu (jak ORM materializuje obiekty, wzorce
-> użycia w logice biznesowej) opisuje skill **soneta-programming**.
+> użycia w logice biznesowej) opisuje skill `/soneta-programming` (artykuł row-types.md).

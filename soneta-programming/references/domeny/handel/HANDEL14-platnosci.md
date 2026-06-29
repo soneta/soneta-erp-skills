@@ -61,7 +61,7 @@ foreach (Platnosc p in dok.Platnosci)
 
 **Pułapki:**
 - `dok.Platnosci` to `SubTable` — iteruj serwerowo, nie materializuj do `List` tylko po to, by policzyć
-  elementy (`IsEmpty`/`Count` są dostępne na kolekcji). Patrz [`rowcondition.md`](references/rowcondition.md).
+  elementy (`IsEmpty`/`Count` są dostępne na kolekcji). Patrz [`rowcondition.md`](../../rowcondition.md).
 - `StanRozliczenia.NiePodlega` oznacza płatność **nierozliczaną** (`p.Rozliczana == false`) — nie myl jej
   z `Nierozliczony` (rozliczana, ale jeszcze niezapłacona).
 - `Kwota` jest w walucie dokumentu; do raportu w PLN użyj `KwotaKsiegi` (HANDEL-W81), nie mnóż „ręcznie".

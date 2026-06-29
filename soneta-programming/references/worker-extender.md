@@ -4,6 +4,9 @@ Obiekty `Worker` i `Extender` rozszerzają model danych o dodatkową logikę UI:
 properties wyliczane, akcje w menu Czynności, dodatkowe pola na formularzu.
 Oba korzystają z [Context](context.md) do pobierania parametrów.
 
+> Składnię wyrażeń bindujących po stronie form.xml (`{Workers.Alias.Pole}`, `{new Extender.Pole}`)
+> oraz element `Command` wywołujący akcję opisuje skill `/soneta-form-xml`.
+
 ## Obiekty Worker
 
 Worker dorzuca do obiektu danych dodatkowe properties wyliczane (do użycia w bindowaniu) oraz pozycje w menu Czynności.
