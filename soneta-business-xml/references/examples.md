@@ -1,4 +1,4 @@
-# Przykłady z modułów enova365
+# Przykłady z modułów platformy Soneta (enova365)
 
 ## Spis treści
 

@@ -152,7 +152,7 @@ var worker = new Umowa.AktualizacjaStawkiWorker
 // uruchomienie zgodnie z konwencją workerów (patrz worker-extender.md)
 ```
 
-> Pokrewne workery (wywoływane jak każdy worker enova): `Umowa.KopiujUmowe2Worker`
+> Pokrewne workery (wywoływane jak każdy worker Soneta): `Umowa.KopiujUmowe2Worker`
 > (`Umowa Umowa` — kopiuje umowę), `Umowa.WyrejestrujUmoweWorker` (wyrejestrowanie umowy).
 
 **Pułapki:**
@@ -472,7 +472,7 @@ session.Save();
   istniejący tytuł zleceniobiorcy, nie twórz „w locie".
 - `ZarejestrujUmowyWorker` jest na `Umowa` (umowy), a `ZarejestrujPracownikówWorker` na `Pracownik`
   (etatowi) — do zleceniobiorców używaj wersji „Umowy".
-- Workery deklaracji uruchamiaj jak każdy worker enova (Context z tej samej sesji); po akcji wołasz
+- Workery deklaracji uruchamiaj jak każdy worker Soneta (Context z tej samej sesji); po akcji wołasz
   `Session.Save()`. Obsłuż `RowConflictException` z `Save()` (safe-code §4).
 - `ZarejestrujRodzinę`/`WyrejestrujRodzinę` sterują dołączeniem ZCNA dla członków rodziny
   (`pracownik.Rodzina`, KADRY-A9) — dla zleceniobiorcy zgłoszenie rodziny działa analogicznie do etatu.

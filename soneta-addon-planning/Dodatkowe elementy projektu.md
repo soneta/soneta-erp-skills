@@ -1,9 +1,9 @@
 # Dodatkowe elementy projektu
 
 
-## Wyszczególnienie użycia istniejących tabel z systemie enova365/Triva które będą wykorzystywane przez moduł.
-Lista wszystkich tabel z systemu enova365/Triva podzielonych na moduły znajduje się w załączniku ExistingTables.md.
-Jeżeli moduł budowany jest przez zespół firmy Soneta, to należy określić ewentualne zmiany w tabelach z systemu enova365/Triva.
+## Wyszczególnienie użycia istniejących tabel z systemu platformy Soneta (enova365, Triva) które będą wykorzystywane przez moduł.
+Lista wszystkich tabel z systemu platformy Soneta podzielonych na moduły znajduje się w załączniku ExistingTables.md.
+Jeżeli moduł budowany jest przez zespół firmy Soneta, to należy określić ewentualne zmiany w tabelach z systemu platformy Soneta.
 
 ### 3. Struktura menu modułu
 - Hierarchia list w menu głównym
@@ -86,7 +86,7 @@ Plan projektu generowany jest jako dokument Markdown z następującą strukturą
 ## Powiązanie z innymi skillami
 
 Po zatwierdzeniu planu projektu:
-1. **enova365-business-xml** - generowanie pliku business.xml na podstawie modelu danych
+1. **soneta-business-xml** - generowanie pliku business.xml na podstawie modelu danych
 2. **soneta-programming** - implementacja workerów i logiki biznesowej
 
 ## Szczegółowa dokumentacja

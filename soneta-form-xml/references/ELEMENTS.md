@@ -1,6 +1,6 @@
 # Pełna specyfikacja elementów Form XML
 
-Kompletna lista elementów XML dostępnych w plikach form.xml platformy enova365.
+Kompletna lista elementów XML dostępnych w plikach form.xml platformy Soneta.
 
 ## Spis treści
 

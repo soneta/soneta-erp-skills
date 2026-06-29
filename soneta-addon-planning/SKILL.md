@@ -1,7 +1,7 @@
 ---
 name: soneta-addon-planning
 description: >
-  Planowanie projektów dodatków dla platformy enova365/Soneta Enterprise. Tworzy
+  Planowanie projektów dodatków dla platformy Soneta (enova365, Triva). Tworzy
   kompletną dokumentację projektową obejmującą: strukturę danych (tabele, relacje),
   elementy konfigurowalne, definicje list i menu, formularze, workery i raporty.
   Używaj gdy użytkownik prosi o zaplanowanie nowego modułu/dodatku enova365,

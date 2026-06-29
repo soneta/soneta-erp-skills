@@ -1,6 +1,6 @@
 # Session, Login, Database, BusApplication
 
-Dokumentacja klas zarządzających połączeniem z bazą danych i sesjami w platformie enova365/Soneta.
+Dokumentacja klas zarządzających połączeniem z bazą danych i sesjami w platformie Soneta.
 
 ## Spis treści
 

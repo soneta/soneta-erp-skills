@@ -1,7 +1,7 @@
 # Skanowanie pól klasy biznesowych z DLL (Roslyn MetadataReference)
 
 Narzędzie do odczytu rzeczywistych pól bazodanowych obiektu biznesowego ze skompilowanych bibliotek dodatku 
-enova365/Soneta.
+platformy Soneta.
 Pozwala to na budowanie kodu opierającego się na tych klasach biznesowych, wyrażeń bindujących form.xml oraz
 (Warunki filtrujące)[./rowconditions.md].
 

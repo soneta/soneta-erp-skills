@@ -1,6 +1,6 @@
 # Safe Code - Zasady bezpiecznego kodu biznesowego Soneta
 
-Lista zasad, które należy weryfikować **po każdym refaktoringu** oraz **przy każdym code review / PR** kodu biznesowego enova365 / Soneta Enterprise. Każda zasada jest sformułowana jako kontrolne pytanie — odpowiedź "nie" oznacza realne ryzyko (utrata danych, niespójność, race condition, błędna logika).
+Lista zasad, które należy weryfikować **po każdym refaktoringu** oraz **przy każdym code review / PR** kodu biznesowego platformy Soneta. Każda zasada jest sformułowana jako kontrolne pytanie — odpowiedź "nie" oznacza realne ryzyko (utrata danych, niespójność, race condition, błędna logika).
 
 ## Spis treści
 

@@ -1,20 +1,22 @@
 ---
 name: soneta-programming
 description: >
-  Klasy ORM i wzorce kodu biznesowego enova365 / Soneta Enterprise / Triva.
+  Klasy ORM i wzorce kodu biznesowego platformy Soneta (enova365, Soneta Enterprise, Triva).
   Używaj gdy użytkownik: (1) pisze, modyfikuje lub refaktoruje kod biznesowy
   enova365/Soneta/Triva (Row/Table/Module, sesje i transakcje, selector, typy
   wierszy); (2) pyta o konkretny mechanizm ORM — Session, Commit/Save, optimistic
   lock, Context, RowCondition, Datapack, ViewInfo, Features, thread-safety; (3) prosi
   o code review kodu biznesowego Soneta (safe-code); (4) pisze worker, extender,
   akcję w menu Czynności, folder/listę; (5) chce zinwentaryzować moduły, pola lub
-  workery z bibliotek DLL. Sięgnij też, gdy inny skill potrzebuje warstwy ORM/kodu
-  biznesowego Soneta.
+  workery z bibliotek DLL; (6) chce rozpocząć nowy dodatek/rozszerzenie Soneta —
+  wygenerować szkielet źródeł z CLI (`dotnet new soneta-addon`, Soneta.MsBuild.SDK,
+  szablony Soneta Platform Developer). Sięgnij też, gdy inny skill potrzebuje warstwy
+  ORM/kodu biznesowego Soneta.
 ---
 
 # Soneta Programming Basics - Podstawowe klasy ORM
 
-Skill zawiera dokumentację fundamentalnych klas logiki biznesowej platformy enova365/Soneta Enterprise. Klasy te stanowią podstawę mapowania obiektowo-relacyjnego (ORM) i są niezbędne do tworzenia kodu i dodatków.
+Skill zawiera dokumentację fundamentalnych klas logiki biznesowej platformy Soneta. Klasy te stanowią podstawę mapowania obiektowo-relacyjnego (ORM) i są niezbędne do tworzenia kodu i dodatków.
 
 > **Code review / refaktoring:** po napisaniu nowego kodu biznesowego oraz po każdym refaktoringu, **zawsze** zweryfikuj go względem [references/safe-code.md](references/safe-code.md). Ten sam dokument służy jako lista kontrolna do review PR-ów.
 
@@ -24,6 +26,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 
 | Temat                                                                                             | Gdzie szukać |
 |---------------------------------------------------------------------------------------------------|---|
+| **Nowy dodatek od zera** — wygenerowanie szkieletu źródeł przez CLI (`dotnet new soneta-addon`, Soneta.MsBuild.SDK, `global.json`/`Directory.Build.props`, solucja, debug VS Code) | [references/new-addon-cli.md](references/new-addon-cli.md) |
 | Hierarchia ORM, Row / Table / Module, klucze, ISessionable                                        | sekcje poniżej |
 | Implementacja klas Row/Table, konstruktory (pola readonly, `RowCreator`), selector + `[BusinessRow]`, `[NewRow]`, `[DefaultConstructor]`, jawne wartości enum'ów | [references/row-types.md](references/row-types.md) |
 | `AssemblyAttributes` - odczyt atrybutów z załadowanych modułów (`GetCustom<T>`, `Find`, iteracja po assembly, cache, analiza DLL w runtime) | [references/assembly-attributes.md](references/assembly-attributes.md) |
@@ -49,6 +52,47 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Skanowanie pól obiektu biznesowego z DLL (Roslyn MetadataReference)                   | [references/scan-props.md](references/scan-props.md) |
 | Inwentaryzacja modułów i tabel (`*Module` / `*Row` / `*Table`) z DLL                  | [references/scan-modules.md](references/scan-modules.md) |
 | Inwentaryzacja workerów i extenderów (`[Worker<…>]`) z DLL                            | [references/scan-workers.md](references/scan-workers.md) |
+
+## Nowy dodatek od zera (CLI)
+
+Gdy zaczynasz **nowy** dodatek (a nie modyfikujesz istniejący), najpierw wygeneruj szkielet źródeł
+z wiersza poleceń, a dopiero potem wypełniaj go treścią. Robi to paczka szablonów **Soneta Platform
+Developer** w oparciu o **Soneta.MsBuild.SDK** — jednym poleceniem powstają rozdzielone projekty
+(logika biznesowa, UI, testy) już skonfigurowane pod platformę Soneta:
+
+```bash
+dotnet new install Soneta.Platform.Developer          # raz na maszynę (starsza składnia: dotnet new -i …)
+dotnet new soneta-addon -n MyExtension -o ./MyExtension
+# >>> obowiązkowy krok konfiguracji (patrz niżej) — nadpisz 3 pliki poprawną treścią <<<
+cd ./MyExtension && dotnet build                       # weryfikacja
+```
+
+Powstaje gotowa solucja `MyExtension.sln` z projektami `MyExtension` (logika), `MyExtension.UI`,
+`MyExtension.Tests` oraz pliki `global.json` (wersja SDK) i `Directory.Build.props` (wersja bibliotek
+`SonetaPackageVersion`). SDK sam pobiera biblioteki Soneta i uruchamia generator
+`*.business.xml → *.business.cs` przy buildzie. Dodatki celują w **`net10.0`** i są **cross-platform**
+— pełny cykl (generowanie, build, testy) działa na macOS/Linux/Windows.
+
+**Obowiązkowy krok po wygenerowaniu — nadpisz pliki konfiguracyjne poprawną treścią.** Szablon
+`1.0.7` generuje konfigurację, która **nie buduje się z pudełka**, więc zaraz po `dotnet new` (a przed
+`dotnet build`) doprowadź trzy pliki do poprawnej postaci — nie czekaj, aż build padnie:
+
+1. **`global.json`** — przypnij `"Soneta.Sdk": "1.2.0"` (szablon wpisuje starszą, np. `1.1.8`).
+2. **`Directory.Build.props`** — dodaj w pierwszym `PropertyGroup`
+   `<SonetaTargetFramework>net10.0</SonetaTargetFramework>` (szablon zostawia tę zmienną pustą).
+3. **`NuGet.Config`** — utwórz w katalogu solucji z feedem Soneta
+   (`https://nuget.soneta.pl/v3/index.json`); szablon **nie generuje** tego pliku.
+
+Gotowa treść wszystkich trzech plików: [references/new-addon-cli.md](references/new-addon-cli.md#5a-pliki-konfiguracyjne--poprawna-treść-krok-obowiązkowy).
+Dopiero po tym uruchom `dotnet build` (powinien przejść z 0 ostrzeżeń, 0 błędów).
+
+**Kryterium ukończenia:** w katalogu docelowym istnieją trzy `*.csproj`, `global.json`
+i `Directory.Build.props`. Dalej wypełniasz szkielet: definicje (**soneta-business-xml**) → kod
+biznesowy (ten skill) → UI (**soneta-form-xml**).
+
+Pełna procedura — szablony, pliki konfiguracyjne, parametry MSBuild, solucja, debug w VS Code,
+referencje WinForms, ręczny fallback bez szablonów i troubleshooting:
+[references/new-addon-cli.md](references/new-addon-cli.md).
 
 ## Architektura warstw
 

@@ -1,4 +1,4 @@
-# Dokument handlowy — receptury kodu biznesowego (Soneta / enova365)
+# Dokument handlowy — receptury kodu biznesowego (platforma Soneta)
 
 Zbiór gotowych wzorców kodu dla obiektu biznesowego **`Soneta.Handel.DokumentHandlowy`**
 (tabela `DokHandlowe`, moduł `HandelModule`). Dokument jest częścią skilla `soneta-programming`.

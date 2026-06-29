@@ -1,4 +1,4 @@
-# Workflow — receptury kodu biznesowego (Soneta / enova365)
+# Workflow — receptury kodu biznesowego (platforma Soneta)
 
 Zbiór gotowych wzorców kodu dla domeny **Workflow**: definicje procesów
 (**`Soneta.Workflow.Config.WFDefinition`**, tabela `WFDefs`), węzły procesów

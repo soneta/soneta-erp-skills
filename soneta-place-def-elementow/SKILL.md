@@ -1,11 +1,11 @@
 ---
 name: soneta-place-def-elementow
-description: Tworzenie i konfiguracja definicji elementów wynagrodzenia w enova365/Soneta przez MCP soneta_ui. Algorytmy naliczania (kreator, edytor C#, wbudowane), wzorce algorytmiczne, receptury kodu C# dla elementów płacowych, konfiguracja PIT/ZUS/nieobecności. Używaj gdy użytkownik: (1) chce utworzyć/skonfigurować definicję elementu wynagrodzenia (zakładki Ogólne, Deklaracje, Nieobecności, Algorytm); (2) pyta o algorytm naliczania (kreator, edytor, kod C#); (3) potrzebuje kodu C# do edytora algorytmu (_Param, _Wylicz, _Wartość1h); (4) pyta o wzorce dla dodatków, nieobecności, zasiłków; (5) wspomina 'definicja elementu', 'element wynagrodzenia', 'algorytm płacowy', 'WypSkladnik', 'WypElement', 'premia procentowa', 'dodatek stażowy', 'zasiłek chorobowy', 'ekwiwalent za urlop'; (6) pisze recepturę kodu płacowego (staż pracy, wymiar etatu, czas pracy, wskaźniki, cechy pracownika).
+description: Tworzenie i konfiguracja definicji elementów wynagrodzenia na platformie Soneta przez MCP soneta_ui. Algorytmy naliczania (kreator, edytor C#, wbudowane), wzorce algorytmiczne, receptury kodu C# dla elementów płacowych, konfiguracja PIT/ZUS/nieobecności. Używaj gdy użytkownik: (1) chce utworzyć/skonfigurować definicję elementu wynagrodzenia (zakładki Ogólne, Deklaracje, Nieobecności, Algorytm); (2) pyta o algorytm naliczania (kreator, edytor, kod C#); (3) potrzebuje kodu C# do edytora algorytmu (_Param, _Wylicz, _Wartość1h); (4) pyta o wzorce dla dodatków, nieobecności, zasiłków; (5) wspomina 'definicja elementu', 'element wynagrodzenia', 'algorytm płacowy', 'WypSkladnik', 'WypElement', 'premia procentowa', 'dodatek stażowy', 'zasiłek chorobowy', 'ekwiwalent za urlop'; (6) pisze recepturę kodu płacowego (staż pracy, wymiar etatu, czas pracy, wskaźniki, cechy pracownika).
 ---
 
-# Definicje elementów wynagrodzenia — enova365
+# Definicje elementów wynagrodzenia — platforma Soneta (enova365, Triva)
 
-Ten skill zawiera kompletną wiedzę o tworzeniu i konfigurowaniu definicji elementów wynagrodzenia w enova365. Wiedza jest podzielona na pliki referencyjne — czytaj odpowiedni plik w zależności od potrzeby.
+Ten skill zawiera kompletną wiedzę o tworzeniu i konfigurowaniu definicji elementów wynagrodzenia na platformie Soneta. Wiedza jest podzielona na pliki referencyjne — czytaj odpowiedni plik w zależności od potrzeby.
 
 ## Spis treści referencji
 

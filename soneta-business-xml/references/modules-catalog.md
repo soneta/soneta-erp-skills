@@ -15,7 +15,7 @@ Katalog modułów dla platform Soneta (enova365, Soneta Enterprise).
 
 ## Architektura: Konfiguracja vs Operacje
 
-enova365 stosuje wzorzec **Definicja → Operacja**, gdzie:
+Platforma Soneta stosuje wzorzec **Definicja → Operacja**, gdzie:
 
 - **Tabele konfiguracyjne (`config="true"`)** - definiują zachowanie systemu
   - Tworzone podczas wdrożenia

@@ -1,6 +1,6 @@
 # Skanowanie modułów i tabel z DLL (Roslyn MetadataReference)
 
-Narzędzie do wylistowania wszystkich modułów (`*Module`) platformy enova365/Soneta oraz tabel
+Narzędzie do wylistowania wszystkich modułów (`*Module`) platformy Soneta oraz tabel
 (`*Row` / `*Table`) zdefiniowanych w każdym z nich. Czyta metadane skompilowanych bibliotek dodatku,
 nie wymaga źródeł.
 

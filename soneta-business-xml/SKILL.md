@@ -1,17 +1,17 @@
 ---
 name: soneta-business-xml
 description: >
-  Generator plików business.xml dla platform Soneta (enova365, Soneta Enterprise). 
+  Generator plików business.xml dla platformy Soneta (enova365, Soneta Enterprise). 
   Tworzy definicje obiektów biznesowych (tabel, kolumn, relacji, indeksów) zgodne 
   ze schematem XSD. Używaj gdy użytkownik prosi o stworzenie nowego modułu biznesowego, 
   zdefiniowanie obiektów lub encji do przechowywania w bazie danych, utworzenie relacji 
-  między obiektami, lub generowanie plików business.xml dla enova365/Soneta Enterprise.
+  między obiektami, lub generowanie plików business.xml dla platformy Soneta.
 ---
 
 # Soneta Business XML Generator
 
 Skill do generowania plików `business.xml` dla platform firmy Soneta:
-- **enova365** - system ERP dla firm
+- **Soneta** - system ERP dla firm (enova365, Soneta Enterprise)
 - **Soneta Enterprise** - platforma enterprise
 
 Pliki te definiują obiekty biznesowe (encje ORM), które platforma automatycznie mapuje na tabele w bazie danych i generuje klasy C#.

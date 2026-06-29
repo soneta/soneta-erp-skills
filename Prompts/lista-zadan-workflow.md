@@ -1,4 +1,4 @@
-# Lista zadań domeny Workflow (Soneta / enova365)
+# Lista zadań domeny Workflow (platforma Soneta)
 
 Uporządkowany katalog procedur i operacji, jakie można wykonać na obiektach domeny **Workflow**
 i powiązanych z nią **zadaniach** (`Task`). Lista jest **wejściem do promptu „Code-Snippets"** —

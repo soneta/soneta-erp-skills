@@ -1,6 +1,6 @@
-# Soneta / enova365 AI Skills
+# Soneta AI Skills
 
-Zestaw skills dla asystentów AI (Claude, Cursor, Windsurf, itp.) wspierających programowanie, projektowanie i konfigurację platformy **enova365 / Soneta Enterprise / Triva**.
+Zestaw skills dla asystentów AI (Claude, Cursor, Windsurf, itp.) wspierających programowanie, projektowanie i konfigurację **platformy Soneta (enova365, Triva)**.
 
 ## Dostępne skille
 
@@ -12,7 +12,7 @@ Mapa i przewodnik po pozostałych skillach. Pomaga wybrać właściwy skill w za
 
 ### 1. soneta-programming
 
-Fundamentalne klasy ORM platformy enova365/Soneta Enterprise.
+Fundamentalne klasy ORM platformy Soneta (enova365, Triva).
 
 **Zakres:**
 - Mapowanie obiektowo-relacyjne (`Row`, `Table`, `Module`)
@@ -38,7 +38,7 @@ Generator plików `business.xml` definiujących strukturę obiektów biznesowych
 
 ### 3. soneta-form-xml
 
-Tworzenie plików `form.xml` opisujących formularze i widoki UI platformy enova365.
+Tworzenie plików `form.xml` opisujących formularze i widoki UI platformy Soneta.
 
 **Zakres:**
 - Formularze stron (`pageform.xml`), widoki list (`viewform.xml`), lookupy (`lookupform.xml`), gridy (`gridform.xml`)
@@ -46,11 +46,11 @@ Tworzenie plików `form.xml` opisujących formularze i widoki UI platformy enova
 - Atrybuty: `EditValue`, `DataContext`, `Visibility`, `RowCondition`, `Renderable`, `CaptionHtml`
 - Warunkowe formatowanie, wiązanie danych, wzorce UI
 
-**Kiedy używać:** tworzenie zakładek, widoków list, formularzy i lookupów dla enova365.
+**Kiedy używać:** tworzenie zakładek, widoków list, formularzy i lookupów dla platformy Soneta.
 
 ### 4. soneta-addon-planning
 
-Planowanie projektów dodatków dla platformy enova365/Soneta Enterprise.
+Planowanie projektów dodatków dla platformy Soneta.
 
 **Zakres:**
 - Interaktywny proces planowania w 3 etapach (wizja, architektura, specyfikacja szczegółowa)
@@ -63,7 +63,7 @@ Planowanie projektów dodatków dla platformy enova365/Soneta Enterprise.
 
 ### 5. soneta-ui-style
 
-System projektowy (design system) Soneta / enova365 do budowania aplikacji webowych.
+System projektowy (design system) platformy Soneta do budowania aplikacji webowych.
 
 **Zakres:**
 - Palety kolorów (motywy jasny/ciemny) — szmaragdowy `#016E46` jako kolor główny
@@ -72,11 +72,11 @@ System projektowy (design system) Soneta / enova365 do budowania aplikacji webow
 - Cienie, ikony SVG (~370 ikon liniowych), animacje, responsywność
 - Enterprise minimalism, flat design z subtelnymi cieniami
 
-**Kiedy używać:** projektowanie stron/aplikacji w stylu enova365, dashboardy, formularze, strony logowania, panele administracyjne.
+**Kiedy używać:** projektowanie stron/aplikacji w stylu Soneta, dashboardy, formularze, strony logowania, panele administracyjne.
 
 ### 6. soneta-place-def-elementow
 
-Tworzenie i konfiguracja definicji elementów wynagrodzenia w enova365 (moduł Płace).
+Tworzenie i konfiguracja definicji elementów wynagrodzenia na platformie Soneta (moduł Płace).
 
 **Zakres:**
 - Algorytmy naliczania: kreator, edytor C# (`_Param`, `_Wylicz`, `_Wartość1h`), algorytmy wbudowane

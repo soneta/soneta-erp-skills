@@ -1,7 +1,7 @@
 # Skanowanie workerów i extenderów z DLL (Roslyn MetadataReference)
 
 Narzędzie do wylistowania wszystkich klas `*Worker` / `*Extender` zarejestrowanych w bibliotekach
-dodatków enova365 / Soneta przez atrybut `WorkerAttribute` (assembly). Czyta metadane skompilowanych
+dodatków platformy Soneta przez atrybut `WorkerAttribute` (assembly). Czyta metadane skompilowanych
 bibliotek dodatku — nie wymaga źródeł.
 
 ## Cel

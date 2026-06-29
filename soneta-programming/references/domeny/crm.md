@@ -1,4 +1,4 @@
-# Kontrahent — receptury kodu biznesowego (Soneta / enova365)
+# Kontrahent — receptury kodu biznesowego (platforma Soneta)
 
 Zbiór gotowych wzorców kodu dla obiektu biznesowego **`Soneta.CRM.Kontrahent`** (tabela `Kontrahenci`).
 Dokument jest częścią skilla `soneta-programming`. Celem jest, aby agent pisał **bezbłędny kod

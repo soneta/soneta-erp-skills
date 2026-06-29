@@ -1,4 +1,4 @@
-# Pracownik / Kadry-Płace — receptury kodu biznesowego (Soneta / enova365)
+# Pracownik / Kadry-Płace — receptury kodu biznesowego (platforma Soneta)
 
 Zbiór gotowych wzorców kodu dla domeny **Kadry i Płace**: obiekt biznesowy
 **`Soneta.Kadry.Pracownik`** (tabela `Pracownicy`) wraz z jego historią kadrową, etatem,

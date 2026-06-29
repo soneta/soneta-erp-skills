@@ -162,7 +162,7 @@ Interface musi być zadeklarowany w business.xml. Sama definicja interfejsu (met
 | Wskazuje na | jedną konkretną tabelę | dowolną tabelę implementującą interface |
 | Przykład | `type="Kontrahent"` | `type="IKontrahent"` |
 
-### Popularne interfejsy enova365
+### Popularne interfejsy platformy Soneta
 
 | Interfejs | Opis |
 |-----------|------|

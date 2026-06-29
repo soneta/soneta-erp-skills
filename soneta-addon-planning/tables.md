@@ -42,7 +42,7 @@ Moduł Business Intelligence. Zawiera definicje kostek analitycznych, miar, wymi
 | TimeSpanItems | TimeSpanItem | Elementy zestawu przedziałów czasowych | root | X | Element szczegółowy zestawu przedziałów czasowych (TimeSpanSet). Wiąże konkretną definicję przedziału czasowego z zestawem, określając jej pozycję. Umożliwia składanie zestawów z wielu niezależnych definicji przedziałów. |
 | TimeSpanSets | TimeSpanSet | Zestawy przedziałów czasowych | root | X | Nazwany zestaw przedziałów czasowych używany w polach modeli danych BI. Grupuje powiązane definicje przedziałów (np. miesiące, kwartały) w logiczną całość, którą można przypisać do pola typu data w modelu analitycznym. |
 # Moduł: Business
-Moduł systemowy zawierający podstawowe definicje typów danych, struktur tabel oraz obiektów bazodanowych platformy enova365. Definiuje typy proste (string, int, decimal, date itp.), konfigurację systemu, uprawnienia, powiadomienia i mechanizmy wersjonowania.
+Moduł systemowy zawierający podstawowe definicje typów danych, struktur tabel oraz obiektów bazodanowych platformy Soneta. Definiuje typy proste (string, int, decimal, date itp.), konfigurację systemu, uprawnienia, powiadomienia i mechanizmy wersjonowania.
 | Tabela | Obiekt | Tytuł tabeli | Nadrzędny | Konfiguracyjna | Opis |
 |---|---|---|---|---|---|
 | AppTokens | AppToken | Tokeny aplikacyjne | root | X | Token aplikacyjny do autoryzacji dostępu API. Przechowuje nazwę, typ, zawartość tokena, datę ważności i powiązanie z operatorem uprawnionym do jego użycia. |
@@ -116,7 +116,7 @@ Moduł systemowy zawierający podstawowe definicje typów danych, struktur tabel
 | WizardReferences | WizardReference | Powiązania kreatorów | TuplesDefs, DefLeadow, DefProjektow, DefTransakcji, DefZadan, TaskDefs, WFDefs | X | Powiązanie kreatora z obiektem biznesowym lub definicją zadania. Określa priorytet, tryb uruchamiania i ustawienia zachowania kreatora w kontekście obiektu. |
 | WizardStepDefs | WizardStepDefinition | Definicje kroków kreatorów | root | X | Definicja pojedynczego kroku kreatora. Określa typ zakładki, algorytm, uprawnienia operatora do wykonania kroku oraz parametry prezentacji. |
 # Moduł: Core
-Moduł podstawowy platformy enova365 zawierający wspólne obiekty biznesowe. Obejmuje kontrahentów, adresy, lokalizacje, banki, słowniki, szablony, definicje dokumentów, powiadomienia, załączniki oraz mechanizmy konfiguracji systemu.
+Moduł podstawowy platformy Soneta zawierający wspólne obiekty biznesowe. Obejmuje kontrahentów, adresy, lokalizacje, banki, słowniki, szablony, definicje dokumentów, powiadomienia, załączniki oraz mechanizmy konfiguracji systemu.
 | Tabela | Obiekt | Tytuł tabeli | Nadrzędny | Konfiguracyjna | Opis |
 |---|---|---|---|---|---|
 | Adresy | AdresExt |  | Banki, Rodzina, InstFinansowePPK, JednostkiSprawKS, KontaktyOsoby, Kontrahenci, Lokalizacje, OddzialyFirmy, OddzialyZUS, OfertySzkolen, PracHistorie, Pracownicy, Przelewy, RachBankPodmiot, RealizSzkolen, UrzedyCelne, UrzedySkarbowe, WizytowkiFirm, ZUSY |  | Element szczegółowy hosta adresowego (IAdresHost). Przechowuje adres danego typu (np. siedziby, korespondencyjny, dostawy) wraz z danymi identyfikacyjnymi (GLN) oraz flagą blokady. |
@@ -257,7 +257,7 @@ Moduł podstawowy platformy enova365 zawierający wspólne obiekty biznesowe. Ob
 | Subscriptions | Subscription |  | root |  | Subskrypcja powiadomień o zmianach w obiekcie. Łączy subskrybenta (identyfikowanego GUID-em i tabelą) z obserwowanym zasobem (również GUID i tabela), umożliwiając automatyczne powiadamianie o aktualizacjach. |
 | SubstituteDefs | SubstituteDef | Definicje zastępstw | root | X | Definicja zasad zastępstwa użytkowników. Określa nazwę, algorytmy wyszukiwania zastępujących i zastępowanych, flagę blokady i domyślności, ustawienia powiadomień e-mail oraz widoczność pól wyboru uprawnień i poziomu przejmowanych obowiązków. |
 | SubstituteUsers | SubstituteUser | Zastępstwa | root |  | Zastępstwo użytkownika w systemie. Określa zastępującego, zastępowanego, okres zastępstwa, uprawnienia zastępującego, definicję zastępstwa, stan oraz poziom przejmowanych obowiązków (bezpośredni lub kaskadowy). |
-| SystemyZewn | SystemZewn | Lista systemów zewnętrznych | root | X | Definicja systemu zewnętrznego zintegrowanego z enova365 (np. sklep internetowy, platforma EDI, KSeF). Zawiera typ systemu, symbol, opis, flagę blokady i domyślności oraz powiązanie z kontrahentem. |
+| SystemyZewn | SystemZewn | Lista systemów zewnętrznych | root | X | Definicja systemu zewnętrznego zintegrowanego z platformą Soneta (np. sklep internetowy, platforma EDI, KSeF). Zawiera typ systemu, symbol, opis, flagę blokady i domyślności oraz powiązanie z kontrahentem. |
 | SysZewnDefXmls | SystemZewnDefXmlNag |  | root | X | Powiązanie systemu zewnętrznego z definicją XML określające, które definicje komunikatów są dostępne dla danego systemu. Zawiera referencję do definicji XML oraz ustawienia pobierania i aktualizacji danych. |
 | SysZewnImpDefs | SysZewnImpDef | Elementy definicji pobierania danych | root |  | Definicja elementu pobierania danych z systemu zewnętrznego. Określa symbol, tabelę docelową, akcję, priorytet oraz schematy pobierania, aktualizacji i synchronizacji danych między systemami. |
 | SysZewnStatusy | SysZewnStatus |  | root |  | Mapowanie statusów zamówień w systemie zewnętrznym. Określa status źródłowy, docelowy i nazwę wyświetlaną oraz flagę pobierania - zamówienia z tym statusem będą pobrane i przetworzone z systemu zewnętrznego. |
@@ -846,8 +846,8 @@ Moduł płacowy obsługujący naliczanie wynagrodzeń. Zawiera listy płac, skł
 Moduł obsługujący pracę zdalną i hybrydową. Zawiera definicje miejsc pracy, harmonogramy pracy zdalnej oraz ewidencję obecności w biurze i poza nim.
 | Tabela | Obiekt | Tytuł tabeli | Nadrzędny | Konfiguracyjna | Opis |
 |---|---|---|---|---|---|
-| AreaPaths | AreaPath |  | root |  | Rejestr obszarów (ścieżek folderów) w systemie enova365 powiązanych z konkretną bazą danych. Służy do mapowania zadań na miejsca w strukturze programu. |
-| AreaTaskRel | AreaPathTaskRel | Relacje zadań do obszarów | root |  | Przypisanie zadania CRM do obszaru w systemie. Umożliwia powiązanie zadań z konkretnymi miejscami w strukturze programu enova365 dla celów raportowania i nawigacji. |
+| AreaPaths | AreaPath |  | root |  | Rejestr obszarów (ścieżek folderów) w systemie Soneta powiązanych z konkretną bazą danych. Służy do mapowania zadań na miejsca w strukturze programu. |
+| AreaTaskRel | AreaPathTaskRel | Relacje zadań do obszarów | root |  | Przypisanie zadania CRM do obszaru w systemie. Umożliwia powiązanie zadań z konkretnymi miejscami w strukturze programu Soneta dla celów raportowania i nawigacji. |
 | DefinicjeRCP | DefinicjaRCP | Definicje rejestracji czasu pracy | root | X | Szablon rejestracji czasu pracy (RCP). Konfiguruje parametry ewidencji czasu pracy: algorytmy akcji, blokady wyświetlania i edycji, dzienny wymiar czasu oraz opcje rejestracji miejsca i trybu pracy. |
 | DefinicjeWerRCP | DefinicjaWerRCP | Definicje weryfikatorow rejestracji czasu pracy | root | X | Szablon weryfikatora rejestracji czasu pracy. Definiuje reguły walidacji i algorytmy kontrolne sprawdzające poprawność danych ewidencji czasu pracy pracowników. |
 | RelChangeInfos | RelChangeInfo |  | root |  | Powiązanie wpisów historii zmian (ChangeInfo) z rejestracją czasu pracy (TimeTrack). Umożliwia śledzenie, które zmiany w systemie zostały zarejestrowane w ramach sesji pracy. |
@@ -1105,13 +1105,13 @@ Moduł obsługujący kursy walut i tabele kursowe. Zawiera definicje walut, tabe
 | TabeleKursowe | TabelaKursowa | Tabele kursowe | root | X | Definicja tabeli kursowej służącej do przeliczania wartości walutowych. Określa walutę bazową tabeli i sposób pobierania kursów (np. wg kursu z dnia operacji). Umożliwia korzystanie z wielu źródeł kursów, takich jak NBP czy ECB. |
 | Waluty | Waluta |  | root | X | Słownik walut stosowanych w systemie. Definiuje symbole, nazwy i krotności walut oraz opcjonalny stały przelicznik do EUR wykorzystywany w rozliczeniach. |
 # Moduł: WebAuthorization
-Moduł autoryzacji webowej. Zawiera definicje uprawnień, tokenów dostępu oraz mechanizmy uwierzytelniania użytkowników aplikacji webowych enova365.
+Moduł autoryzacji webowej. Zawiera definicje uprawnień, tokenów dostępu oraz mechanizmy uwierzytelniania użytkowników aplikacji webowych Soneta.
 | Tabela | Obiekt | Tytuł tabeli | Nadrzędny | Konfiguracyjna | Opis |
 |---|---|---|---|---|---|
 | WebProfiles | WebProfile |  | root |  | Element szczegółowy użytkownika webowego (WebUser). Profil przechowuje preferencje interfejsu (styl, język), historię aktywności i logowań, politykę haseł oraz konfigurację uwierzytelniania zewnętrznego i dwuskładnikowego. Służy do personalizacji i zabezpieczania sesji użytkownika. |
-| WebReports | WebReport |  | root |  | Definicja raportu dostępnego w aplikacji webowej enova365. Określa nazwę, opis, moduł docelowy, ścieżkę do pliku raportu na serwerze oraz status aktywności. Raporty są przypisywane do modułów i udostępniane użytkownikom zgodnie z rolami uprawnień. |
+| WebReports | WebReport |  | root |  | Definicja raportu dostępnego w aplikacji webowej Soneta. Określa nazwę, opis, moduł docelowy, ścieżkę do pliku raportu na serwerze oraz status aktywności. Raporty są przypisywane do modułów i udostępniane użytkownikom zgodnie z rolami uprawnień. |
 | WebReportRoles | WebReportRole | Role raportu | WebReports |  | Element szczegółowy raportu webowego (WebReport). Przypisuje rolę uprawnień do raportu, kontrolując które grupy użytkowników mogą go wyświetlać. Jeden raport może mieć wiele przypisanych ról. |
-| WebUsers | WebUser |  | root |  | Użytkownik aplikacji webowej enova365. Przechowuje dane uwierzytelniające, typ konta, przypisane licencje modułowe (CRM, ZMN, PLN, BI itp.) oraz powiązania z operatorem enova365 i obiektem biznesowym (np. pracownikiem). Stanowi podstawę kontroli dostępu do interfejsu webowego. |
+| WebUsers | WebUser |  | root |  | Użytkownik aplikacji webowej Soneta. Przechowuje dane uwierzytelniające, typ konta, przypisane licencje modułowe (CRM, ZMN, PLN, BI itp.) oraz powiązania z operatorem Soneta i obiektem biznesowym (np. pracownikiem). Stanowi podstawę kontroli dostępu do interfejsu webowego. |
 # Moduł: Windykacja
 Moduł obsługujący procesy windykacji należności. Zawiera definicje schematów windykacyjnych, akcje windykacyjne, monity oraz śledzenie statusów windykacji kontrahentów.
 | Tabela | Obiekt | Tytuł tabeli | Nadrzędny | Konfiguracyjna | Opis |

@@ -1,6 +1,6 @@
 # Przykłady kodu - Podstawowe klasy ORM
 
-Praktyczne przykłady użycia podstawowych klas logiki biznesowej enova365/Soneta.
+Praktyczne przykłady użycia podstawowych klas logiki biznesowej platformy Soneta.
 
 ## Spis treści
 

@@ -94,7 +94,7 @@ foreach (Nieobecnosc n in pracownik.Nieobecnosci.GetIntersectedRows(lipiec))
 ### KADRY-D2 — Korygowanie nieobecności już wypłaconych (★)
 
 **Cel:** poprawić nieobecność, która została już rozliczona w wypłacie — zmienić jej okres lub typ
-(definicję) i/lub wymusić ponowne ustalenie podstawy naliczania zasiłku. enova rozróżnia dwie ścieżki:
+(definicję) i/lub wymusić ponowne ustalenie podstawy naliczania zasiłku. Soneta rozróżnia dwie ścieżki:
 (a) **modyfikacja istniejącej nieobecności** + ponowne ustalenie podstawy, (b) **korekta** jako odrębny
 rekord typu `KorektaNieobecności`.
 
