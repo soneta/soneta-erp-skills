@@ -227,15 +227,15 @@ private void Report_BeforePrint(object s, CancelEventArgs e) {
 ```
 
 `[Priority]` ustala kolejność pól, `[Caption]`/`[Translate]` — etykiety w oknie parametrów.
-Formularz parametrów można też opisać osobnym plikiem `pageform.xml` (→ **/soneta:form-xml**).
+Formularz parametrów można też opisać osobnym plikiem `pageform.xml` (→ **[form-xml](../../form-xml/SKILL.md)**).
 
 > **To ten sam mechanizm, co parametry workerów i list.** Klasa parametrów wydruku jest
 > konstruowana identycznie jak klasa parametrów workera/widoku: dziedziczy po `ContextBase`
 > (lub `SerializableContextBase` dla trwałości między sesjami), pola z `[Priority]`/`[Caption]`,
 > wstrzykiwanie przez `[Context]`, powiadamianie o zmianie przez `InvokeChanged`/`OnChanged`.
-> Pełny opis (cykl życia, trwałość, `InvokeChanged`, wzorce) → **/soneta:programming**, temat
+> Pełny opis (cykl życia, trwałość, `InvokeChanged`, wzorce) → **[programming](../../programming/SKILL.md)**, temat
 > *Klasy parametrów (`ContextBase`)*; sama klasa `Context` i odczyt zaznaczeń/danych z UI →
-> **/soneta:programming**, temat *Klasa `Context`*.
+> **[programming](../../programming/SKILL.md)**, temat *Klasa `Context`*.
 
 ## Dostarczanie własnych, policzonych danych
 
@@ -260,7 +260,7 @@ empty.CustomDataSource = lista;
 
 `DataKind` komponentu (`CurrentList`/`Context`/`SingleRow`/`Session`) i wiązanie band przez
 `DataSource="#Ref-N"` + `DataMember` → [DATA.md](DATA.md). Logikę liczącą dane buduje się według
-wzorców z **/soneta:programming**: dostęp do `Session` i transakcji (temat *Sesje, transakcje*),
+wzorców z **[programming](../../programming/SKILL.md)**: dostęp do `Session` i transakcji (temat *Sesje, transakcje*),
 odczyt danych i modułów ORM, obliczenia w **workerach/extenderach** (temat *Worker i Extender*),
 oraz weryfikacja bezpieczeństwa kodu (temat *Zasady bezpiecznego kodu biznesowego*).
 
@@ -357,17 +357,17 @@ DevExpress: [../assets/Dokument.repx.cs](../assets/Dokument.repx.cs).
 - [ ] Ciężka inicjalizacja w `BeforePrint` pod strażą flagi (odpala się wielokrotnie).
 - [ ] Parametry jako klasa `: ContextBase` + właściwość `[Context]`.
 - [ ] Dane liczone: `BusinessDataSource.Context.Set(...)` lub `CustomDataSource`, bandy wiązane `DataMember`.
-- [ ] Logika ORM (sesja, workery, odczyt pól) zweryfikowana wg **/soneta:programming**.
+- [ ] Logika ORM (sesja, workery, odczyt pól) zweryfikowana wg **[programming](../../programming/SKILL.md)**.
 
 ## Powiązane
 
-- **/soneta:programming** — warstwa kodu C#, na której opiera się snippet. Konkretne tematy:
+- **[programming](../../programming/SKILL.md)** — warstwa kodu C#, na której opiera się snippet. Konkretne tematy:
   - *Klasy parametrów (`ContextBase`)* — ta sama konstrukcja co parametry wydruku (`[Priority]`, `[Context]`, `InvokeChanged`, trwałość `SerializableContextBase`).
   - *Klasa `Context`* — odczyt danych/zaznaczeń z UI, źródło parametrów.
   - *Sesje, transakcje* — `Session`, dostęp do modułów i danych ORM.
   - *Worker i Extender* — obliczenia dostarczające dane raportu.
   - *Zasady bezpiecznego kodu biznesowego* — checklist do review kodu snippetu.
-- **/soneta:form-xml** — formularz parametrów wydruku (`pageform.xml`).
+- **[form-xml](../../form-xml/SKILL.md)** — formularz parametrów wydruku (`pageform.xml`).
 - [REGISTRATION.md](REGISTRATION.md) — osadzanie `.repx.cs`, rejestracja wydruku, style.
 - [DATA.md](DATA.md) — `BusinessDataSource`, `DataKind`, wiązanie band i `DataMember`.
 - [SUBREPORTS.md](SUBREPORTS.md) — snippety nagłówków/stopek/podraportów: helpery `ReportTools`/`XtraReportHelper`, `SubBand` FirstPage/NextPage, sekcje `DetailReportBand` sterowane snippetem.

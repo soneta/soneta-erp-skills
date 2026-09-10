@@ -316,5 +316,5 @@ w trakcie edycji → **sesyjnie** (`Events`).
   `Equals`/`GetHashCode`, uzbrajanie na zmianę pól-źródeł.
 - [row-types.md](row-types.md) — settery property, w których zwykle rejestrujesz eventy.
 - [safe-code.md](safe-code.md) — zasady bezpiecznego kodu biznesowego (checklist do review).
-- **Skill soneta:form-xml** — akcje UI (Command, edycja pól) kończą się `CommitUI()`, co wyzwala
+- **Skill [form-xml](../../form-xml/SKILL.md)** — akcje UI (Command, edycja pól) kończą się `CommitUI()`, co wyzwala
   eventy sesyjne; tam opisana jest warstwa interfejsu wywołująca to zatwierdzenie.

@@ -5,7 +5,7 @@
 1. [Typy relacji](#typy-relacji)
 2. [Relacja jeden-do-wielu (master-detail)](#relacja-jeden-do-wielu)
 3. [Relacja wiele-do-wielu](#relacja-wiele-do-wielu)
-4. [Relacja do interfejsu](#relacja-do-interfejsu)
+4. [Relacja do interfejsu](#relacja-do-interfejsu-polimorficzna)
 5. [Historia (wersjonowanie)](#historia-wersjonowanie)
 6. [Relacja zwrotna (self-reference)](#relacja-zwrotna)
 7. [Kolekcja odwrotna dla tabel z innego modułu](#kolekcja-odwrotna-dla-tabel-z-innego-modułu)
@@ -23,8 +23,7 @@
 | Historia | Wersjonowanie temporalne | FK + okres | Ceny towaru w czasie |
 | Zwrotna | Do tej samej tabeli | FK (ID) | Kategoria nadrzędna |
 
-> Jak korzystać z relacji w kodzie (nawigacja, LINQ, RowCondition) opisuje skill
-> `/soneta:programming` (rowcondition.md).
+> Jak korzystać z relacji w kodzie (nawigacja, LINQ, RowCondition) opisuje [rowcondition.md](../../programming/references/rowcondition.md).
 
 ---
 
@@ -96,7 +95,7 @@ Zasady:
   i tak traktuje relację guided jako relację praw, ale zapisuje ostrzeżenie do logu;
 - nie prowadź relacji praw z tabeli **operacyjnej** do tabeli **konfiguracyjnej** — prawa do
   danych operacyjnych opiera się wtedy o obiekt konfiguracyjny; do takiego sterowania służą
-  prawa obiektowe (`IRightsSource`, skill `/soneta:programming`).
+  prawa obiektowe (`IRightsSource`, skill [programming](../../programming/SKILL.md)).
 
 **Konsekwencja dla drzewa uprawnień:** tabela z `relright="true"` albo `relguided` **nie ma**
 wpisu w pliku `*.rightstree.xml` — miejsce w drzewie dziedziczy po obiekcie nadrzędnym. Wpis

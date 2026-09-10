@@ -3,7 +3,7 @@
 Zbiór gotowych wzorców kodu dla domeny **Kadry i Płace**: obiekt biznesowy
 **`Soneta.Kadry.Pracownik`** (tabela `Pracownicy`) wraz z jego historią kadrową, etatem,
 nieobecnościami, planem pracy, umowami cywilnoprawnymi i wypłatami. Dokument jest częścią skilla
-`soneta:programming`. Celem jest, aby agent pisał **bezbłędny kod biznesowy** operujący na
+[programming](../../SKILL.md). Celem jest, aby agent pisał **bezbłędny kod biznesowy** operujący na
 pracowniku — trafiający w realne pola, kolekcje i workery platformy.
 
 > Format **zwarty**: każdy wzorzec opisuje ogólny przypadek + tabelę wariantów. Fundamenty (sesja,
@@ -11,9 +11,13 @@ pracowniku — trafiający w realne pola, kolekcje i workery platformy.
 > są opisane w [`safe-code.md`](../safe-code.md), [`session-login.md`](../session-login.md) oraz
 > [`worker-extender.md`](../worker-extender.md) — tutaj się do nich odwołujemy, nie powtarzamy ich.
 >
-> **Cały kod w tym dokumencie jest zgodny z C# 10** (target-typed `new`, `var`, wyrażenia `switch`,
-> nazwane parametry `bool`). Snippety operują wyłącznie na **publicznym kontrakcie** platformy — nie
-> ma odwołań do prywatnych klas ani kodu źródłowego aplikacji.
+> **Cały kod w tym dokumencie jest zgodny z C# 14**. Snippety operują wyłącznie na
+> **publicznym kontrakcie** platformy, bez odwołań do prywatnych klas ani kodu źródłowego aplikacji.
+>
+> **Styl kodu:** preferuj `var`, uwzględniając lokalne ustawienia projektu. Używaj target-typed
+> `new` i wyrażeń `switch`, gdy poprawiają czytelność. Przy argumentach `bool` podawaj nazwę
+> parametru, gdy samo `true` lub `false` nie wyjaśnia znaczenia wywołania. Nowsze konstrukcje
+> stosuj, gdy upraszczają kod.
 
 ## Fakty o typie (zweryfikowane skanem DLL — `scan-props.csx`)
 
@@ -63,11 +67,11 @@ pracowniku — trafiający w realne pola, kolekcje i workery platformy.
 
 Każdy wzorzec (`KADRY-Xn`, gdzie `X` = litera sekcji z listy zadań) ma stałą strukturę:
 
-- **Cel** — co robi i kiedy go użyć.
-- **Warianty** — tabela odmian przypadku (gdy dotyczy).
-- **Pola i typy** — realne właściwości/kolekcje i ich typy.
-- **Snippet** — kod C# 10 na publicznym kontrakcie.
-- **Pułapki** — typowe błędy i zasady safe-code.
+- **Cel**: co robi i kiedy go użyć.
+- **Warianty**: tabela odmian przypadku (gdy dotyczy).
+- **Pola i typy**: realne właściwości/kolekcje i ich typy.
+- **Snippet**: kod C# 14 na publicznym kontrakcie.
+- **Pułapki**: typowe błędy i zasady safe-code.
 
 > **Konwencja testów:** każdy wzorzec ma odpowiadający test w
 > `Soneta.Skills.Test/KadryPlace/Pracownik/` (klasa dziedzicząca z `PracownikTestBase : TestBase`).
@@ -104,5 +108,4 @@ Każdy wzorzec (`KADRY-Xn`, gdzie `X` = litera sekcji z listy zadań) ma stałą
 - [`rowcondition.md`](../rowcondition.md) — serwerowy LINQ, `RowCondition`, `SubTable[condition]`.
 - [`features.md`](../features.md) — cechy (`Features`), typy, dostęp typowany/nietypowany.
 - [`scan-props.md`](../scan-props.md) / [`scan-workers.md`](../scan-workers.md) — inwentaryzacja pól i workerów; weryfikacja dokładnych nazw i typów pól obiektu z DLL.
-- `/soneta:config` (*import-export-xml*) — import/eksport pracownika przez plik XML; gotowy przykład `examples/import-pracownik-etatowy.xml` (model „root + historia", kolekcja historyczna z `addnew="true"`).
-
+- [import-export-xml](../../../config/references/import-export-xml.md) — import/eksport pracownika przez plik XML; gotowy przykład `examples/import-pracownik-etatowy.xml` (model „root + historia", kolekcja historyczna z `addnew="true"`).

@@ -4,7 +4,7 @@
 
 ViewInfo to **kod UI** (patrz "Kod biznesowy vs UI" w głównym `SKILL.md`).
 
-Skill `soneta:form-xml` opisuje pełną składnię plików `viewform.xml`/`pageform.xml` (elementy `DataForm`, `Flow`, 
+Skill [form-xml](../../form-xml/SKILL.md) opisuje pełną składnię plików `viewform.xml`/`pageform.xml` (elementy `DataForm`, `Flow`,
 `Grid`, `Field`, `Appearance`, `GroupBy`, atrybuty `EditValue`, `Visibility`, `IsReadOnly`, `Condition` itd.). Sięgaj do niego za każdym razem, gdy edytujesz lub generujesz XML formularza — bez tej wiedzy łatwo wygenerować nieprawidłowe znaczniki.
 
 ## Spis treści
@@ -48,7 +48,9 @@ Najważniejsze parametry:
 | `IconName` | Nazwa zasobu ikony. |
 | `Description` | Tooltip / opis folderu. |
 
-Najważniejsze foldery `path` programu Soneta można znaleźć w skill /soneta-mcp-ui/common-folders.md. 
+Ścieżki `path` statycznych folderów menu odczytaj z DLL przez
+[scan-folders](../../config/references/scan-folders.md). Foldery dostępne w działającej
+aplikacji odkrywaj przez [buscall](../../tools/references/buscall.md#odkrywanie-ścieżki-folderów).
 
 ---
 
@@ -311,7 +313,7 @@ public ViewInfo MojeWpisyView {
 ```
 
 W `pageform.xml`/`viewform.xml` `Grid` wiąże się z tą property: `EditValue="{MojeWpisyView}"`
-(zob. skill `/soneta:form-xml`).
+(zob. skill [form-xml](../../form-xml/SKILL.md)).
 
 **Zwracanie wyniku i kontekst:**
 - Gotowy `View` zwracaj przez **`args.DataSource = view;`** — to kanał domyślny i ogólniejszy.
@@ -349,7 +351,7 @@ dodatkowe przeliczenie. Property bindowane do `SelectedValue`/`FocusedValue` gri
 wymagają nawet `AutoChange` — sama zmiana zaznaczenia/fokusu przelicza pola zależne.
 
 Wybór nośnika stanu filtrów wpływa na bindowanie paska filtra (`Flow Class="DataBar"`
-wewnątrz `Grid`, zob. skill `/soneta:form-xml`): filtry w `Params` (kontekst) → pasek z
+wewnątrz `Grid`, zob. skill [form-xml](../../form-xml/SKILL.md)): filtry w `Params` (kontekst) → pasek z
 `DataContext="{Context}"` i bindy `{Params.Pole}`; filtry na obiekcie sterującym → pasek bez
 `DataContext` (dziedziczy `{DataSource}`) i bindy wprost `{Pole}`.
 
@@ -390,7 +392,7 @@ Reguły bindowania:
 - `Appearance` z `Condition="{?[FlagaBlokady] = True}"` — formatowanie warunkowe wiersza.
 - `Footer="Sum"` - kolumny liczbowe mogą mieć sumę w stopce.
 
-Pełna gramatyka `viewform.xml` (DataForm, Page, Group, Grid, Field, Stack, Flow, Command, Appearance, GroupBy, Renderable, CaptionHtml, Footer, Class) — używaj skilla **`/soneta:form-xml`**. Bez niego wygenerowany XML łatwo zawiera nieistniejące elementy.
+Pełna gramatyka `viewform.xml` (DataForm, Page, Group, Grid, Field, Stack, Flow, Command, Appearance, GroupBy, Renderable, CaptionHtml, Footer, Class) — używaj skilla **[form-xml](../../form-xml/SKILL.md)**. Bez niego wygenerowany XML łatwo zawiera nieistniejące elementy.
 
 ---
 

@@ -24,7 +24,7 @@ Hierarchię ogólną opisuje [SKILL.md](../SKILL.md#hierarchia-głównych-klas).
 ## Atrybut guided w business.xml
 
 Atrybut `guided` w definicji tabeli określa rolę obiektu w strukturze Datapack. Deklarację
-`guided`/`relguided` w definicji tabeli opisuje skill `/soneta:business-xml`.
+`guided`/`relguided` w definicji tabeli opisuje skill [business-xml](../../business-xml/SKILL.md).
 
 | Wartość | Klasa bazowa | Opis |
 |---------|--------------|------|
@@ -260,5 +260,5 @@ Towar towar = towary[guid];
 ## Powiązania
 
 - Import/eksport rekordów guidowanych (datapack jako jednostka eksportu XML):
-  struktura pliku — artykuł *import-export-xml* w `/soneta:config`; warstwa kodu —
+  struktura pliku — artykuł [import-export-xml](../../config/references/import-export-xml.md); warstwa kodu —
   [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).

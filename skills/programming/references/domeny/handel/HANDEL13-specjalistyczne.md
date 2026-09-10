@@ -9,11 +9,11 @@
 > z bramką KSeF, wysyłka e-mail e-paragonu) albo **sprzętu** (drukarka fiskalna). Tych fragmentów **nie**
 > da się odtworzyć w teście jednostkowym — testuj wyłącznie **ustawienie pól i parametrów** oraz **strukturę**
 > (np. `XmlValidated`, parametry workera, pola `KSeFKomunikat`). Każdy wzorzec poniżej oznacza, która część
-> jest „offline" (testowalna), a która „online/sprzętowa" (NIE testuj — patrz `dh-facts.md`, „Reguły testów").
+> jest „offline" (testowalna), a która „online/sprzętowa" (poza zakresem testów jednostkowych).
 >
 > Wszystkie workery wymienione w tym rozdziale są **publiczne** i mogą być wywołane z dodatku zewnętrznego.
 > Operacje modyfikujące dokument wykonuj w transakcji (`session.Logout(true)` + `Commit`/`CommitUI`), potem
-> `session.Save()`. Kod zgodny z C# 10.
+> `session.Save()`. Kod zgodny z C# 14.
 
 ---
 

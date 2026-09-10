@@ -5,7 +5,7 @@ properties wyliczane, akcje w menu Czynności, dodatkowe pola na formularzu.
 Oba korzystają z [Context](context.md) do pobierania parametrów.
 
 > Składnię wyrażeń bindujących po stronie form.xml (`{Workers.Alias.Pole}`, `{new Extender.Pole}`)
-> oraz element `Command` wywołujący akcję opisuje skill `/soneta:form-xml`.
+> oraz element `Command` wywołujący akcję opisuje skill [form-xml](../../form-xml/SKILL.md).
 
 ## Obiekty Worker
 
@@ -124,7 +124,7 @@ Worker udostępnia metodę w menu Czynności za pomocą atrybutu `[Action("Tytu�
 
 * Jeden worker może udostępniać wiele pozycji (metod) w menu Czynności.
 * Akcja workera pojawia się **w dwóch miejscach naraz**: w menu Czynności listy/formularza oraz
-  jako `Command` możliwy do umieszczenia na formularzu (element `Command` — skill `/soneta:form-xml`).
+  jako `Command` możliwy do umieszczenia na formularzu (element `Command` — skill [form-xml](../../form-xml/SKILL.md)).
 * Metoda Action (w przykładzie metoda `SendEmails`) obiektu worker zwraca [action result](./action-result.md)
 * Metoda `bool IsVisibleXxx()` (np `bool IsVisibleSendEmails()`) jest opcjonalna i kontroluje widoczność w menu
 * Metoda `bool IsEnabledXxx()` (np `bool IsEnabledSendEmails()`) jest opcjonalna i kontroluje aktywność pozycji w menu
@@ -310,7 +310,7 @@ Zasady wykonania na liście:
 Pozwalają na bindowanie logiki interface-owej do formularzy. Można bindować methods i properties z obiektu extender.
 Extender bywa też **kontekstem całej strony** (`DataContext="{New MojExtender}"`) — m.in. stron
 okna Opcji (`Config.*.pageform.xml`), gdzie dostarcza widoki list konfiguracyjnych; składnię
-opisuje `/soneta:form-xml` (binding, *Strony okna Opcji*).
+opisuje [binding](../../form-xml/references/binding.md), *Strony okna Opcji*.
 
 * Extender nie jest przypisany do danych
 * W nazwie klasy powinno się stosować sufiks `Extender`

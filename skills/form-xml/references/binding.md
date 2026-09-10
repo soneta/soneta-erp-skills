@@ -19,7 +19,7 @@ w `{...}`. Podstawy składni formularza: [../SKILL.md](../SKILL.md).
 
 > Odczyt rzeczywistego powiązania (który człon/`DataType`, także zawężanie po namespace, gdy ta
 > sama nazwa jest w wielu modułach) z zasobów DLL realizuje skaner **`scan-forms`**
-> (`/soneta:programming`, references/scan-forms.md).
+> ([scan-forms.md](../../programming/references/scan-forms.md)).
 
 ## Wiele zakładek jednego okna — auto-składanie po nazwie pliku
 
@@ -39,10 +39,9 @@ się automatycznie. `CaptionHtml` bez `/` → samodzielna zakładka; z `/` → h
 > **Zakładki i grupy = sekcje danych.** `Page` i `Group` wyznaczają logiczne **sekcje danych**
 > do uzupełnienia, a kolejność pól odzwierciedla kolejność wprowadzania (i pośrednio wykonywanego
 > kodu). Ma to znaczenie przy budowaniu danych **kodem** oraz przy **imporcie XML `business="true"`**
-> (patrz skill `/soneta:config`). Gdy masz tylko skompilowane DLL (bez źródeł formularzy), zakładki,
+> (patrz skill [config](../../config/SKILL.md)). Gdy masz tylko skompilowane DLL (bez źródeł formularzy), zakładki,
 > sekcje i rozwinięte ścieżki pól (łańcuch `DataContext`+`EditValue`, dołączane `Include`)
-> odczytasz z zasobów osadzonych skanerem **`scan-forms`** ze skilla `/soneta:programming`
-> (references/scan-forms.md).
+> odczytasz z zasobów osadzonych skanerem **[scan-forms](../../programming/references/scan-forms.md)**.
 
 ## Strony okna Opcji (konfiguracja)
 
@@ -57,7 +56,7 @@ w projekcie `.UI` — osadza się automatycznie, jak inne formy (zob. wyżej *Os
   `DataContext="{New MojConfigExtender}"` — klasa z property widoków list konfiguracyjnych
   (np. `public View Definicje => …CreateView()` na sesji konfiguracyjnej okna Opcji).
   Namespace klasy extendera wg katalogu pliku. Extendery i konwencje (`IsVisibleX()`,
-  `GetListX()`) opisuje `/soneta:programming` (worker-extender).
+  `GetListX()`) opisuje [worker-extender](../../programming/references/worker-extender.md).
 - Typowa zawartość: `Group` + `Grid` bindowany do widoku z extendera + standardowe komendy
   wierszy (Dodaj/Otwórz/Usuń) — grid otwiera formularze obiektów (pageformy `{Typ}.{Zakładka}`).
 
@@ -78,9 +77,9 @@ Checklista strony Opcji:
 - [ ] `CaptionHtml` z pełną ścieżką drzewa Opcji (człony `/`)
 - [ ] extender w `DataContext="{New …}"` dostarcza widoki list
 - [ ] jeżeli obiekty konfiguracyjne są źródłami praw (`IRightsSource`) — prawa nadane przy
-      tworzeniu bazy (`/soneta:programming` rights-source, `/soneta:config` import-export-xml)
+      tworzeniu bazy ([rights-source](../../programming/references/rights-source.md), [import-export-xml](../../config/references/import-export-xml.md))
 - [ ] weryfikacja wizualna na żywo: `get_configuration_folders "regexFilter=<nazwa>"` →
-      `navigate_to_folder` → `take_screenshot` (buscall — `/soneta:tools`)
+      `navigate_to_folder` → `take_screenshot` (buscall — [tools](../../tools/SKILL.md))
 
 ## Zmiana kontekstu danych
 
@@ -92,7 +91,7 @@ Checklista strony Opcji:
   `GanttDiagram`, `KanbanDiagram`, `Pivot`, `Chart`, `Diagram`, `TreeDiagram`. Np. w
   `<Grid EditValue="{Pozycje}">` kolumna `<Field EditValue="{Cena}">` to `Pozycje` → element →
   `Cena`. Pełne ścieżki pól z rozwiniętym kontekstem (marker `[]` dla elementu kolekcji)
-  wypisuje skaner **`scan-forms`** (`/soneta:programming`, references/scan-forms.md).
+  wypisuje skaner **`scan-forms`** ([scan-forms.md](../../programming/references/scan-forms.md)).
 
 **`{DataSource}` to obiekt sterujący oknem.** Zwykle jest to edytowany `Row`, ale równie dobrze
 może być klasa sterująca oknem narzędziowym/diagnostycznym. Wtedy pola (także filtry w pasku
@@ -125,12 +124,9 @@ bez osobnego obiektu kontekstu:
 | `{.}` | Aktualna wartość w kontekście elementu |
 
 - Czym są **workery i extendery** (`{Workers.Alias.Pole}`, `{new Extender.Pole}`) — obiekty
-  doczepiane do Row z dodatkowymi property — opisuje skill **`/soneta:programming`**
-  (worker-extender.md).
-- Mechanizm **cech** (`{Features.NazwaCechy}`, `VisibleFeatures` na `Grid`) opisuje skill
-  **`/soneta:programming`** (features.md).
-- Klasę parametrów stojącą za `{Context...}` (`Params : ContextBase`) opisuje skill
-  **`/soneta:programming`** (contextbase.md, context.md).
+  doczepiane do Row z dodatkowymi property — opisuje [worker-extender.md](../../programming/references/worker-extender.md).
+- Mechanizm **cech** (`{Features.NazwaCechy}`, `VisibleFeatures` na `Grid`) opisuje [features.md](../../programming/references/features.md).
+- Klasę parametrów stojącą za `{Context...}` (`Params : ContextBase`) opisują [contextbase.md](../../programming/references/contextbase.md) i [context.md](../../programming/references/context.md).
 
 ## Wyrażenia warunkowe (RowCondition)
 
@@ -143,8 +139,7 @@ Visibility="{?Aktywny and Widoczny}"    <!-- AND -->
 
 > **Dwie strony tego samego pojęcia.** RowCondition w form.xml to tekstowe wyrażenie `{?...}`
 > rozwiązywane po stronie UI; jego odpowiednikiem w kodzie biznesowym jest serwerowy warunek
-> `Expression<Predicate<TRow>>`. Stronę kodu opisuje skill **`/soneta:programming`**
-> (rowcondition.md) — tam te same warunki buduje się i komponuje w C#.
+> `Expression<Predicate<TRow>>`. Stronę kodu opisuje [rowcondition.md](../../programming/references/rowcondition.md) — tam te same warunki buduje się i komponuje w C#.
 
 Ta sama składnia obowiązuje w `Appearance.Condition` (formatowanie warunkowe —
 patrz [../SKILL.md](../SKILL.md)).
@@ -155,5 +150,5 @@ patrz [../SKILL.md](../SKILL.md)).
 - [collections-grids.md](collections-grids.md) — konteksty w elementach listowych, filtry list.
 - [dynamic-forms.md](dynamic-forms.md) — bindowanie po indeksie, generowanie pól z kodu.
 - [examples.md](examples.md) — kompletne pliki pokazujące bindowanie w praktyce.
-- Skill **`/soneta:programming`** — scan-forms.md, viewinfo.md, rowcondition.md, contextbase.md,
-  worker-extender.md, features.md.
+- [scan-forms.md](../../programming/references/scan-forms.md), [viewinfo.md](../../programming/references/viewinfo.md), [rowcondition.md](../../programming/references/rowcondition.md), [contextbase.md](../../programming/references/contextbase.md),
+  [worker-extender.md](../../programming/references/worker-extender.md), [features.md](../../programming/references/features.md).

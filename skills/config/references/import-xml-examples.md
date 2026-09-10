@@ -8,7 +8,7 @@ Ten dokument zbiera z nich powtarzalne wzorce i gotowe szkielety dla najczęstsz
 Składnię i atrybuty opisuje [import-export-xml.md](import-export-xml.md); tu są **przykłady**.
 
 **Nazwy pól w przykładach są ilustracyjne** (stan na wersję, z której je wzięto). Przed użyciem
-zawsze zweryfikuj strukturę obiektu skanem `scan-props` (`/soneta:programming`) — to obowiązek
+zawsze zweryfikuj strukturę obiektu skanem [scan-props](../../programming/references/scan-props.md), to obowiązek
 agenta (zob. *Zasada nadrzędna* w [import-export-xml.md](import-export-xml.md)).
 
 ## Szybki wybór wzorca
@@ -382,7 +382,7 @@ bez własnego GUID-a; `Entitle` wskazuje uprawnionego (`Entitle:GUID` — rola l
 
 GUID `00000000-0015-0001-0001-000000000000` to standardowa rola administratora — nowe obiekty
 będące źródłem praw są domyślnie niedostępne, więc plik definicji zwykle kończy się właśnie
-takim rekordem (kontekst: *rights-source* w `/soneta:programming`). Pełny plik:
+takim rekordem (kontekst: [rights-source](../../programming/references/rights-source.md)). Pełny plik:
 [import-rola-i-prawa.xml](../examples/import-rola-i-prawa.xml).
 
 ### Projekt runtime i plik kodu (`insertonly`)
@@ -491,7 +491,7 @@ Wariant z edytorem: `<Algorytm><Typ>EdytorAlgorytmu</Typ>…</Algorytm>` i kod w
 `%NAZWA%_Param` / `%NAZWA%_Wylicz` (symbole podstawia platforma; encje XML dla `<`, `&`).
 Pełny plik z obydwoma wariantami i opisem pól:
 [import-definicja-elementu-wynagrodzenia.xml](../examples/import-definicja-elementu-wynagrodzenia.xml).
-Znaczenie parametrów algorytmu i API kodu: `/soneta:place-def-elementow`. Gdy trzeba odtworzyć
+Znaczenie parametrów algorytmu i API kodu: [place-def-elementow](../../place-def-elementow/SKILL.md). Gdy trzeba odtworzyć
 element o nietypowej konfiguracji, wyeksportuj istniejący i zmodyfikuj.
 
 ## Pułapki zauważone w plikach standardowych
@@ -505,7 +505,7 @@ element o nietypowej konfiguracji, wyeksportuj istniejący i zmodyfikuj.
 - **`business="true"` nie występuje w żadnym pliku dbinit** — inicjowanie i konwersja bazy to
   zawsze import według rekordów; tryb biznesowy jest dla dokumentów operacyjnych.
 - **Wydruki `.repx` nie są dystrybuowane przez XML importu** — element `<Report>` w plikach to
-  pole definicji, nie rekord. Rejestrację wydruków opisuje `/soneta:repx`.
+  pole definicji, nie rekord. Rejestrację wydruków opisuje [repx](../../repx/SKILL.md).
 - Rekordy podrzędne często powtarzają wskaźnik na rodzica (`<Dashboard>DashboardView_17</Dashboard>`)
   — to nadmiarowe, ale spójne z eksportem; nie jest wymagane.
 
@@ -529,6 +529,9 @@ element o nietypowej konfiguracji, wyeksportuj istniejący i zmodyfikuj.
 - [import-export-xml.md](import-export-xml.md) — składnia, atrybuty, tryby, dbinit, testowanie.
 - [demo-data.md](demo-data.md) — pliki demo: ten sam format, inna kolejność i cel.
 - [config-reg.md](config-reg.md) — przenoszenie całej konfiguracji zamiast wskazanych rekordów.
-- `/soneta:programming` — *rights-source*, *datapack-guidedrow*, `scan-props`, osadzanie dbinit
-  jako EmbeddedResource; `/soneta:place-def-elementow` — definicje elementów wynagrodzenia;
-  `/soneta:repx` — rejestracja wydruków; `/soneta:tools` — `dbmgr importxml`.
+- [programming](../../programming/SKILL.md): [rights-source](../../programming/references/rights-source.md),
+  [datapack-guidedrow](../../programming/references/datapack-guidedrow.md),
+  [scan-props](../../programming/references/scan-props.md), osadzanie dbinit jako EmbeddedResource.
+- [place-def-elementow](../../place-def-elementow/SKILL.md): definicje elementów wynagrodzenia.
+- [repx](../../repx/SKILL.md): rejestracja wydruków.
+- [tools](../../tools/SKILL.md): `dbmgr importxml`.

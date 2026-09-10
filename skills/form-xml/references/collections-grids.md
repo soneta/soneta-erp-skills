@@ -66,8 +66,7 @@ formularzu lub w oknie:
 </Grid>
 ```
 
-Stronę logiki (jak zbudować `ViewInfo` jako property/folder i filtrować widok) opisuje skill
-**`/soneta:programming`** (viewinfo.md, rowcondition.md).
+Stronę logiki (jak zbudować `ViewInfo` jako property/folder i filtrować widok) opisują [viewinfo.md](../../programming/references/viewinfo.md) i [rowcondition.md](../../programming/references/rowcondition.md).
 
 ## Multi-select — `SelectedValue` i reaktywne pole pochodne
 
@@ -128,7 +127,7 @@ leżą wprost na obiekcie sterującym oknem (`{DataSource}`), **nie ustawiaj `Da
 ```
 
 Stronę C# (klasę parametrów `Params : ContextBase` vs property na obiekcie głównym z
-`[Accessor(AutoChange = true)]`) opisuje skill **`/soneta:programming`** (contextbase.md, context.md).
+`[Accessor(AutoChange = true)]`) opisują [contextbase.md](../../programming/references/contextbase.md) i [context.md](../../programming/references/context.md).
 
 ## Powiązania
 
@@ -136,5 +135,5 @@ Stronę C# (klasę parametrów `Params : ContextBase` vs property na obiekcie g�
 - [binding.md](binding.md) — zmiana kontekstu danych w elementach listowych, składnia wyrażeń.
 - [ux-design.md](ux-design.md) — pozycja etykiet, wizualna weryfikacja układu.
 - [ELEMENTS.md](ELEMENTS.md) — pełna specyfikacja elementów i wartości `Class`.
-- Skill **`/soneta:programming`** — `ViewInfo` (viewinfo.md), warunki serwerowe (rowcondition.md),
-  klasy parametrów (contextbase.md, context.md), cechy (features.md).
+- `ViewInfo` ([viewinfo.md](../../programming/references/viewinfo.md)), warunki serwerowe ([rowcondition.md](../../programming/references/rowcondition.md)),
+  klasy parametrów ([contextbase.md](../../programming/references/contextbase.md), [context.md](../../programming/references/context.md)), cechy ([features.md](../../programming/references/features.md)).

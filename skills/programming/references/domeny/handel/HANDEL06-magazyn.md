@@ -5,7 +5,7 @@
 > Sekcja opisuje **odczyt** efektów magazynowych dokumentu (zasoby, obroty) oraz
 > **sterowanie** rozchodem przez wskazanie partii (`GrupaDostaw`) i kontekst wyceny
 > (FIFO/LIFO/wg dostaw). Cały kod operuje wyłącznie na **publicznym kontrakcie**
-> platformy i jest zgodny z C# 10.
+> platformy i jest zgodny z C# 14.
 >
 > **Klucz do zrozumienia całej sekcji:** magazyn księguje obroty i zasoby **dopiero po
 > `Session.Save()`** dokumentu. Samo `Commit()`/`CommitUI()` w transakcji nie nalicza

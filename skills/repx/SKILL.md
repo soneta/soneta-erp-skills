@@ -202,14 +202,14 @@ a raport wybiera arkusz przez `StyleSheetPath`/`StylesSource` (`"standardowy"`).
 
 ## Powiązane skille
 
-- **/soneta:programming** — warstwa kodu C#, na której opiera się snippet (kod-behind). Powiązane
+- **[programming](../programming/SKILL.md)** — warstwa kodu C#, na której opiera się snippet (kod-behind). Powiązane
   tematy: *Klasy parametrów (`ContextBase`)* (tak samo konstruowane jak parametry wydruku),
   *Klasa `Context`*, *Sesje/transakcje* (`Session`, ORM), *Worker i Extender* (obliczanie danych
   raportu), *Zasady bezpiecznego kodu* (review snippetu), oraz typy wierszy, do których wydruk się
   wiąże. Zob. też [references/SNIPPET.md](references/SNIPPET.md).
-- **/soneta:form-xml** — formularz parametrów wydruku (`RepxParams/*.pageform.xml`) pytany przed
+- **[form-xml](../form-xml/SKILL.md)** — formularz parametrów wydruku (`RepxParams/*.pageform.xml`) pytany przed
   generowaniem.
-- **/soneta:business-xml** — definicje obiektów/pól, które wydruk odczytuje w wiązaniach.
-- **/soneta:config** — import/eksport konfiguracji (wzorce wydruków w bazie) przez XML.
-- **/soneta:tools** — generowanie i testowanie wydruków z wiersza poleceń.
-- **/soneta:erp** — mapa skilli platformy Soneta.
+- **[business-xml](../business-xml/SKILL.md)** — definicje obiektów/pól, które wydruk odczytuje w wiązaniach.
+- **[config](../config/SKILL.md)** — import/eksport konfiguracji (wzorce wydruków w bazie) przez XML.
+- **[tools](../tools/SKILL.md)** — generowanie i testowanie wydruków z wiersza poleceń.
+- **[erp](../erp/SKILL.md)** — mapa skilli platformy Soneta.

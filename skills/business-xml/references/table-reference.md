@@ -81,7 +81,7 @@ tabeli, nie pojedyncze pola; dla tabel szczegółów warto wskazać tabelę nadr
 - Najważniejsze tabele transakcyjne (DokumentHandlowy, Platnosc)
 - Używaj dla dokumentów wymagających integracji
 
-> Semantykę paczek danych/eksportu (Datapack, ExportedRow) opisuje skill `/soneta:programming`
+> Semantykę paczek danych/eksportu (Datapack, ExportedRow) opisuje skill [programming](../../programming/SKILL.md)
 > (datapack-guidedrow.md).
 
 **Bez `guided`** - Tabele szczegółów:
@@ -199,9 +199,8 @@ public class DefinicjaCyklu : HarmonogramModule.DefinicjaCykluRow {
 }
 ```
 
-> Nadpisywanie generowanego property (`public virtual` → `override`) opisuje też skill
-> **/soneta:programming** (row-types.md). Ograniczanie widoczności między projektami dodatku
-> (`internal` + `InternalsVisibleTo`) — patrz new-addon-cli.md w /soneta:programming.
+> Nadpisywanie generowanego property (`public virtual` → `override`) opisuje też [row-types.md](../../programming/references/row-types.md). Ograniczanie widoczności między projektami dodatku
+> (`internal` + `InternalsVisibleTo`) — patrz [new-addon-cli.md](../../programming/references/new-addon-cli.md).
 
 #### Pole selector (`selector="true"`)
 
@@ -225,8 +224,8 @@ jako „puste" (mechanizm `required` + `default(T)` opisany w zasadach krytyczny
 selectora) **zatruwa całą tabelę** — każda materializacja dowolnego wiersza kończy się
 `UnrecognizedRowException` („Selektor 0 w tabeli X nieznaleziony"), a naprawa wymaga usunięcia
 wierszy wprost w SQL (`DELETE FROM Tabela WHERE KolumnaSelectora = 0`). Reguły importu wierszy
-tabel z selectorem (atrybut `class`, obowiązkowy element selectora) opisuje `/soneta:config`
-(import-export-xml, *Wiersze tabel z selektorem*).
+tabel z selectorem (atrybut `class`, obowiązkowy element selectora) opisuje
+[import-export-xml](../../config/references/import-export-xml.md), sekcja *Wiersze tabel z selektorem*.
 
 Checklista selectora:
 - [ ] enum zaczyna się od 1 (`0` niezdefiniowane albo jawnie „puste")
@@ -235,7 +234,7 @@ Checklista selectora:
 Po stronie C# klasa obiektu biznesowego jest `abstract`, a warianty to podtypy rejestrowane
 atrybutem `[BusinessRow]`; pozycje menu „Nowy" wyznacza `[NewRow]`. Pełny wzorzec:
 [generated-classes.md](generated-classes.md). Wzorzec selektora po stronie kodu opisuje też
-skill `/soneta:programming` (row-types.md).
+[row-types.md](../../programming/references/row-types.md).
 
 > ⚠ **`selector="true"` ≠ „pole enum, po którym filtruję/wyświetlam".** To rozróżnienie
 > decyduje, czy tabela w ogóle się wczyta. Selector oznacza **dyskryminator polimorficzny**:
@@ -397,8 +396,7 @@ Walidator pola wywoływany przy zapisie.
 
 > `business.xml` deklaruje jedynie nazwę weryfikatora — **kod** weryfikatora (klasa dziedzicząca
 > po `Verifier`/`RowVerifier<T>`/`ColVerifier<T>`, poziomy `Error`/`Warning`/`Information`,
-> uzbrajanie na zmianę pola) pisze się po stronie klasy obiektu biznesowego: skill
-> `/soneta:programming`, `references/verifiers.md`. Kolumna z elementem `<verifier>` staje się
+> uzbrajanie na zmianę pola) pisze się po stronie klasy obiektu biznesowego: [verifiers.md](../../programming/references/verifiers.md). Kolumna z elementem `<verifier>` staje się
 > **źródłem** uzbrajającym weryfikator; `onadded="true"` ogranicza to do dodania wiersza.
 
 ---

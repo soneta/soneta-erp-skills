@@ -23,7 +23,7 @@
   „Ważny od = 1.08.2026" ze stawką 10 000,00 zł, a wpis sprzed daty zachował 10 350,00 zł.
 
   Struktura pól (Etat = subrow, Etat.Zaszeregowanie = subrow pojedynczy, Stawka: Currency)
-  zweryfikowana skanem scan-props — zob. /soneta:programming (Kadry/PracHistoria).
+  zweryfikowana skanem scan-props; zob. ../../programming/SKILL.md (Kadry/PracHistoria).
 -->
 <session xmlns="http://www.soneta.pl/schema/business" fromto="(wszystko)">
   <Pracownik where="Nazwisko=Bujak">

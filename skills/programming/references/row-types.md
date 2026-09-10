@@ -2,8 +2,7 @@
 
 Ten dokument opisuje, jak programista **implementuje klasy** dla tabeli zdefiniowanej w
 `business.xml` — od strony kodu i działania ORM. Definicję tabeli, kolumn, selektora i atrybutów
-(`guided`, `selector`, `[BusinessRow]`/`[NewRow]` po stronie XML) opisuje skill `/soneta:business-xml`
-(generated-classes.md, table-reference.md) — tam też pełny wzorzec „XML ↔ klasy".
+(`guided`, `selector`, `[BusinessRow]`/`[NewRow]` po stronie XML) opisują [generated-classes.md](../../business-xml/references/generated-classes.md) i [table-reference.md](../../business-xml/references/table-reference.md) — tam też pełny wzorzec „XML ↔ klasy".
 
 ## Klasy obiektu biznesowego i tabeli (poziom 3)
 
@@ -209,7 +208,7 @@ i wyzwalanie przeliczeń (`OnEditing`/`OnDeleting`).
 | `OnImported()` | po ustawieniu wszystkich pól importowanego obiektu | uzupełnij logikę biznesową, która nie odpaliła się przez properties |
 
 `OnImporting`/`OnImported` dotyczą importu XML **według rekordów** — mechanizm i strukturę pliku
-opisuje artykuł *import-export-xml* w `/soneta:config`, a warstwę kodu
+opisuje artykuł [import-export-xml](../../config/references/import-export-xml.md), a warstwę kodu
 [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).
 
 ```csharp

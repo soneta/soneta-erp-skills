@@ -33,7 +33,7 @@ Na podstawie inwentaryzacji modułów (`scan-modules`, patrz `dane-referencyjne.
 - identyfikuj istniejące słowniki i kartoteki zamiast tworzyć duplikaty; do pól wybranego rekordu użyj `scan-props`.
 
 **Mapowanie nazw logicznych na `tablename`.** Plan operuje nazwami logicznymi obiektów, ale
-fizyczna nazwa tabeli (`tablename` w business.xml, skill `/soneta:business-xml`) ma **limit
+fizyczna nazwa tabeli (`tablename` w business.xml, skill [business-xml](../../business-xml/SKILL.md)) ma **limit
 ≤16 znaków**. Już w Etapie 3 zapisz w dokumencie tabelę mapowań i utrzymuj ją przy każdym nowym
 obiekcie — inaczej przy generowaniu business.xml spójność nazw się rozjedzie:
 
@@ -71,7 +71,7 @@ Dla każdego formularza:
 - listy szczegółów (sublists).
 
 ### 3.6. Weryfikatory (walidacja danych operatora)
-Dla każdego obiektu danych wyspecyfikuj **listę weryfikatorów** — reguł sprawdzających poprawność i spójność danych wprowadzanych przez operatora. To one pilnują, by do bazy nie trafiły dane naruszające reguły biznesowe. Implementację po stronie kodu opisuje skill `/soneta:programming` (`verifiers.md`).
+Dla każdego obiektu danych wyspecyfikuj **listę weryfikatorów** — reguł sprawdzających poprawność i spójność danych wprowadzanych przez operatora. To one pilnują, by do bazy nie trafiły dane naruszające reguły biznesowe. Implementację po stronie kodu opisuje [verifiers.md](../../programming/references/verifiers.md).
 
 Dla każdego weryfikatora podaj:
 - **obiekt i pola-źródła** — czego dotyczy i zmiana których pól go uruchamia,
@@ -94,7 +94,7 @@ Dla każdego weryfikatora podaj:
 > Każdy worker, algorytm obiektu biznesowego i inny nietrywialny algorytm wymaga **testu integracyjnego** (patrz sekcja 3.13).
 
 ### 3.8. Algorytmy w transakcji serwerowej
-Zidentyfikuj algorytmy i procesy, które **muszą wykonać się w transakcji serwerowej** — czyli takie, których poprawność zależy od zmian wykonywanych **równolegle na innych stanowiskach** (np. ciągła numeracja dokumentów, rezerwacja zasobu, kontrola limitu, sekwencyjne przydzielanie identyfikatorów). Bez transakcji serwerowej dwa stanowiska mogłyby pobrać ten sam numer lub przekroczyć limit. Mechanizm (eventy serwerowe `Session.ServerEvents`) opisuje skill `/soneta:programming` (`events.md`).
+Zidentyfikuj algorytmy i procesy, które **muszą wykonać się w transakcji serwerowej** — czyli takie, których poprawność zależy od zmian wykonywanych **równolegle na innych stanowiskach** (np. ciągła numeracja dokumentów, rezerwacja zasobu, kontrola limitu, sekwencyjne przydzielanie identyfikatorów). Bez transakcji serwerowej dwa stanowiska mogłyby pobrać ten sam numer lub przekroczyć limit. Mechanizm (eventy serwerowe `Session.ServerEvents`) opisuje [events.md](../../programming/references/events.md).
 
 Dla każdego takiego procesu podaj:
 - **obiekt i moment** wykonania (zwykle podczas `Save()`),
@@ -129,8 +129,7 @@ Uszczegółowienie procesów z sekcji 1.7:
 - **Umiejscowienie w drzewie uprawnień** — gdzie osoba konfigurująca role znajdzie prawa modułu:
   wspólna gałąź modułu czy rozbicie na obszary, oddzielenie danych operacyjnych od konfiguracji.
   Ustalenie przekłada się wprost na plik `*.rightstree.xml` towarzyszący definicjom danych —
-  wpis dostaje każdy obiekt niedziedziczący praw po obiekcie nadrzędnym (skill
-  `/soneta:business-xml`, `references/rights-tree.md`). Bez tego prawa modułu trafią do zbiorczej
+  wpis dostaje każdy obiekt niedziedziczący praw po obiekcie nadrzędnym ([rights-tree.md](../../business-xml/references/rights-tree.md)). Bez tego prawa modułu trafią do zbiorczej
   gałęzi „Dodatki".
 
 ### 3.12. Integracje szczegółowe
@@ -141,7 +140,7 @@ Uszczegółowienie integracji z sekcji 2.5 i 2.6:
 - **Obsługa błędów** — niedostępność systemu zewnętrznego, walidacja danych wejściowych, logowanie błędów.
 
 ### 3.13. Scenariusze i testy integracyjne
-Testy integracyjne pisze się na prawdziwej bazie (nie na mockach) — patrz skill `/soneta:programming` (`integration-tests.md`). Zaplanuj je **równolegle z logiką**, nie po fakcie.
+Testy integracyjne pisze się na prawdziwej bazie (nie na mockach) — patrz [integration-tests.md](../../programming/references/integration-tests.md). Zaplanuj je **równolegle z logiką**, nie po fakcie.
 
 - **Obowiązkowe pokrycie testami integracyjnymi** — dla **każdego** elementu logiki z Etapu 3 zaplanuj odpowiedni test:
   - każdy **worker** i proces w tle (3.7),
@@ -169,8 +168,8 @@ list/cech, role i uprawnienia, ustawienia startowe modułu. Dla każdego zestawu
 - **wersję wprowadzenia** każdego rekordu (→ `dbversion`; także przyszłe konwersje ustawień).
 
 Dane te trafią do plików **`*.dbinit.xml`** osadzonych w projekcie jako **EmbeddedResource**
-— strukturę i reguły plików opisuje artykuł *import-export-xml* w skillu `/soneta:config`,
-a osadzanie w projekcie skill `/soneta:programming` (SDK osadza `*.dbinit.xml` automatycznie).
+— strukturę i reguły plików opisuje artykuł [import-export-xml](../../config/references/import-export-xml.md),
+a osadzanie w projekcie skill [programming](../../programming/SKILL.md) (SDK osadza `*.dbinit.xml` automatycznie).
 W TODO planuje się z tej sekcji budowę i przetestowanie tych plików.
 
 Nie myl z sekcją 3.15: dane demonstracyjne trafiają tylko do bazy Demo, dane inicjujące —

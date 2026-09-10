@@ -11,7 +11,7 @@ listy/obiektu**. Są dwie drogi:
 1. **Rejestracja w kodzie dodatku** — atrybut `[assembly: DxReport(...)]` (dla programisty).
 2. **Wzorzec użytkownika** — dodanie raportu w edytorze wydruków w programie; zapisywany w bazie
    w folderze „Wzorce użytkownika" (dla wdrożeniowca bez dostępu do kodu). Taki wzorzec można też
-   przenosić między bazami przez import/eksport XML — zob. **/soneta:config**.
+   przenosić między bazami przez import/eksport XML — zob. **[config](../../config/SKILL.md)**.
 
 ## Rejestracja atrybutem `[assembly: DxReport(...)]`
 
@@ -54,14 +54,14 @@ Umieszczana w projekcie dodatku (np. w pliku `Properties/AssemblyInfo.RepxReport
 | `Contexts` | Ograniczenie licencyjne/kontekstowe (np. moduł licencji). |
 | `VisibleInAspxMode` | Widoczność w trybie web. |
 
-Warstwa ORM (typy list, workery liczące dane) → **/soneta:programming**.
+Warstwa ORM (typy list, workery liczące dane) → **[programming](../../programming/SKILL.md)**.
 
 ## Osadzanie plików — automatyczne przez SDK
 
 Plik `.repx` (oraz `.repx.cs`, grafiki, `.repss`) **wystarczy umieścić w podkatalogu `Repx/`**
 projektu dodatku typu `*.Reports`. Soneta SDK osadza je automatycznie jako `EmbeddedResource` —
 **nie dodawaj wpisów `EmbeddedResource` do `.csproj` ręcznie**. Grafiki wstawiane do raportu
-(logo, wzory deklaracji) też muszą leżeć w `Repx/`. Struktura szkieletu dodatku i CLI → **/soneta:programming**.
+(logo, wzory deklaracji) też muszą leżeć w `Repx/`. Struktura szkieletu dodatku i CLI → **[programming](../../programming/SKILL.md)**.
 
 ```
 MojDodatek.Reports/
@@ -99,7 +99,7 @@ MojDodatek.Reports/
   ```
 
   Pełny opis klasy `ReportSnippet`, atrybutu `[DxBind]`, zdarzeń, parametrów i dostarczania danych
-  → **[SNIPPET.md](SNIPPET.md)**. Wzorce samego kodu (sesja, ORM, workery) → **/soneta:programming**.
+  → **[SNIPPET.md](SNIPPET.md)**. Wzorce samego kodu (sesja, ORM, workery) → **[programming](../../programming/SKILL.md)**.
 
   > **⚠️ Licencja DevExpress:** `ReportSnippet`/`[DxBind]` używają typów DevExpress — w kodzie dodatku
   > wymaga to własnej licencji DevExpress (licencja Soneta na projektowanie raportów jej nie zastępuje).
@@ -116,7 +116,7 @@ użytkownika przed wydrukiem definiuje się jako **klasę kontekstu** + **formul
 
 - `RepxParams/MojWydrukParams.cs` — klasa dziedzicząca po `ContextBase` z właściwościami-parametrami.
 - `RepxParams/MojWydrukParams.pageform.xml` — formularz parametrów (składnia form.xml →
-  **/soneta:form-xml**).
+  **[form-xml](../../form-xml/SKILL.md)**).
 - W `.repx`: `BusinessDataSource DataKind="Context"` + `DataMember` nawigujący do właściwości/
   kolekcji klasy parametrów (np. `MojWydrukSnippet+ParamClass.MyDataSource`). Zob. [DATA.md](DATA.md).
 
@@ -153,4 +153,4 @@ nazwie logicznej → [SUBREPORTS.md](SUBREPORTS.md).
 ## Testowanie i generowanie z CLI
 
 Wygenerowanie wydruku do PDF/innego formatu z wiersza poleceń oraz testy na żywej aplikacji →
-**/soneta:tools**.
+**[tools](../../tools/SKILL.md)**.

@@ -9,7 +9,7 @@ płatności, blokada większości pól), aż po anulowanie. Stanem steruje **jed
 
 > **Fundamenty** (sesja, transakcja edycyjna `session.Logout(editMode: true)`, `Commit`/`CommitUI`,
 > blokada optymistyczna w `Save()`) opisuje [`safe-code.md`](../../safe-code.md) — tu się do nich
-> odwołujemy, nie powtarzamy. Cały kod jest zgodny z **C# 10** i operuje wyłącznie na **publicznym
+> odwołujemy, nie powtarzamy. Cały kod jest zgodny z **C# 14** i operuje wyłącznie na **publicznym
 > kontrakcie** platformy.
 
 **Fakty o stanie (zweryfikowane):**

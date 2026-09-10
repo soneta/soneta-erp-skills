@@ -1,0 +1,20 @@
+{
+  "name": "soneta-erp-skills",
+  "interface": {
+    "displayName": "Soneta AI Skills"
+  },
+  "plugins": [
+    {
+      "name": "soneta",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

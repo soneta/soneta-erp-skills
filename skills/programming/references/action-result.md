@@ -8,7 +8,7 @@ o sposobie obsługi.
 
 > Akcje zwracające action result tworzy się w workerze/extenderze — patrz [worker-extender.md](worker-extender.md).
 > Element `Command` (`MethodName`/`OpenMethodName`) wywołujący taką akcję definiuje się po stronie
-> form.xml — opisuje to skill `/soneta:form-xml`.
+> form.xml — opisuje to skill [form-xml](../../form-xml/SKILL.md).
 
 ## Spis treści
 
@@ -177,7 +177,8 @@ Przejście do innego folderu danych lub bazy. Działa jak kliknięcie w drzewie 
 | `KeepSessionLiving` | Przeniesienie żywej sesji do folderu docelowego (`Self` only). |
 | `KeepCurrentViewInHistory` | Aktualny widok zostaje w historii nawigacji. |
 
-Najważniejsze ścieżki do folderów aplikacji znajdują się w skill `/soneta-mcp-ui/common-folders.md`.
+Ścieżkę folderu w działającej aplikacji ustal przez nawigację opisaną w
+[referencji buscall](../../tools/references/buscall.md#odkrywanie-ścieżki-folderów).
 
 ```csharp
 return new NavigationResult("Handel/Sprzedaż/Faktury sprzedaży") {

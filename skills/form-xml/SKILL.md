@@ -263,8 +263,7 @@ Jest generowany **dynamicznie** — typ właściwości decyduje o kontrolce (int
 **Kiedy NIE dodawać `IsReadOnly`.** Tryb tylko-do-odczytu jest wyliczany automatycznie — nie
 dokładaj `IsReadOnly="true"`, gdy pole i tak ma być nieedytowalne z jednego z poniższych powodów:
 - **property bez settera** (tylko `get`) — np. pole `readonly`/selektor z definicji danych lub
-  property kalkulowana — jest read-only z definicji (definicję pól tabeli opisuje skill
-  **`/soneta:business-xml`**, table-reference.md);
+  property kalkulowana — jest read-only z definicji (definicję pól tabeli opisuje [table-reference.md](../business-xml/references/table-reference.md));
 - **prawa do obiektu biznesowego** — brak prawa zapisu blokuje edycję automatycznie;
 - **metoda `IsReadOnlyX()`** obok property `X` w klasie biznesowej — zwraca warunek, czy edytor ma
   być zablokowany (to preferowany sposób sterowania read-only, bo logika zostaje przy danych).
@@ -307,7 +306,7 @@ public string WybranaOpcja { get; set; }
 ```
 
 Alternatywa dla bardziej złożonych przypadków: `Session.InvokeChanged()` / `Context.InvokeChanged()`
-w setterze. Szczegóły — skill **`/soneta:programming`** (contextbase.md, viewinfo.md).
+w setterze. Szczegóły — [contextbase.md](../programming/references/contextbase.md), [viewinfo.md](../programming/references/viewinfo.md).
 
 ### RadioButton, przełącznik i lista wielokrotnego wyboru
 
@@ -381,7 +380,7 @@ edytora:
 
 `Command` wywołuje metodę (`MethodName`) lub otwiera obiekt (`OpenMethodName`) z kontekstu —
 zwykle z extendera/workera. Co taka akcja zwraca (action result: zamknięcie okna, otwarcie
-formularza, komunikat) opisuje skill **`/soneta:programming`** (action-result.md, worker-extender.md).
+formularza, komunikat) opisują [action-result.md](../programming/references/action-result.md) i [worker-extender.md](../programming/references/worker-extender.md).
 
 ### Grid — listy i kolekcje
 
@@ -435,7 +434,7 @@ Składnia `Condition` może używać nawiasów kwadratowych gdy nazwa pola zawie
 
 Warunek `Appearance.Condition` to ta sama składnia co RowCondition w `Visibility`
 ([references/binding.md](references/binding.md)) — jego odpowiednikiem po stronie kodu jest
-`Expression<Predicate<TRow>>`; patrz skill **`/soneta:programming`** (rowcondition.md).
+`Expression<Predicate<TRow>>`; patrz [rowcondition.md](../programming/references/rowcondition.md).
 
 ## Powiązane skille — gdzie szukać strony kodu
 
@@ -443,12 +442,12 @@ Form.xml opisuje **prezentację**; logikę i dane opisują skille obok. Mapa poj
 
 | Pojęcie w form.xml | Strona kodu / danych |
 |---|---|
-| `Visibility="{?...}"`, `Appearance.Condition` | skill `/soneta:programming` — rowcondition.md (`Expression<Predicate<TRow>>`) |
-| `Grid EditValue="{...View}"` (ViewInfo) | skill `/soneta:programming` — viewinfo.md |
-| `Flow Class="DataBar"`, `{XParams.Pole}` | skill `/soneta:programming` — contextbase.md, context.md |
-| `{Features.NazwaCechy}`, `VisibleFeatures` | skill `/soneta:programming` — features.md |
-| `{Workers.Alias.Pole}`, `{new Extender.Pole}` | skill `/soneta:programming` — worker-extender.md |
-| `Command MethodName`/`OpenMethodName` | skill `/soneta:programming` — action-result.md, worker-extender.md |
-| pole `readonly`/selektor, definicja pól | skill `/soneta:business-xml` — table-reference.md |
-| odczyt zakładek i pól z DLL (bez źródeł) | skill `/soneta:programming` — scan-forms.md |
-| wizualna weryfikacja wyglądu formularza na żywo (zrzut ekranu) | skill `/soneta:programming` — `buscall-live-testing.md` (składnia `buscall` w `/soneta:tools`) |
+| `Visibility="{?...}"`, `Appearance.Condition` | [rowcondition.md](../programming/references/rowcondition.md) (`Expression<Predicate<TRow>>`) |
+| `Grid EditValue="{...View}"` (ViewInfo) | [viewinfo.md](../programming/references/viewinfo.md) |
+| `Flow Class="DataBar"`, `{XParams.Pole}` | [contextbase.md](../programming/references/contextbase.md), [context.md](../programming/references/context.md) |
+| `{Features.NazwaCechy}`, `VisibleFeatures` | [features.md](../programming/references/features.md) |
+| `{Workers.Alias.Pole}`, `{new Extender.Pole}` | [worker-extender.md](../programming/references/worker-extender.md) |
+| `Command MethodName`/`OpenMethodName` | [action-result.md](../programming/references/action-result.md), [worker-extender.md](../programming/references/worker-extender.md) |
+| pole `readonly`/selektor, definicja pól | [table-reference.md](../business-xml/references/table-reference.md) |
+| odczyt zakładek i pól z DLL (bez źródeł) | [scan-forms.md](../programming/references/scan-forms.md) |
+| wizualna weryfikacja wyglądu formularza na żywo (zrzut ekranu) | [buscall-live-testing.md](../programming/references/buscall-live-testing.md) (składnia `buscall` w [tools](../tools/SKILL.md)) |

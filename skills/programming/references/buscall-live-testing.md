@@ -5,7 +5,7 @@ i sprawdzania kodu**. Zamiast klikać ręcznie, sterujesz uruchomioną aplikacj�
 otwieranie formularzy, edycja pól) i robisz **zrzuty ekranu**, które oglądasz, aby potwierdzić
 layout, wartości pól, widoczność kontrolek czy motyw — na realnej bazie i na **swoim** kodzie.
 
-Składnię wywołań, katalog metod i kody wyjścia opisuje `buscall.md` w skillu `/soneta:tools`. Tu skupiamy się
+Składnię wywołań, katalog metod i kody wyjścia opisuje [buscall.md](../../tools/references/buscall.md). Tu skupiamy się
 na tym, co jest specyficzne dla weryfikacji na żywo: **konfiguracji bazy startującej z Twojego
 kodu**, przeładowaniu kodu i pułapkach procesów.
 
@@ -17,7 +17,7 @@ kodu**, przeładowaniu kodu i pułapkach procesów.
 > buscall --db Demo call methods.list
 > ```
 >
-> Pełny opis odkrywania metod (`methods.list`) i ich kontraktów znajdziesz w `buscall.md` (skill `/soneta:tools`).
+> Pełny opis odkrywania metod (`methods.list`) i ich kontraktów znajdziesz w [buscall.md](../../tools/references/buscall.md).
 
 Używamy trybu `call` — każde wywołanie jest niezależne (`buscall --db <Baza> call <metoda> …`),
 frame (GUI) startuje przy pierwszym wywołaniu i **zostaje** w tle, więc kolejne `call`-e są szybkie.
@@ -36,7 +36,7 @@ Innymi słowy: nazwa po `--db` = nazwa połączenia w SonetaFrame, a to połącz
 
 Konfiguracja połączeń SonetaFrame to plik `Settings_Standard.json` — macOS:
 `~/Library/Application Support/Soneta.Frame/`, Windows: `%APPDATA%\Soneta.Frame\`
-(pełna tabela lokalizacji: `sonetaframe.md` w skillu `/soneta:tools`) — tablica **`Sources`**. Każdy
+(pełna tabela lokalizacji: [sonetaframe.md](../../tools/references/sonetaframe.md)) — tablica **`Sources`**. Każdy
 wpis to string z parametrami rozdzielonymi `;`. Przykład bazy `Demo` startującej kod z projektu:
 
 ```json
@@ -56,7 +56,7 @@ Znaczenie pól:
 > (`--db Demo` może przy tym trafić w INNE źródło, którego caption to `Demo`). Objaw złej nazwy:
 > `[-32603] Brak połączenia z serwerem: Demo` przy każdym wywołaniu (aplikacja stoi na ekranie
 > wyboru baz). Jednoznacznie wskażesz źródło identyfikatorem: `--db "Process|Demo"`.
-> Szczegóły: *buscall* i *sonetaframe* w `/soneta:tools`.
+> Szczegóły: [buscall](../../tools/references/buscall.md) i [sonetaframe](../../tools/references/sonetaframe.md).
 
 > **Poświadczenia a automatyzacja.** Podanie tu `user`/`pwd` sprawia, że frame **loguje się do
 > bazy automatycznie** — dzięki temu `buscall`/refaktoryzacja działają w pełni bezobsługowo
@@ -74,10 +74,10 @@ włącza tryb dewelopera.
 ### Baza z WŁASNYM dodatkiem — przepis w trzech krokach
 
 Gdy testujesz **własny dodatek** (np. `Soneta.MojDodatek`), potrzebna jest baza z jego tabelami
-i frame ładujący jego DLL-e. Przepis (szczegóły w skillu `/soneta:tools`):
+i frame ładujący jego DLL-e. Przepis (szczegóły w skillu [tools](../../tools/SKILL.md)):
 
 1. **Per-bazowy `serversettings.json`** — tablica `Ext` (DLL logiki + `.UI` z `bin/Debug` dodatku)
-   oraz `Server.DbRegister` (połączenie SQL). Struktura pliku: `dbmgr.md` w `/soneta:tools`,
+   oraz `Server.DbRegister` (połączenie SQL). Struktura pliku: [dbmgr.md](../../tools/references/dbmgr.md),
    sekcja „Baza z własnym dodatkiem".
 2. **Utworzenie bazy z tabelami dodatku i danymi demo** (~3 min):
    ```bash
@@ -89,7 +89,7 @@ i frame ładujący jego DLL-e. Przepis (szczegóły w skillu `/soneta:tools`):
    process:moja_baza;caption=moja_baza;path=<katalog-kodu-soneta>;user=Administrator;pwd=;config-file=<ścieżka>/serversettings.json
    ```
    ⚠️ Klucz to **`config-file=`**, nie `config=` (starsza forma nie działa). Szczegóły
-   modyfikatorów: `sonetaframe.md` w `/soneta:tools`.
+   modyfikatorów: [sonetaframe.md](../../tools/references/sonetaframe.md).
 
 Pułapki:
 - **Prawa do dodatku:** operator `Administrator` z bazy demo-gold **nie ma praw** do obiektów
@@ -168,7 +168,7 @@ Zabicie tych procesów jest bezpieczne i odwracalne (frame odtworzy je przy nast
 ## Zrzut ekranu → analiza wizualna
 
 Sedno tej weryfikacji: `take_screenshot` zwraca **ścieżkę do PNG** bieżącego widoku (kontrakt metody
-opisuje `buscall.md` w skillu `/soneta:tools`, sekcja `take_screenshot — kontrakt`). Otwórz plik z tej ścieżki i **obejrzyj go**
+opisuje [buscall.md](../../tools/references/buscall.md), sekcja `take_screenshot — kontrakt`). Otwórz plik z tej ścieżki i **obejrzyj go**
 narzędziem czytającym obrazy — tak potwierdzasz wizualnie layout formularza, wartości pól, widoczność
 kontrolek, wyrównanie, motyw itp. To krok, którego nie zastąpi odczyt danych JSON-em.
 
@@ -217,4 +217,4 @@ Uwagi praktyczne:
   przebuduj i wywołaj `call` ponownie. Do zabijania osieroconych `server.dll`/`web.dll` sięgaj tylko
   awaryjnie (patrz nota ratunkowa wyżej) — samo `grep SonetaFrameNew` i tak NIE wystarczy.
 
-Pełna składnia metod, `methods.list` i wariant `callmcp`: `buscall.md` w skillu `/soneta:tools`.
+Pełna składnia metod, `methods.list` i wariant `callmcp`: [buscall.md](../../tools/references/buscall.md).

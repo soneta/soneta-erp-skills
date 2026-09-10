@@ -154,7 +154,7 @@ public class Faktura : HandelModule.FakturaRow {
 ```
 
 > Pełną dokumentację klas Row/Table i wzorca selektora (`[BusinessRow]`, `[NewRow]`,
-> konstruktor `RowCreator`, pola readonly) zawiera skill `/soneta:programming` (row-types.md).
+> konstruktor `RowCreator`, pola readonly) zawiera [row-types.md](../../programming/references/row-types.md).
 
 ## Tabela z selector'em — wiele typów obiektów w jednej tabeli
 
@@ -286,4 +286,4 @@ Atrybut **assembly-level** `[NewRow]` decyduje, które typy operator może **dod
    sekcja „Standardy kodu C# (.NET 10)".
 
 > Perspektywę kodu/runtime tego samego mechanizmu (jak ORM materializuje obiekty, wzorce
-> użycia w logice biznesowej) opisuje skill `/soneta:programming` (artykuł row-types.md).
+> użycia w logice biznesowej) opisuje [row-types.md](../../programming/references/row-types.md).

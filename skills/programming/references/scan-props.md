@@ -4,7 +4,8 @@ Odczyt rzeczywistych pól bazodanowych obiektu biznesowego platformy Soneta — 
 wyrażeń bindujących form.xml oraz [warunków filtrujących](./rowcondition.md).
 
 > **Ścieżki poleceń** w tym dokumencie są względne wobec katalogu skilla (`skills/programming/`
-> w pluginie `soneta`) — uruchamiaj je z tego katalogu albo poprzedź jego ścieżką.
+> w repozytorium) — ustal lokalizację zainstalowanego skilla i uruchamiaj polecenia z tego
+> katalogu albo poprzedź jego ścieżką.
 
 ## Najpierw sprawdź dane wygenerowane (`data/props/`) — bez skanowania
 
@@ -53,10 +54,9 @@ dotnet script scripts/export-props-all.csx \
 ```
 
 Przykład (macOS/Linux): `-- ~/d/dev/bin/Debug data/props`.
-> **Uwaga przy instalacji z marketplace'u.** Regeneracja nadpisuje `data/` w katalogu
-> zainstalowanego pluginu (`~/.claude/plugins/cache/...`), a `/plugin update` kasuje ten
-> katalog razem z wynikiem. Regeneruj w klonie repo `soneta-erp-skills` i wypchnij zmianę,
-> albo licz się z powtórzeniem po każdej aktualizacji pluginu.
+> **Miejsce regeneracji.** Katalog zainstalowanego skilla może być tylko do odczytu lub
+> zostać zastąpiony podczas aktualizacji. Regeneruj w klonie repo `soneta-erp-skills`
+> albo podaj zapisywalny katalog wynikowy w projekcie i korzystaj z danych z tej lokalizacji.
 Skrypt buduje kompilację Roslyn **raz** i iteruje po wszystkich realnych tabelach
 (`*Row` mające parę `*Table` i `*Record`), zapisując plik na tabelę, `INDEX.md` (z kolumną
 `Historia`) oraz `Interfaces.md` (interfejs → tabele). Cały program (~1200 tabel) eksportuje
@@ -143,7 +143,7 @@ Algorytm:
     Mechanizm wzorca selektora opisuje [row-types.md](row-types.md); odczyt atrybutów
     assembly-level — [assembly-attributes.md](assembly-attributes.md). „Klasa podtypu" z tej sekcji
     jest zarazem wartością atrybutu `class` przy imporcie **nowego** obiektu przez logikę biznesową
-    (`business="true"`) — zob. skill `/soneta:config` (import/eksport XML).
+    (`business="true"`) — zob. skill [config](../../config/SKILL.md) (import/eksport XML).
 13. **Znacznik `enum` i sekcja `## Enumy`** — dla każdego pola, którego typ jest enumem
     (`TypeKind.Enum`, także pod `Nullable<>`), kolumna `Rodzaj` dostaje tag `enum`. Po tabeli pól
     (i ewentualnej sekcji relacji interfejsowych) wypisywana jest sekcja `## Enumy`: dla każdego
@@ -290,4 +290,4 @@ Pola oznaczone `[Obsolete]` są pomijane.
   odczyt atrybutów assembly-level, na których opiera się wykrywanie podtypów.
 - [scan-modules.md](scan-modules.md) — inwentaryzacja modułów/tabel; przydatna, by ustalić `RowType`/moduł (ta sama informacja jest też w `INDEX.md`).
 - Patrz [datapack-guidedrow.md](datapack-guidedrow.md) — struktury `GuidedRow` / `ExportedRow` i mechanizm Datapack operujący na polach rekordu.
-- Patrz skill `soneta:business-xml` — definicja schematu, z którego `BusinessGenerator` produkuje klasę `XxxRecord`.
+- Patrz skill [business-xml](../../business-xml/SKILL.md) — definicja schematu, z którego `BusinessGenerator` produkuje klasę `XxxRecord`.

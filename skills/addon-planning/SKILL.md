@@ -3,7 +3,7 @@ name: addon-planning
 description: >
   Planowanie projektów dodatków dla platformy Soneta (enova365, Triva) — interaktywny,
   etapowy proces od wizji biznesowej po specyfikację implementacyjną, zasilającą skille
-  /soneta:business-xml, /soneta:form-xml i /soneta:programming. Używaj, gdy użytkownik
+  business-xml, form-xml i programming. Używaj, gdy użytkownik
   chce zaplanować nowy moduł lub dodatek — partnerski albo standardowy moduł platformy
   tworzony przez zespół Soneta (założenia, specyfikacja funkcjonalna,
   struktura danych i interfejsu użytkownika).
@@ -11,7 +11,7 @@ description: >
 
 # Planowanie projektu modułu/dodatku Soneta
 
-Skill prowadzi **interaktywny** proces planowania nowego modułu dla platformy Soneta (programy enova365 i Triva — oparte na tej samej platformie technologicznej). Efektem jest dokumentacja projektowa, która w kolejnych krokach zasila skille `/soneta:business-xml` (model danych), `/soneta:form-xml` (formularze) i `/soneta:programming` (logika).
+Skill prowadzi **interaktywny** proces planowania nowego modułu dla platformy Soneta (programy enova365 i Triva — oparte na tej samej platformie technologicznej). Efektem jest dokumentacja projektowa, która w kolejnych krokach zasila skille [business-xml](../business-xml/SKILL.md) (model danych), [form-xml](../form-xml/SKILL.md) (formularze) i [programming](../programming/SKILL.md) (logika).
 
 Ten plik jest mapą procesu — po kroku wstępnym (Etap 0) następują trzy etapy o rosnącym poziomie szczegółowości. Szczegółowe specyfikacje sekcji każdego etapu są w plikach `references/`, które czytasz dopiero, gdy dochodzisz do danego etapu.
 
@@ -86,7 +86,7 @@ Nie zostawiaj nierozstrzygniętych założeń ukrytych w treści dokumentu — k
 
 ## Lokalizacja projektów kodu (etap implementacji)
 
-Dokumenty planistyczne (etapy, otwarte kwestie, TODO) trzymasz w podkatalogu planu — patrz „Zapis dokumentów". Natomiast gdy proces dojdzie do **budowania folderów projektów** (rusztowanie solucji dodatku — patrz skill `/soneta:programming`, `new-addon-cli.md`), twórz je **bezpośrednio w bieżącym katalogu roboczym**: plik solucji (`.sln`) oraz projekty (`Firma.NazwaModulu`, `Firma.NazwaModulu.UI`, `Firma.NazwaModulu.Tests`) mają leżeć w katalogu, w którym pracujesz, a nie w zagnieżdżonym podfolderze. Dzięki temu repozytorium Git założone w Etapie 0 obejmuje solucję od razu. Nazwy projektów budujesz z ustalonej w Etapie 0 nazwy firmy.
+Dokumenty planistyczne (etapy, otwarte kwestie, TODO) trzymasz w podkatalogu planu — patrz „Zapis dokumentów". Natomiast gdy proces dojdzie do **budowania folderów projektów** (rusztowanie solucji dodatku — patrz [new-addon-cli.md](../programming/references/new-addon-cli.md)), twórz je **bezpośrednio w bieżącym katalogu roboczym**: plik solucji (`.sln`) oraz projekty (`Firma.NazwaModulu`, `Firma.NazwaModulu.UI`, `Firma.NazwaModulu.Tests`) mają leżeć w katalogu, w którym pracujesz, a nie w zagnieżdżonym podfolderze. Dzięki temu repozytorium Git założone w Etapie 0 obejmuje solucję od razu. Nazwy projektów budujesz z ustalonej w Etapie 0 nazwy firmy.
 
 ## Dokument TODO
 
@@ -99,30 +99,30 @@ Po zamknięciu wszystkich etapów wygeneruj dokument TODO z kolejnymi krokami:
 - [ ] Zamknięcie otwartych kwestii
 
 ### Implementacja
-- [ ] Rusztowanie solucji w bieżącym katalogu (projekty `Firma.NazwaModulu*`, → skill `/soneta:programming`, `new-addon-cli.md`)
+- [ ] Rusztowanie solucji w bieżącym katalogu (projekty `Firma.NazwaModulu*`, → [new-addon-cli.md](../programming/references/new-addon-cli.md))
 - [ ] Model danych — tabele, pola, relacje
-- [ ] Plik business.xml (→ skill `/soneta:business-xml`)
+- [ ] Plik business.xml (→ skill [business-xml](../business-xml/SKILL.md))
 - [ ] Struktura menu, listy, widoki
-- [ ] Formularze i zakładki (→ skill `/soneta:form-xml`)
+- [ ] Formularze i zakładki (→ skill [form-xml](../form-xml/SKILL.md))
 - [ ] Konfiguracja — słowniki, definicje, ustawienia
-- [ ] Dane konfiguracyjne inicjujące bazę (sekcja 3.14) — pliki `*.dbinit.xml` w projekcie jako EmbeddedResource; budowa pliku → skill `/soneta:config` (import-export-xml), osadzenie → `/soneta:programming` (new-addon-cli), test wczytania przez `dbmgr importxml` → `/soneta:tools`
-- [ ] Weryfikatory — walidacja danych wprowadzanych przez operatora (→ skill `/soneta:programming`, `verifiers.md`)
-- [ ] Workery i czynności (→ skill `/soneta:programming`, `worker-extender.md`)
-- [ ] Algorytmy w transakcji serwerowej — logika zależna od równoległej pracy stanowisk (→ skill `/soneta:programming`, `events.md`)
+- [ ] Dane konfiguracyjne inicjujące bazę (sekcja 3.14) — pliki `*.dbinit.xml` w projekcie jako EmbeddedResource; budowa pliku → [import-export-xml](../config/references/import-export-xml.md), osadzenie → [new-addon-cli](../programming/references/new-addon-cli.md), test wczytania przez `dbmgr importxml` → [tools](../tools/SKILL.md)
+- [ ] Weryfikatory — walidacja danych wprowadzanych przez operatora (→ [verifiers.md](../programming/references/verifiers.md))
+- [ ] Workery i czynności (→ [worker-extender.md](../programming/references/worker-extender.md))
+- [ ] Algorytmy w transakcji serwerowej — logika zależna od równoległej pracy stanowisk (→ [events.md](../programming/references/events.md))
 - [ ] Raporty i wydruki
 - [ ] Procesy Workflow
 - [ ] Wskaźniki i wykresy BI
 - [ ] Uprawnienia i role
 - [ ] Integracje z innymi systemami
 - [ ] Baza Demo i dane demonstracyjne
-- [ ] **Testy integracyjne** — dla każdego workera, każdego algorytmu obiektu biznesowego, każdego weryfikatora i każdej logiki w transakcji serwerowej (→ skill `/soneta:programming`, `integration-tests.md`)
+- [ ] **Testy integracyjne** — dla każdego workera, każdego algorytmu obiektu biznesowego, każdego weryfikatora i każdej logiki w transakcji serwerowej (→ [integration-tests.md](../programming/references/integration-tests.md))
 - [ ] Dokumentacja użytkownika i techniczna
 
 ## Powiązanie z innymi skillami
 
-Już podczas planowania korzystasz z narzędzi inwentaryzacyjnych: `scan-modules` i `scan-props` (skill **`/soneta:programming`**) oraz `scan-folders` (skill **`/soneta:config`**) — łącznie odwzorowują istniejący model danych i menu platformy (patrz `references/dane-referencyjne.md`).
+Już podczas planowania korzystasz z narzędzi inwentaryzacyjnych: [scan-modules](../programming/references/scan-modules.md) i [scan-props](../programming/references/scan-props.md) oraz [scan-folders](../config/references/scan-folders.md) — łącznie odwzorowują istniejący model danych i menu platformy (patrz `references/dane-referencyjne.md`).
 
 Po zatwierdzeniu planu projektu:
-1. **`/soneta:business-xml`** — generowanie pliku business.xml na podstawie modelu danych z Etapu 3 (sekcje 3.1–3.3).
-2. **`/soneta:form-xml`** — generowanie formularzy i widoków UI na podstawie sekcji 3.4 i 3.5.
-3. **`/soneta:programming`** — implementacja logiki biznesowej i testów; dokumenty właściwe dla poszczególnych obszarów Etapu 3 wskazują strzałki (→) przy pozycjach dokumentu TODO powyżej.
+1. **[business-xml](../business-xml/SKILL.md)** — generowanie pliku business.xml na podstawie modelu danych z Etapu 3 (sekcje 3.1–3.3).
+2. **[form-xml](../form-xml/SKILL.md)** — generowanie formularzy i widoków UI na podstawie sekcji 3.4 i 3.5.
+3. **[programming](../programming/SKILL.md)** — implementacja logiki biznesowej i testów; dokumenty właściwe dla poszczególnych obszarów Etapu 3 wskazują strzałki (→) przy pozycjach dokumentu TODO powyżej.

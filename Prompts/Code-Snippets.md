@@ -2,6 +2,10 @@
 
 ## Parametry działania
 
+Ścieżki `../skills/...` i `../Soneta.Skills.Test/...` rozwiązuj względem tego pliku.
+Foldery źródłowe `Soneta.*` są względne wobec osobno ustalonego katalogu źródeł Soneta.
+Odnośniki w generowanej dokumentacji wyliczaj względem jej plików docelowych.
+
 > **Wszystkie parametry uzupełnij PRZED rozpoczęciem pracy.** Reszta promptu odwołuje się tylko do
 > nich — nie wpisuj nazw domeny/plików na sztywno w opisie zadania.
 
@@ -12,23 +16,28 @@
 | **Prefiks kodów receptur** | `WORKFLOW`                                                                                                                                               | Prefiks kodu wzorca, np. `WORKFLOW-A1`, `WORKFLOW-B3` (litera = sekcja listy zadań, numer = receptura).    |
 | **Lista funkcjonalności** | `lista-zadan-workflow.md`                                                                                                                                | Plik wejściowy z listą zadań (efekt promptu „Snippets List").                                              |
 | **Zakres dokumentacji** | workflow, definicje procesów, węzły, tranzycje, procesy (instancje), zadania operatora.                                                                  | Granice tematyczne — co wchodzi, a co nie.                                                                 |
-| **Folder rozdziałów** | `/soneta:programming/references/domeny/workflow/`                                                                                                        | Tu trafiają numerowane pliki rozdziałów `<PREFIKS>NN-nazwa.md`.                                            |
-| **Plik indeksu** | `/soneta:programming/references/domeny/workflow.md`                                                                                                      | Strona tytułowa domeny: fakty o typie, typy domenowe, szablon wzorca, mapa receptur.                       |
-| **Folder testów skilla** | `@Soneta.Skills.Test/Workflow`                                                                                                                           | Tu trafiają testy (po jednej klasie na rozdział).                                                          |
+| **Folder rozdziałów** | `../skills/programming/references/domeny/workflow/`                                                                                                        | Tu trafiają numerowane pliki rozdziałów `<PREFIKS>NN-nazwa.md`.                                            |
+| **Plik indeksu** | `../skills/programming/references/domeny/workflow.md`                                                                                                      | Strona tytułowa domeny: fakty o typie, typy domenowe, szablon wzorca, mapa receptur.                       |
+| **Folder testów skilla** | `../Soneta.Skills.Test/Workflow`                                                                                                                           | Tu trafiają testy (po jednej klasie na rozdział).                                                          |
 | **Klasa bazowa testów** | `WorkflowTestBase : TestBase`                                                                                                                            | Wspólna baza testów obiektu; jeśli nie istnieje — utwórz analogicznie do innych obiektów.                  |
-| **Główne źródła kodu** | Soneta.Workflow/`, `Soneta.Workflow.UI/`, `Soneta.Workflow.Test/`, `Soneta.Zadania/`, `Soneta.Zadania.UI/`, `Soneta.Zadania.Test/`, `Soneta.Business/Db` | Miejsca pierwszego wyboru przy analizie kodu programu.                                                     |
-| **Wersja języka** | C# 10                                                                                                                                                    | Cały kod (dokumentacja i testy) — target-typed `new`, `var`, wyrażenia `switch`, nazwane parametry `bool`. |
+| **Główne źródła kodu** | `Soneta.Workflow/`, `Soneta.Workflow.UI/`, `Soneta.Workflow.Test/`, `Soneta.Zadania/`, `Soneta.Zadania.UI/`, `Soneta.Zadania.Test/`, `Soneta.Business/Db` | Miejsca pierwszego wyboru przy analizie kodu programu.                                                     |
+| **Wersja języka** | C# 14                                                                                                                                                    | Kod dokumentacji i testów ma być zgodny z C# 14. |
+
+**Styl kodu:** preferuj `var`, uwzględniając lokalne ustawienia projektu. Używaj target-typed
+`new` i wyrażeń `switch`, gdy poprawiają czytelność. Przy argumentach `bool` podawaj nazwę
+parametru, gdy samo `true` lub `false` nie wyjaśnia znaczenia wywołania. Nowsze konstrukcje
+stosuj, gdy upraszczają kod.
 
 ## Zadanie do zrobienia
 
 Na podstawie **listy funkcjonalności** (parametr) przygotuj dokument dokumentacji Markdown będący
-elementem skilla `/soneta:programming`, pomagający agentom kodować obiekty obsługujące **zakres
+elementem skilla [programming](../skills/programming/SKILL.md), pomagający agentom kodować obiekty obsługujące **zakres
 dokumentacji** (parametr). Dokument ma **trafiać w realne pola, kolekcje i workery platformy**, tak aby
 na jego podstawie programista zewnętrzny pisał bezbłędny kod biznesowy bez dostępu do źródeł aplikacji.
 
 Akcje i czynności widoczne w programie są zaimplementowane przez **Workery**. Kod implementujący daną
 funkcję znajdziesz, wyszukując Workera po jego tytule w kodzie programu (pomocniczo:
-`/soneta:programming/scripts/scan-workers.csx`). Po analizie kodu workera opisz algorytm realizujący
+`../skills/programming/scripts/scan-workers.csx`). Po analizie kodu workera opisz algorytm realizujący
 funkcję — z perspektywy publicznego kontraktu.
 
 ## Forma dokumentacji (struktura wyjściowa)
@@ -42,12 +51,18 @@ oraz `domeny/handel.md` + `domeny/handel/HANDEL*.md`. Zachowaj ten sam układ, n
 Strona tytułowa domeny — **bez receptur**, same fundamenty i mapa. Zawiera w kolejności:
 
 1. **Nagłówek + akapit wprowadzający** — jaka domena, jaki główny obiekt biznesowy, że dokument jest
-   częścią skilla `soneta:programming`, oraz cel (bezbłędny kod biznesowy).
+   częścią skilla `programming`, oraz cel (bezbłędny kod biznesowy).
 2. **Notka „Format zwarty"** (blockquote) — każdy wzorzec = ogólny przypadek + tabela wariantów;
    fundamenty (sesja, transakcja, blokada optymistyczna, `SubTable`, obsługa błędów, wywoływanie
-   workerów) **nie są powtarzane** — odsyłaj do [`safe-code.md`](../safe-code.md),
-   [`session-login.md`](../session-login.md), [`worker-extender.md`](../worker-extender.md).
-3. **Notka o C# 10 i publicznym kontrakcie** (blockquote) — cały kod w C# 10; snippety wyłącznie na
+   workerów) **nie są powtarzane**. W generowanym indeksie użyj poniższych odnośników
+   (ścieżki względem pliku docelowego):
+
+   ```markdown
+   [safe-code.md](../safe-code.md), [session-login.md](../session-login.md),
+   [worker-extender.md](../worker-extender.md)
+   ```
+
+3. **Notka o C# 14 i publicznym kontrakcie** (blockquote): cały kod w C# 14; snippety wyłącznie na
    publicznym kontrakcie, bez odwołań do prywatnych klas i kodu źródłowego aplikacji.
 4. **`## Fakty o typie (zweryfikowane skanem DLL)`** — klasa biznesowa, moduły i dostęp z sesji
    (`session.GetXxx()`), kluczowe pola bazodanowe (root), kluczowe kolekcje (`SubTable` z typami),
@@ -74,11 +89,11 @@ Strona tytułowa domeny — **bez receptur**, same fundamenty i mapa. Zawiera w 
 Każda receptura ma **stałą strukturę** i kod `<PREFIKS>-Xn` (litera sekcji + numer; ★ = ma własny,
 dedykowany test):
 
-- **Cel** — co robi i kiedy użyć.
-- **Warianty** — tabela odmian przypadku (gdy dotyczy).
-- **Pola i typy** — realne właściwości/kolekcje i ich typy (z namespace).
-- **Snippet** — kod C# 10 na publicznym kontrakcie.
-- **Pułapki** — typowe błędy, kolejność operacji, zasady safe-code (z odwołaniami do `safe-code.md §…`).
+- **Cel**: co robi i kiedy użyć.
+- **Warianty**: tabela odmian przypadku (gdy dotyczy).
+- **Pola i typy**: realne właściwości/kolekcje i ich typy (z namespace).
+- **Snippet**: kod C# 14 na publicznym kontrakcie.
+- **Pułapki**: typowe błędy, kolejność operacji, zasady safe-code (z odwołaniami do `safe-code.md §…`).
 
 ## Sposób działania
 
@@ -91,7 +106,7 @@ Ma dostęp do wszystkiego: kodu źródłowego Soneta i wszystkich skillów. Przy
 szablonu wzorca powyżej) z ewentualnymi snippetami — instrukcję, jak daną funkcjonalność realizuje się
 biblioteką Soneta.
 
-Posługuj się skillem `/soneta:programming`. Wykorzystaj dane z kodu programu; ważniejsze miejsca
+Posługuj się skillem [programming](../skills/programming/SKILL.md). Wykorzystaj dane z kodu programu; ważniejsze miejsca
 (parametr „Główne źródła kodu"):
 
 * `Soneta.Workflow/`
@@ -103,25 +118,25 @@ Posługuj się skillem `/soneta:programming`. Wykorzystaj dane z kodu programu; 
 * `Soneta.Business/Db`
 
 Możesz też szukać w pozostałych częściach programu. **Fakty o typie weryfikuj skanem DLL**
-(`/soneta:programming/scripts/scan-props.csx`, `scan-workers.csx`, `scan-modules.csx`) — nazwy pól,
+(`../skills/programming/scripts/scan-props.csx`, `scan-workers.csx`, `scan-modules.csx`) — nazwy pól,
 typów, modułów i workerów muszą być prawdziwe.
 
-Ponieważ dokument jest elementem skilla, stosuj też zasady `/skill-creator`, żeby dokumentacja była
-lepszej jakości.
+Do redakcji i weryfikacji dokumentacji używaj skilla `skill-creator` dostępnego w danym
+środowisku agenta oraz zasad z [CLAUDE.md](../CLAUDE.md).
 
 Generowany skill jest **dla programistów zewnętrznych**, którzy nie mają dostępu do naszego kodu —
 posługują się tylko publicznymi klasami i metodami. Dokument musi być na tyle szczegółowy, żeby na jego
 podstawie generować kod dodatków bez znajomości kodu aplikacji. **Znany jest tylko kontrakt publiczny.**
 
-Kod w dokumentacji respektuje zasady `/soneta:programming`. Nasz kod jest wiekowy i miejscami pisany w
-starych wersjach C# — w dokumentacji używaj wyłącznie konstrukcji **C# 10**.
+Kod w dokumentacji respektuje zasady [programming](../skills/programming/SKILL.md). W dokumentacji i testach
+stosuj **C# 14** dla **.NET 10**, zgodnie z zasadami stylu kodu w parametrach działania.
 
-W `/soneta:programming/references/domeny` znajdują się już podobne dokumenty (`kadry.md`, `handel.md`,
+W `../skills/programming/references/domeny` znajdują się już podobne dokumenty (`kadry.md`, `handel.md`,
 `crm.md` z rozdziałami) — używaj ich jako wzorca formy i jakości.
 
 ### Subagent testujący
 
-Ma dostęp **tylko** do tworzonego skilla `/soneta:programming` oraz, w razie potrzeby, do skillów
+Ma dostęp **tylko** do tworzonego skilla [programming](../skills/programming/SKILL.md) oraz, w razie potrzeby, do skillów
 powiązanych. **Nie ma dostępu** do kodu źródłowego Soneta — może jedynie odczytywać nagłówki publicznych
 klas, metod, properties. Jego wiedza ogranicza się do skillów. Zadanie: napisać test implementujący
 wskazaną funkcjonalność (weryfikuje, czy dokumentacja wystarcza do napisania działającego kodu).
@@ -141,7 +156,7 @@ konkretnych kodów na sztywno.
 
 ### Praca subagentów
 
-Zacznij od analizy **struktury testów** — ma być zgodna z `@Soneta.Skills.Test`. Użyj tych samych
+Zacznij od analizy **struktury testów** — ma być zgodna z `../Soneta.Skills.Test`. Użyj tych samych
 technik i narzędzi co w pozostałych metodach testowych (przynajmniej klasa dziedzicząca z `TestBase`).
 
 Następnie **przygotuj szablon pliku indeksu** (sekcje 1–8 z „Forma dokumentacji") oraz pusty szkielet
@@ -167,10 +182,10 @@ Po wykonaniu wszystkich kroków zbuduj **mapę receptur** (indeks) oraz spis tre
 * Zweryfikuj, że fakty o typie zostały potwierdzone skanem DLL (realne pola, typy, moduły, workery).
 * Zweryfikuj, że testy są odpowiednio zdokumentowane (`[Description]` + komentarze).
 * Zweryfikuj, że kod w dokumentacji jest spójny z kodem testowym.
-* Pamiętaj o C# 10 — używaj nowych konstrukcji w dokumentacji i w testach.
-* Zweryfikuj zgodność ze standardami `/soneta:programming`.
+* Sprawdź zgodność kodu dokumentacji i testów z C# 14 oraz czy użyte konstrukcje upraszczają kod i zachowują jego czytelność.
+* Zweryfikuj zgodność ze standardami [programming](../skills/programming/SKILL.md).
 * Zweryfikuj brak odnośników do kodu źródłowego programu w dokumentacji (tylko publiczny kontrakt).
 * W testach używaj tylko publicznych klas, metod i właściwości.
-* Sprawdź `/skill-creator` na utworzonym dokumencie.
+* Sprawdź utworzony dokument skillem `skill-creator` danego środowiska agenta.
 * Raportuj funkcjonalności, których nie umiesz poprawnie udokumentować i przetestować — dopytaj o ich
   ewentualne usunięcie.

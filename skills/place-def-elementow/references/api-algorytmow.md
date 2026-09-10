@@ -183,7 +183,7 @@ public DoubleCy {Identyfikator}_Podstawa({KlasaElementu} Element, WypSkladnik Sk
 | Etat | `Soneta.Place.WypElementEtat` |
 | Dodatek | `Soneta.Place.WypElementDodatek` |
 | Dodatek automatyczny | `Soneta.Place.WypElementDodatekAutomatyczny` |
-| Nieobecność | `Soneta.Place.WypElementNieobecnosc` |
+| Nieobecność | `Soneta.Place.WypElementNieobecność` |
 | Nadgodziny I/II/św | `Soneta.Place.WypElementNadgodziny` |
 | Nocne | `Soneta.Place.WypElementNocne` |
 | Umowa | `Soneta.Place.WypElementUmowa` |

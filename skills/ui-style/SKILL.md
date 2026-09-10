@@ -473,13 +473,13 @@ Na dashboardzie ikony w kolorowych kółkach (border-radius `50%`, `32-40px`):
 
 ## Materiały referencyjne
 
-Pełny przewodnik projektowy z większą ilością szczegółów: przeczytaj `enova365-design-guide.md` w katalogu tego skilla.
+Pełny przewodnik projektowy z większą ilością szczegółów: przeczytaj [enova365-design-guide.md](enova365-design-guide.md) w katalogu tego skilla.
 
 Pliki CSS z pełnymi paletami zmiennych:
-- `wzorce/css/standard/PaletteBase.css` — paleta jasna (~830 zmiennych)
-- `wzorce/css/standard/PaletteDark.css` — paleta ciemna
+- [wzorce/css/standard/PaletteBase.css](wzorce/css/standard/PaletteBase.css) — paleta jasna (~830 zmiennych)
+- [wzorce/css/standard/PaletteDark.css](wzorce/css/standard/PaletteDark.css) — paleta ciemna
 
 
-Ikony SVG: katalog `SvgResources/` zawiera ~370 ikon liniowych.
+Ikony SVG: katalog [SvgResources/](SvgResources/) zawiera ~370 ikon liniowych.
 
-Pliki SCSS komponentów: katalog `wzorce/css/fullbrowser/` — style poszczególnych komponentów (TileItem, Login, HeaderBar, NavPanelTree, Grid, itd.).
+Pliki SCSS komponentów: katalog [wzorce/css/fullbrowser/](wzorce/css/fullbrowser/) — style poszczególnych komponentów (TileItem, Login, HeaderBar, NavPanelTree, Grid, itd.).

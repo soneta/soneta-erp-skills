@@ -233,5 +233,5 @@ wielopoziomowa `[A].[B].[C]`. Konteksty specjalne: `[DataSource.CurrentRowIndex]
 
 W raportach Soneta logika jest **deklaratywna** (`ExpressionBindings`, `Summary`,
 pola kalkulowane) oraz — po stronie danych — w kodzie-behind snippetu (patrz
-[REGISTRATION.md](REGISTRATION.md) i **/soneta:programming**). Nie używaj sekcji `Scripts`
+[REGISTRATION.md](REGISTRATION.md) i **[programming](../../programming/SKILL.md)**). Nie używaj sekcji `Scripts`
 DevExpress ani atrybutów `*Script`.

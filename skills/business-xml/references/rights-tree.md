@@ -173,7 +173,7 @@ Plik nie aktualizuje się sam — to drugi krok każdej zmiany struktury danych.
 - [relations-guide.md](relations-guide.md) — relacje `relright` i `relguided`, od których zależy,
   czy tabela jest korzeniem.
 - [table-reference.md](table-reference.md) — atrybuty `guided` i `config` tabeli.
-- `/soneta:programming`, `references/rights-source.md` — **prawa obiektowe** (`IRightsSource`):
+- [rights-source.md](../../programming/references/rights-source.md) — **prawa obiektowe** (`IRightsSource`):
   inny mechanizm, sterujący dostępem do danych przez wskazany obiekt konfiguracyjny; drzewo praw
   opisane tutaj decyduje tylko o miejscu tabeli w konfiguracji uprawnień.
-- `/soneta:addon-planning` — planowanie uprawnień na etapie architektury dodatku.
+- [addon-planning](../../addon-planning/SKILL.md) — planowanie uprawnień na etapie architektury dodatku.

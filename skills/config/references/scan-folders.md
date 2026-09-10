@@ -5,7 +5,8 @@ zadeklarowanych atrybutem assembly `[assembly: FolderView(...)]`. Czyta metadane
 bibliotek dodatku, nie wymaga źródeł ani uruchamiania aplikacji.
 
 > **Ścieżki poleceń** w tym dokumencie są względne wobec katalogu skilla (`skills/config/`
-> w pluginie `soneta`) — uruchamiaj je z tego katalogu albo poprzedź jego ścieżką.
+> w repozytorium) — ustal lokalizację zainstalowanego skilla i uruchamiaj polecenia z tego
+> katalogu albo poprzedź jego ścieżką.
 
 ## Cel
 
@@ -92,13 +93,13 @@ dotnet script scripts/scan-folders.csx \
 
 ```bash
 # Całe drzewo (duże!)
-dotnet script scan-folders.csx -- ./bin/Debug/net10.0
+dotnet script scripts/scan-folders.csx -- ./bin/Debug/net10.0
 
 # Tylko poddrzewo Handel
-dotnet script scan-folders.csx -- ./bin/Debug/net10.0 Handel
+dotnet script scripts/scan-folders.csx -- ./bin/Debug/net10.0 Handel
 
 # Płaska lista folderów poczty CRM
-dotnet script scan-folders.csx -- ./bin/Debug/net10.0 "CRM/Poczta" --flat
+dotnet script scripts/scan-folders.csx -- ./bin/Debug/net10.0 "CRM/Poczta" --flat
 ```
 
 ### Przykładowe wyjście
@@ -144,8 +145,8 @@ _Łącznie folderów: …_
 
 ## Powiązania
 
-- `scan-modules` (skill `/soneta:programming`) — inwentaryzacja modułów i tabel; z niego weźmiesz
+- `scan-modules` (skill [programming](../../programming/SKILL.md)) — inwentaryzacja modułów i tabel; z niego weźmiesz
   nazwę `TableName`, którą zobaczysz jako źródło listy w folderze.
-- `scan-props` (skill `/soneta:programming`) — pola konkretnej tabeli/`ViewInfo` widocznej w folderze.
-- `viewinfo` (skill `/soneta:programming`) — jak działa `ViewInfo` sterujący zawartością listy w folderze.
-- Narzędzia inwentaryzacyjne komplementarne do tego skanu opisuje skill `/soneta:programming`.
+- `scan-props` (skill [programming](../../programming/SKILL.md)) — pola konkretnej tabeli/`ViewInfo` widocznej w folderze.
+- `viewinfo` (skill [programming](../../programming/SKILL.md)) — jak działa `ViewInfo` sterujący zawartością listy w folderze.
+- Narzędzia inwentaryzacyjne komplementarne do tego skanu opisuje skill [programming](../../programming/SKILL.md).

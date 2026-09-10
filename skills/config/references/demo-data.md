@@ -4,7 +4,7 @@ Dane standardowej bazy demo to pliki XML w formacie sesji importu
 (`<session xmlns="http://www.soneta.pl/schema/business">` — składnia:
 [import-export-xml.md](import-export-xml.md)), leżące w katalogu **`Demo`** obok binariów
 programu. Import wykonuje się przy tworzeniu bazy z danymi przykładowymi — `dbmgr create X
---demo gold|silver` (`/soneta:tools`), kreator baz, pierwszy start programu.
+--demo gold|silver` ([tools](../../tools/SKILL.md)), kreator baz, pierwszy start programu.
 
 **Najważniejsze reguły:**
 
@@ -28,7 +28,7 @@ programu. Import wykonuje się przy tworzeniu bazy z danymi przykładowymi — `
 ## Odróżnij od `--sampledata` (wzorce)
 
 Opcja `dbmgr create --sampledata` i katalog `Patterns` to **inny mechanizm** (wzorców) —
-nie mylić z katalogiem `Demo` opisanym tutaj. Szczegóły opcji `create`: `/soneta:tools`
+nie mylić z katalogiem `Demo` opisanym tutaj. Szczegóły opcji `create`: [tools](../../tools/SKILL.md)
 (artykuł *dbmgr*).
 
 ## Testowanie pliku demo
@@ -55,5 +55,5 @@ nie mylić z katalogiem `Demo` opisanym tutaj. Szczegóły opcji `create`: `/son
 
 - [import-export-xml.md](import-export-xml.md) — format plików, identyfikacja rekordów,
   kolekcje, prawa `<Right>`.
-- `/soneta:tools` — `dbmgr create --demo`, `importxml`, `drop` (artykuł *dbmgr*).
-- `/soneta:programming` — *rights-source* (prawa dla funkcji zasilanych w demo/dbinit).
+- [tools](../../tools/SKILL.md) — `dbmgr create --demo`, `importxml`, `drop` (artykuł *dbmgr*).
+- [rights-source](../../programming/references/rights-source.md) (prawa dla funkcji zasilanych w demo/dbinit).

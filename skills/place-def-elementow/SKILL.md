@@ -7,15 +7,22 @@ description: "Tworzenie i konfiguracja definicji elementów wynagrodzenia na pla
 
 Ten skill zawiera kompletną wiedzę o tworzeniu i konfigurowaniu definicji elementów wynagrodzenia na platformie Soneta. Wiedza jest podzielona na pliki referencyjne — czytaj odpowiedni plik w zależności od potrzeby.
 
+Konfigurację w działającej aplikacji wykonuj przez dostępne połączenie do Soneta
+(np. MCP `soneta_ui` lub `buscall` ze skilla [tools](../tools/SKILL.md)). Gdy połączenia
+brak, przygotuj ustawienia i kod C# do wprowadzenia przez użytkownika oraz wskaż,
+że zapis i naliczenie w aplikacji pozostają do sprawdzenia. Samo opracowanie algorytmu
+nie wymaga dostępu do UI.
+
 ## Spis treści referencji
 
 | Plik | Kiedy czytać | Zawartość |
 |---|---|---|
-| `references/algorytmy-naliczania.md` | Gdy trzeba wybrać typ algorytmu, skonfigurować kreator lub napisać kod edytora | Typy algorytmów, parametry kreatora (podstawa, mnożnik, korekty), struktura kodu C# edytora, przykłady kompletnych algorytmów |
-| `references/wzorce-algorytmiczne.md` | Gdy trzeba znaleźć najbliższy wzorzec dla nowego elementu | 12 wzorców dla Dodatków (A-L), 5 dla Nieobecności (A-E), 5 dla Dodatków automatycznych (A-E) — z analizy ~247 definicji |
-| `references/receptury-kodu.md` | Gdy trzeba napisać konkretny fragment kodu C# | 24 kategorie gotowych fragmentów: iterowanie po elementach, wynagrodzenie zasadnicze, nieobecności, wymiar etatu, czas pracy, okresy, staż, cechy, wskaźniki, parametry dodatku, zaokrąglenia, netto→brutto, urlopy, debugowanie |
-| `references/api-algorytmow.md` | Gdy potrzebna jest referencja API — pola, metody, klasy, typy | Pola WypSkladnik, metody pomocnicze, klasy naliczania, moduły, dostęp do konfiguracji, operacje na typach danych, sygnatury metod |
-| `references/metody-sterujace-naliczaniem.md` | Gdy element musi wpływać na podstawy urlopów lub zasiłków | Metody _PodstawaUrlopu, _PodstawaZasiłku, klasa PodstawaZasiłkuArgs |
+| [references/algorytmy-naliczania.md](references/algorytmy-naliczania.md) | Gdy trzeba wybrać typ algorytmu, skonfigurować kreator lub napisać kod edytora | Typy algorytmów, parametry kreatora (podstawa, mnożnik, korekty), struktura kodu C# edytora, przykłady kompletnych algorytmów |
+| [references/wzorce-algorytmiczne.md](references/wzorce-algorytmiczne.md) | Gdy trzeba znaleźć najbliższy wzorzec dla nowego elementu | 12 wzorców dla Dodatków (A-L), 5 dla Nieobecności (A-E), 5 dla Dodatków automatycznych (A-E) — z analizy ~247 definicji |
+| [references/receptury-kodu.md](references/receptury-kodu.md) | Gdy trzeba napisać konkretny fragment kodu C# | 24 kategorie gotowych fragmentów: iterowanie po elementach, wynagrodzenie zasadnicze, nieobecności, wymiar etatu, czas pracy, okresy, staż, cechy, wskaźniki, parametry dodatku, zaokrąglenia, netto→brutto, urlopy, debugowanie |
+| [references/api-algorytmow.md](references/api-algorytmow.md) | Gdy potrzebna jest referencja API — pola, metody, klasy, typy | Pola WypSkladnik, metody pomocnicze, klasy naliczania, moduły, dostęp do konfiguracji, operacje na typach danych, sygnatury metod |
+| [references/metody-sterujace-naliczaniem.md](references/metody-sterujace-naliczaniem.md) | Gdy element musi wpływać na podstawy urlopów lub zasiłków | Metody _PodstawaUrlopu, _PodstawaZasiłku, klasa PodstawaZasiłkuArgs |
+| [references/soneta-ui.md](references/soneta-ui.md) | Gdy konfigurujesz element przez MCP `soneta_ui` lub `buscall` | Metody integracji, przekazywanie kodu do edytora i sprawdzenie zapisu |
 
 ## Lokalizacja w programie
 
@@ -37,7 +44,7 @@ Aby zobaczyć wszystkie definicje, ustaw Zakres=Razem i Stan=Razem.
 | **Etat** | `WypElementEtat` | Wynagrodzenie zasadnicze (mies./godz.), dochód deklarowany |
 | **Dodatek** | `WypElementDodatek` | Premie, dodatki (funkcyjny, stażowy), ekwiwalenty, ryczałty, odprawy, potrącenia, korekty, odsetki |
 | **Dodatek automatyczny** | `WypElementDodatekAutomatyczny` | Elementy naliczane automatycznie (PPK, potrącenie OPP, wynagrodzenie postojowe) |
-| **Nieobecność** | `WypElementNieobecnosc` | Wynagrodzenie za urlopy, zasiłki (chorobowy, macierzyński, opiekuńczy), świadczenia rehabilitacyjne |
+| **Nieobecność** | `WypElementNieobecność` | Wynagrodzenie za urlopy, zasiłki (chorobowy, macierzyński, opiekuńczy), świadczenia rehabilitacyjne |
 | **Nadgodziny I/II/św** | `WypElementNadgodziny` | Dopłata do nadgodzin 50%, 100%, za święta |
 | **Nocne** | `WypElementNocne` | Dopłata za godziny nocne |
 | **Akord** | `WypElementAkord` | Wynagrodzenie akordowe |
@@ -100,7 +107,7 @@ Konfiguracja wliczania do podstaw urlopów i zasiłków:
 
 ### Algorytm/Ogólne (`DefinicjaElementuAlgorytmPage`)
 
-Główna zakładka konfiguracji algorytmu — szczegóły w `references/algorytmy-naliczania.md`.
+Główna zakładka konfiguracji algorytmu — szczegóły w [references/algorytmy-naliczania.md](references/algorytmy-naliczania.md).
 
 ### Algorytm/Edytor (`DefinicjaElementuEdytorPage`)
 
@@ -110,19 +117,18 @@ Pole kodu C# (typ `code`) — edytor algorytmu. Aktywny gdy Algorytm = "Edytor a
 
 Podgląd wygenerowanego kodu C# (read-only).
 
-## Tworzenie nowego elementu — krok po kroku przez MCP
+## Tworzenie nowego elementu
 
-```
-1. navigate_to_folder("Ustawienia/Kadry i płace/Płace/Elementy wynagrodzenia")
-2. add_subobject(gridID="_New_CfgDefElementowExtender_DefElementow")
-3. update_field_value — wypełnij zakładkę Ogólne (nazwa, skrót, naliczanie, lista płac)
-4. switch_form_page("DefinicjaElementuAlgorytmPage") — skonfiguruj algorytm
-5. [opcjonalnie] switch_form_page("DefinicjaElementuEdytorPage") — wpisz kod C#
-6. switch_form_page("DefinicjaElementuDeklaracjePage") — skonfiguruj PIT/ZUS
-7. switch_form_page("DefinicjaElementuNieobecnosciProPage") — skonfiguruj wliczanie do podstaw
-8. accept_subform() — zatwierdź podformularz
-9. save_form() — zapisz do bazy
-```
+1. Otwórz `Ustawienia/Kadry i płace/Płace/Elementy wynagrodzenia` i dodaj definicję.
+2. Wypełnij zakładkę **Ogólne**: nazwa, skrót, naliczanie, lista płac.
+3. W **Algorytm/Ogólne** wybierz i skonfiguruj algorytm; dla edytora wpisz kod C#
+   w **Algorytm/Edytor**.
+4. Uzupełnij **Deklaracje** (PIT/ZUS) i **Nieobecności** (wliczanie do podstaw).
+5. Zatwierdź podformularz i zapisz definicję. Odczytaj zapisane wartości i sprawdź
+   naliczenie na przypadku testowym odpowiadającym wymaganiom.
+
+Przy użyciu MCP `soneta_ui` lub `buscall` przeczytaj [references/soneta-ui.md](references/soneta-ui.md):
+mapowanie tych kroków na metody i sposób przekazania kodu do edytora.
 
 ### Wybór algorytmu
 
@@ -133,14 +139,6 @@ Podgląd wygenerowanego kodu C# (read-only).
 | Naliczanie jak urlop/ekwiwalent | **Jak urlop wypoczynkowy** / **Jak ekwiwalent za urlop** |
 | Naliczanie za okres nieobecności | **Za okres nieobecności** |
 
-### Formatowanie kodu w edytorze (przez MCP)
-
-Znaki nowej linii w kodzie C# przez MCP wstawiamy jako `\\n`:
-
-```
-update_field_value(["_Tekst=public void Nazwa_Param(...) {\\n    ...\\n}\\n\\npublic Currency Nazwa_Wylicz(...) {\\n    return ...;\\n}"])
-```
-
 ## Wskazówki przy tworzeniu nowych algorytmów
 
 1. **`Element` to parametr metody** — w kodzie algorytmu `Element` nie jest zmienną globalną ani polem klasy — jest **pierwszym parametrem** każdej metody (`_Param`, `_Wylicz`, `_Wartość1h` itd.). 
@@ -149,7 +147,7 @@ update_field_value(["_Tekst=public void Nazwa_Param(...) {\\n    ...\\n}\\n\\npu
    - Etat → `Soneta.Place.WypElementEtat Element`
    - Dodatek → `Soneta.Place.WypElementDodatek Element`
    - Dodatek automatyczny → `Soneta.Place.WypElementDodatekAutomatyczny Element`
-   - Nieobecność → `Soneta.Place.WypElementNieobecnosc Element`
+   - Nieobecność → `Soneta.Place.WypElementNieobecność Element`
    - Nadgodziny → `Soneta.Place.WypElementNadgodziny Element`
    - Umowa → `Soneta.Place.WypElementUmowa Element`
 
@@ -158,7 +156,7 @@ update_field_value(["_Tekst=public void Nazwa_Param(...) {\\n    ...\\n}\\n\\npu
    public void MojDodatek_Param(WypElementDodatek Element, WypSkladnik Składnik) { ... }
    ```
 
-2. **Wybierz wzorzec** — większość nowych elementów pasuje do jednego z istniejących wzorców. Przeczytaj `references/wzorce-algorytmiczne.md` i zacznij od skopiowania najbliższego wzorca.
+2. **Wybierz wzorzec** — większość nowych elementów pasuje do jednego z istniejących wzorców. Przeczytaj [references/wzorce-algorytmiczne.md](references/wzorce-algorytmiczne.md) i zacznij od skopiowania najbliższego wzorca.
 
 3. **Źródło kwoty** — zdecyduj skąd pochodzi podstawa:
    - Kwota z parametrów pracownika → `Element.DodHistoria.Podstawa` (Wzorzec A)
@@ -185,11 +183,11 @@ update_field_value(["_Tekst=public void Nazwa_Param(...) {\\n    ...\\n}\\n\\npu
 
 10. **Element.DodHistoria.Podstawa vs Element.DodHistoria.Kwota** — w rzeczywistych algorytmach kreatorowych kwota pobierana jest z `Element.DodHistoria.Podstawa` (nie `.Kwota`). Pole `.Kwota` występuje w dokumentacji, ale `.Podstawa` jest częściej stosowane w generowanym kodzie.
 
-11. **Dodatkowe metody** — jeśli element ma odbiorców płatności (potrącenia, alimenty), zdefiniuj metody `_Odbiorca` i `_RachunekOdbiorcy`. Jeśli okres naliczania wymaga podziału, zdefiniuj `_CięcieOkresu`. Jeśli element wpływa na podstawy urlopów/zasiłków — przeczytaj `references/metody-sterujace-naliczaniem.md`.
+11. **Dodatkowe metody** — jeśli element ma odbiorców płatności (potrącenia, alimenty), zdefiniuj metody `_Odbiorca` i `_RachunekOdbiorcy`. Jeśli okres naliczania wymaga podziału, zdefiniuj `_CięcieOkresu`. Jeśli element wpływa na podstawy urlopów/zasiłków — przeczytaj [references/metody-sterujace-naliczaniem.md](references/metody-sterujace-naliczaniem.md).
 
 ## Powiązania
 
-- [/soneta:config](../config/SKILL.md) — przenoszenie definicji elementów między bazami plikiem
+- [config](../config/SKILL.md): przenoszenie definicji elementów między bazami plikiem
   XML (import według rekordów, `*.dbinit.xml` dodatku): kształt rekordu `DefinicjaElementu`
   i gotowy plik z kreatorem oraz edytorem algorytmu —
   [import-definicja-elementu-wynagrodzenia.xml](../config/examples/import-definicja-elementu-wynagrodzenia.xml),

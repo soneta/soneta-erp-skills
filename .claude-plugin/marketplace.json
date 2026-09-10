@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "soneta",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "./",
       "description": "11 skilli platformy Soneta: ORM i kod biznesowy, business.xml, form.xml, planowanie dodatków, wydruki .repx, design system enova365, definicje elementów wynagrodzenia, konfiguracja i import XML, narzędzia CLI, kontenery.",
       "author": {

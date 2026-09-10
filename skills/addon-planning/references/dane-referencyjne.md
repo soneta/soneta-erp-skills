@@ -1,6 +1,6 @@
 # Dane referencyjne — inwentaryzacja modułów, tabel i folderów menu
 
-Aby osadzić plan w istniejącym modelu danych platformy Soneta, **zinwentaryzuj strukturę na żywo z bibliotek** — nie używaj statycznych snapshotów (starzeją się). Narzędzia `scan-modules` i `scan-props` pochodzą ze skilla `/soneta:programming`, a `scan-folders` ze skilla `/soneta:config` — tam pełna semantyka wyników i opcji; tutaj tylko użycie planistyczne.
+Aby osadzić plan w istniejącym modelu danych platformy Soneta, **zinwentaryzuj strukturę na żywo z bibliotek** — nie używaj statycznych snapshotów (starzeją się). Narzędzia `scan-modules` i `scan-props` pochodzą ze skilla [programming](../../programming/SKILL.md), a `scan-folders` ze skilla [config](../../config/SKILL.md) — tam pełna semantyka wyników i opcji; tutaj tylko użycie planistyczne.
 
 ## Wymagania środowiska
 
@@ -8,7 +8,7 @@ Aby osadzić plan w istniejącym modelu danych platformy Soneta, **zinwentaryzuj
 - .NET SDK 10 oraz `dotnet-script` (`dotnet tool install -g dotnet-script`).
 
 > **Ścieżki skryptów** poniżej są względne wobec katalogu tego dokumentu
-> (`skills/addon-planning/references/` w pluginie `soneta`) i wskazują skrypty
+> (`skills/addon-planning/references/` w repozytorium) i wskazują skrypty
 > sąsiednich skilli — `../../programming/scripts/` i `../../config/scripts/`.
 
 Gdy środowiska brak (np. planowanie koncepcyjne bez dostępu do buildu) — **nie zgaduj istniejących struktur**; zapisz inwentaryzację jako otwartą kwestię **blokującą** dla Etapu 2 i kontynuuj Etap 1.
@@ -30,7 +30,7 @@ dotnet script ../../programming/scripts/scan-modules.csx -- <KatalogDll> > modul
 
 Wynik zapisz do pliku roboczego (`modules.md`) i **czytaj selektywnie** — jest duży (kilkadziesiąt modułów, >1000 tabel). Namierzaj moduły przez `grep -n '^## ' modules.md`, potem czytaj tylko istotne sekcje.
 
-Użycie kolumn wyniku w planie (pełna semantyka wartości: `scan-modules.md` w `/soneta:programming`):
+Użycie kolumn wyniku w planie (pełna semantyka wartości: [scan-modules.md](../../programming/references/scan-modules.md)):
 
 | Kolumna | Użycie w planie |
 |---------|-----------------|

@@ -3,7 +3,7 @@
 Postawienie Soneta (enova365 / Triva) jako stack `dbinit → server → web` przez
 `docker compose`. Gotowe pliki: [../assets/docker-compose.yaml](../assets/docker-compose.yaml)
 (SQL zewnętrzny) i [../assets/docker-compose.mssql.yaml](../assets/docker-compose.mssql.yaml)
-(SQL w kontenerze). Składnię komend `dbmgr` → `/soneta:tools`.
+(SQL w kontenerze). Składnię komend `dbmgr` → [tools](../../tools/SKILL.md).
 
 ## Minimalny cykl życia
 
@@ -43,7 +43,7 @@ Trzy usługi na jednym obrazie serwera + obraz web:
 Podwójne podkreślenie `__` odwzorowuje zagnieżdżenie sekcji `appsettings.json`, a prefiks
 `SONETA_` to **warstwa nadpisań** (silniejsza niż plik bazowy — wygodna w kontenerach).
 Znaczenie kluczy, domyślne porty i warstwy nadpisań →
-[/soneta:config → appsettings.md](../../config/references/appsettings.md).
+[config → appsettings.md](../../config/references/appsettings.md).
 
 Ten stack działa w **trybie bezpośrednim** (web → serwer, bez routera/orkiestratora).
 Serwer nasłuchuje domyślnie na `:22000` (`Server:Urls`), a `SONETA_ServerEndpoint` musi
@@ -100,7 +100,7 @@ docker compose run --rm -v "$(pwd)":/work dbinit licence sttest /work/licence.xm
 
 > Binarny `backup` (`.bac`) zapisuje **serwer SQL** po swojej stronie, nie klient — do
 > przenośnych kopii używaj `backuptxt` (`.zip`). Pełna składnia komend `dbmgr` (convert,
-> backup/restore, licence, extensions) → `/soneta:tools`. Import XML (role, ustawienia) → `/soneta:config`.
+> backup/restore, licence, extensions) → [tools](../../tools/SKILL.md). Import XML (role, ustawienia) → [config](../../config/SKILL.md).
 
 ## Opcjonalnie: parametryzacja przez `.env` (tylko Docker)
 
@@ -133,4 +133,4 @@ Do wklejenia w Container Desktop użyj wersji z wartościami wprost.
       zdropuje bazę) albo startuj tylko `docker compose up -d server web`
 
 Powiązane: [apple-container.md](apple-container.md) · [helm-k8s.md](helm-k8s.md) ·
-[obrazy-wersje.md](obrazy-wersje.md) · `/soneta:tools` (dbmgr) · `/soneta:config` (XML, appsettings).
+[obrazy-wersje.md](obrazy-wersje.md) · [tools](../../tools/SKILL.md) (dbmgr) · [config](../../config/SKILL.md) (XML, appsettings).

@@ -208,7 +208,7 @@ process:moja_baza;caption=moja_baza;path=<katalog-kodu-soneta>;user=Administrato
   `Server.DbRegister` z połączeniem SQL), którym `dbmgr create … --config-file=…` utworzył bazę —
   **jedno źródło prawdy**; struktura pliku i utworzenie bazy: [dbmgr.md](dbmgr.md), sekcja
   „Baza z własnym dodatkiem". Pełny przepis weryfikacji dodatku na żywej aplikacji:
-  `buscall-live-testing.md` w skillu `/soneta:programming`.
+  [buscall-live-testing.md](../../programming/references/buscall-live-testing.md).
 
 ## Logi ramki i `buscall`
 
@@ -242,7 +242,7 @@ PY
 drogą do przyczyny niż powtarzanie scenariusza w UI. `Caller` równy `.ctor` oznacza zwykle
 handler zdarzenia podpięty lambdą w konstruktorze kontrolki. Katalog otwiera przycisk w panelu
 deweloperskim ustawień ramki. Logi **serwera biznesowego** (`Soneta/Logs/server-*.log`) opisuje
-artykuł *translations-logging* w skillu `/soneta:programming`.
+artykuł [translations-logging](../../programming/references/translations-logging.md).
 
 ## Powiązania
 

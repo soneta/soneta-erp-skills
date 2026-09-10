@@ -14,10 +14,10 @@ dokładnych nazw pól, ich typów i tego, czy pole jest kolekcją czy subrowem, 
 i robi się to **skanem DLL**. Zanim zbudujesz jakikolwiek plik importu, **obowiązkowo** odczytaj
 rzeczywistą strukturę docelowego obiektu z bibliotek DLL — to część zadania, nie krok opcjonalny:
 
-- **`scan-props`** (`/soneta:programming`) — pola i właściwości obiektu oraz jego podkolekcje.
+- **`scan-props`** ([programming](../../programming/SKILL.md)) — pola i właściwości obiektu oraz jego podkolekcje.
   Tryb *według rekordów* → tylko pola z `Rodzaj = bazodanowe`; tryb *biznesowy* → właściwości
   biznesowe. Stąd bierzesz **dokładne nazwy** pól, typy i dozwolone wartości (enum).
-- **`scan-forms`** (`/soneta:programming`) — zakładki, sekcje danych i **kolejność pól**
+- **`scan-forms`** ([programming](../../programming/SKILL.md)) — zakładki, sekcje danych i **kolejność pól**
   formularza; w trybie `business="true"` kolejność wprowadzania = kolejność pól na formularzu.
   Stąd bierzesz kolejność elementów i to, co logicznie stanowi „dane obiektu" (zakres eksportu).
 
@@ -76,7 +76,7 @@ Gotowe wzorce dla typowych obiektów: [import-xml-examples.md](import-xml-exampl
 ## Identyfikacja rekordu
 
 Głównym nośnikiem tożsamości jest **GUID** — importować i eksportować w całości można
-**rekordy guidowane** (zob. artykuł *datapack-guidedrow* w `/soneta:programming`). Sposoby
+**rekordy guidowane** (zob. artykuł *datapack-guidedrow* w [programming](../../programming/SKILL.md)). Sposoby
 wskazania rekordu, w kolejności rozpoznawania:
 
 | Atrybut | Działanie |
@@ -162,12 +162,12 @@ Zasady:
 
 - Używaj wyłącznie **pól bazodanowych** rekordu — nie właściwości kalkulowanych ani innych
   properties dodanych w obiektach biznesowych. Pola obiektu inwentaryzuje narzędzie
-  `scan-props` ze skilla `/soneta:programming` — w tym trybie importu interesują nas tylko
+  `scan-props` ze skilla [programming](../../programming/SKILL.md) — w tym trybie importu interesują nas tylko
   pola oznaczone w kolumnie `Rodzaj` znacznikiem **`bazodanowe`**.
 - **Kolejność elementów pól nie ma znaczenia** — wartości trafiają wprost do rekordu.
 - Obiekty przystosowane do tego trybu mają metody `OnImporting`/`OnImported` — po zakończeniu
   wczytywania pól rekordu wywoływana jest `OnImported`, która uzupełnia skutki logiki
-  biznesowej (opis w artykule *row-types* skilla `/soneta:programming`).
+  biznesowej (opis w artykule *row-types* skilla [programming](../../programming/SKILL.md)).
 - Podkolekcje (np. pozycje rekordu nadrzędnego) wczytuje się elementem o **nazwie kolekcji**;
   powiązanie z rodzicem realizują klucze bazodanowe relacji. Wewnątrz kolekcji `where`/`key`
   wyszukują w obrębie elementów tego rodzica.
@@ -209,7 +209,7 @@ rejestrowanych w kodzie). Import rekordowy takich wierszy rządzi się trzema re
 się `UnrecognizedRowException` („Selektor 0 w tabeli X nieznaleziony") — w tym import naprawczy.
 Jedyna naprawa to usunięcie wierszy wprost w SQL (`DELETE FROM Tabela WHERE KolumnaSelectora = 0`).
 Dlatego projektując tabelę z selectorem, enum dyskryminatora numeruje się **od 1** — reguły
-i pułapki po stronie definicji tabeli opisuje `/soneta:business-xml` (table-reference, pole
+i pułapki po stronie definicji tabeli opisuje [business-xml](../../business-xml/SKILL.md) (table-reference, pole
 selector; tam też pułapka „Nierozpoznany typ wiersza").
 
 Checklista wierszy z selectorem:
@@ -228,7 +228,7 @@ po zakończeniu), `fromto` (kasowanie ogranicza się do okresu).
 
 **Detale (wiersze podrzędne) zapisuj zagnieżdżone w rodzicu, bez guidów.** Tabele detali nie
 powinny być guidowane (guided to obiekty główne — zob. *datapack-guidedrow*
-w `/soneta:programming`), a wiersze **nieguidowane importowane top-level tworzą duplikaty** przy
+w [programming](../../programming/SKILL.md)), a wiersze **nieguidowane importowane top-level tworzą duplikaty** przy
 każdym reimporcie — nie ma ich po czym rozpoznać. Poprawny zapis detali w plikach dbinit/demo to
 **obiekty zagnieżdżone w rodzicu**: wrapper o nazwie kolekcji `children` z definicji relacji
 (business.xml), w środku elementy typu wiersza detalu:
@@ -304,7 +304,7 @@ wartość obowiązującą od daty importu.
 
 Obiekt będący **źródłem praw** (`IRightsSource`) jest dla ról domyślnie **Denied** — funkcja
 oparta o taki rekord jest martwa po utworzeniu bazy, dopóki prawo nie zostanie nadane (kontekst
-i pułapki: `/soneta:programming`, artykuł *rights-source*). W dbinit/demo prawo nadaje rekord
+i pułapki: artykuł [rights-source](../../programming/references/rights-source.md)). W dbinit/demo prawo nadaje rekord
 `Right`, wiążący uprawnienie (`Entitle`) ze źródłem praw (`Source`); trzecia kolumna
 `ReadOnlyRight` (bool) oznacza prawo tylko do odczytu.
 
@@ -337,10 +337,10 @@ Zasady:
   **operator wpisywałby dane na formularzu** (najpierw definicja dokumentu, potem kontrahent,
   potem pozycje, na końcu stan). Rzeczywistą kolejność pól i **sekcje danych** (zakładki, grupy)
   formularza — nawet gdy masz tylko skompilowane DLL — odczytasz narzędziem **`scan-forms`**
-  ze skilla `/soneta:programming` (kolejność pól = kolejność wprowadzania; rozwija też ścieżki
+  ze skilla [programming](../../programming/SKILL.md) (kolejność pól = kolejność wprowadzania; rozwija też ścieżki
   pól i `Include`).
 - Dostępne właściwości biznesowe obiektu (oraz jego podkolekcje) zwraca narzędzie `scan-props`
-  ze skilla `/soneta:programming`.
+  ze skilla [programming](../../programming/SKILL.md).
 - Nowy obiekt może wymagać parametrów tworzenia — przekazuje się je **atrybutami** elementu
   rekordu (nazwa atrybutu = nazwa parametru); w kolekcji rodzic jest przekazywany
   automatycznie. Atrybut `ctor` wybiera wariant tworzenia.
@@ -352,7 +352,7 @@ Zasady:
   w imporcie rekordowym, ale tam element kolumny selectora pozostaje obowiązkowy — zob.
   *Wiersze tabel z selektorem* w Części 1. Czy tabela ma selektor i jakie są dopuszczalne podtypy
   sprawdzisz w sekcji `## Selektor — podtypy w jednej tabeli` narzędzia `scan-props`
-  (`/soneta:programming`): wartością atrybutu `class` jest **nazwa klasy podtypu** (kolumna
+  ([programming](../../programming/SKILL.md)): wartością atrybutu `class` jest **nazwa klasy podtypu** (kolumna
   „Klasa podtypu"); brak sekcji `Selektor` = tabela bez selektora, `class` nie ma zastosowania.
 - Referencje wygodnie wskazywać elementem z `where` po czytelnym kluczu (kod, symbol) —
   plik pozostaje przenośny między bazami.
@@ -379,7 +379,7 @@ Zasady:
 
 Standardowy eksport działa **wyłącznie według rekordów**. Eksportowany jest wskazany rekord
 **guidowany** oraz wszystkie rekordy powiązane relacjami guidowanymi — czyli cały **datapack**
-(zob. *datapack-guidedrow* w `/soneta:programming`):
+(zob. *datapack-guidedrow* w [programming](../../programming/SKILL.md)):
 
 - relacje wewnętrzne (inner) — zapisywane **wewnątrz** elementu rekordu jako kolekcje,
 - relacje zewnętrzne (outer) — dopisywane jako **osobne elementy główne** tego samego pliku,
@@ -389,10 +389,10 @@ Standardowy eksport działa **wyłącznie według rekordów**. Eksportowany jest
 ### Ustalenie zakresu eksportu
 
 Zanim wskażesz kolekcje, relacje i cechy do dołączenia, ustal, **co logicznie stanowi „dane
-obiektu"**. Podpowiada to narzędzie **`scan-forms`** ze skilla `/soneta:programming`: zakładki
+obiektu"**. Podpowiada to narzędzie **`scan-forms`** ze skilla [programming](../../programming/SKILL.md): zakładki
 i sekcje formularza pokazują, które podkolekcje i cechy operator widzi jako część obiektu
 (listy `Grid` = kolekcje, zakładki systemowe = załączniki/cechy). Pełny zestaw kolekcji
-i relacji rekordu wylicza `scan-props` (`/soneta:programming`). **Świadomie ogranicz zakres**
+i relacji rekordu wylicza `scan-props` ([programming](../../programming/SKILL.md)). **Świadomie ogranicz zakres**
 do danych potrzebnych w bazie docelowej — nadmiarowe relacje zewnętrzne rozrastają datapack
 o kolejne rekordy powiązane, których import może wymagać dodatkowych słowników.
 
@@ -424,7 +424,7 @@ a wzorzec „root + historia" ma też inne obszary platformy):
 - **Dane trzymane w osobnej strukturze zapisuj tam, gdzie faktycznie są.** Część danych obiektu
   (np. adresy pracownika) nie jest przechowywana wprost w rekordzie — wpisanie ich jako
   podelementu głównego rekordu kończy się błędem. Miejsce i nazwy pól ustalaj skanami
-  (`scan-props`/`scan-forms` w `/soneta:programming`), nie zgaduj (zob. *Zasada nadrzędna*).
+  (`scan-props`/`scan-forms` w [programming](../../programming/SKILL.md)), nie zgaduj (zob. *Zasada nadrzędna*).
 - **Referencje przez standardowe GUID-y (z zerami) są przenośne** między bazami — dobre do
   wskazywania słowników i korzeni struktur (wydział-korzeń, kalendarz podstawowy, definicja
   elementu wynagrodzenia, tytuł ubezpieczenia). Referencje do rekordów o GUID nadawanym per baza
@@ -433,7 +433,7 @@ a wzorzec „root + historia" ma też inne obszary platformy):
   **wymiar etatu** jako ułamek (`1/1`); **kwota z walutą** z kodem (`12,345.00 PLN`).
 
 Strukturę i dokładne nazwy pól obiektu pracownika (root, historia, warunki etatu, stawka)
-dokumentują receptury domeny Kadry-Płace w `/soneta:programming` (rozdziały o zatrudnieniu
+dokumentują receptury domeny Kadry-Płace w [programming](../../programming/SKILL.md) (rozdziały o zatrudnieniu
 i o etacie).
 
 ## Pliki `*.dbinit.xml` — inicjowanie i konwersja bazy
@@ -463,7 +463,7 @@ cechy, szablony, konfiguracja, role i prawa, kokpity) z gotowymi szkieletami:
 
 W projekcie dodatku pliki `*.dbinit.xml` osadza się jako **EmbeddedResource** — sposób
 osadzania (automatyczny przez Soneta.Sdk lub ręczny wpis w projekcie) opisuje artykuł
-*sessionreader-sessionwriter* w `/soneta:programming`.
+*sessionreader-sessionwriter* w [programming](../../programming/SKILL.md).
 
 ## Testowanie plików XML
 
@@ -473,8 +473,8 @@ samowolnie po samym zbudowaniu pliku (sam plik zweryfikuj strukturalnie skanem i
 proponując test). Gdy żądanie testu pada, **całość robi agent, nie operator**: nie odsyłaj
 użytkownika, by sam wczytał plik i sprawdził wynik. Wtedy przetestuj plik **próbą wczytania do
 bazy** narzędziem `dbmgr`, a następnie **sam odczytaj efekt z programu** (odczyt pól / zrzut
-ekranu przez `buscall` — `/soneta:tools`) i potwierdź, że dane zmieniły się zgodnie z zamiarem
-(opis narzędzia: `/soneta:tools`):
+ekranu przez `buscall` — [tools](../../tools/SKILL.md)) i potwierdź, że dane zmieniły się zgodnie z zamiarem
+(opis narzędzia: [tools](../../tools/SKILL.md)):
 
 ```bash
 dbmgr importxml <NazwaBazy> plik.xml
@@ -483,15 +483,15 @@ dbmgr importxml <NazwaBazy> plik.xml
 Zasady:
 
 - Testuj na **bazie testowej lub kopii** (backup/restore i tworzenie baz — `dbmgr`,
-  `/soneta:tools`), nigdy od razu na bazie produkcyjnej — nieudany import (np. błędny plik
+  [tools](../../tools/SKILL.md)), nigdy od razu na bazie produkcyjnej — nieudany import (np. błędny plik
   roli) potrafi zablokować logowanie do bazy.
 - Import przez logikę biznesową (`business="true"`) zgłosi błędy walidacji dokładnie jak przy
   ręcznym wprowadzaniu — komunikat wskazuje rekord i właściwość, której ustawienie się nie
   powiodło; popraw plik i ponów.
 - Wczytanie powtórzone na tej samej bazie weryfikuje też **idempotencję** identyfikacji
   (rekordy z `guid`/`where`/`key` aktualizują się zamiast duplikować).
-- Efekt obejrzyj na działającej aplikacji (`buscall`, `/soneta:tools`) albo w teście
-  integracyjnym (`ImportBusinessXml` — artykuł *integration-tests* w `/soneta:programming`).
+- Efekt obejrzyj na działającej aplikacji (`buscall`, [tools](../../tools/SKILL.md)) albo w teście
+  integracyjnym (`ImportBusinessXml` — artykuł *integration-tests* w [programming](../../programming/SKILL.md)).
 
 ## Checklisty
 
@@ -501,7 +501,7 @@ Zasady:
 **Przed importem:**
 - [ ] Właściwy tryb: konfiguracja/inicjacja → według rekordów; dane operacyjne → logika biznesowa.
 - [ ] Rekordy główne to rekordy guidowane; GUID-y stałe i unikalne (nie generuj ich losowo przy każdym wydaniu pliku).
-- [ ] Pola zweryfikowane narzędziem `scan-props` (`/soneta:programming`): record-mode → tylko pola bazodanowe; business-mode → właściwości biznesowe.
+- [ ] Pola zweryfikowane narzędziem `scan-props` ([programming](../../programming/SKILL.md)): record-mode → tylko pola bazodanowe; business-mode → właściwości biznesowe.
 - [ ] Business-mode: kolejność elementów jak przy wpisywaniu na formularzu; stan dokumentu na końcu.
 - [ ] Referencje przenośne: GUID lub `where` po kodzie/symbolu; bez `#ID`.
 - [ ] Kolekcje: świadomy wybór zastąpienia (domyślne) vs `addnew` vs `relationsimportmode="update"`.
@@ -517,10 +517,10 @@ Zasady:
 - [ ] Nazwy pól/typy/struktura (pole vs kolekcja vs subrow) zweryfikowane skanem przez agenta — read-only, nie zlecone użytkownikowi.
 
 **Testowanie na bazie — tylko na wyraźne żądanie użytkownika (wtedy wykonuje agent, nie operator):**
-- [ ] Próbne wczytanie na bazie testowej/kopii: `dbmgr importxml <baza> plik.xml` (→ `/soneta:tools`).
+- [ ] Próbne wczytanie na bazie testowej/kopii: `dbmgr importxml <baza> plik.xml` (→ [tools](../../tools/SKILL.md)).
 - [ ] Ponowne wczytanie nie duplikuje rekordów (idempotencja identyfikacji — **podwójny** `dbmgr importxml` + policzenie rekordów; szczególnie detale zagnieżdżone).
-- [ ] Efekt odczytany z programu **przez agenta** (buscall: odczyt pól / zrzut ekranu → `/soneta:tools`) lub testem
-  integracyjnym (`ImportBusinessXml` → artykuł *integration-tests* w `/soneta:programming`) — potwierdzona zgodność danych z zamiarem.
+- [ ] Efekt odczytany z programu **przez agenta** (buscall: odczyt pól / zrzut ekranu → [tools](../../tools/SKILL.md)) lub testem
+  integracyjnym (`ImportBusinessXml` → artykuł *integration-tests* w [programming](../../programming/SKILL.md)) — potwierdzona zgodność danych z zamiarem.
 
 ## Powiązania
 
@@ -528,18 +528,18 @@ Zasady:
   obiektów, wyniesiony z plików standardowych `*.dbinit.xml`; pliki w `examples/`.
 - [demo-data.md](demo-data.md) — mechanizm zasilania bazy Demo: katalog `Demo`, kolejność
   plików, sufiksy `.gold`/`.silver`, relacja do rekordów standardowych (dbinit).
-- `/soneta:business-xml` — definicja tabel z selectorem (enum dyskryminatora od 1, pułapka
+- [business-xml](../../business-xml/SKILL.md) — definicja tabel z selectorem (enum dyskryminatora od 1, pułapka
   „Nierozpoznany typ wiersza"), relacje i kolekcje `children`.
-- `/soneta:programming` — źródła praw (*rights-source*: nowe `IRightsSource` domyślnie Denied —
+- Źródła praw ([rights-source](../../programming/references/rights-source.md): nowe `IRightsSource` domyślnie Denied —
   kontekst dla rekordów `<Right>`); warstwa programistyczna importu/eksportu (klasy `SessionReader` /
-  `SessionWriter`): artykuł *sessionreader-sessionwriter*; ponadto *datapack-guidedrow*
-  (rekordy guidowane, datapack), *row-types* (`OnImporting`/`OnImported`), *scan-props*
+  `SessionWriter`): artykuł [sessionreader-sessionwriter](../../programming/references/sessionreader-sessionwriter.md); ponadto [datapack-guidedrow](../../programming/references/datapack-guidedrow.md)
+  (rekordy guidowane, datapack), [row-types](../../programming/references/row-types.md) (`OnImporting`/`OnImported`), [scan-props](../../programming/references/scan-props.md)
   (inwentaryzacja pól i właściwości; wylicza też kolekcje i relacje do zakresu eksportu),
-  *scan-forms* (zakładki, sekcje danych i kolejność pól formularza — kolejność wprowadzania
+  [scan-forms](../../programming/references/scan-forms.md) (zakładki, sekcje danych i kolejność pól formularza — kolejność wprowadzania
   pod `business="true"`; podpowiada zakres eksportu — co stanowi „dane obiektu"),
-  *integration-tests* (`ImportBusinessXml`).
-- `/soneta:form-xml` — składnia formularzy (`Page`/`Group`/`Field`/`DataContext`/`EditValue`);
+  [integration-tests](../../programming/references/integration-tests.md) (`ImportBusinessXml`).
+- [form-xml](../../form-xml/SKILL.md) — składnia formularzy (`Page`/`Group`/`Field`/`DataContext`/`EditValue`);
   zakładki i grupy jako sekcje danych do uzupełnienia.
-- `/soneta:tools` — `dbmgr` (operacje na bazach, import XML z CLI), `buscall` (weryfikacja
+- [tools](../../tools/SKILL.md) — `dbmgr` (operacje na bazach, import XML z CLI), `buscall` (weryfikacja
   efektów importu na żywej aplikacji).
 - [SKILL.md](../SKILL.md) — mapa tego skilla.

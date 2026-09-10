@@ -138,7 +138,7 @@ kolumny dodaje weryfikator do sesji:
 ```
 
 `business.xml` podaje **tylko nazwę** klasy — implementację piszesz po stronie kodu (ten skill).
-Składnia elementu `<verifier>` i atrybut `onadded`: patrz skill **soneta:business-xml**
+Składnia elementu `<verifier>` i atrybut `onadded`: patrz skill **[business-xml](../../business-xml/SKILL.md)**
 (`references/table-reference.md` → „Element verifier"). Ten sam weryfikator można podpiąć pod
 kilka kolumn — każda z nich staje się źródłem uzbrajającym.
 
@@ -448,5 +448,5 @@ Po uzupełnieniu `Email` kolejne uzbrojenie sprawi, że przy najbliższej walida
 - [session-login.md](session-login.md) — `Session.Save()` / transakcje; tu odpalana jest walidacja błędów przed zapisem.
 - [events.md](events.md) — bliźniacza kolekcja sesyjna (`Session.Events`/`ServerEvents`): ten sam model transakcyjności i dedup po `Equals`/`GetHashCode`; do odraczania ciężkich przeliczeń zamiast liczenia ich przy każdej zmianie pola.
 - [features.md](features.md) — cechy wymagane korzystają z tego samego mechanizmu (weryfikator „cecha wymagana").
-- **Skill soneta:business-xml** — deklaratywna rejestracja: element `<verifier>` przy kolumnie, atrybut `onadded` (`references/table-reference.md`).
-- **Skill soneta:form-xml** — prezentacja komunikatów weryfikatorów w formularzu (błędy/ostrzeżenia przy polach).
+- Deklaratywna rejestracja: element `<verifier>` przy kolumnie, atrybut `onadded` ([table-reference.md](../../business-xml/references/table-reference.md)).
+- **Skill [form-xml](../../form-xml/SKILL.md)** — prezentacja komunikatów weryfikatorów w formularzu (błędy/ostrzeżenia przy polach).

@@ -19,7 +19,7 @@ description: >
 
 Skill dla **partnera lub zespołu Soneta**, który ma postawić i utrzymać środowisko Soneta w kontenerach
 oraz założyć i zarządzać bazą — **bez dostępu do kodu programu**. Trzy ścieżki, wspólne
-pojęcia. Składnię komend `dbmgr` opisuje `/soneta:tools` (nie duplikujemy jej tutaj).
+pojęcia. Składnię komend `dbmgr` opisuje [tools](../tools/SKILL.md) (nie duplikujemy jej tutaj).
 
 ## Którą ścieżką
 
@@ -55,7 +55,7 @@ docker compose up -d
 
 **Logowanie do web:** operatorem bazy demo (domyślny administrator). Hasło administratora
 ustawisz przy tworzeniu (`dbmgr create --adminpwd`) albo zresetujesz później
-(`dbmgr resetadminpwd`) — składnia w `/soneta:tools`.
+(`dbmgr resetadminpwd`) — składnia w [tools](../tools/SKILL.md).
 
 **macOS / Container Desktop:** wklej **plik z kroku 1** (SQL zewnętrzny) do okna „Uruchom
 Docker Compose", zmieniając host-alias (`host.docker.internal` → `host.containers.internal`) —
@@ -78,12 +78,12 @@ Desktop) · `x-init` nie może zależeć od zwykłej usługi · brak `build:` w 
 
 ## Powiązane skille
 
-- **`/soneta:tools`** — pełna składnia `dbmgr` (create/convert/backup/restore/licence/
+- **[tools](../tools/SKILL.md)** — pełna składnia `dbmgr` (create/convert/backup/restore/licence/
   extensions) oraz źródło baz `docker:` w `SonetaFrame`. Tu tylko wołamy `dbmgr` w kontenerze.
-- **`/soneta:config`** — znaczenie kluczy `appsettings.json`, domyślne porty i warstwy
+- **[config](../config/SKILL.md)** — znaczenie kluczy `appsettings.json`, domyślne porty i warstwy
   nadpisań przez zmienne `SONETA_...`
   ([appsettings.md](../config/references/appsettings.md)); import/eksport XML (role,
   uprawnienia, ustawienia) do bazy założonej w kontenerze.
-- **`/soneta:programming`**, **`/soneta:addon-planning`** — kod i planowanie dodatku, który
+- **[programming](../programming/SKILL.md)**, **[addon-planning](../addon-planning/SKILL.md)** — kod i planowanie dodatku, który
   potem uruchomisz w tym środowisku.
-- **`/soneta:erp`** — mapa wszystkich skilli platformy.
+- **[erp](../erp/SKILL.md)** — mapa wszystkich skilli platformy.

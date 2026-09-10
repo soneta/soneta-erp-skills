@@ -219,7 +219,7 @@ Zawiera: From (data od), To (data do)
 | `IDokumentPlatny` | Core | Dokument płatny |
 | `IDokumentKsiegowalny` | Core | Dokument księgowalny |
 
-> `IRightsSource` po stronie kodu (obiekt jako źródło uprawnień) — skill `/soneta:programming`
+> `IRightsSource` po stronie kodu (obiekt jako źródło uprawnień) — skill [programming](../../programming/SKILL.md)
 > (rights-source.md).
 
 ---

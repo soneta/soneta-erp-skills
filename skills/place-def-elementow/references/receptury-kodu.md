@@ -18,7 +18,7 @@ Gotowe fragmenty kodu C# do użycia w edytorze algorytmu. Każda receptura rozwi
 12. [Dzielenie z zachowaniem waluty](#12-dzielenie-z-zachowaniem-waluty)
 13. [Mnożenie procentu](#13-mnożenie-procentu)
 14. [Podatki — mnożnik kosztów i ulgi](#14-podatki)
-15. [Przeliczenie Netto → Brutto](#15-przeliczenie-netto-brutto)
+15. [Przeliczenie Netto → Brutto](#15-przeliczenie-netto--brutto)
 16. [Naliczanie urlopów i ekwiwalentów](#16-naliczanie-urlopów-i-ekwiwalentów)
 17. [Porównywanie wartości (Max, Min)](#17-porównywanie-wartości)
 18. [Porównywanie fragmentu nazwy](#18-porównywanie-fragmentu-nazwy)

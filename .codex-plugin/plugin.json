@@ -19,5 +19,17 @@
     "business-xml",
     "form-xml",
     "devexpress"
-  ]
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Soneta AI Skills",
+    "shortDescription": "Programowanie i konfiguracja enova365 oraz Triva",
+    "longDescription": "Skille platformy Soneta (enova365, Triva): klasy ORM i kod biznesowy, business.xml, form.xml, planowanie dodatków, wydruki .repx, design system, definicje elementów wynagrodzenia, konfiguracja i import XML, narzędzia CLI oraz uruchamianie w kontenerach.",
+    "developerName": "Soneta sp. z o.o.",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Pomóż mi zaplanować dodatek do enova365."
+    ]
+  }
 }

@@ -254,4 +254,4 @@ Jawna forma wiązania, gdy nazwa metody nie niesie zdarzenia:
 - [STYLES.md](STYLES.md) — arkusze `.repss` i nazwy logiczne stylów.
 - [DATA.md](DATA.md) — `DataKind="Context"`, `ReportContext`, pola kalkulowane `_GetValue`, podsumowania.
 - [SNIPPET.md](SNIPPET.md) — pełny model snippetu, licencja DevExpress, wariant generyczny.
-- **/soneta:programming** — logika licząca dane (workery, sesja, klasy proxy).
+- **[programming](../../programming/SKILL.md)** — logika licząca dane (workery, sesja, klasy proxy).

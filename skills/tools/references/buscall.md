@@ -7,7 +7,7 @@ metodę warstwy **Bundle** i zwraca wynik jako JSON.
 
 To referencja **funkcji i składni**. Konkretne zastosowanie — wizualna weryfikacja kodu podczas
 developmentu (konfiguracja bazy, rebuild, pułapki procesów) — opisuje
-`buscall-live-testing.md` w skillu `/soneta:programming`.
+[buscall-live-testing.md](../../programming/references/buscall-live-testing.md).
 
 ## Uruchamianie i tryby
 
@@ -44,7 +44,7 @@ się z nazwą bazy **innego** (np. wpis HTTP z `caption=Demo` obok `process:Demo
 `[-32603] Brak połączenia z serwerem: Demo`, a aplikacja stoi na ekranie wyboru baz. Rozwiązania:
 caption właściwego źródła (`--db dev`) albo jednoznaczny identyfikator (`--db "Process|Demo"`).
 To połączenie decyduje też, z jakiego kodu startuje aplikacja — szczegóły
-w `buscall-live-testing.md` w skillu `/soneta:programming`.
+w [buscall-live-testing.md](../../programming/references/buscall-live-testing.md).
 
 ## Argumenty metod: pary `klucz=wartość`
 
@@ -149,7 +149,7 @@ nie zapisuj identyfikatorów na później.
 
 Bez `regexFilter` metoda zwraca jeden poziom drzewa; **z `regexFilter` przeszukuje rekurencyjnie
 w głąb** — to najszybszy sposób znalezienia strony ustawień (np. dodanej własnym plikiem
-`Config.*.pageform.xml` — `/soneta:form-xml`):
+`Config.*.pageform.xml` — [form-xml](../../form-xml/SKILL.md)):
 
 ```bash
 buscall --db dev call get_configuration_folders "regexFilter=Agenci" limit=30
@@ -182,7 +182,7 @@ echo "$SHOT"     # np. /var/folders/.../T/soneta-screenshots/screenshot-<data>.p
   „Brak otwartej bazy danych". Diagnostycznie ratuje wtedy systemowy zrzut całego ekranu (macOS):
   `screencapture -x /tmp/frame.png` i obejrzenie pliku.
 
-Wykorzystanie zrzutu do wizualnej weryfikacji layoutu/pól opisuje `buscall-live-testing.md` w skillu `/soneta:programming`.
+Wykorzystanie zrzutu do wizualnej weryfikacji layoutu/pól opisuje [buscall-live-testing.md](../../programming/references/buscall-live-testing.md).
 
 ### `application_close` — kontrakt
 
@@ -199,13 +199,12 @@ buscall call application_close      # zwykle bez --db; zamyka bieżącą instanc
 - Wraca **dopiero** gdy proces Frame faktycznie zniknął, więc kolejne wywołania nie wstrzelą się
   w zamykaną aplikację.
 - To **preferowany** sposób zamknięcia/przeładowania kodu (zamiast `kill`). Ręczne ubijanie
-  osieroconych serwerów zostaje jako procedura awaryjna — patrz `buscall-live-testing.md`
-  w skillu `/soneta:programming`.
+  osieroconych serwerów zostaje jako procedura awaryjna — patrz [buscall-live-testing.md](../../programming/references/buscall-live-testing.md).
 
 ## Typowy przepływ: zrzut formularza od zera
 
 Od zimnego startu do obejrzanego zrzutu ekranu (szczegóły i konfiguracja bazy z własnym kodem —
-`buscall-live-testing.md` w skillu `/soneta:programming`):
+[buscall-live-testing.md](../../programming/references/buscall-live-testing.md)):
 
 ```bash
 # 0) pierwsze `call` z --db STARTUJE frame (wolno, potem zostaje w tle);
@@ -262,10 +261,9 @@ na wyniku, zamknij okno w aplikacji (albo poproś operatora), a nie zamykaj cał
 
 Błędy widoczne w UI jako gołe dialogi (np. „Brak praw dostępu do danych") mają pełny stack trace
 w logu serwera — na macOS: `~/Library/Application Support/Soneta/Logs/server-RRRRMMDD.log`
-(JSON per linia, pole `Exception`). Pełny opis logowania: artykuł *translations-logging*
-w skillu `/soneta:programming`. Błędy **samej ramki i `buscall`** (np. sterowanie oknem,
-protokół) leżą gdzie indziej — `Soneta.Frame/Logs/{Frame,BusCall}/error-*.log`, patrz
-[sonetaframe.md](sonetaframe.md), sekcja „Logi ramki i `buscall`".
+(JSON per linia, pole `Exception`). Pełny opis logowania: artykuł [translations-logging](../../programming/references/translations-logging.md). Błędy **samej ramki i `buscall`**
+(np. sterowanie oknem, protokół) leżą gdzie indziej: `Soneta.Frame/Logs/{Frame,BusCall}/error-*.log`.
+Patrz [Logi ramki i `buscall`](sonetaframe.md#logi-ramki-i-buscall).
 
 ## Checklista automatyzacji buscall
 

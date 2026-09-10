@@ -33,7 +33,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Sesje, transakcje, Login, Database, BusApplication, optimistic locking                            | [references/session-login.md](references/session-login.md) |
 | Paczki danych, Datapack, GuidedRow, ExportedRow, synchronizacja, blokady                          | [references/datapack-guidedrow.md](references/datapack-guidedrow.md) |
 | Klasa Context - dane z UI, zaznaczenia, parametry workera                                         | [references/context.md](references/context.md) |
-| Klasy parametrów (ContextBase) - filtry, trwałość, InvokeChanged (ta sama konstrukcja służy jako **parametry wydruków** → `/soneta:repx`) | [references/contextbase.md](references/contextbase.md) |
+| Klasy parametrów (ContextBase) - filtry, trwałość, InvokeChanged (ta sama konstrukcja służy jako **parametry wydruków** → [repx](../repx/SKILL.md)) | [references/contextbase.md](references/contextbase.md) |
 | Obiekty Worker i Extender - rozszerzenia modelu, akcje w menu Czynności (`[Action]` i dynamiczne `GetActions`), **rozszerzanie obiektów obcych** (property/kolekcje dodatku na obcym typie Soneta bez modyfikacji jego kodu) | [references/worker-extender.md](references/worker-extender.md) |
 | Serwisy biznesowe (App / Database / Login / Session scope), **rejestracja warunkowa ServiceInitializer** (per instancja właściciela, np. per silnik bazy; kolejność po Priority) | [references/services.md](references/services.md) |
 | Tłumaczenia (Translate, TranslateIgnore), ILogger, ActSource, **lokalizacja plików logów** (katalog `Soneta/Logs/` — macOS: `~/Library/Application Support/`, Windows: `%APPDATA%\`; pliki `server-*`/`dbmgr-*`/`test-*`) | [references/translations-logging.md](references/translations-logging.md) |
@@ -44,7 +44,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Cechy (Features) - tabela Features, typy cech, dostęp typowany/nietypowany, bindowanie w form.xml | [references/features.md](references/features.md) |
 | Weryfikatory - walidacja spójności danych (`Verifier`, `RowVerifier<T>`, `ColVerifier<T>`, `MultiColVerifier<T>`, `RequiredVerifier`), poziomy `Error`/`Warning`/`Information`, uzbrajanie na zmianę pól-źródeł (`Session.Verifiers.Add`, `<verifier>` w business.xml), blokada `Save()` przy błędzie | [references/verifiers.md](references/verifiers.md) |
 | Eventy (zdarzenia sesji) - odraczanie ciężkich obliczeń i logika w transakcji serwerowej: **sesyjne** (`Session.Events`, odpalane na `CommitUI`/`Save`/`Invoke`) vs **serwerowe** (`Session.ServerEvents`, w transakcji `Save` — numeracja). Rejestracja `Add(handler[, args])`, dedup po `Equals`/`GetHashCode`, wymuszanie `Invoke(handler)`, argumenty (`BusEventArgs`, `RowEventArgs<TRow>`, `SessionBusEventArgs`), priorytety, transakcyjność | [references/events.md](references/events.md) |
-| Źródła praw (`IRightsSource`) - obiekt sterujący dostępem do danych operacyjnych, `AccessRight`, `Login.GetObjectRight`; nowe źródło domyślnie Denied, `AccessDeniedException` przy odczycie kolumn bez prawa, nadawanie praw i cache ról. **Miejsce tabeli w drzewie uprawnień** (pliki `*.rightstree.xml`, reguła korzenia praw, relacje `relright`/`relguided`) → skill `/soneta:business-xml` | [references/rights-source.md](references/rights-source.md) |
+| Źródła praw (`IRightsSource`) - obiekt sterujący dostępem do danych operacyjnych, `AccessRight`, `Login.GetObjectRight`; nowe źródło domyślnie Denied, `AccessDeniedException` przy odczycie kolumn bez prawa, nadawanie praw i cache ról. **Miejsce tabeli w drzewie uprawnień** (pliki `*.rightstree.xml`, reguła korzenia praw, relacje `relright`/`relguided`) → skill [business-xml](../business-xml/SKILL.md) | [references/rights-source.md](references/rights-source.md) |
 | Notacja klamrowa (`AccessorFormatter`) - wstawki `{ścieżka}` / `{ścieżka:format}` w captionach, szablonach, promptach; metadane modeli (`ApplicationInfo`, `TableInfo`) | [references/metadata-formatting.md](references/metadata-formatting.md) |
 | Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów)                                      | [references/examples.md](references/examples.md) |
 | Receptury kodu per obiekt biznesowy (domena CRM) — `Kontrahent` (pola, kolekcje, workery, finanse, RODO, KSeF). Indeks + mapa receptur (CRM-W1–W18); rozdziały `references/domeny/crm/CRM01..CRM10` | [references/domeny/crm.md](references/domeny/crm.md) |
@@ -55,10 +55,10 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Moduły i tabele (`*Module` / `*Row` / `*Table`) — gotowy przegląd w `data/props/` (`INDEX.md` → `<Moduł>/INDEX.md`) + skaner z DLL | [references/scan-modules.md](references/scan-modules.md) |
 | Inwentaryzacja workerów i extenderów (`[Worker<…>]`) z DLL                            | [references/scan-workers.md](references/scan-workers.md) |
 | Zakładki, sekcje danych i pola formularzy (zasoby `*.pageform.xml`/`*.form.xml`) z DLL — katalog `data/forms/` (`INDEX.md` → `<Przestrzeń>.md`) + skaner na żądanie (`DataContext`/`EditValue`, `Include`, listy, kolejność pól pod kod i import XML) | [references/scan-forms.md](references/scan-forms.md) |
-| Inwentaryzacja folderów statycznych menu (`[assembly: FolderView]`) z DLL — drzewo, listy, formularze | narzędzie `scan-folders` w skillu `/soneta:config` |
-| Wydruki DevExpress (pliki `.repx`) — struktura raportu, źródło danych `BusinessDataSource`, rejestracja `[assembly: DxReport(...)]`; **kod-behind wydruku** (`ReportSnippet`/`[DxBind]`, lub generyczny `Snippet`/`[Bind]` bez licencji DevExpress) liczący dane raportu w oparciu o ORM. **Parametry wydruku konstruuje się jak parametry workerów — klasa `ContextBase` + `[Context]`** (patrz wyżej) | skill `/soneta:repx` (warstwa `.repx`) |
+| Inwentaryzacja folderów statycznych menu (`[assembly: FolderView]`) z DLL — drzewo, listy, formularze | narzędzie `scan-folders` w skillu [config](../config/SKILL.md) |
+| Wydruki DevExpress (pliki `.repx`) — struktura raportu, źródło danych `BusinessDataSource`, rejestracja `[assembly: DxReport(...)]`; **kod-behind wydruku** (`ReportSnippet`/`[DxBind]`, lub generyczny `Snippet`/`[Bind]` bez licencji DevExpress) liczący dane raportu w oparciu o ORM. **Parametry wydruku konstruuje się jak parametry workerów — klasa `ContextBase` + `[Context]`** (patrz wyżej) | skill [repx](../repx/SKILL.md) (warstwa `.repx`) |
 | **Testowanie na żywej aplikacji przez `buscall call` (CLI)** — zdalne sterowanie programem (nawigacja, formularze, gridy, edycja) i **zrzuty ekranu** do analizy wizualnej; jednorazowe wywołania CLI bez zarządzania procesem (`buscall --db <Baza> call <metoda> klucz=wartość`), plus wariant MCP `callmcp` | [references/buscall-live-testing.md](references/buscall-live-testing.md) (weryfikacja na żywo) |
-| **Import/eksport XML z kodu — `SessionReader`/`SessionWriter`** — konstruktory (`Session` vs `Login`), obsługa błędów (`CollectExceptions`, zdarzenie `ReaderException`/`ReaderResponse`), mapowanie GUID-ów (`AddGuidMap`, `GuidMapPolicy`), tryby kolekcji (`RelationsImportMode`), eksport datapacku z subexports, `ImportBusinessXml` w testach; struktura samego pliku XML → artykuł *import-export-xml* w `/soneta:config` | [references/sessionreader-sessionwriter.md](references/sessionreader-sessionwriter.md) |
+| **Import/eksport XML z kodu — `SessionReader`/`SessionWriter`** — konstruktory (`Session` vs `Login`), obsługa błędów (`CollectExceptions`, zdarzenie `ReaderException`/`ReaderResponse`), mapowanie GUID-ów (`AddGuidMap`, `GuidMapPolicy`), tryby kolekcji (`RelationsImportMode`), eksport datapacku z subexports, `ImportBusinessXml` w testach; struktura samego pliku XML → artykuł [import-export-xml](../config/references/import-export-xml.md) | [references/sessionreader-sessionwriter.md](references/sessionreader-sessionwriter.md) |
 | **Testy integracyjne — klasa bazowa `TestBase`** — testy na realnej bazie z automatycznym rollbackiem (dwupoziomowa transakcja), wybór bazy `[TestDatabase]` (`nunit_default`/`nunit_ui`/`nunit_premiumui`), cykl życia (`ClassSetup`/`TestSetup`), `Session`/`ConfigSession`/`Context`, `InTransaction`/`SaveDispose`, podmiana DI (`ConfigureLoginServices`), asercje `AwesomeAssertions`, testy SQL (`SqlTraceInfo`), konwencje: nazewnictwo `Should_..._When_...` + prefiks grupy, `[Description]`, struktura AAA | [references/integration-tests.md](references/integration-tests.md) |
 
 ## Nowy dodatek od zera (CLI)
@@ -100,8 +100,8 @@ W raportach rozróżniaj „zweryfikowane buildem" vs „wymaga weryfikacji runt
 testy) — zielony build ≠ działające runtime.
 
 **Kryterium ukończenia:** w katalogu docelowym istnieją trzy `*.csproj`, `global.json`
-i `Directory.Build.props`. Dalej wypełniasz szkielet: definicje (**soneta:business-xml**) → kod
-biznesowy (ten skill) → UI (**soneta:form-xml**).
+i `Directory.Build.props`. Dalej wypełniasz szkielet: definicje (**[business-xml](../business-xml/SKILL.md)**) → kod
+biznesowy (ten skill) → UI (**[form-xml](../form-xml/SKILL.md)**).
 
 Pełna procedura — szablony, pliki konfiguracyjne, parametry MSBuild, solucja, debug w VS Code,
 referencje WinForms, ręczny fallback bez szablonów i troubleshooting:
@@ -127,7 +127,7 @@ BusApplication.Instance (singleton) - multithreaded
 | **2. Generowane** | Klasy generowane przez BusinessGenerator z `*.business.xml` (sufiksy: Row, Table, Module) | `TowarRow`, `TowarTable`, `TowaryModule` |
 | **3. Implementowane** | Klasy konkretne tworzone przez programistę | `Towar`, `Towary` (bez sufiksów) |
 
-**BusinessGenerator** jest automatycznie uruchamiany podczas kompilacji dla plików `*.business.xml`. Szczegółowy opis definiowania business.xml znajduje się w skill **soneta:business-xml**.
+**BusinessGenerator** jest automatycznie uruchamiany podczas kompilacji dla plików `*.business.xml`. Szczegółowy opis definiowania business.xml znajduje się w skill **[business-xml](../business-xml/SKILL.md)**.
 
 Klasy poziomu 3 (`Towar`, `Towary`) pisze programista, dziedzicząc po klasach generowanych.
 Gdy tabela ma pola `readonly` (w tym **selector**), klasa obiektu biznesowego wymaga
@@ -378,7 +378,7 @@ rg '^\| `IDokument' data/props/Interfaces.md
 szukasz jednego obiektu — to setki wierszy. Indeksy służą do przeglądu modułu, `rg`/`ls` do
 trafienia w konkret.
 
-Inwentaryzację **folderów statycznych menu** (`[assembly: FolderView]`) — drzewo pozycji menu, list i formularzy — realizuje narzędzie **`scan-folders`** przeniesione do skilla **`/soneta:config`** (komplementarne do `scan-modules`: perspektywa funkcjonalno-użytkowa zamiast danych).
+Inwentaryzację **folderów statycznych menu** (`[assembly: FolderView]`) — drzewo pozycji menu, list i formularzy — realizuje narzędzie **`scan-folders`** przeniesione do skilla **[config](../config/SKILL.md)** (komplementarne do `scan-modules`: perspektywa funkcjonalno-użytkowa zamiast danych).
 
 ## Konwencje nazewnicze
 

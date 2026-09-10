@@ -26,7 +26,7 @@ Zacznij od ogólnej idei, potem doprecyzowuj. Zadawaj 2–4 pytania na raz i dos
 
 Po zebraniu podstawowych informacji (idea, użytkownik, kluczowe funkcjonalności), a **przed** finalnym opracowaniem dokumentu, sprawdź, w jakim zakresie standardowe funkcjonalności platformy Soneta już pokrywają zamierzony zakres — i poinformuj użytkownika o wyniku. Chodzi o to, aby nie planować od zera tego, co platforma już oferuje.
 
-- Zinwentaryzuj standard z dwóch komplementarnych perspektyw (wymagania środowiska, uruchomienie i użycie: `dane-referencyjne.md`; narzędzia: `scan-modules` ze skilla `/soneta:programming`, `scan-folders` ze skilla `/soneta:config`):
+- Zinwentaryzuj standard z dwóch komplementarnych perspektyw (wymagania środowiska, uruchomienie i użycie: `dane-referencyjne.md`; narzędzia: [scan-modules](../../programming/references/scan-modules.md) i [scan-folders](../../config/references/scan-folders.md)):
   - `scan-modules` — perspektywa **danych**: jakie moduły i tabele istnieją. Odpowiada na pytanie „czy platforma ma już strukturę danych pod tę funkcjonalność?".
   - `scan-folders` — perspektywa **funkcjonalno-użytkowa**: jakie listy i formularze program faktycznie udostępnia w menu (foldery statyczne `[assembly: FolderView]`). Odpowiada na pytanie „czy użytkownik już dziś klika tę funkcję w standardzie?". Zwykle wygodniejsza w tym etapie, bo funkcjonalność biznesową łatwiej dopasować do pozycji menu niż do surowej tabeli, a wynik pokazuje też, którą tabelą/`ViewInfo` stoi dana pozycja.
 - Dla każdej kluczowej funkcjonalności z sekcji 1.4 ustal, czy istniejące moduły/tabele/pozycje menu ją realizują: **pokryte standardem**, **częściowo pokryte** (wymaga konfiguracji lub rozszerzenia), **brak** (do zbudowania w module).

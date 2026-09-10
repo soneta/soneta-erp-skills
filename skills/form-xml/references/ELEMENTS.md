@@ -10,7 +10,7 @@ Kompletna lista elementów XML dostępnych w plikach form.xml platformy Soneta.
 4. [Elementy wykresów i wizualizacji](#elementy-wykresów-i-wizualizacji)
 5. [Elementy specjalne](#elementy-specjalne)
 6. [Typy wyliczeniowe (Enum)](#typy-wyliczeniowe)
-7. [Wspólne atrybuty (uiElement)](#wspólne-atrybuty)
+7. [Wspólne atrybuty (uiElement)](#wspólne-atrybuty-uielement)
 
 ---
 
@@ -232,7 +232,7 @@ Przycisk/polecenie.
 | `CommandStyle` | enum | `Default`, `Important`, `Red`, `Green`, `Blue` |
 | `Key` | string | Skrót klawiszowy |
 
-`MethodName`/`OpenMethodName` wskazują metodę w kontekście (zwykle extender/worker). Co taka akcja zwraca (action result) opisuje skill `/soneta:programming` (action-result.md, worker-extender.md).
+`MethodName`/`OpenMethodName` wskazują metodę w kontekście (zwykle extender/worker). Co taka akcja zwraca (action result) opisują [action-result.md](../../programming/references/action-result.md) i [worker-extender.md](../../programming/references/worker-extender.md).
 
 ---
 
@@ -294,7 +294,7 @@ Tabela danych.
 </Grid>
 ```
 
-Gdy `EditValue` wskazuje property zwracającą `ViewInfo` (a nie prostą kolekcję), zawartość, filtr i blokady listy buduje kod — jak zbudować ViewInfo jako property/folder opisuje skill `/soneta:programming` (viewinfo.md). `VisibleFeatures` odwołuje się do mechanizmu cech — patrz skill `/soneta:programming` (features.md).
+Gdy `EditValue` wskazuje property zwracającą `ViewInfo` (a nie prostą kolekcję), zawartość, filtr i blokady listy buduje kod — jak zbudować ViewInfo jako property/folder opisuje [viewinfo.md](../../programming/references/viewinfo.md). `VisibleFeatures` odwołuje się do mechanizmu cech — patrz [features.md](../../programming/references/features.md).
 
 #### Atrybuty przyciski (enumCollectionButtonState)
 - `Auto` - automatycznie
@@ -805,7 +805,7 @@ Wszystkie elementy UI dziedziczą następujące atrybuty z `uiElement`:
 <Appearance Condition="{?[Typ] = 'usługa'}" ForeColor="#800080" />
 ```
 
-Wyrażenie `Condition` (jak `Visibility="{?...}"`) to forma RowCondition; stronę kodu (`Expression<Predicate<TRow>>`) opisuje skill `/soneta:programming` (rowcondition.md) — to dwie strony tego samego pojęcia: XML vs C#.
+Wyrażenie `Condition` (jak `Visibility="{?...}"`) to forma RowCondition; stronę kodu (`Expression<Predicate<TRow>>`) opisuje [rowcondition.md](../../programming/references/rowcondition.md) — to dwie strony tego samego pojęcia: XML vs C#.
 
 ---
 
@@ -823,7 +823,7 @@ Stosowany gdy widok listy (`viewform.xml`) korzysta z obiektu ViewInfo który ag
 
 Wzorzec `{ObiektViewInfo+TypParams.Właściwość}` jest typowy dla paneli filtrów w viewform.xml — gdzie `+` łączy obiekt ViewInfo z typem jego pola będącego obiektem parametrów.
 
-Stronę kodu opisuje skill `/soneta:programming`: budowę ViewInfo (viewinfo.md) oraz klasę parametrów `Params : ContextBase` (contextbase.md, context.md). Workery i extendery z bindów `{Workers.X.Y}` / `{new Ext.Y}` — worker-extender.md; cechy `{Features.X}` — features.md.
+Referencje strony kodu: budowa ViewInfo ([viewinfo.md](../../programming/references/viewinfo.md)) oraz klasa parametrów `Params : ContextBase` ([contextbase.md](../../programming/references/contextbase.md), [context.md](../../programming/references/context.md)). Workery i extendery z bindów `{Workers.X.Y}` / `{new Ext.Y}` — [worker-extender.md](../../programming/references/worker-extender.md); cechy `{Features.X}` — [features.md](../../programming/references/features.md).
 
 ---
 

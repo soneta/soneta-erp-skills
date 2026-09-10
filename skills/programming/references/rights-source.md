@@ -3,7 +3,7 @@
 > **Dwa różne mechanizmy — nie myl ich.** Ten dokument opisuje **prawa obiektowe**: dostęp do
 > danych operacyjnych sterowany wskazanym obiektem (magazyn, rejestr, definicja). Osobną sprawą
 > jest **miejsce tabeli w drzewie uprawnień** — decyduje o nim plik `*.rightstree.xml`
-> towarzyszący `business.xml` (skill `/soneta:business-xml`, `references/rights-tree.md`).
+> towarzyszący `business.xml` ([rights-tree.md](../../business-xml/references/rights-tree.md)).
 > Każda nowa tabela wymaga tam wpisu, o ile nie dziedziczy praw przez relację
 > `relright="true"`/`relguided`.
 
@@ -31,7 +31,7 @@ dokumentów z innych magazynów dostępu nie ma.
 ## Podstawy
 
 - Włączenie: w `business.xml` dodaj do tabeli `<interface>IRightsSource</interface>` (deklarację
-  `<interface>` opisuje skill `/soneta:business-xml`). Od tego momentu
+  `<interface>` opisuje skill [business-xml](../../business-xml/SKILL.md)). Od tego momentu
   system sam dba o widoczność obiektów i propagację praw. (`IRightsSourceEx` dokłada pod-kategorię,
   `IsRightsSourceEnable()`, `IsRightsSourceVisible()`.)
 - Odczyt uprawnień: `Row.AccessRight`, `Table.AccessRight`, `Login.GetObjectRight(source)` →
@@ -69,7 +69,7 @@ foreach (Definicja definicja in module.Definicje) {
 - **Kod** — rekord `Right` wiążący uprawnienie (`Entitle`) ze źródłem (`Source`); wzorzec dla
   testów integracyjnych: [integration-tests.md](integration-tests.md#testy-praw-obiektowych-irightssource).
 - **dbinit/demo** — element `<Right>` w pliku importu; format i stały guid Entitle administratora
-  opisuje `/soneta:config` (import-export-xml, sekcja o nadawaniu praw obiektowych).
+  opisuje [import-export-xml](../../config/references/import-export-xml.md), sekcja o nadawaniu praw obiektowych.
 
 **Cache ról a transakcja:** prawa nadane w tej samej transakcji **nie odświeżają cache ról**
 zalogowanego loginu — kod, który tworzy definicję, nadaje prawo i natychmiast je egzekwuje
@@ -78,7 +78,7 @@ w jednym zapisie, zobaczy Denied. Nadanie praw i ich egzekwowanie rozdziel zapis
 
 ## Checklista — moduł ze źródłem praw
 
-- [ ] Prawa dla ról nadane przy tworzeniu bazy (dbinit/demo — `/soneta:config`), nie tylko ręcznie w UI.
+- [ ] Prawa dla ról nadane przy tworzeniu bazy (dbinit/demo — [config](../../config/SKILL.md)), nie tylko ręcznie w UI.
 - [ ] Kod enumerujący źródła praw sprawdza `AccessRight` przed odczytem kolumn.
 - [ ] Komunikaty o braku prawa nie czytają kolumn wiersza.
 - [ ] Logika biznesowa bez warunków na `AccessRight` ([safe-code.md](safe-code.md) §7.2).

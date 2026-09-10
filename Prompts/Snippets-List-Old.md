@@ -2,6 +2,9 @@
 
 ## Parametry działania
 
+Ścieżki `../skills/...` rozwiązuj względem tego pliku. Foldery źródłowe `Soneta.*`
+są względne wobec osobno ustalonego katalogu źródeł Soneta.
+
 > **Wszystkie parametry uzupełnij PRZED rozpoczęciem pracy.** Reszta promptu odwołuje się tylko
 > do nich — nie wpisuj nazw domeny/obiektów na sztywno w treści zadania. Te same parametry
 > (Domena, Główny obiekt, Prefiks, Zakres) muszą zgadzać się z promptem „Code-Snippets".
@@ -13,14 +16,14 @@
 | **Prefiks kodów receptur** | `WORKFLOW`                                                                                                                                                       | Prefiks używany później w etapie 2 (`KADRY-A1`). Litera sekcji listy = litera receptury. |
 | **Zakres** | Workflow, procesy, zadania                                                                                                                                       | Granice tematyczne — co wchodzi, a co nie. |
 | **Plik wyjściowy** | `lista-zadan-workflow.md`                                                                                                                                        | Tu zapisz gotową listę (wejście do promptu „Code-Snippets"). |
-| **Główne źródła kodu** | `@Soneta.Workflow/`, `@Soneta.Workflow.UI/`, `@Soneta.Workflow.Test/`, `@Soneta.Zadania/`, `@Soneta.Zadania.UI/`, `@Soneta.Zadania.Test/`, `@Soneta.Business/Db` | Miejsca pierwszego wyboru przy analizie. |
+| **Główne źródła kodu** | `Soneta.Workflow/`, `Soneta.Workflow.UI/`, `Soneta.Workflow.Test/`, `Soneta.Zadania/`, `Soneta.Zadania.UI/`, `Soneta.Zadania.Test/`, `Soneta.Business/Db` | Miejsca pierwszego wyboru przy analizie. |
 | **Zadania obowiązkowe** | (wklej poniżej)                                                                                                                                                  | Lista pozycji, które MUSZĄ się znaleźć — punkt wyjścia do rozszerzenia. |
 
 ## Zadanie do zrobienia
 
 Przygotuj **listę zadań** dla domeny (parametr) — uporządkowany katalog procedur i operacji, jakie
 można wykonać na **głównym obiekcie biznesowym** i obiektach powiązanych w ramach **zakresu**. Lista
-będzie elementem skilla `/soneta:programming` i **wejściem do promptu „Code-Snippets"**, który na jej
+będzie elementem skilla [programming](../skills/programming/SKILL.md) i **wejściem do promptu „Code-Snippets"**, który na jej
 podstawie wygeneruje receptury z kodem i testami.
 
 **Na tym etapie NIE piszesz kodu i NIE projektujesz snippetów.** Opisujesz wyłącznie *co* można zrobić
@@ -32,7 +35,7 @@ tylko jako orientacyjny trop dla etapu 2, nie jako gotowe API.
 1. **Formularze i listy w programie** — przejrzyj listy dokumentów/obiektów domeny, otwórz formularze,
    przejrzyj zakładki i czynności (menu „Czynności"). Każda zakładka i czynność to kandydat na pozycję.
 2. **Workery** — akcje w programie są zaimplementowane przez Workery; ich tytuły to dobre nazwy zadań
-   (pomocniczo: `/soneta:programming/scripts/scan-workers.csx`).
+   (pomocniczo: `../skills/programming/scripts/scan-workers.csx`).
 3. **Istniejące listy zadań** — `domeny/kadry.md`, `domeny/handel.md` (mapy receptur) jako wzorzec
    zakresu i granulacji.
 4. **Wiedza biznesowa** — typowe procesy domeny, nawet jeśli nieoczywiste w UI.

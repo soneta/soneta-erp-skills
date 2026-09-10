@@ -5,7 +5,8 @@ Narzędzie do wylistowania wszystkich modułów (`*Module`) platformy Soneta ora
 nie wymaga źródeł.
 
 > **Ścieżki poleceń** w tym dokumencie są względne wobec katalogu skilla (`skills/programming/`
-> w pluginie `soneta`) — uruchamiaj je z tego katalogu albo poprzedź jego ścieżką.
+> w repozytorium) — ustal lokalizację zainstalowanego skilla i uruchamiaj polecenia z tego
+> katalogu albo poprzedź jego ścieżką.
 
 > **Przegląd modułów/tabel masz już gotowy — bez skanowania.** Wygenerowany indeks jest
 > zarazem pełną inwentaryzacją, w układzie dwupoziomowym:
@@ -163,5 +164,5 @@ _Łącznie tabel: 1196_
   `Interfaces` + link do pól).
 - [scan-props.md](./scan-props.md) — kontrakt pól pojedynczej tabeli; dane wygenerowane w
   [`../data/props/`](../data/props/) (plik `<Moduł>/<RowType>.md` na tabelę).
-- Patrz skill `soneta:business-xml` — definicje schematu z których `BusinessGenerator`
+- Patrz skill [business-xml](../../business-xml/SKILL.md) — definicje schematu z których `BusinessGenerator`
   produkuje klasy `*Module`, `*Row`, `*Table` i `*Record`.

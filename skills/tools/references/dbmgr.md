@@ -112,7 +112,7 @@ dbmgr register exampleDb --sqlserver localhost --sqldb exampleDbName --sqluser u
 | Opcja | Znaczenie |
 |---|---|
 | `--recreate` | Kasuje bazę, jeśli istnieje, i tworzy nową (idempotentnie w skryptach) |
-| `--demo silver\|gold\|platinum` | Wypełnia bazę danymi demo + licencją danego poziomu (skąd pochodzą dane i jak dodać własny plik demo — artykuł *demo-data* w `/soneta:config`) |
+| `--demo silver\|gold\|platinum` | Wypełnia bazę danymi demo + licencją danego poziomu (skąd pochodzą dane i jak dodać własny plik demo — artykuł [demo-data](../../config/references/demo-data.md)) |
 | `--sampledata` | Wypełnia danymi przykładowymi z podkatalogu `Patterns` — **inny mechanizm** (wzorce) niż dane demo z katalogu `Demo` |
 | `--licence <nr\|plik>` | Nakłada licencję na tworzoną bazę |
 | `--generateadminpwd` | Generuje i ustawia hasło administratora |
@@ -178,7 +178,7 @@ wystartuje z tym samym dodatkiem i tą samą bazą SQL, którą utworzył `dbmgr
 > **`dbmgr` w kontenerze (bez lokalnego .NET).** Obraz `soneta/server.standard` zawiera
 > `dbmgr.dll` — bazę tworzy się usługą init w compose (`entrypoint: ["dotnet","dbmgr.dll"]`)
 > albo ad hoc: `docker compose run --rm dbinit <komenda>`. Uruchamianie stacku (server + web),
-> wybór wersji obrazu i wariant z kontenerem `mssql` opisuje **`/soneta:containers`**.
+> wybór wersji obrazu i wariant z kontenerem `mssql` opisuje **[containers](../../containers/SKILL.md)**.
 
 > **⚠️ Prawa operatora do dodatku.** Operator `Administrator` z bazy demo-gold **nie ma praw**
 > do obiektów nowego dodatku. Nadaj rolę z prawem `Dodatki=Granted` — np. importując plik roli

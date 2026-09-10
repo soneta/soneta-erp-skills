@@ -8,7 +8,8 @@ Zakładki i listy (`Grid`) pokazują też, co logicznie stanowi „dane obiektu"
 **ustalić zakres eksportu** (które podkolekcje i cechy dołączyć do datapacku).
 
 > **Ścieżki poleceń** w tym dokumencie są względne wobec katalogu skilla (`skills/programming/`
-> w pluginie `soneta`) — uruchamiaj je z tego katalogu albo poprzedź jego ścieżką.
+> w repozytorium) — ustal lokalizację zainstalowanego skilla i uruchamiaj polecenia z tego
+> katalogu albo poprzedź jego ścieżką.
 
 ## Najpierw dane wygenerowane (`data/forms/`) — szybkie wyszukanie „obiekt → zakładki”
 
@@ -48,10 +49,9 @@ Regeneracja po zmianie wersji/kompilacji (jeden przebieg po DLL):
 dotnet script scripts/export-forms-index.csx \
     -- <KatalogDll> data/forms
 ```
-> **Uwaga przy instalacji z marketplace'u.** Regeneracja nadpisuje `data/` w katalogu
-> zainstalowanego pluginu (`~/.claude/plugins/cache/...`), a `/plugin update` kasuje ten
-> katalog razem z wynikiem. Regeneruj w klonie repo `soneta-erp-skills` i wypchnij zmianę,
-> albo licz się z powtórzeniem po każdej aktualizacji pluginu.
+> **Miejsce regeneracji.** Katalog zainstalowanego skilla może być tylko do odczytu lub
+> zostać zastąpiony podczas aktualizacji. Regeneruj w klonie repo `soneta-erp-skills`
+> albo podaj zapisywalny katalog wynikowy w projekcie i korzystaj z danych z tej lokalizacji.
 
 ## Po co to
 
@@ -60,7 +60,7 @@ wykonywanego kodu (settery, `Accessor`, przeliczenia, walidacje). Ta sama kolejn
 potrzebna, gdy dane wprowadza się:
 - **kodem** (ustawianie właściwości rekordu w poprawnej sekwencji — patrz [context.md](context.md), [safe-code.md](safe-code.md)),
 - **importem XML `business="true"`** — logika biznesowa reaguje na kolejność ustawień jak przy
-  ręcznym wprowadzaniu (patrz artykuł import/eksport w `/soneta:config`).
+  ręcznym wprowadzaniu (patrz artykuł import/eksport w [config](../../config/SKILL.md)).
 
 Grupy (`Group`) i zakładki (`Page`) wyznaczają **sekcje danych** do uzupełnienia — skaner
 pokazuje je w kolumnie `Sekcja`, dzięki czemu widać, które pola tworzą logiczną całość.
@@ -97,7 +97,7 @@ Algorytm:
 ## Rozwijanie ścieżek pól (DataContext + EditValue)
 
 Pełna ścieżka pola = złożenie łańcucha `DataContext` z wartością `EditValue`. Szczegóły
-składni bindowania opisuje skill [`/soneta:form-xml`](../../form-xml/SKILL.md).
+składni bindowania opisuje skill [form-xml](../../form-xml/SKILL.md).
 
 | Sytuacja | Efekt w ścieżce |
 |---|---|
@@ -172,7 +172,7 @@ W nagłówku każdej zakładki skaner pokazuje metadane: `plik` (DLL), `Priority
 (DataType)` gdy jest, `prawo` (`RightName`) oraz **`licencje`** — wymagane moduły licencyjne całej zakładki z atrybutu
 `Contexts` na `<DataForm>`, **bez prefiksu** `License.`/`Licence.` (np. `HAN | FA`, czasem
 z poziomem `_Złoty`/`_Platynowy`). Składnię `Contexts` opisuje skill
-[`/soneta:form-xml`](../../form-xml/SKILL.md).
+[form-xml](../../form-xml/SKILL.md).
 
 ### Zawężanie po namespace — ta sama nazwa w wielu modułach
 
@@ -260,11 +260,11 @@ Dopasowano 51 zakładek (pageform) po typie danych lub `DataType`. …
 - Dane wygenerowane: [`../data/forms/`](../data/forms/) — katalog wszystkich zakładek
   (router [`INDEX.md`](../data/forms/INDEX.md) + pliki `<Przestrzeń>.md`; pierwsze źródło
   „obiekt → zakładki"); regeneracja skryptem `scripts/export-forms-index.csx`.
-- [`/soneta:form-xml`](../../form-xml/SKILL.md) — składnia `Page`/`Group`/`Field`/`Include`,
+- [form-xml](../../form-xml/SKILL.md) — składnia `Page`/`Group`/`Field`/`Include`,
   `DataContext`, `EditValue`; strona źródłowa tego, co skaner odczytuje.
 - [scan-props.md](scan-props.md) — pola bazodanowe i kalkulowane tabeli (typy, tytuły) do
   których prowadzą ścieżki pól z formularza.
-- [`/soneta:config`](../../config/SKILL.md) — import/eksport XML; sekcje i kolejność pól
+- [config](../../config/SKILL.md) — import/eksport XML; sekcje i kolejność pól
   są istotne przy `business="true"`, a listy/zakładki podpowiadają zakres eksportu (datapack).
 - [context.md](context.md), [safe-code.md](safe-code.md) — budowanie danych kodem w poprawnej sekwencji.
-- Narzędzie `scan-folders` (`/soneta:config`) — statyczne foldery menu (listy, formularze).
+- Narzędzie [scan-folders](../../config/references/scan-folders.md) — statyczne foldery menu (listy, formularze).

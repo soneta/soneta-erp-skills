@@ -7,7 +7,7 @@ Zbiór gotowych wzorców kodu dla domeny **Workflow**: definicje procesów
 (**`Soneta.Workflow.WFWorkflow`**, tabela `WFWorkflows`, caption „Proces"), zadania operatora
 (**`Soneta.Business.Db.Task`**, tabela `Tasks`, caption „Zadanie") oraz zadania CRM / aktywności
 (**`Soneta.Zadania.Zadanie`**, tabela `Zadania`). Dokument jest częścią skilla
-`soneta:programming`. Celem jest, aby agent pisał **bezbłędny kod biznesowy** operujący na
+[programming](../../SKILL.md). Celem jest, aby agent pisał **bezbłędny kod biznesowy** operujący na
 procesach i zadaniach — trafiający w realne pola, kolekcje i workery platformy.
 
 > Format **zwarty**: każdy wzorzec opisuje ogólny przypadek + tabelę wariantów. Fundamenty (sesja,
@@ -15,9 +15,13 @@ procesach i zadaniach — trafiający w realne pola, kolekcje i workery platform
 > są opisane w [`safe-code.md`](../safe-code.md), [`session-login.md`](../session-login.md) oraz
 > [`worker-extender.md`](../worker-extender.md) — tutaj się do nich odwołujemy, nie powtarzamy ich.
 >
-> **Cały kod w tym dokumencie jest zgodny z C# 10** (target-typed `new`, `var`, wyrażenia `switch`,
-> nazwane parametry `bool`). Snippety operują wyłącznie na **publicznym kontrakcie** platformy — nie
-> ma odwołań do prywatnych klas ani kodu źródłowego aplikacji.
+> **Cały kod w tym dokumencie jest zgodny z C# 14**. Snippety operują wyłącznie na
+> **publicznym kontrakcie** platformy, bez odwołań do prywatnych klas ani kodu źródłowego aplikacji.
+>
+> **Styl kodu:** preferuj `var`, uwzględniając lokalne ustawienia projektu. Używaj target-typed
+> `new` i wyrażeń `switch`, gdy poprawiają czytelność. Przy argumentach `bool` podawaj nazwę
+> parametru, gdy samo `true` lub `false` nie wyjaśnia znaczenia wywołania. Nowsze konstrukcje
+> stosuj, gdy upraszczają kod.
 
 ## Fakty o typie (zweryfikowane skanem DLL — `scan-props.csx`)
 
@@ -92,11 +96,11 @@ procesach i zadaniach — trafiający w realne pola, kolekcje i workery platform
 
 Każdy wzorzec (`WORKFLOW-Xn`, gdzie `X` = litera sekcji z listy zadań) ma stałą strukturę:
 
-- **Cel** — co robi i kiedy go użyć.
-- **Warianty** — tabela odmian przypadku (gdy dotyczy).
-- **Pola i typy** — realne właściwości/kolekcje i ich typy.
-- **Snippet** — kod C# 10 na publicznym kontrakcie.
-- **Pułapki** — typowe błędy i zasady safe-code.
+- **Cel**: co robi i kiedy go użyć.
+- **Warianty**: tabela odmian przypadku (gdy dotyczy).
+- **Pola i typy**: realne właściwości/kolekcje i ich typy.
+- **Snippet**: kod C# 14 na publicznym kontrakcie.
+- **Pułapki**: typowe błędy i zasady safe-code.
 
 Znacznik ★ przy kodzie wzorca oznacza, że wzorzec ma własny, dedykowany test.
 

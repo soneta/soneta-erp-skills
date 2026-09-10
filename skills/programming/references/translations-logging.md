@@ -84,12 +84,12 @@ Pliki dzielą się po komponencie:
 | Wzorzec pliku | Komponent |
 |---------------|-----------|
 | `server-*.log` | serwer biznesowy (aplikacja Soneta) |
-| `dbmgr-*.log` | menedżer baz danych (`dbmgr` — patrz /soneta:tools) |
+| `dbmgr-*.log` | menedżer baz danych (`dbmgr` — patrz [tools](../../tools/SKILL.md)) |
 | `test-*.log` | uruchomienia testów |
 | `*-*.log` | pozostałe komponenty wg analogicznego wzorca `<komponent>-*.log` |
 
 Aplikacja ramki (`SonetaFrame`) i `buscall` logują **osobno**, w `Soneta.Frame/Logs/{Frame,BusCall}/`
-(JSON lines, pliki `info-*`/`error-*`) — patrz artykuł *sonetaframe* w skillu `/soneta:tools`.
+(JSON lines, pliki `info-*`/`error-*`), patrz [sonetaframe](../../tools/references/sonetaframe.md#logi-ramki-i-buscall).
 
 ```bash
 # macOS/Linux — najnowszy log serwera i podgląd na żywo
@@ -103,5 +103,5 @@ Get-ChildItem "$env:APPDATA\Soneta\Logs\server-*.log" | Sort-Object LastWriteTim
 Get-Content "$env:APPDATA\Soneta\Logs\server-*.log" -Wait -Tail 50
 ```
 
-> Operacje na bazie z wiersza poleceń (`dbmgr`, `buscall`) opisuje skill **/soneta:tools**;
+> Operacje na bazie z wiersza poleceń (`dbmgr`, `buscall`) opisuje skill **[tools](../../tools/SKILL.md)**;
 > uruchamianie testów integracyjnych — [integration-tests.md](integration-tests.md).

@@ -78,7 +78,7 @@ Znajomość tych wzorców pozwala szybko tworzyć nowe definicje przez analogię
 
 ---
 
-## Wzorce dla Nieobecności (WypElementNieobecnosc)
+## Wzorce dla Nieobecności (WypElementNieobecność)
 
 ### Wzorzec A — PodstawaZasiłku (~51 definicji)
 

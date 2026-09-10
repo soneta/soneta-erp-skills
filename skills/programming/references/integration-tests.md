@@ -159,7 +159,7 @@ public class MojModulDatabaseInitializer : TestDatabaseInitializer {
 > i nie przygotuje jej prawidłowo — testy zaczynają wtedy kończyć się niespodziewanymi, trudnymi
 > do wyjaśnienia błędami (niezwiązanymi z testowaną logiką). Naprawa: **usuń odpowiednią bazę
 > testową z serwera SQL** (np. `nunit_default`) — najprościej narzędziem `dbmgr`:
-> `dbmgr drop nunit_default` (składnia i pozostałe komendy — skill **soneta:tools**). Przy kolejnym
+> `dbmgr drop nunit_default` (składnia i pozostałe komendy — skill **[tools](../../tools/SKILL.md)**). Przy kolejnym
 > uruchomieniu `TestBase` automatycznie utworzy nową bazę i wypełni ją danymi z inicjalizatora.
 > Uwaga: **odbudowa bazy testowej od zera jest długotrwała** i może chwilę potrwać — to normalne,
 > po jednorazowym odtworzeniu kolejne uruchomienia testów są już szybkie.
@@ -468,8 +468,7 @@ public class LicenceTest : TestBase {
   (np. `*.viewform.xml`, folder, ustawienia) z **zasobu osadzonego** w assembly testowym. Domyślnie
   wycofywany po klasie; `SetConfigFilesPermanent()` zostawia go na stałe. `RemoveConfigFile(...)` usuwa.
 - `ImportBusinessXml(nazwaZasobu)` — wczytuje dane XML (np. definicje dokumentów, cechy, dane
-  przygotowawcze) przez `SessionReader(Login)`. Struktura pliku: artykuł *import-export-xml*
-  w `/soneta:config`; warstwa kodu: [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).
+  przygotowawcze) przez `SessionReader(Login)`. Struktura pliku: artykuł [import-export-xml](../../config/references/import-export-xml.md); warstwa kodu: [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).
 - `RegisterDataForm(name, resName, asm)` — rejestruje formularz z zasobu (testy UI/DataForm).
 
 ## Asercje

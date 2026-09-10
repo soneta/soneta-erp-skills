@@ -4,7 +4,7 @@
 
 Rozdział opisuje publiczny kontrakt dokumentu handlowego w zakresie tabeli VAT, podsumowań
 wartości, ręcznej korekty VAT, sposobu liczenia VAT oraz zmiany waluty dokumentu i cen. Cały kod
-jest zgodny z **C# 10** i operuje wyłącznie na **publicznych** typach i workerach platformy.
+jest zgodny z **C# 14** i operuje wyłącznie na **publicznych** typach i workerach platformy.
 
 > **Wartości pieniężne** na pozycjach tabeli VAT i podsumowaniach mają dwie reprezentacje:
 > `BruttoNetto` — kwoty w walucie systemowej jako `decimal` (`Netto`, `VAT`, `Brutto`); `BruttoNettoCy`

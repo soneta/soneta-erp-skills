@@ -11,7 +11,7 @@ przez SQL i — przy analizach poprzecznych — ogranicz przedział czasowy.
 
 > **Fundamenty** (sesja, transakcja, blokada optymistyczna) opisuje [`safe-code.md`](../../safe-code.md),
 > a mechanikę warunków serwerowych [`rowcondition.md`](../../rowcondition.md) — tu się do nich
-> odwołujemy, nie powtarzamy. Cały kod jest zgodny z **C# 10** i operuje wyłącznie na **publicznym
+> odwołujemy, nie powtarzamy. Cały kod jest zgodny z **C# 14** i operuje wyłącznie na **publicznym
 > kontrakcie** platformy. W wyrażeniu LINQ wolno użyć **tylko pól bazodanowych**; pole kalkulowane
 > rzuci `LinqConditionException`.
 

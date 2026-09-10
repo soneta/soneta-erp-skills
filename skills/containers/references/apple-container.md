@@ -73,4 +73,4 @@ Dla wygody rozważ Drogę A — Container Desktop sam wiąże nazwy przez `/etc/
 - [ ] `mem_limit` ustawiony także dla `server`
 
 Powiązane: [docker-compose.md](docker-compose.md) · [obrazy-wersje.md](obrazy-wersje.md) ·
-`/soneta:tools` (dbmgr).
+[tools](../../tools/SKILL.md) (dbmgr).

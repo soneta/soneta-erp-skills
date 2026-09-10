@@ -5,7 +5,8 @@ dodatków platformy Soneta przez atrybut `WorkerAttribute` (assembly). Czyta met
 bibliotek dodatku — nie wymaga źródeł.
 
 > **Ścieżki poleceń** w tym dokumencie są względne wobec katalogu skilla (`skills/programming/`
-> w pluginie `soneta`) — uruchamiaj je z tego katalogu albo poprzedź jego ścieżką.
+> w repozytorium) — ustal lokalizację zainstalowanego skilla i uruchamiaj polecenia z tego
+> katalogu albo poprzedź jego ścieżką.
 
 ## Cel
 

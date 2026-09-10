@@ -33,7 +33,7 @@ Każde narzędzie ma **referencję funkcji/parametrów** oraz osobny dokument o 
 
 > **Uwaga:** wizualną **weryfikację kodu na żywej aplikacji** przez `buscall` (baza startująca z Twojego kodu,
 > przeładowanie DLL, pułapki osieroconych procesów/portów, zrzuty ekranu do oceny wyglądu formularzy) opisuje
-> dokument `buscall-live-testing.md` w skillu **`/soneta:programming`**.
+> dokument [buscall-live-testing.md](../programming/references/buscall-live-testing.md).
 
 > **Żywa aplikacja z WŁASNYM dodatkiem** — kompletny przepis w trzech krokach: (1) per-bazowy
 > `serversettings.json` (`Ext` + `Server.DbRegister`) i utworzenie bazy z tabelami dodatku —
@@ -43,6 +43,11 @@ Każde narzędzie ma **referencję funkcji/parametrów** oraz osobny dokument o 
 
 ## Wspólny kontekst
 
+- **Dostęp do narzędzi:** polecenia uruchamiaj przez terminal dostępny w danym środowisku
+  agenta. MCP jest opcjonalnym sposobem połączenia, a `callmcp` trybem narzędzia `buscall`;
+  dostępne nazwy i parametry sprawdzaj w kontrakcie połączenia lub przez `methods.list`.
+  Gdy brakuje terminala, binariów lub połączenia z aplikacją, przygotuj polecenia i wskaż,
+  które kroki pozostają niewykonane.
 - **Binaria** znajdują się w katalogu wyjściowym buildu (`bin/Debug`) odpowiedniego projektu.
   Dokładna ścieżka zależy od Twojego układu repozytoriów — w przykładach piszemy krótko
   `dbmgr` / `buscall`, zakładając alias, wpis w `PATH` albo uruchamianie z katalogu buildu:
@@ -66,10 +71,10 @@ Każde narzędzie ma **referencję funkcji/parametrów** oraz osobny dokument o 
 
 ## Powiązane skille
 
-- **`/soneta:programming`** — warstwa ORM i kod biznesowy; `buscall` służy do weryfikacji
+- **[programming](../programming/SKILL.md)** — warstwa ORM i kod biznesowy; `buscall` służy do weryfikacji
   napisanego tam kodu na żywej aplikacji.
-- **`/soneta:containers`** — uruchamianie i wdrażanie produktu w kontenerach (docker compose,
+- **[containers](../containers/SKILL.md)** — uruchamianie i wdrażanie produktu w kontenerach (docker compose,
   Apple container / Container Desktop, Helm). Tu wołasz `dbmgr` **w kontenerze** (obraz
   `server.standard` ma `dbmgr.dll`) — składnię komend bierzesz z tego skilla, orkiestrację
-  z `/soneta:containers`.
-- **`/soneta:erp`** — meta-skill z mapą wszystkich skilli platformy Soneta.
+  z [containers](../containers/SKILL.md).
+- **[erp](../erp/SKILL.md)** — meta-skill z mapą wszystkich skilli platformy Soneta.

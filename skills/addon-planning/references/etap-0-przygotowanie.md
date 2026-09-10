@@ -41,6 +41,10 @@ TestResults/
 .vscode/
 ```
 
+Analogiczne katalogi innych asystentów (np. `.codex/`) dopisz według używanego narzędzia.
+Współdzielone instrukcje (`CLAUDE.md`, `AGENTS.md`) i skille wersjonowane w repozytorium
+zostaw poza wykluczeniami — wykluczasz lokalne ustawienia asystenta, nie ustalenia zespołu.
+
 Gdy Git nie jest zainstalowany albo katalog jest już repozytorium — pomiń ten krok (istniejącego repo nie nadpisuj).
 
 > Repozytorium założone na tym etapie obejmie później solucję dodatku budowaną **bezpośrednio w bieżącym katalogu roboczym** — patrz sekcja „Lokalizacja projektów kodu" w `SKILL.md`.

@@ -149,11 +149,11 @@ short-name'y zawsze sprawdzisz `dotnet new list soneta`.
 
 | Short name | Dodaje | Powiązany skill |
 |------------|--------|-----------------|
-| `soneta-item-businessxml` | Plik `*.business.xml` (definicja obiektów biznesowych) | **soneta:business-xml** |
-| `soneta-item-pageform` | Plik `*.pageform.xml` (formularz) | **soneta:form-xml** |
+| `soneta-item-businessxml` | Plik `*.business.xml` (definicja obiektów biznesowych) | **[business-xml](../../business-xml/SKILL.md)** |
+| `soneta-item-pageform` | Plik `*.pageform.xml` (formularz) | **[form-xml](../../form-xml/SKILL.md)** |
 | `soneta-item-viewinfo` | Klasa `ViewInfo` (definicja widoku listy) | [references/viewinfo.md](viewinfo.md) |
 | `soneta-item-worker` | Klasa Worker (akcja w menu Czynności) | [references/worker-extender.md](worker-extender.md) |
-| `soneta-item-dashboard` | Pulpit / dashboard | **soneta:form-xml** |
+| `soneta-item-dashboard` | Pulpit / dashboard | **[form-xml](../../form-xml/SKILL.md)** |
 
 Szablony elementów przyjmują własne parametry — sprawdź `dotnet new <short-name> --help`. Przykład
 (worker dla wybranego typu danych, z parametrami i tytułem okna):
@@ -380,7 +380,7 @@ Projekt testowy łamiący tę konwencję oznacz jawnie flagą w `.csproj`:
 ### Widoczność klas i składowych między projektami (`InternalsVisibleTo`)
 
 Podział na trzy projekty pozwala **domknąć widoczność składowych `internal`** — pola, property (patrz
-`modifier="internal"` w skillu /soneta:business-xml) czy klasy pomocnicze zostają wewnątrz dodatku,
+`modifier="internal"` w skillu [business-xml](../../business-xml/SKILL.md)) czy klasy pomocnicze zostają wewnątrz dodatku,
 a nie w publicznym API dostępnym dla obcego kodu. Aby projekt UI i testy widziały `internal` z
 projektu biznesowego, dodaj `InternalsVisibleTo` w `.csproj` (lub `Directory.Build.props`) projektu,
 którego składowe udostępniasz:
@@ -559,14 +559,14 @@ Szkielet jest pusty — teraz wypełnia się go treścią. Pojedyncze pliki dok�
 elementów** (`dotnet new soneta-item-*` wewnątrz właściwego projektu — [sekcja 4](#4-szablony-soneta-platform-developer)),
 a samą treść pisz wg odpowiedniego skilla. Typowa kolejność:
 
-1. **Założenia / struktura modułu** — skill **soneta:addon-planning**.
+1. **Założenia / struktura modułu** — skill **[addon-planning](../../addon-planning/SKILL.md)**.
 2. **Definicje obiektów biznesowych** → projekt logiki. `dotnet new soneta-item-businessxml`;
-   treść wg **soneta:business-xml**. Generator zamieni `*.business.xml` na `*.business.cs` przy buildzie.
+   treść wg **[business-xml](../../business-xml/SKILL.md)**. Generator zamieni `*.business.xml` na `*.business.cs` przy buildzie.
 3. **Kod biznesowy** (klasy `Row`/`Table`/`Module`, workery, extendery) → projekt logiki.
-   Worker: `dotnet new soneta-item-worker`. Wzorce: cały skill **soneta:programming** (ten) +
+   Worker: `dotnet new soneta-item-worker`. Wzorce: cały skill **[programming](../SKILL.md)** (ten) +
    [references/safe-code.md](safe-code.md).
 4. **Interfejs** → projekt `.UI`. `dotnet new soneta-item-pageform` / `soneta-item-viewinfo` /
-   `soneta-item-dashboard`; treść wg **soneta:form-xml** i [references/viewinfo.md](viewinfo.md).
+   `soneta-item-dashboard`; treść wg **[form-xml](../../form-xml/SKILL.md)** i [references/viewinfo.md](viewinfo.md).
 5. **Testy** → projekt `*.Test*`.
 
 ### Pętla iteracji i raportowanie

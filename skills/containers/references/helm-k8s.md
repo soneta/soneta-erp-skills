@@ -53,7 +53,7 @@ dotnet dbmgr.dll create sample --dbconfig ~/temp.xml --mssql --sqlserver "<host>
 helm upgrade sample soneta/soneta -f values.yaml --set adminMode=false
 ```
 
-Pełna składnia `dbmgr` (`--dbconfig`, convert/backup/licence/extensions) → `/soneta:tools`.
+Pełna składnia `dbmgr` (`--dbconfig`, convert/backup/licence/extensions) → [tools](../../tools/SKILL.md).
 
 ## Checklista
 
@@ -64,4 +64,4 @@ Pełna składnia `dbmgr` (`--dbconfig`, convert/backup/licence/extensions) → `
 - [ ] `ingress.host` i TLS skonfigurowane dla produkcji
 
 Powiązane: [docker-compose.md](docker-compose.md) · [obrazy-wersje.md](obrazy-wersje.md) ·
-`/soneta:tools` (dbmgr) · `/soneta:config` (appsettings, import XML).
+[tools](../../tools/SKILL.md) (dbmgr) · [config](../../config/SKILL.md) (appsettings, import XML).

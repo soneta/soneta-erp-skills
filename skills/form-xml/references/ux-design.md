@@ -49,12 +49,11 @@ Weryfikacja jest szczególnie ważna po zbudowaniu **układu wielokolumnowego** 
 patrz [../SKILL.md](../SKILL.md)), bo rozjechane kolumny widać dopiero na ekranie.
 
 Pełna procedura sterowania aplikacją i robienia zrzutów (konfiguracja bazy, uruchamianie, `take_screenshot`):
-narzędzie `buscall` — dokument `buscall-live-testing.md` (weryfikacja na żywej aplikacji) w skillu
-`/soneta:programming`; składnia metod w `buscall.md` skilla `/soneta:tools`.
+narzędzie `buscall` — dokument [buscall-live-testing.md](../../programming/references/buscall-live-testing.md) (weryfikacja na żywej aplikacji); składnia metod w [buscall.md](../../tools/references/buscall.md).
 
 ## Powiązania
 
 - [../SKILL.md](../SKILL.md) — układ wielokolumnowy (`OuterWidth`), kontenery, `Class`.
 - [collections-grids.md](collections-grids.md) — pasek filtra listy i etykiety w `DataBar`.
 - [examples.md](examples.md) — kompletne pliki formularzy.
-- Skill **`/soneta:programming`** — `buscall-live-testing.md`; skill **`/soneta:tools`** — `buscall.md`.
+- [buscall-live-testing.md](../../programming/references/buscall-live-testing.md); [buscall.md](../../tools/references/buscall.md).

@@ -204,12 +204,12 @@ Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wsp
 
 - [import-export-xml.md](import-export-xml.md) — drugi mechanizm przenoszenia ustawień
   (`<session>`, `*.dbinit.xml`, eksport rekordów powiązanych).
-- [/soneta:tools](../../tools/SKILL.md) — operacje na bazach z wiersza poleceń: kopia
+- [tools](../../tools/SKILL.md) — operacje na bazach z wiersza poleceń: kopia
   bezpieczeństwa przed scaleniem i sprawdzenie wersji bazy z checklist powyżej, a także
   weryfikacja efektów na uruchomionej aplikacji.
-- [/soneta:programming](../../programming/SKILL.md) — rekordy guidowane i paczki danych,
+- [programming](../../programming/SKILL.md) — rekordy guidowane i paczki danych,
   czyli warstwa, na której opiera się tożsamość wierszy opisana w „Dlaczego wiersz nie został
   dopasowany".
-- [/soneta:business-xml](../../business-xml/SKILL.md) — definicja tabel i kolumn, w tym
+- [business-xml](../../business-xml/SKILL.md) — definicja tabel i kolumn, w tym
   oznaczanie tabeli jako konfiguracyjnej, co decyduje o jej obecności w rejestrze.
-- [/soneta:erp](../../erp/SKILL.md) — mapa wyboru skilla.
+- [erp](../../erp/SKILL.md) — mapa wyboru skilla.

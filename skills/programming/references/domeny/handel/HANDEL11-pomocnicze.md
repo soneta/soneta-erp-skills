@@ -8,8 +8,12 @@ odczyt metadanych (`ChangeInfos`) oraz pracę z definicjami i numeracją dokumen
 transakcja, `Save`, blokada optymistyczna) opisuje [`safe-code.md`](../../safe-code.md) i
 [`session-login.md`](../../session-login.md) — tutaj się do nich odwołujemy.
 
-> Cały kod jest zgodny z C# 10 (target-typed `new`, `var`, file-scoped namespace, wyrażenia `switch`,
-> nazwane parametry `bool`) i operuje **wyłącznie na publicznym kontrakcie** platformy.
+> Cały kod jest zgodny z C# 14 i operuje **wyłącznie na publicznym kontrakcie** platformy.
+>
+> **Styl kodu:** preferuj `var`, uwzględniając lokalne ustawienia projektu. Używaj target-typed
+> `new` i wyrażeń `switch`, gdy poprawiają czytelność. Przy argumentach `bool` podawaj nazwę
+> parametru, gdy samo `true` lub `false` nie wyjaśnia znaczenia wywołania. Nowsze konstrukcje
+> stosuj, gdy upraszczają kod.
 
 ---
 

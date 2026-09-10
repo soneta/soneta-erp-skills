@@ -5,7 +5,7 @@
 > Rozdział opisuje, jak z poziomu sesji dotrzeć do modułów handlowo-magazynowych, jak poprawnie
 > wskazać **definicję dokumentu** (`DefDokHandlowego`) zanim utworzysz dokument, oraz jak na podstawie
 > definicji i flag dokumentu **rozpoznać jego rodzaj** (faktura / magazynowy / zamówienie / korekta /
-> zaliczka). Cały kod jest zgodny z **C# 10** i operuje wyłącznie na **publicznym kontrakcie**
+> zaliczka). Cały kod jest zgodny z **C# 14** i operuje wyłącznie na **publicznym kontrakcie**
 > platformy. Fundamenty wspólne (sesja, transakcja `session.Logout(true)` + `Commit`/`CommitUI`,
 > blokada optymistyczna, praca z `SubTable`) opisują [`safe-code.md`](../../safe-code.md),
 > [`session-login.md`](../../session-login.md) oraz [`worker-extender.md`](../../worker-extender.md) — tutaj
