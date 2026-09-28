@@ -164,6 +164,12 @@ public class MojModulDatabaseInitializer : TestDatabaseInitializer {
 > Uwaga: **odbudowa bazy testowej od zera jest długotrwała** i może chwilę potrwać — to normalne,
 > po jednorazowym odtworzeniu kolejne uruchomienia testów są już szybkie.
 
+> **Nie współdziel bazy testowej między wersjami platformy.** Baza `nunit_default` zbudowana
+> bibliotekami innej wersji niż pakiety dodatku (np. testy platformy 2610 i dodatku na 2606 na
+> tym samym serwerze SQL) daje `CompileException` definicji Workflow przy każdym `Save` dokumentu,
+> także przy zapisie nowego kontrahenta. Dodatek zawsze dostaje **własną nazwę bazy**
+> w `[TestDatabase]` (sekcja [Testy własnego dodatku](#testy-własnego-dodatku-testbase)).
+
 ## Testy własnego dodatku (TestBase)
 
 Testy integracyjne modułu dodatkowego (np. `Soneta.MojDodatek` z `MojDodatekModule`) piszesz
@@ -315,6 +321,11 @@ dotnet test --project Soneta.MojDodatek.Tests/Soneta.MojDodatek.Tests.csproj \
 ```
 
 - Pierwsze uruchomienie buduje bazę testową (długo — to normalne); kolejne są szybkie.
+- **Połączenie SQL baz `nunit_*`** host testów bierze ze zmiennych środowiskowych
+  `SONETA_TEST__SERVER`, `SONETA_TEST__USER`, `SONETA_TEST__PASSWORD` (brak `SERVER` = lokalny
+  serwer domyślny, brak `USER` = logowanie zintegrowane). Na macOS z SQL Serverem w kontenerze
+  bez nich testy nie wystartują. `Connection refused` w `SetUp` = niedziałający serwer SQL
+  (np. zatrzymany kontener), nie błąd bazy.
 
 ### Checklista — testy własnego dodatku
 
@@ -327,6 +338,8 @@ dotnet test --project Soneta.MojDodatek.Tests/Soneta.MojDodatek.Tests.csproj \
 - [ ] Słowniki `config="true"` edytujesz przez `ConfigSession`/`InConfigTransaction`, nie `Session`.
 - [ ] `<ProjectReference>` z projektu testów do projektu logiki dodatku.
 - [ ] Uruchamianie: `dotnet test --project <ścieżka.csproj> --filter "FullyQualifiedName~<Klasa>"`.
+- [ ] Serwer SQL spoza domyślnego (kontener, macOS) → `SONETA_TEST__SERVER`/`USER`/`PASSWORD`.
+- [ ] Baza dodatku nie jest współdzielona z testami innej wersji platformy na tym samym serwerze.
 
 ## Cykl życia testu — metody wirtualne
 
@@ -496,6 +509,22 @@ towar.Nazwa.Should().Be("Nowa nazwa");   // dalej pracujemy na wartości non-nul
 `BeSameTexts` / `BeSameTextsIgnoreNumbers` porównują bez białych znaków, więc oczekiwany tekst
 możesz zapisać czytelnie w **raw string literal** (`""" … """`) bez martwienia się o wcięcia.
 
+**Końce linii z importu XML.** Tekst wielowierszowy wczytany z pliku XML (np. dane demo) zachowuje
+końce linii pliku: na Windows przy `core.autocrlf=true` — `\r\n`, na macOS/Linux — `\n`. Porównuj
+po `ReplaceLineEndings("\n")`; parsery treści (np. nagłówek `---` pliku Markdown) muszą obsługiwać
+oba warianty.
+
+**Weryfikator `Warning` w teście.** Nie twórz nowej instancji do sprawdzenia — gdy wygenerowany
+setter już uzbroił weryfikator, `Session.Verifiers.Add(new X(row))` odrzuca nową instancję (dedup),
+a nieuzbrojona instancja ma `Validate() == true`. Sprawdzaj instancję z kolekcji
+([verifiers.md](verifiers.md)):
+
+```csharp
+Session.Verifiers.OfType<X>()
+    .Any(v => ReferenceEquals(v.Source, row) && !v.Validate())
+    .Should().BeTrue();
+```
+
 ## Testy optymalizacji SQL — `SqlTraceInfo`
 
 Gdy test ma pilnować, **jakie i ile** zapytań SQL generuje operacja (regresje wydajności), użyj
@@ -558,6 +587,42 @@ dotnet test --project Soneta.MojDodatek.Tests/Soneta.MojDodatek.Tests.csproj \
     --filter "FullyQualifiedName~MojObiektTest"
 ```
 
+### Debugowanie przez podpięcie debuggera (MTP)
+
+Gdy IDE nie oferuje uruchomienia testu (brak ikony Run przy metodzie), uruchom go z CLI
+i podepnij debugger do hosta testów:
+
+```bash
+LANG=pl_PL.UTF-8 LC_ALL=pl_PL.UTF-8 TESTINGPLATFORM_WAIT_ATTACH_DEBUGGER=1 \
+  dotnet test --project <Dodatek>.Test/<Dodatek>.Test.csproj --filter "FullyQualifiedName~<Klasa>.<Metoda>"
+```
+
+- `TESTINGPLATFORM_WAIT_ATTACH_DEBUGGER=1` zatrzymuje host Microsoft.Testing.Platform przed testami.
+  `dotnet test` nie wypisuje PID-u — znajdź go: `pgrep -f "<Dodatek>.Test.dll --filter"`.
+- W IDE: Attach to Process → ten PID (debugger .NET Core), wznów wykonanie.
+- W często wołanym kodzie (np. `Dispose` sesji) używaj pułapek warunkowych.
+- Pauza wstrzymuje wszystkie wątki — testy zależne od czasu lub usług zewnętrznych mogą padać
+  w innym miejscu niż bez debuggera.
+- Przed ponownym uruchomieniem zamknij poprzedni host (`pkill -f "<Dodatek>.Test.dll --filter"`) —
+  inaczej dwa procesy korzystają z tej samej bazy `nunit_*`.
+
+### Polecenie widoczne tylko w DEBUG a testy w Release
+
+Polecenie menu budowane w kodzie (`CommandMenu`) z `Visible = false` nie trafia do okna. Test
+„klikający" je po nazwie nie dostaje błędu — żądanie jest ignorowane, a test pada dopiero na
+`null` brakującej kontrolki. W `form.xml` było inaczej: `Visibility` ukrywa kontrolkę, ale
+zostawia ją dostępną po nazwie. Polecenie, na którym opiera się test, warunkuj także trybem testów:
+
+```csharp
+new CommandMenu {
+    CaptionHtml = "Polecenie diagnostyczne", Name = "MojePolecenie", Action = Wykonaj,
+    Visible = new EnvironmentExtender().IsDebug || CoreTools.IsTestingMode
+}
+```
+
+CI uruchamia testy także w Release — sprawdź test w obu konfiguracjach (alternatywa: test
+w `#if DEBUG`).
+
 ## Checklist / pułapki
 
 - Styl .NET 10: **file-scoped namespace** (bez klamer), **raw string literals** (`""" … """`) dla tekstów wielowierszowych/SQL.
@@ -571,6 +636,9 @@ dotnet test --project Soneta.MojDodatek.Tests/Soneta.MojDodatek.Tests.csproj \
 - Nie sprzątaj ręcznie danych — transakcja `TestBase` wycofa je sama (chyba że `EnableDbTransation => false`).
 - Dane globalne dla klasy wpisuj w `ClassSetup`, dane per-test w teście lub `TestSetup`.
 - DI podmieniaj przez `ConfigureXxxServices` — nie modyfikuj rejestracji atrybutami assembly (wpłynęłoby na inne testy).
+- Wielowierszowy tekst z importu XML → `ReplaceLineEndings("\n")` przed asercją.
+- Weryfikator sprawdzaj instancją z `Session.Verifiers`, nie nową (`new X(row).Validate()` zawsze `true`).
+- Polecenie `CommandMenu` „tylko DEBUG" używane w teście → `|| CoreTools.IsTestingMode`; weryfikacja w Debug i Release.
 - Testujesz własny dodatek? Przejdź checklistę z sekcji
   [Testy własnego dodatku](#testy-własnego-dodatku-testbase) (`Assembly.Load` w `[SetUpFixture]`,
   rola z prawami `Dodatki`, `ConfigSession` dla tabel `config="true"`).

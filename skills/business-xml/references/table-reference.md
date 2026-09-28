@@ -70,6 +70,10 @@ tabeli, nie pojedyncze pola; dla tabel szczegółów warto wskazać tabelę nadr
 > Wartość `description` musi być w **jednej linii** (patrz ostrzeżenie na górze dokumentu) —
 > nawet długi opis nie może być zawinięty w XML.
 
+**Moduły standardowe platformy:** `description` każdej `<table>` i `<module>` ma **> 100 znaków
+i co najmniej dwa zdania** — krótszy opis zatrzymuje weryfikację opisów tabel. Opis trafia do
+atrybutu `[Description]` wygenerowanej klasy tabeli.
+
 ### Rodzaje tabel
 
 **`guided="Root"`** - Główne tabele programu:
@@ -341,11 +345,16 @@ Definiuje indeks na tabeli.
   <keycol name="Kod"/>
 </key>
 
-<key name="WgKontrahentaIDaty" keyunique="false">
-  <keycol name="Kontrahent"/>
+<key name="WgDatyINumeru" keyunique="false">
   <keycol name="Data"/>
+  <keycol name="Numer"/>
 </key>
 ```
+
+> **`<key>` nie zaczyna się od kolumny relacji.** Każda kolumna relacji ma już własny klucz
+> `[Kolumna, ID]` — osobny `<key>` `[Kolumna, …]` go dubluje. Klucz złożony definiuj na `<col>`
+> relacji przez `<keycol>` ([relations-guide.md](relations-guide.md#klucz-kolumny-relacji-i-keycol)).
+> Żaden klucz tabeli nie może być identyczny z innym ani być jego prefiksem (pole `ID` się nie liczy).
 
 ### Atrybuty key
 
@@ -401,6 +410,13 @@ Walidator pola wywoływany przy zapisie.
 > `/soneta:programming`, `references/verifiers.md`. Kolumna z elementem `<verifier>` staje się
 > **źródłem** uzbrajającym weryfikator; `onadded="true"` ogranicza to do dodania wiersza.
 
+**Kontrakt klasy.** Generator emituje `Session.Verifiers.Add(new Typ.Klasa((Typ)this))` w setterze
+kolumny-źródła (przy `onadded="true"` — w `OnAdded`). Klasa musi być **zagnieżdżona** w klasie
+obiektu biznesowego, mieć konstruktor przyjmujący **ten typ wiersza** (primary constructor
+`Klasa(Typ row) : ColVerifier<Typ>(row, nameof(Pole))`) i być widoczna dla wygenerowanego kodu
+(`internal` w tym samym assembly wystarcza). Ten sam weryfikator pod kilkoma kolumnami = kilka
+źródeł, jedna instancja w sesji (dedup).
+
 ---
 
 ## Element attribute
@@ -451,10 +467,6 @@ Wzorce relacji — [relations-guide.md](relations-guide.md).
   <key name="WgNumeru" keyunique="true" keyprimary="true">
     <keycol name="Numer"/>
   </key>
-  <key name="WgKontrahenta">
-    <keycol name="Kontrahent"/>
-    <keycol name="Data"/>
-  </key>
   
   <col name="Numer" type="string" length="30" required="true" 
        category="Ogólne" important="true"
@@ -470,6 +482,7 @@ Wzorce relacji — [relations-guide.md](relations-guide.md).
        category="Ogólne"
        relname="Kontrahent faktury"
        children="Faktury">
+    <keycol name="Data"/>  <!-- klucz relacji [Kontrahent, Data], akcesor WgKontrahent -->
     <attribute>Context</attribute>
   </col>
   

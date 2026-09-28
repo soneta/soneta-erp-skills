@@ -54,7 +54,7 @@ w cudzysłowie, obiekt/tablica); w przeciwnym razie traktowana jako zwykły stri
 
 ```bash
 buscall --db Demo call navigate_to_folder programFolderPath=Handel        # string
-buscall --db Demo call open_form tableName=Towary objectID=2              # objectID = liczba
+buscall --db Demo call open_form id=kont2                                # id z retrieve_list
 buscall --db Demo call update_field_value 'fieldsValues=["Nazwa=Buciki"]' # wartość = tablica JSON
 ```
 
@@ -110,13 +110,16 @@ buscall --db Demo call navigate_to_folder "programFolderPath=Kadry i płace/Kadr
 | `get_folders` | lista podfolderów wskazanego foldera: `programFolderPath=<folder>` (odkrywanie struktury menu) |
 | `get_configuration_folders` | strony okna konfiguracji (Ustawienia); z `regexFilter=<wzorzec>` przeszukuje **rekurencyjnie w głąb** — najszybszy sposób znalezienia strony ustawień (bez filtra zwraca jeden poziom) |
 | `navigate_to_folder` | przejście do foldera programu, np. `programFolderPath=Handel/Kartoteki/Towary i usługi` |
-| `retrieve_list` | odczyt danych listy (stronicowane); zwraca `data.rows[{objectID,values}]` i oznacza wiersze jako „odwiedzone" (wymagane przez `open_form`) |
-| `open_form` | otwarcie formularza obiektu: `tableName=Towary objectID=<id>` |
+| `retrieve_list` | odczyt danych listy (stronicowane); przy `detail=full` identyfikatory wierszy (`#id`, np. `kont2`) są w `rowsCsv`; udostępnia wiersze do `open_form`. Filtr panelu widoku: `'filtersValues=["Context.<ViewInfo>+Params.<Pole>=<wartość>"]'` (tylko na stronie 0) |
+| `open_form` | otwarcie formularza obiektu: `id=<#id>` z `retrieve_list`/`retrieve_folder_list`/`search_object` — **nie** `tableName`/`objectID` (błąd „Brak wymaganego parametru o nazwie: id") |
 | `open_subform` | otwarcie formularza **wiersza grida** bieżącego okna: `gridPath=<ścieżka-grida> id=<#id-wiersza>` — parametr nazywa się `id` (nie `objectID`!); wartości `gridPath` i `id` z odpowiedzi `detail=full` (patrz niżej) |
 | `search_object` | otwarcie formularza po warunku: `tableName=… objectSelector=Kod=…` |
 | `get_form_pages` | lista zakładek otwartego formularza (zwraca `pageID` do `switch_form_page`) |
 | `switch_form_page` | zmiana zakładki formularza: `pageID=TowarCennikKontrahentowPage` |
 | `cancel_form` | zamknięcie bieżącego okna/dialogu bez zapisu (np. okna „Wersja demonstracyjna" po zalogowaniu) |
+| `save_form` | zapis formularza — **bez parametru pakietu „Samodzielny zapis formularza" czeka na kliknięcie operatora**; w automatyzacji bezobsługowej twórz dane przez `import_business_xml`, a formularz zamykaj `cancel_form` |
+| `import_business_xml` | import XML przez logikę biznesową — treść w parametrze `xml` (`xmlFileName` nie działa w trybie `call`); `datetime` w formacie `RRRR-MM-DD HH:MM:SS`; format XML: `/soneta:config` |
+| `invoke_command` | wykonanie `Command` z formularza, np. `commandPath=Workers.<Alias>#<Metoda>` — czynność workera zbindowana na zakładce (tę samą czynność z menu listy uruchamia `execute_action`) |
 | `get_actions` | lista czynności dostępnych w bieżącym kontekście; zwraca `workerID` w formie `Namespace.Worker,Assembly\|Metoda` |
 | `execute_action` | wykonanie czynności: `workerID=<Namespace.Worker,Assembly\|Metoda>` |
 | `get_grid_rows` | pełny grid z formularza + filtr regex: `gridPath=… regexFilter=… regexOptions=IgnoreCase` |
@@ -140,7 +143,7 @@ i `#id` wierszy do `open_subform`/`edit_grid_rows` pozyskuje się z odpowiedzi `
 
 ### Identyfikatory obiektów są ulotne
 
-Identyfikatory (`#id` z gridów, `objectID` z `retrieve_list`) **tracą ważność po restarcie
+Identyfikatory (`#id` z gridów i z `retrieve_list`) **tracą ważność po restarcie
 aplikacji / wylogowaniu**. Objaw: „Nieznany identyfikator obiektu 'X'… wczytaj listę zawierającą
 ten obiekt ponownie". Po `application_close` + ponownym starcie zawsze odczytaj listy od nowa —
 nie zapisuj identyfikatorów na później.
@@ -158,9 +161,10 @@ buscall --db dev call get_configuration_folders "regexFilter=Agenci" limit=30
 
 ### `retrieve_list` przed `open_form`
 
-`retrieve_list` **musi** poprzedzać `open_form` — oznacza wiersze jako „odwiedzone", inaczej próba
-otwarcia kończy się błędem „unsafe open". Typowy łańcuch: `navigate_to_folder` → `retrieve_list`
-→ `open_form`.
+`open_form` otwiera tylko obiekt, którego `id` zostało wcześniej udostępnione przez
+`retrieve_list`, `retrieve_folder_list` albo `search_object` — inaczej błąd „…nie został wcześniej
+udostępniony…". Typowy łańcuch: `navigate_to_folder` → `retrieve_list detail=full` (odczyt `#id`
+z `rowsCsv`) → `open_form id=<#id>`; bez wchodzenia na listę: `search_object` → `open_form`.
 
 ### `take_screenshot` — kontrakt
 
@@ -218,8 +222,8 @@ buscall --db moja_baza call get_folders programFolderPath=<folder>
 
 # 2) lista → formularz → zakładka → zrzut
 buscall --db moja_baza call navigate_to_folder "programFolderPath=<ścieżka-foldera>"
-ID=$(buscall --db moja_baza call retrieve_list | jq -r '.data.rows[0].objectID')
-buscall --db moja_baza call open_form tableName=<tbl> objectID="$ID"
+buscall --db moja_baza call retrieve_list detail=full            # #id wierszy w rowsCsv
+buscall --db moja_baza call open_form id=<#id>
 buscall --db moja_baza call get_form_pages                       # dostępne pageID
 buscall --db moja_baza call switch_form_page pageID=<x>
 buscall --db moja_baza call take_screenshot                      # → ścieżka PNG: otwórz i OBEJRZYJ
@@ -274,7 +278,9 @@ protokół) leżą gdzie indziej — `Soneta.Frame/Logs/{Frame,BusCall}/error-*.
 - [ ] Nazwy metod z `methods.list`, nie z pamięci (np. `where_am_I`, nie „where_I_am";
       objaw literówki: `{"kind":"error","error":"Nazwa metody MCP nieznaleziona"}`).
 - [ ] `detail=full` tam, gdzie potrzebne `gridPath`/`rowsCsv`; `detail=none`, gdy wynik zbędny.
-- [ ] Po restarcie aplikacji identyfikatory (`#id`, `objectID`) czytane od nowa.
+- [ ] Po restarcie aplikacji identyfikatory (`#id`) czytane od nowa.
+- [ ] `open_form id=<#id>` (nie `tableName`/`objectID`); `#id` z `retrieve_list detail=full` lub `search_object`.
+- [ ] Bezobsługowo: dane przez `import_business_xml` (`xml=…`), nie `save_form`; formularz zamykany `cancel_form`.
 - [ ] Do testów źródło `process:` (`--db "Process|<Baza>"`) — stawia serwery samo; wpis `http://…`
       wymaga zewnętrznego serwera, a jego brak daje mylące „Niepoprawny adres serwera" / „Nie znaleziono bazy".
 - [ ] Przy błędach UI: log serwera `server-RRRRMMDD.log`; błędy ramki/`buscall`: `Soneta.Frame/Logs/`.

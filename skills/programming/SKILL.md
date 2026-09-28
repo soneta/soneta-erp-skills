@@ -44,7 +44,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Cechy (Features) - tabela Features, typy cech, dostęp typowany/nietypowany, bindowanie w form.xml | [references/features.md](references/features.md) |
 | Weryfikatory - walidacja spójności danych (`Verifier`, `RowVerifier<T>`, `ColVerifier<T>`, `MultiColVerifier<T>`, `RequiredVerifier`), poziomy `Error`/`Warning`/`Information`, uzbrajanie na zmianę pól-źródeł (`Session.Verifiers.Add`, `<verifier>` w business.xml), blokada `Save()` przy błędzie | [references/verifiers.md](references/verifiers.md) |
 | Eventy (zdarzenia sesji) - odraczanie ciężkich obliczeń i logika w transakcji serwerowej: **sesyjne** (`Session.Events`, odpalane na `CommitUI`/`Save`/`Invoke`) vs **serwerowe** (`Session.ServerEvents`, w transakcji `Save` — numeracja). Rejestracja `Add(handler[, args])`, dedup po `Equals`/`GetHashCode`, wymuszanie `Invoke(handler)`, argumenty (`BusEventArgs`, `RowEventArgs<TRow>`, `SessionBusEventArgs`), priorytety, transakcyjność | [references/events.md](references/events.md) |
-| Źródła praw (`IRightsSource`) - obiekt sterujący dostępem do danych operacyjnych, `AccessRight`, `Login.GetObjectRight`; nowe źródło domyślnie Denied, `AccessDeniedException` przy odczycie kolumn bez prawa, nadawanie praw i cache ról. **Miejsce tabeli w drzewie uprawnień** (pliki `*.rightstree.xml`, reguła korzenia praw, relacje `relright`/`relguided`) → skill `/soneta:business-xml` | [references/rights-source.md](references/rights-source.md) |
+| Źródła praw (`IRightsSource`) - obiekt sterujący dostępem do danych operacyjnych, `AccessRight`, `Login.GetObjectRight`; nowe źródło domyślnie Denied, `AccessDeniedException` przy odczycie kolumn bez prawa, nadawanie praw i cache ról; prawa proste `SimpleRight`. **Miejsce tabeli w drzewie uprawnień** (pliki `*.rightstree.xml`, reguła korzenia praw, relacje `relright`/`relguided`) → skill `/soneta:business-xml` | [references/rights-source.md](references/rights-source.md) |
 | Notacja klamrowa (`AccessorFormatter`) - wstawki `{ścieżka}` / `{ścieżka:format}` w captionach, szablonach, promptach; metadane modeli (`ApplicationInfo`, `TableInfo`) | [references/metadata-formatting.md](references/metadata-formatting.md) |
 | Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów)                                      | [references/examples.md](references/examples.md) |
 | Receptury kodu per obiekt biznesowy (domena CRM) — `Kontrahent` (pola, kolekcje, workery, finanse, RODO, KSeF). Indeks + mapa receptur (CRM-W1–W18); rozdziały `references/domeny/crm/CRM01..CRM10` | [references/domeny/crm.md](references/domeny/crm.md) |
@@ -335,6 +335,16 @@ Gotowe **receptury per obiekt biznesowy** (realne pola, kolekcje i workery) są 
 [crm.md](references/domeny/crm.md) (`Kontrahent`), [handel.md](references/domeny/handel.md)
 (`DokumentHandlowy`), [kadry.md](references/domeny/kadry.md) (`Pracownik`),
 [workflow.md](references/domeny/workflow.md) (procesy i zadania).
+
+### Wymagane `using` dla metod rozszerzających
+
+Przykłady w skillu podają wywołania bez przestrzeni nazw. Brak `using` daje `CS1061`/`CS0246`:
+
+| Wywołanie | `using` |
+|-----------|---------|
+| `"…".Translate()`, `.TranslateFormat(…)` | `Soneta.Langs` |
+| `tekst.IsNullOrEmpty()` (rozszerzenie `string`) | `Soneta.Tools` |
+| `[Caption]`, `VerifierType` | `Soneta.Types` |
 
 ## Narzędzia pomocnicze
 

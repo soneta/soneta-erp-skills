@@ -15,6 +15,12 @@ w `{...}`. Podstawy składni formularza: [../SKILL.md](../SKILL.md).
 2. **Przez atrybut DataType** — `<DataForm DataType="Soneta.Handel.Towar,Soneta.Handel">`;
    wiąże typ **jawnie**, gdy nazwa pliku jest niejednoznaczna (formularze parametrów workerów,
    konfiguracji, selektory) lub gdy typ jest w innej przestrzeni nazw.
+   **Zakładka dodatku dla typu z obcej biblioteki wymaga `DataType`** — plik
+   `Kontrahent.Oceny.pageform.xml` bez niego nie pojawi się na formularzu kontrahenta, mimo
+   poprawnie osadzonego zasobu. Działa `<DataForm DataType="Soneta.CRM.Kontrahent,Soneta.CRM">`
+   (tak robią standardowe zakładki innych modułów). Typ z własnej biblioteki wystarcza nazwą pliku.
+   `Page Name="…Page"` nadaje zakładce stabilny identyfikator (`pageID` w buscall
+   `get_form_pages`/`switch_form_page` — `/soneta:tools`).
 3. **Przez rejestrację FolderViewAttribute** — dla viewform.xml
 
 > Odczyt rzeczywistego powiązania (który człon/`DataType`, także zawężanie po namespace, gdy ta
@@ -33,8 +39,8 @@ się automatycznie. `CaptionHtml` bez `/` → samodzielna zakładka; z `/` → h
 > **Osadzanie zasobu.** Pliki `*.pageform.xml` / `*.form.xml` / `*.viewform.xml` są dołączane
 > do biblioteki jako zasób przez konwencję budowania projektu — zwykle **nie** trzeba dodawać
 > ich ręcznie do pliku projektu. Po dodaniu pliku wystarczy zbudować projekt i zakładka jest
-> dostępna. (Jeśli wyjątkowo nie zostanie znaleziona, dopiero wtedy rozważ jawne dołączenie
-> zasobu w konfiguracji projektu.)
+> dostępna. (Jeśli wyjątkowo nie zostanie znaleziona: dla typu z innej biblioteki najpierw dodaj
+> `DataType` — punkt 2 wyżej; dopiero potem rozważ jawne dołączenie zasobu w konfiguracji projektu.)
 
 > **Zakładki i grupy = sekcje danych.** `Page` i `Group` wyznaczają logiczne **sekcje danych**
 > do uzupełnienia, a kolejność pól odzwierciedla kolejność wprowadzania (i pośrednio wykonywanego

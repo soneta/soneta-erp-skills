@@ -103,7 +103,7 @@ Przykładowa zawartość przy otwartej liście kontrahentów:
 | `SelectedCounter` | Liczba zaznaczonych wierszy na gridzie |
 | `Kontrahent` | Wiersz bieżący (fokus) pod jego konkretnym typem |
 | `Kontrahent[]` | Kolekcja zaznaczonych kontrahentów — tablica typowana, dostępna też jako `GuidedRow[]` / `Row[]` (`Context[typeof(GuidedRow[])]`) |
-| `UILocation` | Aktywny element interfejsu             |
+| `UILocation` | Aktywny element interfejsu; na formularzu `PageXmlName` = aktywna zakładka ([warunki czynności](./worker-extender.md#warunki-czynności--isvisible--isenabled)) |
 | `INavigatorContext` | Context grida (zaznaczenia, focus)     |
 | `View` | Źródło danych grida                    |
 | `Params` | Klasa parametrów filtrów               |
@@ -291,6 +291,10 @@ public void Action(Context cx)
     }
 }
 ```
+
+Tablica zaznaczenia jest dostępna także pod interfejsem implementowanym przez typ wiersza
+(`cx.Get(out IMojInterfejs[] zaznaczone)`). Na formularzu tablicy brak — warunki czynności
+zależne od liczby zaznaczonych: [worker-extender.md](./worker-extender.md#warunki-czynności--isvisible--isenabled).
 
 ## Context implementuje ISessionable
 

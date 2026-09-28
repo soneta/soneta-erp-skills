@@ -140,7 +140,25 @@ kolumny dodaje weryfikator do sesji:
 `business.xml` podaje **tylko nazwę** klasy — implementację piszesz po stronie kodu (ten skill).
 Składnia elementu `<verifier>` i atrybut `onadded`: patrz skill **soneta:business-xml**
 (`references/table-reference.md` → „Element verifier"). Ten sam weryfikator można podpiąć pod
-kilka kolumn — każda z nich staje się źródłem uzbrajającym.
+kilka kolumn — każda z nich staje się źródłem uzbrajającym (jedna instancja dzięki dedup).
+
+**Kontrakt klasy dla `<verifier name="Typ.Klasa"/>`.** Generator emituje
+`Session.Verifiers.Add(new Typ.Klasa((Typ)this))` w setterze kolumny-źródła (i w `OnAdded` przy
+`onadded="true"`). Stąd wymagania:
+
+- klasa **zagnieżdżona** w klasie obiektu biznesowego (`Typ.Klasa`),
+- konstruktor przyjmujący **ten konkretny typ wiersza** — primary constructor
+  `Klasa(Typ row) : ColVerifier<Typ>(row, nameof(Pole))` wystarcza,
+- widoczna dla wygenerowanego kodu — `internal` wystarcza w tym samym assembly.
+
+```csharp
+public class Pracownik : KadryModule.PracownikRow {
+    internal sealed class PeselVerifier(Pracownik row) : ColVerifier<Pracownik>(row, nameof(PESEL)) {
+        protected override bool IsValid() => Row.PESEL.IsNullOrEmpty() || Row.PESEL.Length == 11;
+        public override string Description => "Niepoprawny PESEL".Translate();
+    }
+}
+```
 
 ### 2. Ręcznie w kodzie
 
@@ -381,6 +399,7 @@ klasa bazowa sama ogranicza sprawdzenie do pól podanych w konstruktorze (`nameo
 - [ ] `Type` ustawiony świadomie: `Error` tylko dla naruszeń, których nie wolno zapisać.
 - [ ] Źródła (`IsAccept` lub nazwy pól w konstruktorze) pokrywają **wszystkie** pola wpływające na regułę.
 - [ ] Weryfikator uzbrojony na **każde** źródło (business.xml `<verifier>` lub `Session.Verifiers.Add`).
+- [ ] Klasa z `<verifier>`: zagnieżdżona w typie wiersza, konstruktor `(Typ row)`, co najmniej `internal`.
 - [ ] `Description` przez `.Translate()`.
 - [ ] Uzbrajanie tylko dla wiersza nie-`Detached` (`State != RowState.Detached`), gdy robisz to ręcznie.
 - [ ] Kod zapisu **nie połyka** `VerifiersException`/`BusException` z `Save()` — patrz [safe-code.md §5](safe-code.md) i [§9](safe-code.md).

@@ -429,6 +429,12 @@ Przy buildzie SDK uruchamia **generator**, który konwertuje pliki `*.xml` (m.in
 na `*.cs`. Odpowiednia wersja generatora pobierana jest razem z bibliotekami — nie podpina się go
 ręcznie.
 
+Wygenerowany `<Moduł>.business.cs` ląduje **obok** `*.business.xml` w katalogu projektu (nie
+w `obj/`). To artefakt builda — dodaj `*.business.cs` do `.gitignore` dodatku (szablon
+`soneta-addon` tego nie robi). Plik zawiera już rejestrację `[assembly: ModuleType(...)]`
+i metodę rozszerzającą `session.Get<Moduł>()` — nie dopisuj ich ręcznie
+(kontrakt klas: `/soneta:business-xml` → `references/generated-classes.md`).
+
 ## 8. Solucja (.sln)
 
 Szablon `soneta-addon` **sam tworzy** `MyExtension.sln` i dodaje do niej projekty — zwykle nic tu
@@ -591,4 +597,5 @@ Raportując postęp rozróżniaj: **„zweryfikowane buildem"** vs **„wymaga w
 | Build pada na brak .NET 10 | Zainstaluj **.NET SDK 10** (`dotnet --version`); biblioteki Soneta celują w `net10.0`. |
 | F5 uruchamia zły/brak host Soneta | Popraw `program` w `launch.json` (na macOS/Linux ustaw ścieżkę jawnie); sprawdź `SonetaAddonStartProgram` i `launchSettings.json` (mają priorytet nad mechanizmem SDK). |
 | Brak podpowiedzi w plikach `*.xml` w VS Code | Doinstaluj **Xml Complete** i uzupełnij atrybuty `xmlns`/`schemaLocation` ([sekcja 10](#10-intellisense-dla-plików-xml-vs-code)). |
+| `*.business.cs` w zmianach Git po każdym buildzie | Plik generowany obok `*.business.xml` — dodaj `*.business.cs` do `.gitignore` ([sekcja 7](#7-parametry-msbuild)). |
 | Stare rozszerzenie *Soneta Studio Ext* w VS | Odinstaluj — kłóci się z Soneta Platform Developer. |

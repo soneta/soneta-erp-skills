@@ -130,6 +130,9 @@ Worker udostępnia metodę w menu Czynności za pomocą atrybutu `[Action("Tytu�
 * Metoda `bool IsEnabledXxx()` (np `bool IsEnabledSendEmails()`) jest opcjonalna i kontroluje aktywność pozycji w menu
 * Metoda `string GetNameXxx()` (np `string GetNameSendEmails()`) jest opcjonalna i kontroluje tytuł pozycji w menu
 * Metoda `bool IsCheckedXxx()` (np `bool IsCheckedSendEmails()`) jest opcjonalna i kontroluje zaznaczenie pozycji w menu
+* Warunki zależne od listy/formularza, zakładki, liczby zaznaczonych wierszy i serwisów DI —
+  [Warunki czynności](#warunki-czynności--isvisible--isenabled). **W kliencie web `IsEnabledXxx() == false`
+  ukrywa czynność** tak samo jak `IsVisibleXxx()`.
 
 #### Przykład akcji wykonywanej grupowo na liście kontrahentów
 
@@ -304,6 +307,71 @@ Zasady wykonania na liście:
   tablica zaznaczenia lub `View` — gdy typ parametru jest z niej przypisywalny), potem z `Context`.
   Brak dopasowania oznacza brak akcji, bez wyjątku — przy nietypowych sygnaturach sprawdź menu
   na obu rodzajach okien.
+
+### Warunki czynności — `IsVisible…` / `IsEnabled…`
+
+**Najważniejsze:**
+
+- **Web: niedostępna = niewidoczna.** Czynność z `IsEnabled…` = `false` znika z menu Czynności
+  i z paska (`ActionTarget.Toolbar`/`ToolbarWithText`) — bez „wyszarzonego" przycisku. Para
+  wykluczających się czynności pokazuje zawsze tylko jedną; po wykonaniu pasek przerysowuje się
+  i pokazuje drugą. Czynność ma być widoczna, ale nieaktywna? W web niemożliwe — przenieś warunek
+  do komunikatu w metodzie czynności.
+- **Przeliczanie po każdej zmianie.** Menu i pasek przeliczają się przy budowie każdej odpowiedzi
+  okna: po zmianie w sesji, zmianie zakładki, zmianie wiersza bieżącego **i** liczby zaznaczonych
+  (także bez zmiany wiersza bieżącego). Warunek ma być tani (bez SQL w pętli) i bez skutków ubocznych.
+
+```csharp
+public static bool IsEnabledZatwierdz(MojDokument dok) => dok.Bufor;
+public static bool IsEnabledOdtwierdz(MojDokument dok) => !dok.Bufor;
+```
+
+**Lista czy formularz w statycznej `[Action]`.** Property
+`[Context(Required = false)] public Kontrahent[] Zaznaczeni { get; set; }` dostaje tablicę zaznaczenia
+tylko na liście (na formularzu zostaje `null`); `Required = false` zapobiega otwarciu okna
+parametrów, gdy typu brak w kontekście. Warunek czynności „tylko dla jednego zapisu":
+`IsVisibleXxx() => Zaznaczeni is null || Zaznaczeni.Length <= 1`.
+
+**Liczba zaznaczonych na liście.** Zaznaczenie jest w kontekście jako tablica typu wiersza lub
+interfejsu, który typ implementuje ([context.md](context.md#kolekcje-zaznaczonych-obiektów)):
+
+```csharp
+public static bool IsVisibleWyslij(Context cx) =>
+    !(cx.Get(out IMojHost[] zaznaczone) && zaznaczone.Length > 1);
+
+public static bool IsVisibleWyslijZbiorczo(Context cx) =>
+    cx.Get(out IMojHost[] zaznaczone) && zaznaczone.Length > 1;
+```
+
+**Czynność zależna od zakładki formularza** — `UILocation.PageXmlName`:
+
+```csharp
+public bool IsVisibleMojaCzynnosc(Context cx) =>
+    cx.Get(out UILocation uil) && uil.PageXmlName == "MojaZakladka";
+```
+
+- `PageXmlName` = część nazwy pliku po typie (`Typ.MojaZakladka.pageform.xml` → `MojaZakladka`),
+  nie `Name` elementu `Page`.
+- Formularz otwiera się na **pierwszej widocznej** zakładce — czynność innej zakładki pojawia się
+  (pasek i menu) dopiero po przejściu na nią, także w testach.
+
+**Parametr serwisu.** Metoda warunku może przyjmować obok `Context` interfejs serwisu — platforma
+rozwiązuje go z kontenera DI sesji, tak jak parametry metody czynności ([services.md](services.md)):
+
+```csharp
+public static bool IsVisibleMojaCzynnosc(Context cx, IMojSerwis serwis) => serwis.CzyDostepne(cx);
+```
+
+Nie trzymaj referencji do serwisu poza wywołaniem — zapis z zamknięciem jednego okna zwalnia
+sesję i jej kontener DI, a inne okno tej sesji może jeszcze budować odpowiedź.
+
+Checklista:
+- [ ] Nie projektuj UI ani testu oczekującego obu przycisków pary wykluczających się czynności.
+- [ ] Warunek z `Get(out T[])` obsługuje jawnie brak tablicy (formularz).
+- [ ] Nazwa w warunku zakładki = nazwa z pliku `pageform.xml`; scenariusz testu przechodzi na zakładkę przed sprawdzeniem czynności.
+- [ ] Parametr serwisu to interfejs zarejestrowany w DI (inaczej nie zostanie rozwiązany).
+- [ ] Warunek czysty i szybki — zależy tylko od wiersza/kontekstu.
+- [ ] Scenariusz listy: zaznacz 1 → sprawdź; dołóż drugi bez zmiany wiersza bieżącego → sprawdź.
 
 ## Obiekty Extender
 

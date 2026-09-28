@@ -196,11 +196,11 @@ DB=Demo
 # 1) nawigacja do listy (pierwsze wywołanie może wystartować frame — daj czas)
 "$BUSCALL" --db "$DB" call navigate_to_folder "programFolderPath=Handel/Kartoteki/Towary i usługi"
 
-# 2) retrieve_list — MUSI poprzedzać open_form (oznacza wiersze jako odwiedzone)
-ID=$("$BUSCALL" --db "$DB" call retrieve_list | jq -r '.data.rows[0].objectID')
+# 2) retrieve_list — udostępnia wiersze do open_form; #id wierszy w rowsCsv
+"$BUSCALL" --db "$DB" call retrieve_list detail=full
 
-# 3) otwarcie formularza po liczbowym objectID
-"$BUSCALL" --db "$DB" call open_form tableName=Towary objectID="$ID"
+# 3) otwarcie formularza po #id z rowsCsv
+"$BUSCALL" --db "$DB" call open_form id=<#id>
 
 # 4) (opcjonalnie) zmiana zakładki
 "$BUSCALL" --db "$DB" call switch_form_page pageID=TowarCennikKontrahentowPage
@@ -212,7 +212,8 @@ ID=$("$BUSCALL" --db "$DB" call retrieve_list | jq -r '.data.rows[0].objectID')
 Uwagi praktyczne:
 - Pierwsze wywołanie po starcie bywa wolne (uruchomienie/logowanie frame'a) — dawaj timeout ~30–60 s
   (zimny start po ubiciu serwerów potrafi przekroczyć 2 min). Kolejne `call`-e są szybkie (frame w tle).
-- `retrieve_list` **musi** poprzedzać `open_form` (inaczej „unsafe open").
+- `open_form` przyjmuje `id=<#id>` udostępniony wcześniej przez `retrieve_list`/`search_object`.
+- `save_form` bez parametru pakietu „Samodzielny zapis formularza" czeka na operatora — dane testowe twórz przez `import_business_xml` (kontrakty: `/soneta:tools` → `references/buscall.md`).
 - Aby przeładować kod, zamknij frame przez `buscall call application_close` (posprząta też serwery),
   przebuduj i wywołaj `call` ponownie. Do zabijania osieroconych `server.dll`/`web.dll` sięgaj tylko
   awaryjnie (patrz nota ratunkowa wyżej) — samo `grep SonetaFrameNew` i tak NIE wystarczy.

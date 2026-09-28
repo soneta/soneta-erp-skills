@@ -3,7 +3,7 @@
 ## Spis treści
 
 1. [Typy relacji](#typy-relacji)
-2. [Relacja jeden-do-wielu (master-detail)](#relacja-jeden-do-wielu)
+2. [Relacja jeden-do-wielu (master-detail)](#relacja-jeden-do-wielu) — w tym [klucz kolumny relacji i `keycol`](#klucz-kolumny-relacji-i-keycol)
 3. [Relacja wiele-do-wielu](#relacja-wiele-do-wielu)
 4. [Relacja do interfejsu](#relacja-do-interfejsu)
 5. [Historia (wersjonowanie)](#historia-wersjonowanie)
@@ -112,6 +112,57 @@ dostają wyłącznie tabele bez tych relacji: [rights-tree.md](rights-tree.md).
 </col>
 <col name="Lp" type="int" required="true"/>
 ```
+
+### Klucz kolumny relacji i `keycol`
+
+**Każda kolumna relacji generuje własny klucz**, także bez atrybutów `key*`:
+
+- pola `[<Kolumna>, ID]`; z `<keycol>` wewnątrz `<col>` — `[<Kolumna>, <keycol>…]` (bez `ID`);
+- nazwa klucza = nazwa kolumny, akcesor tabeli `Wg<Kolumna>`;
+- indeksery: `Wg<Kolumna>[rodzic]` → `SubTable` dzieci; kolejne pola klucza dają indeksery
+  z prefiksem (`[rodzic, pole1]` → `SubTable`), a pełny klucz unikalny → pojedynczy wiersz albo `null`;
+- `keyunique`/`keyprimary` na `<col>` czynią ten klucz unikalnym/głównym.
+
+**Pułapka — osobny `<key>` zaczynający się od relacji:**
+
+```xml
+<!-- ŹLE: dwa klucze [Provider, ID] i [Provider, Name] — pierwszy jest nadmiarowy -->
+<key name="ByName" keyunique="true" keyprimary="true">
+  <keycol name="Provider"/>
+  <keycol name="Name"/>
+</key>
+<col name="Provider" type="Dostawca" required="true" readonly="true"
+     children="Modele" delete="cascade" relguided="inner"/>
+```
+
+Po pominięciu `ID` pierwszy klucz jest prefiksem drugiego: dodatkowy indeks w bazie i w pamięci
+sesji bez nowych możliwości wyszukiwania. W modułach standardowych taka para zatrzymuje
+weryfikację kluczy aplikacji.
+
+```xml
+<!-- DOBRZE: jeden klucz Provider = [Provider, Name], unikalny i główny -->
+<col name="Provider" type="Dostawca" required="true" readonly="true"
+     keyunique="true" keyprimary="true"
+     children="Modele" delete="cascade" relguided="inner">
+  <keycol name="Name"/>
+</col>
+<col name="Name" type="string" length="128" required="true"/>
+```
+
+Akcesor zmienia nazwę z `ByName` na `WgProvider` — popraw odwołania w kodzie
+(`Table.WgProvider[dostawca]`, `Table.WgProvider[dostawca, "nazwa"]`). Kilka pól:
+`<keycol name="Rodzaj"/><keycol name="Name"/>` w relacji `Agent` → `[Agent, Rodzaj, Name]`
+z indekserami `[agent]`, `[agent, rodzaj]`, `[agent, rodzaj, nazwa]`.
+
+**Reguła ogólna:** żaden klucz tabeli nie może być identyczny z innym ani być jego prefiksem
+(bez `ID`) — dotyczy też dwóch zwykłych `<key>` (np. `[Symbol]` i `[Symbol, Numer]`). Zwykle
+wystarczy dłuższy klucz, bo wyszukiwanie po prefiksie obsługuje indekser z mniejszą liczbą
+argumentów. Wyjątek: krótszy klucz jest unikalny, a dłuższy nie — wtedy zostaje krótszy.
+
+Checklista:
+- [ ] `<key>` zaczyna się od kolumny relacji → przenieś go na `<col>` relacji (`keyunique`/`keyprimary` + `<keycol>`).
+- [ ] Żaden klucz nie jest identyczny z innym ani jego prefiksem (pole `ID` się nie liczy).
+- [ ] Po przeniesieniu poprawione odwołania do akcesora (`By…` → `Wg<Kolumna>`).
 
 ---
 

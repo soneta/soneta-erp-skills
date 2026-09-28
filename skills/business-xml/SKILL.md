@@ -126,6 +126,7 @@ bo nic Cię przed nimi nie ostrzeże automatycznie.
 >
 > **`description`** — 2–3 zdania o przeznaczeniu tabeli, do szybkiej orientacji w strukturze
 > programu (również dla modeli językowych). Opisuje, po co tabela powstała, nie pojedyncze pola.
+> W modułach standardowych platformy: **> 100 znaków i ≥ 2 zdania** (tabela i moduł).
 
 ### Rodzaje tabel
 
@@ -366,7 +367,9 @@ Klasę obiektu biznesowego i klasę tabeli umieszczaj w **osobnych plikach** (`Z
 - **Nazwa w bazie (tablename)**: PascalCase, liczba mnoga, **maks. 16 znaków**, **globalnie unikalna
   w bazie** — uwaga na kolizje z tabelami modułów platformy (np. `Towary`, `DokHandlowe`)
 - **Nazwa kolumny**: PascalCase (np. `KodPocztowy`, `DataWystawienia`)
-- **Klucz**: `Wg` + nazwa kolumny (np. `WgKodu`, `WgNazwy`)
+- **Klucz**: `Wg` + nazwa kolumny (np. `WgKodu`, `WgNazwy`). Klucz kolumny relacji nazywa się
+  jak kolumna, a jego akcesor to `Wg<Kolumna>` — klucza zaczynającego się od relacji nie
+  definiuj osobnym `<key>` ([references/relations-guide.md](references/relations-guide.md#klucz-kolumny-relacji-i-keycol))
 - **Namespace**: `Firma.NazwaModulu` w **liczbie mnogiej**; ostatni segment **nie może** równać się
   `name` żadnej tabeli — inaczej `CS0118` (wzorzec: `Soneta.Towary` + encja `Towar`)
 

@@ -33,6 +33,10 @@ Wyjątki, w których etykieta trafia **na górę, nad pole edycyjne** (`Class="L
 - **Pola filtrujące listy** (pasek parametrów `Flow Class="DataBar"`) — patrz
   [collections-grids.md](collections-grids.md).
 
+`LabelTop` dziedziczy się w dół drzewa (Group/Row/Stack/Page → pola) — ustaw go raz na kontenerze;
+`LabelLeft` przerywa dziedziczenie. Nie używaj `GroupItem` do sterowania etykietą pól w `Flow`
+([ELEMENTS.md](ELEMENTS.md#flow)).
+
 ## Wizualna weryfikacja formularza (buscall)
 
 Po zdefiniowaniu lub zmianie `form.xml` (i przebudowaniu projektu `.UI`) **zweryfikuj wygląd wizualnie**

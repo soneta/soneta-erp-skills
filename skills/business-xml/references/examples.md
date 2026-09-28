@@ -306,18 +306,16 @@
     <key name="WgKodu" keyunique="true" keyprimary="true">
       <keycol name="Kod"/>
     </key>
-    <key name="WgKlienta">
-      <keycol name="Klient"/>
-      <keycol name="StatusProjektu"/>
-    </key>
-
     <col name="Kod" type="string" length="20" required="true" 
          important="true" category="Ogólne"/>
     <col name="Nazwa" type="string" length="200" required="true" 
          category="Ogólne"/>
+    <!-- klucz relacji [Klient, StatusProjektu] na <col>, nie osobnym <key> -->
     <col name="Klient" type="Kontrahent" required="true" 
          category="Ogólne"
-         relname="Projekty klienta" children="Projekty"/>
+         relname="Projekty klienta" children="Projekty">
+      <keycol name="StatusProjektu"/>
+    </col>
     <col name="Kierownik" type="Pracownik" category="Ogólne"
          relname="Projekty kierownika"/>
     <!-- nie "Status" — kolizja z publicznym członkiem klasy Row (CS0108);

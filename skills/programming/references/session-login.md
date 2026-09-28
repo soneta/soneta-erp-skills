@@ -142,6 +142,17 @@ wartości (np. filtr „bieżący operator" w oknie/widoku), zainicjuj ją z
 `Session.AuthorizationInfo.Operator` — nie z `Login.Operator`. `AuthorizationInfo` liczy
 operatora leniwie i dla właściwej sesji.
 
+**Operator jest już obiektem tej sesji** — pobrany z tabeli operatorów tej samej sesji, więc
+przypisuj go wprost do relacji „autor": `Operator = Session.AuthorizationInfo.Operator`, bez
+`Session[...]`/`Session.Get(...)`. Wzorzec `Session[Session.Login.Operator] as Operator` jest
+zbędny (i opiera się na odradzanym `Login.Operator`).
+
+**Sesja bez operatora.** Import `dbmgr` i inne sesje systemowe mają
+`AuthorizationInfo.Operator == null` oraz `Login.CurrentRole == null`. `OnAdded` ustawiające
+autora z sesji nic nie ustawi (pole wymagane → błąd importu), a kod praw bez `?.` rzuca
+`NullReferenceException`. Kod musi to obsłużyć — [rights-source.md](rights-source.md#prawa-proste-simpleright),
+dane demo: `/soneta:config` → `references/demo-data.md`.
+
 ### Właściwości informacyjne
 
 | Właściwość | Typ | Opis |

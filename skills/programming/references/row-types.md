@@ -212,6 +212,11 @@ i wyzwalanie przeliczeń (`OnEditing`/`OnDeleting`).
 opisuje artykuł *import-export-xml* w `/soneta:config`, a warstwę kodu
 [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).
 
+> **Sesja bez operatora.** `OnAdded` przypisujące autora z `Session.AuthorizationInfo.Operator`
+> ([session-login.md](session-login.md)) nic nie ustawi w sesji importu `dbmgr` — tam operatora
+> brak. Pole wymagane podaj w pliku importu jawnie, a kod praw w `CalcReadOnly`/`OnDeleting` pisz
+> null-safe (`/soneta:config` → *demo-data*, [rights-source.md](rights-source.md#prawa-proste-simpleright)).
+
 ```csharp
 public class Zgloszenie : SerwisModule.ZgloszenieRow {
 

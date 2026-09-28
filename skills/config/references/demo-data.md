@@ -24,6 +24,23 @@ programu. Import wykonuje się przy tworzeniu bazy z danymi przykładowymi — `
 - Rekordy w plikach demo zapisuje się **bez `dbversion`** — import następuje raz, przy
   tworzeniu bazy (odwrotnie niż w `*.dbinit.xml`, gdzie `dbversion` jest obowiązkowy).
 - Instalacje Premium pomijają standardowe dane demo.
+- **Dodatek nie osadza danych demo w bibliotece** — z zasobów assembly czytane są tylko
+  `*.dbinit.xml`. Plik demo dodatku trzymaj w repozytorium (np. `Demo/900.<Moduł>.gold.xml`)
+  i kopiuj do katalogu `Demo` produktu przy instalacji.
+
+## Import bez operatora — `dbmgr importxml`
+
+Sesja `dbmgr importxml` nie ma operatora ani roli (`Session.AuthorizationInfo.Operator == null`,
+`Login.CurrentRole == null`). Skutki dla kodu wiersza:
+
+- `OnAdded` ustawiające autora z sesji nic nie ustawi — przy polu wymaganym import pada. W pliku
+  wskaż autora jawnie: `<Operator where="Name=Administrator" />`.
+- Kod praw w `CalcReadOnly`/`OnDeleting` bez obsługi `null` rzuca `NullReferenceException` —
+  brak operatora ma oznaczać kontekst systemowy (`/soneta:programming` → *rights-source*,
+  sekcja o prawach prostych).
+- Atrybut `guid` działa także przy `business="true"` — ponowny import aktualizuje rekord. Import
+  po GUID przechodzi przez `CalcReadOnly`, więc wiersz tylko do odczytu dla „obcego" operatora
+  zablokowałby aktualizację.
 
 ## Odróżnij od `--sampledata` (wzorce)
 
@@ -47,6 +64,8 @@ nie mylić z katalogiem `Demo` opisanym tutaj. Szczegóły opcji `create`: `/son
 - [ ] Prefiks numeryczny stałej szerokości; numer większy niż pliki, do których się odwołujesz.
 - [ ] Sufiks `.gold`/`.silver` tylko gdy dane zależą od koloru licencji.
 - [ ] GUID-y unikalne; referencje do rekordów standardowych po GUID; bez `dbversion`.
+- [ ] Pola ustawiane w `OnAdded` z operatora sesji (np. autor) podane w pliku jawnie.
+- [ ] Plik demo dodatku w repozytorium, kopiowany do katalogu `Demo` produktu przy instalacji.
 - [ ] Detale zagnieżdżone w rodzicu, tabele z selectorem z elementem selectora
       ([import-export-xml.md](import-export-xml.md)).
 - [ ] Weryfikacja: podwójny `importxml` albo pełne `create --demo`.

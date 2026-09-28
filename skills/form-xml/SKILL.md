@@ -78,7 +78,7 @@ Kompletne pliki do skopiowania: [references/examples.md](references/examples.md)
 | `Contexts` | Warunki licencyjne, np. `"Licence.HAN \| Licence.FA"` |
 | `ViewType` | Typ widoku: `None`, `Dialog`, `Form`, `Folder` |
 | `Mode` | Tryb: `None`, `Form`, `Folder`, `Wizard`, `Modal`, `Popup`, `Frame` |
-| `DataType` | Opcjonalny. Pełna nazwa typu gdy nie wynika z nazwy pliku |
+| `DataType` | Pełna nazwa typu, gdy nie wynika z nazwy pliku. **Wymagany dla zakładki dodatku do typu z obcej biblioteki** (np. kontrahent) — [references/binding.md](references/binding.md) |
 
 ## Wspólne atrybuty elementów
 
@@ -100,6 +100,12 @@ i osobno dla klienta web i mobile). Element z `Renderable=false` zostaje **usuni
 więc nie da się go potem pokazać — dlatego `Renderable` nadaje się wyłącznie do warunków
 licencyjnych i środowiskowych, nigdy do warunków zależnych od danych. Do tych drugich służy
 `Visibility`, liczone przy każdym przeliczeniu formularza.
+
+**`RenderKey` i kolejność przeliczania** ([references/ELEMENTS.md](references/ELEMENTS.md#renderkey-i-kolejność-przeliczania)):
+- Grupa z `RenderKey` jest przy zmianie klucza **tworzona od nowa** z definicji — widoczność jej
+  elementów opisuj bindingiem `Visibility="{…}"`, nie ustawiaj jej w kodzie okna.
+- Element zależny od widoczności zakładek (własny pasek zakładek, licznik) → `Class="LateCalculate"`,
+  inaczej pokaże stan z poprzedniego żądania.
 
 ### Atrybut CaptionHtml
 
@@ -400,7 +406,10 @@ Komplet atrybutów, edycja w miejscu, `SelectedValue`/`FocusedValue`, listy ster
 
 ## Atrybut Class — najważniejsze wartości
 
-**Style etykiet:** `BoldLabel`, `CenterLabel`, `RightLabel`, `WarningLabel`, `InfoLabel`, `NoColonLabel`
+> Nieznana wartość `Class` = błąd wczytania formularza. Część klas działa tylko w web albo tylko
+> w WinForms, część nie ma żadnego efektu — [references/ELEMENTS.md](references/ELEMENTS.md#pułapki-atrybutu-class).
+
+**Style etykiet:** `BoldLabel` (w web tylko na `Label`), `CenterLabel`, `RightLabel`, `WarningLabel`, `InfoLabel`
 
 **Style czcionek:** `BoldFont`, `LargeFont`, `GreenFont`, `RedFont`
 
@@ -408,11 +417,15 @@ Komplet atrybutów, edycja w miejscu, `SelectedValue`/`FocusedValue`, listy ster
 
 **Zachowania kontenerów:** `Collapsable`, `Expandable`, `Expanded`, `Scrollable`, `FirstResponder`
 
-**Przyciski:** `MainCommand`, `SplitCommand`, `CommandText`, `CommandIco`, `CommandIcoText`
+**Przyciski:** `MainCommand`, `SplitCommand`, `CommandIco`, `CommandIcoText`; rozmiar `SmallSize`/`NormalSize`/`LargeSize` (tylko `Command`)
 
 **Wyrównanie:** `LeftAlign`, `RightAlign`, `TextRight`
 
-**Pozycjonowanie:** `GroupItem` — element na poziomie nagłówka Group (zwykle po prawej)
+**Pozycjonowanie:** `GroupItem` — w `Group` **pierwsze** dziecko trafia do linii nagłówka grupy;
+w `Flow` pierwszy widoczny `GroupItem` dokuje się w prawym górnym rogu
+([references/ELEMENTS.md](references/ELEMENTS.md#flow))
+
+**Późne obliczanie:** `LateCalculate` — element liczony po zakładkach (patrz `RenderKey` wyżej)
 
 **Etykiety:** `LabelLeft` (domyślne na formularzach), `LabelTop` — patrz
 [references/ux-design.md](references/ux-design.md)

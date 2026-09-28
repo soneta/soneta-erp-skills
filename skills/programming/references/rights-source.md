@@ -6,6 +6,9 @@
 > towarzyszący `business.xml` (skill `/soneta:business-xml`, `references/rights-tree.md`).
 > Każda nowa tabela wymaga tam wpisu, o ile nie dziedziczy praw przez relację
 > `relright="true"`/`relguided`.
+>
+> Trzeci mechanizm — **prawa proste (funkcyjne)** nadawane w rolach, bez rekordu źródła —
+> opisuje sekcja [Prawa proste `SimpleRight`](#prawa-proste-simpleright).
 
 Obiekt (zwykle **konfiguracyjny**, np. magazyn, rejestr, definicja) może być **źródłem praw**:
 operatorowi/roli przypisuje się uprawnienia do tego obiektu, co steruje dostępem do **danych
@@ -76,6 +79,33 @@ zalogowanego loginu — kod, który tworzy definicję, nadaje prawo i natychmias
 w jednym zapisie, zobaczy Denied. Nadanie praw i ich egzekwowanie rozdziel zapisem sesji
 (konsekwencje dla testów — [integration-tests.md](integration-tests.md#testy-praw-obiektowych-irightssource)).
 
+## Prawa proste `SimpleRight`
+
+Prawo funkcyjne („wolno edytować cudze oceny") bez własnej tabeli. Deklaracja atrybutem assembly
+przy typie wiersza; nazwa prawa jest jednocześnie etykietą w drzewie uprawnień roli:
+
+```csharp
+[assembly: SimpleRight(typeof(Ocena), Oceny.SimpleRightZarzadzanie,
+    Description = "Zezwala na edycję ocen innych autorów.")]
+
+public class Oceny : OcenyModule.OcenaTable {
+    public const string SimpleRightZarzadzanie = "Zarządzanie ocenami";
+
+    public static bool IsZarzadzanieGranted(Session session) =>
+        session.Login.CurrentRole?[typeof(Ocena), SimpleRightZarzadzanie] == AccessRights.Granted;
+}
+```
+
+- Typowe miejsca sprawdzenia: `OnDeleting` (rzuć `RowException`, gdy brak prawa), `CalcReadOnly`
+  (wiersz tylko do odczytu dla operatora bez prawa), warunek `IsEnabled…`/`IsVisible…` czynności.
+- `CustomType = "Worker"` grupuje prawo w drzewie uprawnień pod czynnościami.
+- To świadoma reguła funkcyjna, nie ręczne powielanie praw do tabel — zakaz warunków na
+  `AccessRight` z [safe-code.md](safe-code.md) §7.2 jej nie dotyczy.
+- **Null-safe:** sesja bez operatora (import `dbmgr`, dane demo, zadania systemowe) ma
+  `Login.CurrentRole == null` i `AuthorizationInfo.Operator == null`. Kod praw w `CalcReadOnly`/
+  `OnDeleting` bez `?.` rzuca `NullReferenceException`. Brak operatora traktuj jako kontekst
+  systemowy (pełny dostęp) — szczegóły importu: `/soneta:config` → `references/demo-data.md`.
+
 ## Checklista — moduł ze źródłem praw
 
 - [ ] Prawa dla ról nadane przy tworzeniu bazy (dbinit/demo — `/soneta:config`), nie tylko ręcznie w UI.
@@ -83,3 +113,4 @@ w jednym zapisie, zobaczy Denied. Nadanie praw i ich egzekwowanie rozdziel zapis
 - [ ] Komunikaty o braku prawa nie czytają kolumn wiersza.
 - [ ] Logika biznesowa bez warunków na `AccessRight` ([safe-code.md](safe-code.md) §7.2).
 - [ ] Testy praw wg wzorca z [integration-tests.md](integration-tests.md#testy-praw-obiektowych-irightssource).
+- [ ] Prawa proste: stała z nazwą prawa + `[assembly: SimpleRight]`; sprawdzenie null-safe (`CurrentRole?[…]`).

@@ -21,6 +21,11 @@ Po pierwszym buildzie **przeczytaj wygenerowany `*.business.cs`** — to źród�
 sygnatury konstruktorów, dostępność setterów (`readonly`), akcesory indeksów `Wg…`, metoda
 `session.Get<Moduł>()`.
 
+Plik powstaje **obok** `*.business.xml` w katalogu projektu (nie w `obj/`) i jest artefaktem
+builda — trzymaj go w `.gitignore`. Rejestracja `[assembly: ModuleType(...)]` i metoda
+rozszerzająca `session.Get<Moduł>()` są w nim wygenerowane — programista ich nie pisze
+(`/soneta:programming` → `references/new-addon-cli.md`, sekcja 7).
+
 ## Co generuje narzędzie, co pisze programista
 
 Dla definicji:
@@ -92,7 +97,9 @@ przez modele językowe analizujące schemat).
   (generator wkleja tekst do stałej C# `[Description]`); patrz [table-reference.md](table-reference.md);
 - pisz o **przeznaczeniu** tabeli, nie o pojedynczych polach;
 - dla tabel szczegółów warto zaznaczyć powiązanie z tabelą nadrzędną;
-- `description` ≠ `caption`/`tablecaption` (te są etykietami UI, nie opisem zastosowania).
+- `description` ≠ `caption`/`tablecaption` (te są etykietami UI, nie opisem zastosowania);
+- w modułach standardowych platformy: > 100 znaków i ≥ 2 zdania (tabela i moduł) — inaczej
+  weryfikacja opisów tabel nie przechodzi.
 
 ## Konstruktory klasy obiektu biznesowego
 

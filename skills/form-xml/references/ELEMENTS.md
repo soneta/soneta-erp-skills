@@ -57,6 +57,18 @@ Układ płynny z automatycznym zawijaniem.
 | `Align` | boolean | Wyrównanie elementów |
 | `Arrange` | enum | `Horizontally` lub `Vertically` |
 
+**`Class="GroupItem"` w `Flow`** (tylko `Arrange="Horizontally"`, domyślne):
+- Pierwszy widoczny element z `GroupItem` — na dowolnej pozycji — jest dokowany w **prawym górnym
+  rogu** i nie bierze udziału w zawijaniu. Kolejne elementy z `GroupItem` układają się zwyczajnie.
+- Omija go **tylko pierwszy wiersz** (węższy; wysokość `max(wiersz, GroupItem)`); kolejne wiersze
+  mają pełną szerokość. `Width="*"` w pierwszym wierszu sięga do lewej krawędzi GroupItem.
+- Gdy pierwszy element nie mieści się obok, pierwszy wiersz zawiera tylko GroupItem.
+- Działa z `Align="true"`: pierwsza linia może mieć mniej kolumn, kolejne pozostają wyrównane.
+- Typowo: stały blok w panelu filtrów —
+  `<Flow Name="FilterPanel"><Row Class="GroupItem">…lokator, przyciski…</Row> …filtry…</Flow>`.
+- Pułapka: nie dawaj `GroupItem` polom w `Flow` dla samego wyglądu etykiety — pierwsze zostanie
+  zadokowane w rogu.
+
 ### Group
 Wizualna ramka grupująca elementy.
 
@@ -65,6 +77,9 @@ Wizualna ramka grupująca elementy.
   <!-- elementy potomne -->
 </Group>
 ```
+
+`Class="GroupItem"` w `Group` działa tylko na **pierwszym** dziecku — trafia ono do linii nagłówka
+(obok captionu). Kilka pól w nagłówku → opakuj je w `<Row Class="GroupItem">` jako pierwsze dziecko.
 
 ### Page
 Zakładka formularza.
@@ -776,6 +791,43 @@ Wszystkie elementy UI dziedziczą następujące atrybuty z `uiElement`:
 | `Renderable` | string | Czy renderowalne |
 | `RenderKey` | string | Klucz renderowania |
 
+### RenderKey i kolejność przeliczania
+
+**Grupa z `RenderKey` jest przy zmianie klucza tworzona od nowa** z definicji (np. pasek przypiętych
+czynności po przypięciu pinezką, pełne odświeżenie okna). Nowe elementy mają stan z definicji —
+widoczność ustawiona na elemencie w kodzie okna (np. przy pierwszym wyświetleniu) przepada.
+Widoczność takich elementów opisuj bindingiem, liczonym przy każdej odpowiedzi:
+
+```xml
+<Group Name="MojaGrupa" RenderKey="{KluczUstawien}">
+  <Command Name="MojPrzycisk" CaptionHtml="Raporty" MethodName="Pokaz"
+           Visibility="{MojePolecenia.IsPrzyciskVisible}"/>
+</Group>
+```
+
+**`Class="LateCalculate"` — element zależny od widoczności zakładek.** `Visibility`, `Renderable`
+i `RenderKey` liczą się w jednym przebiegu, w kolejności elementów; zakładki (`Page`) — na końcu.
+Element zależny od tego, **które zakładki są widoczne** (własny pasek skrótów, licznik zakładek),
+pokazuje wtedy stan z poprzedniego żądania i odświeża się dopiero przy następnym kliknięciu.
+`LateCalculate` przenosi element na koniec przebiegu, bez zmiany miejsca w układzie:
+
+```xml
+<Bar Name="MojPasek" DataContext="Window" Class="LateCalculate"
+     RenderKey="{KluczWidocznychZakladek}">
+  <Template RenderMethodName="RenderujPasek"><Command/></Template>
+</Bar>
+```
+
+- `RenderKey` jest odczytywany raz w przebiegu — ponowne przeliczenie elementu w tym samym żądaniu
+  zwraca starą wartość; kolejność ustawiaj przez `LateCalculate`.
+- Komenda przełączająca zakładkę z takiego paska toleruje zakładkę już ukrytą (brak dopasowania =
+  brak akcji, nie wyjątek) — klient może mieć jeszcze poprzednią listę.
+
+Checklista:
+- [ ] Element w grupie z `RenderKey` → `Visibility="{…}"`, nie widoczność ustawiana w kodzie.
+- [ ] Element czyta widoczność zakładek → `Class="LateCalculate"`.
+- [ ] Scenariusz: akcja zmieniająca klucz lub widoczność stron → w tej samej odpowiedzi element ma poprawny stan.
+
 ### Appearance (formatowanie warunkowe)
 
 ```xml
@@ -828,6 +880,30 @@ Stronę kodu opisuje skill `/soneta:programming`: budowę ViewInfo (viewinfo.md)
 ---
 
 ## Wartości Class (enumSingleClass)
+
+### Pułapki atrybutu Class
+
+- **Nieznana nazwa = błąd wczytania formularza.** Wartości tylko ze zbioru klas platformy
+  (enum `UIClass`, [Form.xsd](Form.xsd)).
+- **Bez efektu** (nie stosuj w nowych formularzach): `CenterAlign` (wyrównanie tylko
+  `LeftAlign`/`RightAlign`), `NoColonLabel` (przestarzała), `Info`, `Rss`, `PrintButton`,
+  `MainPage`, `HorizontalSplitter`, `ConditionEdit`, `RangeEdit`, `MenuGroup`,
+  `FormNavigationCommand`, `SpecialCommand`, `CommandText`.
+- `LargeSize`/`SmallSize`/`NormalSize` działają tylko na `Command`; rozmiar czcionki `Label` — `LargeFont`.
+- `BoldLabel` na `Field` pogrubia etykietę tylko w WinForms; w web działa na `Label`.
+  Pogrubienie wartości edytora — `BoldFont`.
+- **Tylko web** (WinForms ignoruje): `Secondary`/`Tertiary`/`IconRight`/`RedFont`/`GreenFont`,
+  `Frozen`, `DisableSelection`, `NoGridLines`, `Chips`, `RadioTab`, `ProgressEdit`,
+  `TrafficLightEdit`, `PhoneEdit`/`SkypeEdit`/`GpsEdit`, `RatingEdit`, `SignatureEdit`,
+  `OneTimePasswordEdit`, `XmlEdit`, `DataTextEdit`, `AllowDragging`/`AllowEditing`, `Expanded`,
+  `NoTransaction`.
+- **Tylko WinForms:** `PreviewLine`, `PasswordButton`, `ArrowsSelectNext`, `PropertyGridEdit`,
+  `CheckButtonEdit` (w web zwykłe radio).
+- `LabelTop` dziedziczy się w dół drzewa (Group/Row/Stack/Page → pola); `LabelLeft` przerywa dziedziczenie.
+- `Collapsable` działa tylko w grupie z `Expandable` (pola ukrywane po zwinięciu); `Expanded` = grupa
+  zwijana startująca rozwinięta.
+- `GroupItem` — różne działanie w `Group` i `Flow` ([Flow](#flow), [Group](#group)).
+- `LateCalculate` — [RenderKey i kolejność przeliczania](#renderkey-i-kolejność-przeliczania).
 
 ### Zachowania kontenerów
 - `Collapsable` - zwijalna
