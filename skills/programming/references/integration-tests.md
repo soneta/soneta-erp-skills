@@ -481,7 +481,7 @@ public class LicenceTest : TestBase {
   (np. `*.viewform.xml`, folder, ustawienia) z **zasobu osadzonego** w assembly testowym. Domyślnie
   wycofywany po klasie; `SetConfigFilesPermanent()` zostawia go na stałe. `RemoveConfigFile(...)` usuwa.
 - `ImportBusinessXml(nazwaZasobu)` — wczytuje dane XML (np. definicje dokumentów, cechy, dane
-  przygotowawcze) przez `SessionReader(Login)`. Struktura pliku: artykuł *import-export-xml*
+  przygotowawcze) przez `SessionReader(Login)`. Struktura pliku: artykuł *import-xml*
   w `/soneta:config`; warstwa kodu: [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).
 - `RegisterDataForm(name, resName, asm)` — rejestruje formularz z zasobu (testy UI/DataForm).
 

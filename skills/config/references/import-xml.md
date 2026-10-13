@@ -1,9 +1,32 @@
-# Import i eksport danych oraz ustawień konfiguracyjnych przez pliki XML
+# Import danych i ustawień konfiguracyjnych z plików XML
 
-Platforma Soneta wczytuje i zapisuje dane przez pliki XML o wspólnym schemacie. Jeden format
-obsługuje trzy zastosowania: **import według rekordów** (dane konfiguracyjne, pliki `*.dbinit.xml`,
-bazy demo), **import przez logikę biznesową** (dokumenty i dane operacyjne z pełną walidacją)
-oraz **eksport** wskazanych rekordów wraz z powiązanymi danymi (datapack).
+Platforma Soneta wczytuje dane z plików XML o wspólnym schemacie (element `<session>`). Import
+działa w dwóch trybach: **według rekordów** (dane konfiguracyjne, pliki `*.dbinit.xml`, bazy
+demo) i **przez logikę biznesową** (dokumenty i dane operacyjne z pełną walidacją). Ten sam
+format powstaje przy eksporcie rekordów wraz z danymi powiązanymi (datapack) — opis
+w [export-xml.md](export-xml.md).
+
+## Spis treści
+
+- [Zasada nadrzędna — najpierw odczytaj rzeczywistą strukturę, potem generuj XML](#zasada-nadrzędna--najpierw-odczytaj-rzeczywistą-strukturę-potem-generuj-xml)
+- [Szkielet pliku](#szkielet-pliku)
+- [Który tryb wybrać](#który-tryb-wybrać)
+- [Identyfikacja rekordu](#identyfikacja-rekordu)
+  - [Referencje do innych rekordów](#referencje-do-innych-rekordów)
+- [Formaty wartości w elementach](#formaty-wartości-w-elementach)
+- [Atrybuty specjalne — ściąga](#atrybuty-specjalne--ściąga)
+- [Część 1 — Import według rekordów (`business="false"`, domyślny)](#część-1--import-według-rekordów-businessfalse-domyślny)
+  - [Wiersze tabel z selektorem — atrybut `class` i obowiązkowy element selectora](#wiersze-tabel-z-selektorem--atrybut-class-i-obowiązkowy-element-selectora)
+  - [Zachowanie kolekcji przy aktualizacji rekordu](#zachowanie-kolekcji-przy-aktualizacji-rekordu)
+  - [Aktualizacja historyczna — zmiana wartości „od dnia" (`date`)](#aktualizacja-historyczna--zmiana-wartości-od-dnia-date)
+  - [Cechy (features)](#cechy-features)
+  - [Nadawanie praw obiektowych — rekord `<Right>`](#nadawanie-praw-obiektowych--rekord-right)
+- [Część 2 — Import przez logikę biznesową (`business="true"`)](#część-2--import-przez-logikę-biznesową-businesstrue)
+- [Przykład: kompletny plik importu (pracownik etatowy)](#przykład-kompletny-plik-importu-pracownik-etatowy)
+- [Pliki `*.dbinit.xml` — inicjowanie i konwersja bazy](#pliki-dbinitxml--inicjowanie-i-konwersja-bazy)
+- [Testowanie plików XML](#testowanie-plików-xml)
+- [Checklisty](#checklisty)
+- [Powiązania](#powiązania)
 
 ## Zasada nadrzędna — najpierw odczytaj rzeczywistą strukturę, potem generuj XML
 
@@ -19,7 +42,7 @@ rzeczywistą strukturę docelowego obiektu z bibliotek DLL — to część zadan
   biznesowe. Stąd bierzesz **dokładne nazwy** pól, typy i dozwolone wartości (enum).
 - **`scan-forms`** (`/soneta:programming`) — zakładki, sekcje danych i **kolejność pól**
   formularza; w trybie `business="true"` kolejność wprowadzania = kolejność pól na formularzu.
-  Stąd bierzesz kolejność elementów i to, co logicznie stanowi „dane obiektu" (zakres eksportu).
+  Stąd bierzesz kolejność elementów i to, co logicznie stanowi „dane obiektu".
 
 Dopiero na tej podstawie generuj XML. Samodzielny odczyt skanami jest **domyślną i wymaganą**
 drogą; prośba do operatora o weryfikację pól to sygnał, że pominięto skan. Dostęp do DLL jest
@@ -375,40 +398,6 @@ Zasady:
 </session>
 ```
 
-## Część 3 — Eksport danych
-
-Standardowy eksport działa **wyłącznie według rekordów**. Eksportowany jest wskazany rekord
-**guidowany** oraz wszystkie rekordy powiązane relacjami guidowanymi — czyli cały **datapack**
-(zob. *datapack-guidedrow* w `/soneta:programming`):
-
-- relacje wewnętrzne (inner) — zapisywane **wewnątrz** elementu rekordu jako kolekcje,
-- relacje zewnętrzne (outer) — dopisywane jako **osobne elementy główne** tego samego pliku,
-- można dodatkowo wskazać kolekcje, relacje lub cechy do dołączenia (np. `Features`,
-  nazwy kolekcji, ścieżki rozdzielane kropką).
-
-### Ustalenie zakresu eksportu
-
-Zanim wskażesz kolekcje, relacje i cechy do dołączenia, ustal, **co logicznie stanowi „dane
-obiektu"**. Podpowiada to narzędzie **`scan-forms`** ze skilla `/soneta:programming`: zakładki
-i sekcje formularza pokazują, które podkolekcje i cechy operator widzi jako część obiektu
-(listy `Grid` = kolekcje, zakładki systemowe = załączniki/cechy). Pełny zestaw kolekcji
-i relacji rekordu wylicza `scan-props` (`/soneta:programming`). **Świadomie ogranicz zakres**
-do danych potrzebnych w bazie docelowej — nadmiarowe relacje zewnętrzne rozrastają datapack
-o kolejne rekordy powiązane, których import może wymagać dodatkowych słowników.
-
-Struktura wyniku:
-
-- każdy rekord dostaje atrybuty `id` (identyfikator lokalny) i `guid`; typ pochodny — `class`;
-- referencje zapisywane są jako `Obiekt:GUID` (rekordy guidowane, np.
-  `DokumentHandlowy:1ee7f76c-...`) albo identyfikator lokalny (rekordy nieguidowane,
-  dołączone do pliku);
-- pola `RRRR-MM-DD`, kropka dziesiętna itd. — formaty jak w tabeli wyżej;
-- skasowane rekordy można zaznaczyć wpisem `<NazwaObiektu guid="..." deleted="True" />`;
-- `fromto` ogranicza eksport kolekcji datowanych do okresu.
-
-Plik wyniku eksportu jest bezpośrednio zdatny do importu według rekordów — to podstawowy
-sposób **przenoszenia ustawień konfiguracyjnych między bazami**.
-
 ## Przykład: kompletny plik importu (pracownik etatowy)
 
 Gotowy, **zweryfikowany próbnym importem** plik: pracownik zatrudniony na umowę o pracę
@@ -524,6 +513,8 @@ Zasady:
 
 ## Powiązania
 
+- [export-xml.md](export-xml.md) — eksport rekordów i datapacku do pliku w tym samym formacie;
+  wynik eksportu jest gotowym plikiem importu według rekordów.
 - [import-xml-examples.md](import-xml-examples.md) — katalog wzorców i szkieletów dla typowych
   obiektów, wyniesiony z plików standardowych `*.dbinit.xml`; pliki w `examples/`.
 - [demo-data.md](demo-data.md) — mechanizm zasilania bazy Demo: katalog `Demo`, kolejność
@@ -531,12 +522,12 @@ Zasady:
 - `/soneta:business-xml` — definicja tabel z selectorem (enum dyskryminatora od 1, pułapka
   „Nierozpoznany typ wiersza"), relacje i kolekcje `children`.
 - `/soneta:programming` — źródła praw (*rights-source*: nowe `IRightsSource` domyślnie Denied —
-  kontekst dla rekordów `<Right>`); warstwa programistyczna importu/eksportu (klasy `SessionReader` /
-  `SessionWriter`): artykuł *sessionreader-sessionwriter*; ponadto *datapack-guidedrow*
+  kontekst dla rekordów `<Right>`); warstwa programistyczna importu (klasa `SessionReader`):
+  artykuł *sessionreader-sessionwriter*; ponadto *datapack-guidedrow*
   (rekordy guidowane, datapack), *row-types* (`OnImporting`/`OnImported`), *scan-props*
-  (inwentaryzacja pól i właściwości; wylicza też kolekcje i relacje do zakresu eksportu),
+  (inwentaryzacja pól i właściwości),
   *scan-forms* (zakładki, sekcje danych i kolejność pól formularza — kolejność wprowadzania
-  pod `business="true"`; podpowiada zakres eksportu — co stanowi „dane obiektu"),
+  pod `business="true"`),
   *integration-tests* (`ImportBusinessXml`).
 - `/soneta:form-xml` — składnia formularzy (`Page`/`Group`/`Field`/`DataContext`/`EditValue`);
   zakładki i grupy jako sekcje danych do uzupełnienia.

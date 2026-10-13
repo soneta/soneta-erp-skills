@@ -5,11 +5,11 @@ w bibliotekach. To ten sam mechanizm i ta sama składnia, co zwykły import XML 
 więc pliki standardowe są **najlepszym wzornikiem** budowy własnych plików importu — dla dodatku
 partnera (własny `*.dbinit.xml`) i dla jednorazowego wczytania danych (`dbmgr importxml`).
 Ten dokument zbiera z nich powtarzalne wzorce i gotowe szkielety dla najczęstszych obiektów.
-Składnię i atrybuty opisuje [import-export-xml.md](import-export-xml.md); tu są **przykłady**.
+Składnię i atrybuty opisuje [import-xml.md](import-xml.md); tu są **przykłady**.
 
 **Nazwy pól w przykładach są ilustracyjne** (stan na wersję, z której je wzięto). Przed użyciem
 zawsze zweryfikuj strukturę obiektu skanem `scan-props` (`/soneta:programming`) — to obowiązek
-agenta (zob. *Zasada nadrzędna* w [import-export-xml.md](import-export-xml.md)).
+agenta (zob. *Zasada nadrzędna* w [import-xml.md](import-xml.md)).
 
 ## Szybki wybór wzorca
 
@@ -54,7 +54,7 @@ Pliki złożone z wzorców standardowych; **nie były wczytywane próbnie** — 
   błędu — atrybut jest po cichu ignorowany.
 - **`versionName`**: `soneta` dla obiektów biznesowych; `system` dla obiektów infrastruktury
   (projekty runtime, szablony powiadomień, kokpity, definicje zadań systemowych). Własny dodatek
-  używa **własnej** nazwy wersjonowania (zob. sekcję dbinit w [import-export-xml.md](import-export-xml.md)).
+  używa **własnej** nazwy wersjonowania (zob. sekcję dbinit w [import-xml.md](import-xml.md)).
 - **`priority`** — piętra stosowane w plikach standardowych: 1–10 projekty runtime i jednostki,
   40–100 słowniki podstawowe (muszą poprzedzić dane, które się do nich odwołują), 200–400
   definicje, 1000–4000 role i prawa, bardzo wysokie (np. 9000+) — poprawki „na końcu”.
@@ -522,11 +522,11 @@ element o nietypowej konfiguracji, wyeksportuj istniejący i zmodyfikuj.
 - [ ] Miejsca na kod klienta z `insertonly="true"`.
 - [ ] Nowe źródła praw domknięte rekordem `Right` dla roli administratora.
 - [ ] Nazwy pól potwierdzone skanem `scan-props`; test na kopii bazy tylko na żądanie użytkownika
-      (checklisty w [import-export-xml.md](import-export-xml.md)).
+      (checklisty w [import-xml.md](import-xml.md)).
 
 ## Powiązania
 
-- [import-export-xml.md](import-export-xml.md) — składnia, atrybuty, tryby, dbinit, testowanie.
+- [import-xml.md](import-xml.md) — składnia, atrybuty, tryby, dbinit, testowanie.
 - [demo-data.md](demo-data.md) — pliki demo: ten sam format, inna kolejność i cel.
 - [config-reg.md](config-reg.md) — przenoszenie całej konfiguracji zamiast wskazanych rekordów.
 - `/soneta:programming` — *rights-source*, *datapack-guidedrow*, `scan-props`, osadzanie dbinit

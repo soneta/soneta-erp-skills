@@ -2,7 +2,7 @@
 
 Dane standardowej bazy demo to pliki XML w formacie sesji importu
 (`<session xmlns="http://www.soneta.pl/schema/business">` — składnia:
-[import-export-xml.md](import-export-xml.md)), leżące w katalogu **`Demo`** obok binariów
+[import-xml.md](import-xml.md)), leżące w katalogu **`Demo`** obok binariów
 programu. Import wykonuje się przy tworzeniu bazy z danymi przykładowymi — `dbmgr create X
 --demo gold|silver` (`/soneta:tools`), kreator baz, pierwszy start programu.
 
@@ -20,7 +20,7 @@ programu. Import wykonuje się przy tworzeniu bazy z danymi przykładowymi — `
   muszą być globalnie unikalne względem pozostałych plików.
 - **Rekordy standardowe (dbinit) powstają PRZED danymi demo** — pliki demo mogą odwoływać się
   **po GUID** do rekordów standardowych (w tym do rekordów `<Right>` i definicji z dbinit —
-  zob. [import-export-xml.md](import-export-xml.md)).
+  zob. [import-xml.md](import-xml.md)).
 - Rekordy w plikach demo zapisuje się **bez `dbversion`** — import następuje raz, przy
   tworzeniu bazy (odwrotnie niż w `*.dbinit.xml`, gdzie `dbversion` jest obowiązkowy).
 - Instalacje Premium pomijają standardowe dane demo.
@@ -52,11 +52,11 @@ nie mylić z katalogiem `Demo` opisanym tutaj. Szczegóły opcji `create`: `/son
 
 - **Szybko:** `dbmgr importxml <baza> <plik>` wykonane **×2** — drugi import weryfikuje
   idempotencję (detale zagnieżdżone w rodzicu — zob.
-  [import-export-xml.md](import-export-xml.md), *Zachowanie kolekcji przy aktualizacji rekordu*).
+  [import-xml.md](import-xml.md), *Zachowanie kolekcji przy aktualizacji rekordu*).
 - **Pełna ścieżka:** `dbmgr create X --demo gold --recreate` (ok. 2–3 min) i kontrola rekordów;
   sprzątanie `dbmgr drop X`.
 - Import do bazy wykonuj na żądanie użytkownika, na bazie testowej — zasady jak w
-  [import-export-xml.md](import-export-xml.md), *Testowanie plików XML*.
+  [import-xml.md](import-xml.md), *Testowanie plików XML*.
 
 ## Checklista — nowy plik danych demo
 
@@ -67,12 +67,12 @@ nie mylić z katalogiem `Demo` opisanym tutaj. Szczegóły opcji `create`: `/son
 - [ ] Pola ustawiane w `OnAdded` z operatora sesji (np. autor) podane w pliku jawnie.
 - [ ] Plik demo dodatku w repozytorium, kopiowany do katalogu `Demo` produktu przy instalacji.
 - [ ] Detale zagnieżdżone w rodzicu, tabele z selectorem z elementem selectora
-      ([import-export-xml.md](import-export-xml.md)).
+      ([import-xml.md](import-xml.md)).
 - [ ] Weryfikacja: podwójny `importxml` albo pełne `create --demo`.
 
 ## Powiązania
 
-- [import-export-xml.md](import-export-xml.md) — format plików, identyfikacja rekordów,
+- [import-xml.md](import-xml.md) — format plików, identyfikacja rekordów,
   kolekcje, prawa `<Right>`.
 - `/soneta:tools` — `dbmgr create --demo`, `importxml`, `drop` (artykuł *dbmgr*).
 - `/soneta:programming` — *rights-source* (prawa dla funkcji zasilanych w demo/dbinit).

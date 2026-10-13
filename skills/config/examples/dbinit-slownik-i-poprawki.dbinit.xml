@@ -12,7 +12,7 @@
   Nazwy pól są ilustracyjne — przed użyciem potwierdź je skanem scan-props (/soneta:programming).
   Plik NIE był wczytywany próbnie. Katalog wzorców: references/import-xml-examples.md.
 
-  Reguły dbinit (szczegóły: references/import-export-xml.md):
+  Reguły dbinit (szczegóły: references/import-xml.md):
     - rekord bez dbversion jest pomijany; dbversion na <session> nie jest czytany;
     - rekord wchodzi tylko, gdy dbversion > wersja bazy dla danego versionName;
     - id musi być unikalne w pliku (stąd sufiks wersji w id patcha).

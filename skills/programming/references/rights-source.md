@@ -72,7 +72,7 @@ foreach (Definicja definicja in module.Definicje) {
 - **Kod** — rekord `Right` wiążący uprawnienie (`Entitle`) ze źródłem (`Source`); wzorzec dla
   testów integracyjnych: [integration-tests.md](integration-tests.md#testy-praw-obiektowych-irightssource).
 - **dbinit/demo** — element `<Right>` w pliku importu; format i stały guid Entitle administratora
-  opisuje `/soneta:config` (import-export-xml, sekcja o nadawaniu praw obiektowych).
+  opisuje `/soneta:config` (import-xml, sekcja o nadawaniu praw obiektowych).
 
 **Cache ról a transakcja:** prawa nadane w tej samej transakcji **nie odświeżają cache ról**
 zalogowanego loginu — kod, który tworzy definicję, nadaje prawo i natychmiast je egzekwuje

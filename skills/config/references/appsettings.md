@@ -230,8 +230,8 @@ z bazy.
 
 - [/soneta:tools](../../tools/SKILL.md) — uruchamianie i zarządzanie bazami z CLI
   (`dbmgr`), ramka hostująca aplikację (`SonetaFrame`), test na żywej aplikacji (`buscall`).
-- [import-export-xml](import-export-xml.md) — przenoszenie danych i ustawień biznesowych
-  między bazami (komplementarne do konfiguracji uruchomieniowej opisanej tu).
+- [import-xml](import-xml.md) i [export-xml](export-xml.md) — przenoszenie danych i ustawień
+  biznesowych między bazami (komplementarne do konfiguracji uruchomieniowej opisanej tu).
 - [/soneta:containers](../../containers/SKILL.md) — uruchamianie komponentów w kontenerach
   (docker compose, Apple container, Helm); tam klucze z tego dokumentu ustawia się jako zmienne
   `SONETA_…` (np. `SONETA_Server__DbRegister__*`, `SONETA_ServerEndpoint`, `SONETA_URLS`).

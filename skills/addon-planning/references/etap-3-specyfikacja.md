@@ -169,7 +169,7 @@ list/cech, role i uprawnienia, ustawienia startowe modułu. Dla każdego zestawu
 - **wersję wprowadzenia** każdego rekordu (→ `dbversion`; także przyszłe konwersje ustawień).
 
 Dane te trafią do plików **`*.dbinit.xml`** osadzonych w projekcie jako **EmbeddedResource**
-— strukturę i reguły plików opisuje artykuł *import-export-xml* w skillu `/soneta:config`,
+— strukturę i reguły plików opisuje artykuł *import-xml* w skillu `/soneta:config`,
 a osadzanie w projekcie skill `/soneta:programming` (SDK osadza `*.dbinit.xml` automatycznie).
 W TODO planuje się z tej sekcji budowę i przetestowanie tych plików.
 

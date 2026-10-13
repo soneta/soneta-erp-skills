@@ -105,7 +105,7 @@ Po zamknięciu wszystkich etapów wygeneruj dokument TODO z kolejnymi krokami:
 - [ ] Struktura menu, listy, widoki
 - [ ] Formularze i zakładki (→ skill `/soneta:form-xml`)
 - [ ] Konfiguracja — słowniki, definicje, ustawienia
-- [ ] Dane konfiguracyjne inicjujące bazę (sekcja 3.14) — pliki `*.dbinit.xml` w projekcie jako EmbeddedResource; budowa pliku → skill `/soneta:config` (import-export-xml), osadzenie → `/soneta:programming` (new-addon-cli), test wczytania przez `dbmgr importxml` → `/soneta:tools`
+- [ ] Dane konfiguracyjne inicjujące bazę (sekcja 3.14) — pliki `*.dbinit.xml` w projekcie jako EmbeddedResource; budowa pliku → skill `/soneta:config` (import-xml), osadzenie → `/soneta:programming` (new-addon-cli), test wczytania przez `dbmgr importxml` → `/soneta:tools`
 - [ ] Weryfikatory — walidacja danych wprowadzanych przez operatora (→ skill `/soneta:programming`, `verifiers.md`)
 - [ ] Workery i czynności (→ skill `/soneta:programming`, `worker-extender.md`)
 - [ ] Algorytmy w transakcji serwerowej — logika zależna od równoległej pracy stanowisk (→ skill `/soneta:programming`, `events.md`)

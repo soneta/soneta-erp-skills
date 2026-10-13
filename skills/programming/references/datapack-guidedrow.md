@@ -260,5 +260,5 @@ Towar towar = towary[guid];
 ## Powiązania
 
 - Import/eksport rekordów guidowanych (datapack jako jednostka eksportu XML):
-  struktura pliku — artykuł *import-export-xml* w `/soneta:config`; warstwa kodu —
+  struktura pliku — artykuły *export-xml* i *import-xml* w `/soneta:config`; warstwa kodu —
   [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).

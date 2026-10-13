@@ -2,7 +2,7 @@
 
 Programowa obsługa importu i eksportu danych XML platformy Soneta. **Strukturę i budowę
 samego pliku XML** (tryby importu, identyfikacja rekordów, formaty wartości, atrybuty)
-opisuje artykuł *import-export-xml* w skillu `/soneta:config` — ten dokument dotyczy
+opisują artykuły *import-xml* i *export-xml* w skillu `/soneta:config` — ten dokument dotyczy
 wyłącznie warstwy kodu: klas `SessionReader` (import) i `SessionWriter` (eksport)
 z przestrzeni `Soneta.Business`.
 
@@ -115,7 +115,7 @@ bool cokolwiekZapisano = writer.Write(xmlWriter);
 Pliki inicjujące bazę muszą być **osadzone w bibliotece** dodatku — platforma wyszukuje je
 w zasobach assembly po rozszerzeniu `.dbinit.xml` i wczytuje przy tworzeniu bazy oraz przy
 konwersji do nowszej wersji (kolejność wg `priority`, filtr rekordów wg `dbversion` —
-struktura pliku: artykuł *import-export-xml* w `/soneta:config`).
+struktura pliku: artykuł *import-xml* w `/soneta:config`).
 
 - Projekt na **Soneta.Sdk** (zalecany — [new-addon-cli.md](./new-addon-cli.md)) osadza
   wszystkie pliki `**/*.dbinit.xml` jako `EmbeddedResource` **automatycznie** — wystarczy
@@ -170,13 +170,15 @@ using (var xmlReader = XmlReader.Create(stream)) {
 - [ ] Import wielu niezależnych rekordów z tolerancją błędów → `CollectExceptions` + `GetThrowedExceptions()`.
 - [ ] Przenoszenie między bazami z konfliktami GUID → `AddGuidMap` / `GuidMapPolicy`.
 - [ ] Eksport z cechami/kolekcjami spoza datapacku → subexports w `Add`.
-- [ ] Struktura pliku XML zgodna z artykułem *import-export-xml* (`/soneta:config`).
+- [ ] Struktura pliku XML zgodna z artykułami *import-xml* / *export-xml* (`/soneta:config`).
 - [ ] Weryfikacja: test integracyjny (`ImportBusinessXml`) lub żywa aplikacja (`/soneta:tools`, buscall).
 
 ## Powiązania
 
-- Artykuł *import-export-xml* w `/soneta:config` — struktura i budowa pliku XML (tryby
+- Artykuł *import-xml* w `/soneta:config` — struktura i budowa pliku XML (tryby
   importu, identyfikacja, formaty wartości, atrybuty, pliki `*.dbinit.xml`).
+- Artykuł *export-xml* w `/soneta:config` — zakres eksportu (datapack, relacje inner/outer)
+  i struktura pliku wynikowego.
 - [datapack-guidedrow.md](./datapack-guidedrow.md) — rekordy guidowane i zakres datapacku.
 - [row-types.md](./row-types.md) — `OnImporting`/`OnImported` w cyklu życia wiersza.
 - [scan-props.md](./scan-props.md) — inwentaryzacja pól i właściwości do pliku importu.

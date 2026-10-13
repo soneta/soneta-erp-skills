@@ -230,7 +230,7 @@ selectora) **zatruwa całą tabelę** — każda materializacja dowolnego wiersz
 `UnrecognizedRowException` („Selektor 0 w tabeli X nieznaleziony"), a naprawa wymaga usunięcia
 wierszy wprost w SQL (`DELETE FROM Tabela WHERE KolumnaSelectora = 0`). Reguły importu wierszy
 tabel z selectorem (atrybut `class`, obowiązkowy element selectora) opisuje `/soneta:config`
-(import-export-xml, *Wiersze tabel z selektorem*).
+(import-xml, *Wiersze tabel z selektorem*).
 
 Checklista selectora:
 - [ ] enum zaczyna się od 1 (`0` niezdefiniowane albo jawnie „puste")

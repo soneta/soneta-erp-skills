@@ -84,7 +84,7 @@ Checklista strony Opcji:
 - [ ] `CaptionHtml` z pełną ścieżką drzewa Opcji (człony `/`)
 - [ ] extender w `DataContext="{New …}"` dostarcza widoki list
 - [ ] jeżeli obiekty konfiguracyjne są źródłami praw (`IRightsSource`) — prawa nadane przy
-      tworzeniu bazy (`/soneta:programming` rights-source, `/soneta:config` import-export-xml)
+      tworzeniu bazy (`/soneta:programming` rights-source, `/soneta:config` import-xml)
 - [ ] weryfikacja wizualna na żywo: `get_configuration_folders "regexFilter=<nazwa>"` →
       `navigate_to_folder` → `take_screenshot` (buscall — `/soneta:tools`)
 

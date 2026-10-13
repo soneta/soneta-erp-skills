@@ -209,7 +209,7 @@ i wyzwalanie przeliczeń (`OnEditing`/`OnDeleting`).
 | `OnImported()` | po ustawieniu wszystkich pól importowanego obiektu | uzupełnij logikę biznesową, która nie odpaliła się przez properties |
 
 `OnImporting`/`OnImported` dotyczą importu XML **według rekordów** — mechanizm i strukturę pliku
-opisuje artykuł *import-export-xml* w `/soneta:config`, a warstwę kodu
+opisuje artykuł *import-xml* w `/soneta:config`, a warstwę kodu
 [sessionreader-sessionwriter.md](./sessionreader-sessionwriter.md).
 
 > **Sesja bez operatora.** `OnAdded` przypisujące autora z `Session.AuthorizationInfo.Operator`

@@ -25,7 +25,8 @@ są wyłącznie mechanizmy faktycznie obecne w skillu; kolejne artykuły dodawan
 
 | Potrzeba | Skill |
 |---|---|
-| **Budowa pliku XML importu/eksportu danych i ustawień** (dbinit.xml, demo, przenoszenie konfiguracji) | **/soneta:config** ([import-export-xml](references/import-export-xml.md)) |
+| **Budowa pliku XML importu danych i ustawień** (dbinit.xml, demo, tryby importu) | **/soneta:config** ([import-xml](references/import-xml.md)) |
+| **Eksport rekordów do XML** (datapack, zakres eksportu, przenoszenie konfiguracji) | **/soneta:config** ([export-xml](references/export-xml.md)) |
 | **Gotowy wzorzec pliku importu** dla typowego obiektu (słownik, definicja, rola, cecha, szablon, kokpit) | **/soneta:config** ([import-xml-examples](references/import-xml-examples.md)) |
 | Inwentaryzacja/mapa **folderów statycznych menu** (`[assembly: FolderView]`) z DLL | **/soneta:config** ([scan-folders](references/scan-folders.md)) |
 | **Konfiguracja uruchomieniowa** (porty, adresy komponentów, warstwy nadpisań `appsettings.json`) | **/soneta:config** ([appsettings](references/appsettings.md)) |
@@ -39,23 +40,30 @@ są wyłącznie mechanizmy faktycznie obecne w skillu; kolejne artykuły dodawan
 
 ## Artykuły i narzędzia
 
-### Import i eksport danych przez XML — [references/import-export-xml.md](references/import-export-xml.md)
+### Import danych przez XML — [references/import-xml.md](references/import-xml.md)
 
 Struktura i sposób budowania plików XML (`<session xmlns="http://www.soneta.pl/schema/business">`)
-do wczytywania danych i ustawień konfiguracyjnych oraz ich eksportu. Trzy części:
+do wczytywania danych i ustawień konfiguracyjnych. Dwa tryby:
 
 1. **Import według rekordów** (domyślny) — dane wprost do pól rekordów, bez logiki biznesowej;
    kolejność pól bez znaczenia; do danych konfiguracyjnych, plików `*.dbinit.xml` i bazy demo.
 2. **Import przez logikę biznesową** (`business="true"`) — ustawianie właściwości biznesowych
    z pełną walidacją; kolejność elementów jak przy wpisywaniu danych na formularzu.
-3. **Eksport** — wskazany rekord guidowany + rekordy powiązane (datapack), wynik zdatny
-   do ponownego importu; podstawa przenoszenia ustawień między bazami.
 
 Artykuł specyfikuje identyfikację rekordów (GUID, `where`, `key`, `id`), formaty wartości
 (liczby, daty, referencje, kwoty z walutą), atrybuty specjalne oraz reguły plików
 `*.dbinit.xml` (`priority`, `versionName`, `dbversion`). Zawiera też gotowy, zweryfikowany
 importem **przykład** (obiekt w modelu „root + historia") —
 [examples/import-pracownik-etatowy.xml](examples/import-pracownik-etatowy.xml).
+
+### Eksport danych do XML — [references/export-xml.md](references/export-xml.md)
+
+Eksport według rekordów: wskazany rekord guidowany + rekordy powiązane (datapack; relacje
+inner jako kolekcje w rekordzie, outer jako osobne elementy główne). Artykuł opisuje ustalanie
+zakresu eksportu (`scan-forms`/`scan-props`), strukturę pliku wynikowego (`id`, `guid`,
+`Obiekt:GUID`, `deleted`, `fromto`), wybór między eksportem XML a rejestrem konfiguracji oraz
+checklistę eksportu do przeniesienia na inną bazę. Wynik jest gotowym plikiem importu według
+rekordów.
 
 ### Katalog wzorców importu XML — [references/import-xml-examples.md](references/import-xml-examples.md)
 

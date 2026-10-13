@@ -18,7 +18,7 @@ i nie da się ich mieszać.
 | Wykrywanie różnic | tak — porównanie bazy ze zrzutem | nie |
 | Scalanie i usuwanie | tak, z kontrolą stanu każdego węzła | nie, tylko dodawanie i aktualizacja |
 | Typowe użycie | wdrożenie, audyt zmian, wersjonowanie ustawień w repozytorium | dane demo, paczka startowa, punktowa migracja rekordów |
-| Opis | ten dokument | [import-export-xml.md](import-export-xml.md) |
+| Opis | ten dokument | [import-xml.md](import-xml.md), [export-xml.md](export-xml.md) |
 
 Kryterium wyboru: **czy interesuje Cię różnica?** Jeśli chcesz wiedzieć, co zmieniło się od
 poprzedniego zrzutu, albo doprowadzić bazę do zadanego stanu — rejestr. Jeśli chcesz po prostu
@@ -310,8 +310,8 @@ Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wsp
 
 ## Powiązania
 
-- [import-export-xml.md](import-export-xml.md) — drugi mechanizm przenoszenia ustawień
-  (`<session>`, `*.dbinit.xml`, eksport rekordów powiązanych).
+- [import-xml.md](import-xml.md) i [export-xml.md](export-xml.md) — drugi mechanizm przenoszenia
+  ustawień (`<session>`, `*.dbinit.xml`, eksport rekordów powiązanych).
 - [/soneta:tools](../../tools/SKILL.md) — operacje na bazach z wiersza poleceń: kopia
   bezpieczeństwa przed scaleniem i sprawdzenie wersji bazy z checklist powyżej, a także
   weryfikacja efektów na uruchomionej aplikacji.
