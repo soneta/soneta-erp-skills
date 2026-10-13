@@ -87,6 +87,8 @@ i cech (subexports), znaczniki usunięć i okres `FromTo` opisuje artykuł *sess
 - [config-reg.md](config-reg.md) — rejestr konfiguracji: porównanie i scalanie stanu
   konfiguracji między bazami (`*.reg.json`).
 - [import-xml-examples.md](import-xml-examples.md) — wzorce plików dla typowych obiektów.
+- [export-excel.md](export-excel.md) — eksport listy do Excela/CSV na właściwościach biznesowych
+  (plik do importu przez logikę biznesową z poziomu listy).
 - `/soneta:programming` — *datapack-guidedrow* (rekordy guidowane, datapack, relacje inner/outer),
   *sessionreader-sessionwriter* (`SessionWriter`), *scan-props* i *scan-forms* (zakres eksportu).
 - `/soneta:tools` — `dbmgr` (kopia bazy przed importem wyeksportowanego pliku).
