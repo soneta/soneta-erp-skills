@@ -67,6 +67,16 @@ użyj rejestru konfiguracji — [config-reg.md](config-reg.md) (porównanie kryt
 Plik w tym formacie zapisuje klasa `SessionWriter` — dodawanie rekordów, dołączanie kolekcji
 i cech (subexports), znaczniki usunięć i okres `FromTo` opisuje artykuł *sessionreader-sessionwriter* w `/soneta:programming`.
 
+## Eksport przez MCP
+
+Metoda `export_business_xml` pakietu „Import i eksport danych" zapisuje do XML obiekty wskazane
+identyfikatorami `ids`. Przyjmuje tylko obiekty wcześniej pokazane agentowi (`search_object`,
+`retrieve_list`, `open_form`) i tylko z tabel z GUID-em. `subexports` dołącza kolekcje
+i datapacki powiązane, np. `["Pozycje"]`. `xmlFileName` każe klientowi zapisać wynik do pliku.
+Eksport jest zawsze według rekordów, w osobnej sesji tylko do odczytu. Wynik wczytuje
+`import_business_xml`, najpierw z `testing=true`. Wspólne zasady:
+[mcp-import-export.md](mcp-import-export.md).
+
 ## Checklista — eksport do przeniesienia na inną bazę
 
 - [ ] Eksportowany rekord jest guidowany (rekordy nieguidowane tylko w jego datapacku).
@@ -84,6 +94,7 @@ i cech (subexports), znaczniki usunięć i okres `FromTo` opisuje artykuł *sess
 
 - [import-xml.md](import-xml.md) — format pliku, identyfikacja rekordów, formaty wartości,
   atrybuty specjalne, tryby importu, dbinit, testowanie.
+- [mcp-import-export.md](mcp-import-export.md) — eksport i import XML przez MCP, tryb próbny.
 - [config-reg.md](config-reg.md) — rejestr konfiguracji: porównanie i scalanie stanu
   konfiguracji między bazami (`*.reg.json`).
 - [import-xml-examples.md](import-xml-examples.md) — wzorce plików dla typowych obiektów.

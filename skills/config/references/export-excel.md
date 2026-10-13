@@ -23,6 +23,7 @@ biznesową, z pełną walidacją, tak jak operator na formularzu.
 ## Spis treści
 
 - [Skąd uruchomić eksport i jakie są opcje](#skąd-uruchomić-eksport-i-jakie-są-opcje)
+  - [Eksport przez MCP](#eksport-przez-mcp)
 - [Budowa pliku](#budowa-pliku)
 - [Zasady budowy ścieżek w nagłówku](#zasady-budowy-ścieżek-w-nagłówku)
 - [Pola kluczowe — identyfikacja przy imporcie](#pola-kluczowe--identyfikacja-przy-imporcie)
@@ -52,6 +53,23 @@ webowej kreator eksportu oferuje formaty CSV, XLSX i XML. XML to osobny mechaniz
 Użytkownicy pulpitu (aplikacja webowa dla pracowników i kontrahentów) dostają zawsze tytuły
 kolumn, bez ścieżek. Jeśli konfiguracja programu rejestruje eksporty w historii zmian, każdy
 eksport jest odnotowywany, a w zależności od ustawienia także z treścią pliku.
+
+### Eksport przez MCP
+
+Metoda `export_folder_list` eksportuje listę folderu programu (`programFolderPath`, np.
+`CRM/Kontrahenci`) bez otwierania jej operatorowi. Najważniejsze parametry:
+
+| Parametr | Znaczenie |
+|---|---|
+| `filters` | `["ścieżka=wartość"]`, np. `"Kod=*ABC"`, `"Data=2026-01-01..2026-06-30"`; lista startuje od domyślnych wartości filtrów widoku |
+| `fields` | **ścieżki kolumn w podanej kolejności**, zamiast kolumn listy; w ten sposób zbudujesz szablon importu (klucz, kolejność formularza) bez zmiany układu listy |
+| `sort` | np. `"Kod"`, `"Data desc, Kod"` |
+| `format` | `xlsx` (domyślnie) albo `csv` |
+| `headerMode` | `path` (domyślnie, plik do importu) albo `caption` |
+| `dataFileName` | klient zapisze plik; bez niego wynik wraca w Base64 z limitem 1 MB |
+
+Eksportowane są wszystkie wiersze po filtrach, a nie jedna strona. Wymaga prawa „Lista - Excel"
+i prawa roli do danych. Wspólne zasady: [mcp-import-export.md](mcp-import-export.md).
 
 ## Budowa pliku
 
@@ -186,7 +204,7 @@ podlisty w arkuszu:
 - Podlista z elementami różnych typów (np. płatności) może wymagać kolumny `Kolekcja:Class`.
 
 Szczegóły wczytywania podlist i kolumny sterujące importem (`!Action`, `!Ignore`, aktualizacja
-historii) opisuje dokument importu.
+historii) opisuje [import-excel.md](import-excel.md).
 
 ## Formaty wartości
 
@@ -217,6 +235,9 @@ historii) opisuje dokument importu.
 
 ## Powiązania
 
+- [mcp-import-export.md](mcp-import-export.md) — eksport i import list przez MCP, import próbny.
+- [import-excel.md](import-excel.md) — import pliku do listy: identyfikacja, akcje, weryfikacja,
+  raportowanie błędów, migracja.
 - [export-xml.md](export-xml.md) — eksport rekordów do XML (datapack, według rekordów, bez
   logiki biznesowej); inny format i inne zastosowanie.
 - [config-reg.md](config-reg.md) — ustawienia list (`tableviews/`) w magazynie plików

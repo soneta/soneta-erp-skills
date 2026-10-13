@@ -41,6 +41,39 @@ scalenie.**
 porównanie drugiej bazy z tym plikiem. Znaczniki wyniku czyta się z perspektywy bazy
 porównywanej: `[+]` jest tylko w niej, `[-]` jest tylko w pliku, `[*]` jest w obu, ale inaczej.
 
+## Te same operacje z wiersza poleceń (`dbmgr`) i przez MCP
+
+| Operacja | `dbmgr configreg …` | Metoda MCP |
+|---|---|---|
+| Eksport całej bazy | `export <db>` | `export_configreg` bez `paths` |
+| Eksport gałęzi / wybranych elementów | `export <db> -p <ścieżka>`; `concat <db> -s <ścieżka> [--linked\|--linked-one-level]` | `export_configreg` z `paths` i `linked` (`none`/`all`/`oneLevel`) |
+| Zmiany względem zrzutu | `diff <db> <plik>` | `export_configreg` z `compareToRegJson` / `compareToRegistry` (zwraca tylko zmiany i `changes`) |
+| **Próba scalenia** | `merge <db> <plik>` (domyślnie bez zapisu) | `import_configreg` z `testing=true` |
+| Scalenie z zapisem | `merge <db> <plik> --save` | `import_configreg` |
+| Scalenie dwóch plików bez bazy | `merge … --dump-merged <plik>` (scala z bazą, wynik do pliku) | `import_configreg` z `intoRegJson` / `intoRegistry` → `resultRegJson` |
+| Podgląd drzewa | `show <db> [ścieżka]` | — |
+| Zapis zrzutu na liście rejestrów w bazie | — | `export_configreg` z `saveAsRegistry` |
+
+Opcje `dbmgr` opisuje skill `/soneta:tools` (artykuł *dbmgr*, sekcja „Rejestr konfiguracji").
+Wspólne zasady metod MCP (prawa, pliki, porównanie prób) opisuje
+[mcp-import-export.md](mcp-import-export.md). Obie drogi wymagają uprawnień jak folder
+„Zarządzanie konfiguracją" (MCP: rola pełnego dostępu).
+
+**Analiza scalenia** jest wspólna dla `dbmgr configreg merge` i `import_configreg`. Jej błędy
+**blokują zapis**:
+
+| Rodzaj | Poziom | Znaczenie |
+|---|---|---|
+| `konflikt` | błąd | węzeł zmieniony po obu stronach; rozstrzyganie nie jest dokończone |
+| `strict-odrzucony` | błąd | kolekcja `$strict` ma po scaleniu wiersze w stanie innym niż dodany/bez zmian — zapis zostałby odrzucony |
+| `kasowanie-i-dodanie` | błąd | ten sam wiersz jednocześnie usunięty i dodany (nowy GUID) — zob. [Dlaczego wiersz nie został dopasowany](#dlaczego-wiersz-nie-został-dopasowany) |
+| `strict` | ostrzeżenie | plik deklaruje kolekcję `$strict`: wiersze nieobecne w pliku zostaną w bazie **usunięte** |
+
+Próba (`merge` bez `--save`, `testing=true`) wykonuje pełne scalenie i analizę, a zwraca
+liczby węzłów dodanych, zmienionych, usuniętych i konfliktów wraz z listą zmian
+(`ścieżka`, `stan`). `dbmgr` pozwala wymusić zapis mimo błędów (`--force`). Nie rób tego na
+bazie operacyjnej.
+
 ## Co wchodzi do rejestru — struktura drzewa
 
 ```text
@@ -301,7 +334,8 @@ Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wsp
 
 - [ ] Wykonana kopia bezpieczeństwa bazy docelowej — scalenie omija część walidacji biznesowej
       i nie ma operacji odwrotnej.
-- [ ] Scalenie uruchomione najpierw **bez zapisu** i przeczytane wyniki, nie tylko liczby.
+- [ ] Scalenie uruchomione najpierw **bez zapisu** (w programie, `dbmgr configreg merge` bez
+      `--save` albo `import_configreg` z `testing=true`) i przeczytane wyniki, nie tylko liczby.
 - [ ] Zero ostrzeżeń blokujących; jeśli są — przyczyna zrozumiana, a nie obejściem wymuszona.
 - [ ] Ostrzeżenia o kolekcjach `$strict` przejrzane pod kątem tego, **co zostanie usunięte**.
 - [ ] Lista zmian obejrzana w całości, a nie w domyślnym przycięciu.
@@ -312,6 +346,8 @@ Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wsp
 
 - [import-xml.md](import-xml.md) i [export-xml.md](export-xml.md) — drugi mechanizm przenoszenia
   ustawień (`<session>`, `*.dbinit.xml`, eksport rekordów powiązanych).
+- [mcp-import-export.md](mcp-import-export.md) — metody MCP `export_configreg` / `import_configreg`
+  i porównanie trybów próbnych.
 - [/soneta:tools](../../tools/SKILL.md) — operacje na bazach z wiersza poleceń: kopia
   bezpieczeństwa przed scaleniem i sprawdzenie wersji bazy z checklist powyżej, a także
   weryfikacja efektów na uruchomionej aplikacji.

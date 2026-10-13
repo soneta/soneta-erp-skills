@@ -70,7 +70,12 @@ z konfiguracji (przydatne, gdy zdefiniowana jest dokładnie jedna baza).
 | `restoretxt` | `<db> <plik.zip>` | Odtworzenie z backupu tekstowego |
 | `resetadminpwd` | `<db>` | Reset hasła administratora bazy |
 | `licence` | `<db> <licencja>` | Dodaje licencję (numer / plik xml / zip) |
-| `importxml` | `<db> <plik.xml>` | Import danych z pliku XML |
+| `importxml` | `<db> <plik.xml>` | Import danych z pliku XML (zapis od razu, bez trybu próbnego) |
+| `configreg export` | `<db>` | Zrzut rejestru konfiguracji do `*.reg.json` (cały lub gałąź `-p`) |
+| `configreg concat` | `<db>` | Zrzut wybranych węzłów (`-s`), opcjonalnie z powiązanymi |
+| `configreg show` | `<db> [ścieżka]` | Wypisuje gałąź rejestru bazy |
+| `configreg diff` | `<db> <plik.reg.json>` | Porównuje bazę ze zrzutem, bez zapisu |
+| `configreg merge` | `<db> <plik.reg.json>` | Scala zrzut z bazą i analizuje; **próba**, dopóki nie podasz `--save` |
 | `extlist` | `<db>` | Lista rozszerzeń (extensions) bazy |
 | `extupdate` | `<db> <plik>` | Dodaje/aktualizuje rozszerzenie |
 | `extremove` | `<db> <plik>` | Usuwa rozszerzenie |
@@ -276,7 +281,44 @@ dbmgr analyse   exampleDb output.xml --category --name --withdb  # analiza wg ka
 dbmgr compile   exampleDb                                        # kompilacja algorytmów
 ```
 
+- `importxml` wczytuje plik w formacie `<session>` (opis: skill `/soneta:config`, artykuł
+  *import-xml*) i **od razu zapisuje** dane. Nie ma trybu próbnego. Po imporcie kompiluje
+  algorytmy bazy, chyba że podasz `--skip-compile`. Próbę wykonuj na kopii bazy (`backup`/`restore`)
+  albo przez metodę MCP `import_business_xml` z `testing=true` (artykuł *mcp-import-export*
+  w `/soneta:config`).
 - `analyse`: `--category` (wg kategorii), `--name` (wg nazwy), `--withdb` (dołącz analizę bazy).
+
+## Rejestr konfiguracji (`configreg`)
+
+Operacje na rejestrze konfiguracji (`*.reg.json`) bez uruchamiania programu. Format pliku,
+ścieżki węzłów i `$strict` opisuje artykuł *config-reg* w `/soneta:config`.
+
+```bash
+dbmgr configreg export exampleDb                                   # cały rejestr → exampleDb.reg.json
+dbmgr configreg export exampleDb -p Business/FeatureDefs -f cechy.reg.json   # jedna gałąź
+dbmgr configreg concat exampleDb -s Business/FeatureDefs/Name=CECHA --linked  # wybrane węzły + powiązane
+dbmgr configreg show   exampleDb Business/FeatureDefs                 # podgląd gałęzi bazy
+dbmgr configreg diff   exampleDb wzorzec.reg.json                     # różnice baza ↔ zrzut
+dbmgr configreg merge  exampleDb wzorzec.reg.json                     # PRÓBA: scalenie + analiza
+dbmgr configreg merge  exampleDb wzorzec.reg.json --save              # zapis do bazy
+```
+
+| Opcja | Komendy | Znaczenie |
+|---|---|---|
+| `-f\|--file <plik>` | `export`, `concat` | plik wynikowy; `-` = stdout; domyślnie `<db>.reg.json` / `<db>-concat.reg.json` |
+| `-p\|--path <ścieżka>` | `export` | gałąź rejestru zamiast całości |
+| `-s\|--select <ścieżka>` | `concat` | węzeł do zrzutu (powtarzalna); `#N` = N-ty element kolekcji |
+| `--linked` / `--linked-one-level` | `concat` | dołącza wiersze powiązane (wszystkie poziomy / jeden poziom) |
+| `--save` | `merge` | zapisuje wynik do bazy; bez niej `merge` jest próbą |
+| `--force` | `merge` | zapisuje mimo błędów analizy — **unikaj** |
+| `--dump-merged <plik>` | `merge` | zapisuje scalony rejestr do pliku zamiast do bazy |
+| `--tree` | `merge`, `diff` | wypisuje całe drzewo wyniku |
+| `-o\|--output table\|json` | `merge`, `diff`, `concat` | format podsumowania; `json` do skryptów |
+| `-n\|--limit <N>` | `merge`, `diff`, `concat` | ile zmian wypisać (domyślnie 50, `0` = wszystkie) |
+
+`merge` najpierw analizuje plik źródłowy (ostrzeżenie `strict`: plik usunie wiersze nieobecne
+w nim), potem wynik scalenia. Przy błędach analizy (`konflikt`, `strict-odrzucony`,
+`kasowanie-i-dodanie`) `--save` kończy się kodem 1 bez zapisu.
 
 ## Diagnostyka i wyjście dla skryptów
 

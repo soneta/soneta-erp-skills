@@ -466,8 +466,24 @@ ekranu przez `buscall` — `/soneta:tools`) i potwierdź, że dane zmieniły si�
 (opis narzędzia: `/soneta:tools`):
 
 ```bash
-dbmgr importxml <NazwaBazy> plik.xml
+dbmgr importxml <NazwaBazy> plik.xml                # zapis od razu; potem kompilacja algorytmów
+dbmgr importxml <NazwaBazy> plik.xml --skip-compile # bez kompilacji
 ```
+
+`dbmgr importxml` **nie ma trybu próbnego**: wczytuje plik i od razu zapisuje dane. Próba bez
+zapisu jest możliwa przez MCP:
+
+| Droga | Zapis | Co sprawdza | Wynik |
+|---|---|---|---|
+| `dbmgr importxml` | od razu | wszystko, łącznie z zapisem | pierwszy błąd przerywa |
+| MCP `import_business_xml` z `testing=true` | **nie** | wczytanie i logika pól (zbiera wszystkie błędy, nie przerywa na pierwszym), zdarzenia sesji, weryfikatory (błędy i ostrzeżenia) | `errors`, `warnings` jako `{table, object, message}` |
+| MCP `import_business_xml` | tak, gdy brak błędów weryfikatorów | jak wyżej + zapis | `message`, `warnings` |
+
+Próba MCP **nie obejmuje zapisu**: numeracji dokumentów nadawanej przy zapisie, unikalności
+w bazie ani kolizji z innymi użytkownikami. Plik, który przeszedł próbę, wymaga więc jeszcze
+importu na kopii bazy. Import MCP działa w nowej, izolowanej sesji. Rodzaj danych (operacyjne
+czy konfiguracyjne, z odpowiednim prawem roli) program ustala po elementach pod `<session>`.
+Wspólne zasady metod: [mcp-import-export.md](mcp-import-export.md).
 
 Zasady:
 
@@ -506,6 +522,7 @@ Zasady:
 - [ ] Nazwy pól/typy/struktura (pole vs kolekcja vs subrow) zweryfikowane skanem przez agenta — read-only, nie zlecone użytkownikowi.
 
 **Testowanie na bazie — tylko na wyraźne żądanie użytkownika (wtedy wykonuje agent, nie operator):**
+- [ ] Próba bez zapisu przez MCP `import_business_xml` z `testing=true` (zero `errors`), jeśli MCP jest dostępne.
 - [ ] Próbne wczytanie na bazie testowej/kopii: `dbmgr importxml <baza> plik.xml` (→ `/soneta:tools`).
 - [ ] Ponowne wczytanie nie duplikuje rekordów (idempotencja identyfikacji — **podwójny** `dbmgr importxml` + policzenie rekordów; szczególnie detale zagnieżdżone).
 - [ ] Efekt odczytany z programu **przez agenta** (buscall: odczyt pól / zrzut ekranu → `/soneta:tools`) lub testem
@@ -515,6 +532,7 @@ Zasady:
 
 - [export-xml.md](export-xml.md) — eksport rekordów i datapacku do pliku w tym samym formacie;
   wynik eksportu jest gotowym plikiem importu według rekordów.
+- [mcp-import-export.md](mcp-import-export.md) — import i eksport XML przez MCP, tryb próbny.
 - [import-xml-examples.md](import-xml-examples.md) — katalog wzorców i szkieletów dla typowych
   obiektów, wyniesiony z plików standardowych `*.dbinit.xml`; pliki w `examples/`.
 - [demo-data.md](demo-data.md) — mechanizm zasilania bazy Demo: katalog `Demo`, kolejność

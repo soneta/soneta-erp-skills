@@ -4,15 +4,15 @@ description: >
   Konfiguracja platformy Soneta (enova365, Triva) — dla partnerów i zespołu Soneta:
   (A) IMPORT/EKSPORT DANYCH I USTAWIEŃ przez XML —
   element session, import według rekordów (*.dbinit.xml, demo) i przez logikę biznesową
-  (business="true"), eksport datapacku, GUID; eksport listy do Excela/CSV; (B) `scan-folders` — foldery menu
-  (`[assembly: FolderView]`) z DLL; (C) KONFIGURACJA URUCHOMIENIOWA `appsettings.json` — porty i adresy,
+  (business="true"), eksport datapacku, GUID; import/eksport list Excel/CSV; (B) `scan-folders` — foldery menu
+  (`[assembly: FolderView]`) z DLL; (C) KONFIGURACJA URUCHOMIENIOWA `appsettings.json` — porty,
   warstwy nadpisań (`-c`, `SONETA_`, CLI); (D) REJESTR KONFIGURACJI (ConfigReg,
   „Zarządzanie konfiguracją") — `*.reg.json`, porównanie i scalanie,
   sigile (`$strict`, `#klucz`, `@atrybut`). Używaj gdy użytkownik: (1) buduje XML importu,
-  pyta o atrybuty guid/where/key/id/business/deleted/dbversion; (2) eksportuje rekordy guidowane;
-  (3) mapuje menu z DLL; (4) pyta o klucz `appsettings.json`; (5) pyta o rejestr konfiguracji,
-  debuguje `*.reg.json` albo przenosi ustawienia między bazami; (6) eksportuje listę do
-  Excela/CSV. Kod importu → /soneta:programming;
+  pyta o atrybuty guid/where/key/id/business/dbversion; (2) eksportuje rekordy guidowane;
+  (3) mapuje menu z DLL; (4) pyta o `appsettings.json`; (5) pyta o rejestr konfiguracji,
+  debuguje `*.reg.json` albo przenosi ustawienia między bazami; (6) importuje/eksportuje
+  listę Excel/CSV (migracja). Kod importu → /soneta:programming;
   operacje na bazie z CLI → /soneta:tools.
 ---
 
@@ -29,6 +29,8 @@ są wyłącznie mechanizmy faktycznie obecne w skillu; kolejne artykuły dodawan
 | **Budowa pliku XML importu danych i ustawień** (dbinit.xml, demo, tryby importu) | **/soneta:config** ([import-xml](references/import-xml.md)) |
 | **Eksport rekordów do XML** (datapack, zakres eksportu, przenoszenie konfiguracji) | **/soneta:config** ([export-xml](references/export-xml.md)) |
 | **Eksport listy do Excela/CSV** (ścieżki w nagłówku, pola kluczowe, kolejność kolumn, podlisty) | **/soneta:config** ([export-excel](references/export-excel.md)) |
+| **Import z Excela/CSV do listy, migracja z innego systemu** (akcje, kolumny specjalne, weryfikacja, raport błędów) | **/soneta:config** ([import-excel](references/import-excel.md)) |
+| **Import/eksport przez MCP** (`export_folder_list`, `import_folder_list`, `*_business_xml`, `*_configreg`), **import próbny** `testing=true` | **/soneta:config** ([mcp-import-export](references/mcp-import-export.md)) |
 | **Gotowy wzorzec pliku importu** dla typowego obiektu (słownik, definicja, rola, cecha, szablon, kokpit) | **/soneta:config** ([import-xml-examples](references/import-xml-examples.md)) |
 | Inwentaryzacja/mapa **folderów statycznych menu** (`[assembly: FolderView]`) z DLL | **/soneta:config** ([scan-folders](references/scan-folders.md)) |
 | **Konfiguracja uruchomieniowa** (porty, adresy komponentów, warstwy nadpisań `appsettings.json`) | **/soneta:config** ([appsettings](references/appsettings.md)) |
@@ -66,6 +68,26 @@ eksportu, zasady budowy ścieżek (`A.B`, `Obiekt:Klucz`, `Obiekt:Class`, sufiks
 złożonych, `//`), pola kluczowe identyfikujące obiekty przy imporcie (`Guid`, `ID`, klucze
 unikalne), kolejność kolumn zgodną z formularzem, podlisty (`Kolekcja:Pole` i wiersze
 kontynuacji) oraz checklistę eksportu pod ponowny import.
+
+### Import z Excela i CSV do list (migracja) — [references/import-excel.md](references/import-excel.md)
+
+Wczytanie arkusza lub CSV do listy przez właściwości biznesowe z pełną walidacją, także migracja
+z innych systemów. Artykuł opisuje miejsca uruchomienia, budowę pliku (pierwszy arkusz, separator
+i kodowanie CSV), identyfikację obiektów (`Guid`, `ID`, klucze unikalne), akcje (`!Action`
+Add/Edit/EditAdd/Delete, także dla odwołań), odwołania i ich tworzenie, formaty wartości, podlisty,
+dane historyczne (`!Update`…), kolumny specjalne (`!Ignore`, `!Problem`, `!Thread`, `//`),
+przebieg (jedna transakcja „wszystko albo nic", paczki, wątki), etapy weryfikacji obiektów,
+raportowanie błędów (log „Excel", raport „Problem", tabela komunikatów), opcje konfiguracji,
+procedurę migracji i checklisty.
+
+### Import i eksport przez MCP — [references/mcp-import-export.md](references/mcp-import-export.md)
+
+Metody pakietu „Import i eksport danych" dla agentów AI: lista ↔ Excel/CSV, XML, rejestr
+konfiguracji. Artykuł porównuje **tryby próbne** (`testing=true`): import listy wykonuje zapis
+wycofywany na końcu, XML kończy przed zapisem, a rejestr robi analizę scalenia. Opisuje też
+odpowiedzi (`errors`, `warnings`, numeracja wierszy), przekazywanie plików (`…FileName`, limit
+1 MB), prawa i ustawienia pakietu, procedurę importu z próbą i checklistę. Odpowiedniki
+w wierszu poleceń (`dbmgr importxml`, `dbmgr configreg`) opisuje `/soneta:tools`.
 
 ### Eksport danych do XML — [references/export-xml.md](references/export-xml.md)
 
