@@ -41,18 +41,124 @@ scalenie.**
 porównanie drugiej bazy z tym plikiem. Znaczniki wyniku czyta się z perspektywy bazy
 porównywanej: `[+]` jest tylko w niej, `[-]` jest tylko w pliku, `[*]` jest w obu, ale inaczej.
 
-## Co wchodzi do rejestru
+## Co wchodzi do rejestru — struktura drzewa
 
-Rejestr obejmuje **tabele konfiguracyjne z rekordami identyfikowanymi GUID-em** oraz, obok nich,
-trzy gałęzie szczególne:
+```text
+Register
+├── <Moduł>                    Business, Core, CRM, Handel, Kadry, … (także moduły dodatków)
+│   ├── Config                 ustawienia modułu: węzły i atrybuty @…
+│   └── <Tabela>               tabela konfiguracyjna — tablica wierszy (przyrostowa)
+│       └── { wiersz }         pola (#klucze najpierw), podwiersze, listy podrzędne ($strict)
+├── Addins
+│   └── <nazwa dodatku>        @Version, @DataHash, @UseInCommon, @UseInServer + treść biblioteki
+└── Storage
+    └── <folder>/…/<plik>[,<kontekst>]    magazyn plików (wydruki, układy list, formularze…)
+```
 
-- **konfigurację modułów** — węzły ustawień wraz z ich atrybutami,
-- **magazyn plików** (definicje wydruków, szablony, pliki pomocnicze) wraz ze strukturą folderów,
-- **dodatki** zarejestrowane w bazie.
+Kolejność pod korzeniem: wszystkie moduły sesji, potem `Addins`, na końcu `Storage`. Moduł
+o nazwie `Storage` występuje jako `StorageModule`, żeby nie kolidował z gałęzią magazynu.
 
-Poza rejestrem zostają: dane transakcyjne, tabele oznaczone przez producenta jako wyłączone
-oraz **pojedyncze pola wrażliwe i lokalne** — hasła, historia haseł, hasze licencji,
-identyfikatory instalacji. Tabele bez ani jednego rekordu w ogóle nie pojawiają się w drzewie.
+### Moduły i tabele
+
+Węzeł modułu nosi jego nazwę z modelu danych. Pod nim, poza `Config`, są tabele spełniające
+**łącznie** trzy warunki:
+
+1. tabela jest **konfiguracyjna**,
+2. jej rekordy są **identyfikowane GUID-em**,
+3. nie jest tabelą podrzędną, czyli GUID nie jest dziedziczony z wiersza nadrzędnego.
+
+W indeksie modułów skilla `/soneta:programming` (`data/props/<Moduł>/INDEX.md`, opis
+w artykule `scan-modules.md`) odpowiada to kolumnom `Konfig = konfig` i `Guided = root`.
+Pola tabel opisuje plik `data/props/<Moduł>/<RowType>.md`.
+
+| Przypadek | Gdzie w drzewie |
+|---|---|
+| Tabela podrzędna (`Guided = child: …`) | nie ma jej pod modułem; jej wiersze są listą `$strict` wewnątrz wiersza nadrzędnego |
+| Relacja domyślna do tabeli konfiguracyjnej lub buforowanej | lista podrzędna `$strict` w wierszu nadrzędnym |
+| Tabela o strukturze drzewa (relacja do samej siebie) | pod tabelą tylko korzenie; dzieci są zagnieżdżone w rodzicach |
+| Pole typu podwiersz | obiekt zagnieżdżony w wierszu |
+| Tabela bez rekordów | nie występuje |
+| Wyjątki producenta | tabela ukryta mimo spełnienia warunków (np. `CfgNodes`, pokazywana jako `Config`) albo dołączona mimo ich niespełnienia (np. słownik `Dictionary`) |
+
+Kolejność pól w wierszu: pola klucza unikalnego, `Parent`/`Owner`/`TableName`, `Kod`/`Symbol`,
+`Name`/`Nazwa`, `FullName`/`Opis`, `Guid`, potem pozostałe.
+
+### `Config` — ustawienia modułu
+
+Gałąź występuje w modułach, które mają ustawienia. To odwzorowanie drzewa ustawień, edytowanych
+w programie w opcjach (Narzędzia → Opcje): podwęzły jako obiekty, wartości jako `@atrybuty`,
+np. `Business/Config/mail/@EMailAddress`. Pełna lista węzłów zależy od wersji i modułów, więc
+ten dokument jej nie opisuje. Ustal ją podglądem drzewa. Producent może wyłączyć z rejestru
+pojedyncze ustawienia. Pliki magazynu są fizycznie przechowywane w ustawieniach modułu
+`Business`, ale w rejestrze pojawiają się wyłącznie w gałęzi `Storage`, nie pod `Config`.
+
+### `Addins` — dodatki
+
+Jeden węzeł na dodatek zarejestrowany w bazie, nazwany jak dodatek. Zawiera atrybuty
+`@Version`, `@DataHash`, `@UseInCommon` (używany w programie), `@UseInServer` (używany na
+serwerze) oraz treść biblioteki (binarnie, zwykle jako `$blob`).
+
+### `Storage` — magazyn plików
+
+To pliki z konfiguracji programu (**Opcje → Systemowe → Pliki**): ustawienia i definicje, które użytkownicy zapisali
+w bazie. Wzorce standardowe dostarczane z programem nie są przechowywane w bazie. Ścieżka
+w rejestrze odpowiada ścieżce w magazynie, ale:
+
+- **całość jest zapisana małymi literami** (`Reports/HandelZakres-Dokumenty` →
+  `reports/handelzakres-dokumenty`),
+- nazwa węzła ma najwyżej 40 znaków: dłuższa nazwa folderu jest obcinana od końca,
+  a dłuższa nazwa pliku od początku,
+- wersja językowa (inna niż polska) leży w podfolderze z kodem języka przed nazwą pliku, np.
+  `reports/…/en/dokumenty.xml`,
+- pliki `.xml`, `.txt`, `.repx`, `.aspx` są zapisywane jako tekst, a pozostałe (np. `.dotx`,
+  `.repx.cs`, `.json`) binarnie.
+
+Jeden plik może mieć osobną treść dla każdego **kontekstu** (poziomu ustawień). Kontekst
+zapisuje się po przecinku w nazwie węzła:
+
+| Sufiks | Kontekst |
+|---|---|
+| *(brak)* | wszyscy operatorzy |
+| `,PULPIT` | wszyscy użytkownicy pulpitu |
+| `,R<guid>` | rola |
+| `,E<guid>` | uprawnienie |
+| `,<guid>` | operator |
+| `,W<guid>` | użytkownik pulpitu |
+
+Program odczytuje najbardziej szczegółowy dostępny kontekst: użytkownik pulpitu → operator →
+uprawnienie → rola → wszyscy → wzorzec standardowy. GUID w sufiksie wskazuje rolę, operatora
+albo uprawnienie w bazie źródłowej. Jeśli w bazie docelowej obiekt ma inny GUID, plik trafi
+do nieistniejącego kontekstu.
+
+**Foldery magazynu** (nazwy w rejestrze małymi literami):
+
+| Folder | Zawartość | Pliki i schemat nazwy |
+|---|---|---|
+| `reports/` | definicje wydruków list (generator, wzorzec, parametry) | `<lista lub tabela>/[podfolder/]<nazwa wydruku>.xml`; wydruki DevExpress z sufiksem `dx` |
+| `xtrareports/` | wzorce wydruków DevExpress | `nagłówki/`, `stopki/`, `podraporty/` (`.repx`, `.repx.cs`), `arkusze stylów/` (`.repss`) |
+| `xtrareports/wzorce użytkownika/` | wzorce `.repx` skopiowane ze standardu albo utworzone w kreatorze lub projektancie | `<moduł>/<typ obiektu>/<nazwa>.repx` |
+| `dotx/wzorce użytkownika/` | szablony wydruków Word | `<moduł>/<typ obiektu>/<nazwa>.dotx` |
+| `aspx/` | wydruki ASPX skopiowane ze standardu lub utworzone w kreatorach | `<ścieżka wydruku standardowego>.aspx`, `.aspx.cs` |
+| `tableviews/` | układy list: kolumny, filtry, cechy na liście | `<lista lub tabela>.viewform.xml` |
+| `lookups/` | układy list wyboru | `<lista>.lookupform.xml` |
+| `forms/data/` | własne i zmodyfikowane zakładki formularzy | `<pełna nazwa typu>/<zakładka>.pageform.xml` |
+| `forms/grid/` | układy tabel (gridów) na formularzach | `<pełna nazwa typu>/<grid>.gridform.xml` |
+| `foldery/` | ustawienia folderów menu (które listy i widoki zawierają) | `<ścieżka folderu z „.” zamiast „/”>.xml` |
+| `settings/` | ulubione (`fav.xml`); `dashboard.xml` to dawny format pulpitów, konwertowany do tabeli | stałe nazwy |
+| `ustawienia formularzy…/` | ustawienia formularza (asystent, widoczne dane, szerokości); wariant z sufiksem w nazwie folderu dla ustawień operatora i prywatnych | `<typ obiektu>[-<klucz>].xml` |
+| `ustawienia list…/` | ustawienia formularza listy | `<lista lub ścieżka folderu>.xml` |
+| `ustawienia inne/` | ustawienia edytorów wydruków | stałe nazwy |
+| `contexts/` | zapamiętane parametry okien i wydruków, konfiguracja interfejsu operatora | `<typ parametrów>.xml`, `operatoruiconfig.json` |
+| `budżetowanie/realizacja/` | perspektywy realizacji budżetu | `<definicja budżetu>/<szablon>.xml` |
+| `storages/` | dawne układy list `.grid.xml` ze starszych wersji | do pominięcia przy przenoszeniu |
+
+Lista nie jest zamknięta. Dodatki i moduły mogą zakładać własne foldery. Aktualny stan bazy
+pokazuje podgląd drzewa gałęzi `Storage`.
+
+### Czego nie ma w rejestrze
+
+Dane transakcyjne, tabele oznaczone przez producenta jako wyłączone oraz **pojedyncze pola
+wrażliwe i lokalne**: hasła, historia haseł, hasze licencji, identyfikatory instalacji.
 
 > **Uwaga przy eksporcie całej bazy.** Plik zawiera wszystko, co jest w rejestrze. Zanim
 > wrzucisz go do repozytorium albo wyślesz poza firmę, przejrzyj go pod kątem danych
@@ -187,6 +293,8 @@ Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wsp
 - [ ] Eksport z bazy wzorcowej: cała baza albo wybrane elementy, w razie potrzeby „z powiązanymi".
 - [ ] Plik przejrzany pod kątem danych wrażliwych, jeśli ma opuścić firmę lub trafić do repozytorium.
 - [ ] Pliki towarzyszące (wyniesione treści `$blob`) przeniesione **razem** ze zrzutem.
+- [ ] Pliki magazynu z sufiksem kontekstu (`,R…`, `,E…`, `,<guid>`) wskazują role, uprawnienia
+      i operatorów, którzy istnieją w bazie docelowej pod tym samym GUID-em.
 - [ ] Porównanie bazy docelowej ze zrzutem — zanim cokolwiek scalisz.
 
 ## Checklista — przed scaleniem do bazy operacyjnej
@@ -210,6 +318,9 @@ Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wsp
 - [/soneta:programming](../../programming/SKILL.md) — rekordy guidowane i paczki danych,
   czyli warstwa, na której opiera się tożsamość wierszy opisana w „Dlaczego wiersz nie został
   dopasowany".
+- `/soneta:programming`, `data/props/INDEX.md` i `data/props/<Moduł>/INDEX.md` — moduły
+  i tabele z kolumnami `Konfig`/`Guided`, czyli lista tabel trafiających do rejestru, oraz pola
+  każdej tabeli (artykuł `scan-modules.md`).
 - [/soneta:business-xml](../../business-xml/SKILL.md) — definicja tabel i kolumn, w tym
   oznaczanie tabeli jako konfiguracyjnej, co decyduje o jej obecności w rejestrze.
 - [/soneta:erp](../../erp/SKILL.md) — mapa wyboru skilla.

@@ -111,8 +111,9 @@ Uruchamianie komponentów, ramki hostującej i zarządzanie bazami opisuje
 
 Zrzut **całej konfiguracji bazy** do jednego drzewa zapisywanego jako `*.reg.json`, który da się
 porównać z inną bazą, scalić i wgrać z powrotem (menu **Narzędzia → Zarządzanie konfiguracją**).
-Artykuł opisuje pięć operacji formularza, zakres rejestru (co wchodzi, a co zostaje poza nim —
-w tym pola wrażliwe), format pliku wraz z sigilami (`$strict`, `$v`, `#klucz`, `@atrybut`,
+Artykuł opisuje pięć operacji formularza, strukturę drzewa (moduły → `Config` i tabele
+konfiguracyjne, `Addins`, `Storage` z mapą folderów magazynu plików i sufiksami kontekstów),
+pola wyłączone z rejestru (m.in. wrażliwe), format pliku wraz z sigilami (`$strict`, `$v`, `#klucz`, `@atrybut`,
 `$blob`), składnię ścieżek węzłów, semantykę kolekcji `$strict` (**usuwa** wiersze nieobecne
 w pliku) oraz diagnostykę najczęstszej pułapki — wiersza pokazywanego jednocześnie jako usunięty
 i dodany. Zawiera dwie checklisty: przeniesienie ustawień między bazami i kroki przed scaleniem
