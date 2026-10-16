@@ -152,7 +152,8 @@ public class Zgloszenie : SerwisModule.ZgloszenieRow {
   dla pól wyliczanych/agregatów aktualizowanych z kodu po utworzeniu — nie da się ich ustawić.
 - **`readonly="set"`** — dodatkowo generuje `protected` property **`base<Pole>`** tylko
   z setterem, pozwalające ustawić wartość z kodu obiektu biznesowego (z UI pole pozostaje
-  tylko do odczytu). Tego używaj dla pól liczonych z kodu (sumy pozycji, statusy wyliczane):
+  tylko do odczytu). Setter `base<Pole>` działa też na wierszu przed `AddRow` (np. w konstruktorze).
+  Tego używaj dla pól liczonych z kodu (sumy pozycji, statusy wyliczane):
 
 ```csharp
 public class Faktura : HandelModule.FakturaRow {

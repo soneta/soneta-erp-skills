@@ -638,6 +638,12 @@ w `#if DEBUG`).
 - DI podmieniaj przez `ConfigureXxxServices` — nie modyfikuj rejestracji atrybutami assembly (wpłynęłoby na inne testy).
 - Wielowierszowy tekst z importu XML → `ReplaceLineEndings("\n")` przed asercją.
 - Weryfikator sprawdzaj instancją z `Session.Verifiers`, nie nową (`new X(row).Validate()` zawsze `true`).
+- **Zapis z innego wątku w teście** (zadanie w tle, `Task.Run`) — baza testowa ma jedno połączenie
+  związane z wątkiem testu i transakcję wycofywaną na końcu. Zapis z obcego wątku blokuje się,
+  zwalnia połączenie z obcego wątku („Object synchronization method was called from an unsynchronized
+  block of code”) albo trzyma je przy sprzątaniu („Nie wszystkie połączenia do bazy danych zostały
+  zakończone”). W trybie testowym (`CoreTools.IsTestingMode`) wykonuj taki zapis synchronicznie
+  ([session-login.md](session-login.md#zapis-w-tle--osobna-sesja-w-zadaniu)).
 - Polecenie `CommandMenu` „tylko DEBUG" używane w teście → `|| CoreTools.IsTestingMode`; weryfikacja w Debug i Release.
 - Testujesz własny dodatek? Przejdź checklistę z sekcji
   [Testy własnego dodatku](#testy-własnego-dodatku-testbase) (`Assembly.Load` w `[SetUpFixture]`,

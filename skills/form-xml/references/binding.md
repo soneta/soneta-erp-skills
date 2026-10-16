@@ -19,6 +19,12 @@ w `{...}`. Podstawy składni formularza: [../SKILL.md](../SKILL.md).
    `Kontrahent.Oceny.pageform.xml` bez niego nie pojawi się na formularzu kontrahenta, mimo
    poprawnie osadzonego zasobu. Działa `<DataForm DataType="Soneta.CRM.Kontrahent,Soneta.CRM">`
    (tak robią standardowe zakładki innych modułów). Typ z własnej biblioteki wystarcza nazwą pliku.
+   **Typ `internal` też wymaga `DataType`** — po samej krótkiej nazwie odnajdowane są tylko typy
+   publiczne. Bez tego start programu (i testów) przerywa błąd „Nie można znaleźć typu danych”.
+   Dotyczy też formularza zwykłej klasy (obiektu, który nie jest wierszem, np. zwracanego
+   w `FormActionResult.EditValue`): zasób `<Typ>.<Zakładka>.pageform.xml`. Tytuł okna takiego
+   obiektu = `[Caption("…")]` klasy + `ToString()` obiektu — nie powtarzaj podpisu w `ToString()`
+   ani w tytule grupy. Okno tylko do odczytu: obiekt i `Context` z sesji `Login.CreateSession(readOnly: true, …)`.
    `Page Name="…Page"` nadaje zakładce stabilny identyfikator (`pageID` w buscall
    `get_form_pages`/`switch_form_page` — `/soneta:tools`).
 3. **Przez rejestrację FolderViewAttribute** — dla viewform.xml

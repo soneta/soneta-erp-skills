@@ -26,7 +26,7 @@ Pliki te definiują obiekty biznesowe (encje ORM), które platforma automatyczni
 
 ## ⚠ Krytyczne zasady — łamią RUNTIME (build przechodzi bez ostrzeżeń)
 
-Te trzy błędy **nie dają żadnego sygnału przy kompilacji** — build jest zielony, a program pada
+Te błędy **nie dają żadnego sygnału przy kompilacji** — build jest zielony, a program pada
 dopiero przy pierwszym użyciu danej ścieżki kodu. Sprawdzaj je świadomie przy każdej nowej tabeli,
 bo nic Cię przed nimi nie ostrzeże automatycznie.
 
@@ -73,6 +73,10 @@ bo nic Cię przed nimi nie ostrzeże automatycznie.
    drugą połową każdej zmiany struktury danych: dodanie tabeli, jej usunięcie, zmiana nazwy klasy
    i zmiana relacji praw wymagają jego aktualizacji —
    [references/rights-tree.md](references/rights-tree.md).
+5. **Druga ścieżka `delete="cascade"` do tej samej tabeli** (np. A→C i A→B→C). SQL Server odrzuca
+   klucz obcy (błąd 1785 „may cause cycles or multiple cascade paths”) i konwersja bazy się przerywa.
+   Jedną z relacji zostaw bez `delete="cascade"`, a wiersze podrzędne usuwaj w `OnDeleting`
+   obiektu nadrzędnego — [references/relations-guide.md](references/relations-guide.md#kluczowe-atrybuty-relacji-podrzędnej).
 
 ## Struktura pliku business.xml
 
@@ -357,6 +361,7 @@ Klasę obiektu biznesowego i klasę tabeli umieszczaj w **osobnych plikach** (`Z
 - **[references/relations-guide.md](references/relations-guide.md)** - tworzenie relacji między obiektami
 - **[references/rights-tree.md](references/rights-tree.md)** - pliki `*.rightstree.xml`: miejsce tabel w drzewie uprawnień, reguła korzenia praw, osadzanie jako zasób
 - **[references/examples.md](references/examples.md)** - przykłady z rzeczywistych modułów Soneta
+- **[references/konwersje.md](references/konwersje.md)** - skrypty `*.convert.sql`: atrybuty, kolumny polimorficzne, przepinanie wierszy, test konwersji
 
 > Po zdefiniowaniu struktury danych w business.xml kolumny prezentuje się w formularzach
 > (elementy Field, Grid) — patrz skill `/soneta:form-xml` (ELEMENTS.md).
