@@ -70,6 +70,10 @@
 | `relguided="inner"` | | **Wymagane** dla tabel szczegółów (bez `guided`) |
 | `relright="true"` | | Prawa dziedziczone z obiektu nadrzędnego (patrz niżej) |
 
+> **`delete="cascade"` tylko jedną ścieżką do tabeli.** Dwie ścieżki kaskady do tej samej tabeli
+> (A→C oraz A→B→C) SQL Server odrzuca (błąd 1785), a konwersja bazy się przerywa. Drugą relację
+> zostaw bez `delete="cascade"` i usuń wiersze podrzędne w `OnDeleting` obiektu nadrzędnego.
+
 ### Zasada relguided="inner"
 
 Tabele bez atrybutu `guided` (tabele szczegółów) **muszą mieć dokładnie jedną** relację z `relguided="inner"`. Wskazuje ona obiekt główny, którego szczegóły są opisywane.
@@ -292,6 +296,17 @@ Interface musi być zadeklarowany w business.xml. Sama definicja interfejsu (met
 ### Typ FromTo
 
 Wbudowany typ dla okresów czasowych z polami `From` i `To`.
+
+### Klucz z `keyclass="FromTo"` — dopisanie kolumny łamie API
+
+Generator tworzy podtabelę okresową (`FromToSubTable`: indeksator `[data]`, `GetPrev`,
+`GetIntersectedRows`) tylko dla **pełnego** zestawu kolumn klucza; krótsze prefiksy są zwykłą
+`SubTable`. Dopisanie kolumny na końcu klucza zmienia typ istniejącego indeksatora `[a, b]` i łamie
+kod, który z niego korzysta — także skrypty wydruków i definicji kompilowane w bazach.
+
+Jak zachować API: wstaw nową kolumnę klucza **przed** dotychczasową ostatnią (indeksatory dostają
+nowe typy parametrów) i dopisz w części `partial` klasy klucza ręczny indeksator o starej sygnaturze,
+który podstawia wartość nowej kolumny (np. z kontekstu albo `null`).
 
 ---
 

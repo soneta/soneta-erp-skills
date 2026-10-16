@@ -54,3 +54,5 @@ public void {Identyfikator}_PodstawaZasiłku(WypElement element, PodstawaZasiłk
 |---|---|---|
 | `args.KwotaPodstawy` | `decimal` | Kwota wliczana do podstawy zasiłku |
 | `args.SposóbWliczenia` | `ElementPodstawyZasilku.SposóbWliczenia` | Sposób wliczenia (`BezDopełniania` i inne) |
+
+> Skutki ustawień definicji dla kwoty urlopu i ekwiwalentu: [wynagrodzenie-urlopowe.md](wynagrodzenie-urlopowe.md).

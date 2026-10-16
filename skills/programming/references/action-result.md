@@ -15,7 +15,7 @@ o sposobie obsługi.
 - [Najważniejsza zasada](#najważniejsza-zasada)
 - [Wartości specjalne](#wartości-specjalne) - `null`, `string`, `bool`
 - [Sterowanie aktualnym formularzem](#sterowanie-aktualnym-formularzem) - close, refresh
-- [Okna informacyjne i pytania do użytkownika](#okna-informacyjne-i-pytania-do-użytkownika) - MessageBox, potwierdzenia
+- [Okna informacyjne i pytania do użytkownika](#okna-informacyjne-i-pytania-do-użytkownika) - MessageBox, potwierdzenia, wznowienie operacji, `PromptResult` (agent AI)
 - [Otwieranie obiektów i okien](#otwieranie-obiektów-i-okien) - edycja, podgląd
 - [Nawigacja po programie](#nawigacja-po-programie) - listy, foldery, URL
 - [Pliki i strumienie](#pliki-i-strumienie) - pobieranie plików, podgląd
@@ -116,6 +116,7 @@ który zostanie obsłużony rekurencyjnie (mechanizm `DelayedHandler`).
 | `Type` | `Information` / `Warning` / `Error` — kolorystyka. |
 | `OKHandler` / `CancelHandler` / `YesHandler` / `NoHandler` | Akcje po wybraniu przycisku. |
 | `IsSecondDefault` | `Enter` wywołuje drugą akcję (No/Cancel zamiast Yes/OK). |
+| `IsCancelVisible` | Dodaje przycisk Anuluj bez osobnego handlera — anulowanie kończy operację. |
 
 ```csharp
 return new MessageBoxInformation("Potwierdzenie".Translate(), "Czy na pewno usunąć?".Translate()) {
@@ -127,6 +128,53 @@ return new MessageBoxInformation("Potwierdzenie".Translate(), "Czy na pewno usun
     NoHandler = () => null,
 };
 ```
+
+#### Wzorzec: zatrzymanie operacji pytaniem i wznowienie
+
+Handler przycisku wykonuje brakujący krok (np. uzupełnia konfigurację) i zwraca rezultat, który
+uruchamia operację od nowa:
+
+```csharp
+return new MessageBoxInformation("Brak ustawienia".Translate(), "Uzupełnić i kontynuować?".Translate()) {
+    IsCancelVisible = true,
+    OKHandler = () => {
+        using (var cfg = login.CreateSession(readOnly: false, config: true, name: "Uzupełnienie")) {
+            using (var t = cfg.Logout(editMode: true)) { UzupelnijUstawienie(cfg); t.Commit(); }
+            cfg.Save();
+        }
+        return new MojaOperacja(definicjaGuid).Uruchom();   // wznowienie
+    },
+};
+```
+
+- Zmiany konfiguracji rób we własnej sesji konfiguracyjnej (`config: true`) z `Save()`.
+- Rezultat wznawiający wskazuje obiekty identyfikatorem (`Guid`), nie wierszem z sesji
+  wywołującej — po wznowieniu dane są czytane na nowo.
+- Chroń się przed pętlą: gdy krok uzupełniający się nie powiódł, rzuć wyjątek zamiast zwracać
+  rezultat, który zada to samo pytanie.
+
+### `PromptResult` — odpowiedź agenta AI
+
+Czynność może zlecić zadanie agentowi AI i obsłużyć jego odpowiedź w kodzie:
+
+```csharp
+return new PromptResult(prompt) {
+    AgentGuid = agentGuid,
+    ResultHandler = r => {
+        Zapisz(r.Result);   // zwykle Markdown
+        return null;        // albo kolejny rezultat, np. MessageBoxInformation
+    },
+};
+```
+
+- Program uruchamia agenta; to, co zwróci `ResultHandler`, jest wynikiem czynności.
+- Agent serwerowy działa w przeglądarce i w ramce, ale wymaga skonfigurowanego dostawcy API
+  i włączonych funkcji AI serwera. Agent lokalny (Claude Code itp.) działa tylko w aplikacji
+  klienckiej Soneta Frame. Czynność pokazuj, gdy dostępny jest któryś z nich.
+- Prompt z danymi kolekcji (proces, historia) buduj w kodzie — szablon `AiPrompt` nie przechodzi
+  po kolekcjach.
+- Odpowiedź agenta to treść niezaufana: pokazując ją jako HTML, konwertuj Markdown bez
+  przepuszczania surowego HTML.
 
 ## Otwieranie obiektów i okien
 
@@ -622,6 +670,8 @@ Operacja na schowku przeglądarki (kopiowanie do / odczyt z).
 | Pokazać błąd | `Exception` (throw) lub `MessageBoxInformation` (Type = Error) |
 | Zapisać/zamknąć formularz | `FormAction.Save*` / `FormAction.Close` |
 | Zadać pytanie tak/nie | `MessageBoxInformation` z `YesHandler`/`NoHandler` |
+| Zapytać i wznowić operację | `MessageBoxInformation`, handler zwraca rezultat operacji |
+| Zlecić zadanie agentowi AI | `PromptResult` z `ResultHandler` |
 | Otworzyć obiekt do edycji | sam obiekt (`Row` lub inny) |
 | Otworzyć inny folder | `NavigationResult` |
 | Otworzyć stronę WWW | `HyperlinkResult` |
