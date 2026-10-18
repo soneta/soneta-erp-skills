@@ -108,7 +108,10 @@ return new FormActionResult {
 - Formularz działa w tej samej sesji operatora (bez ponownego logowania) i zna listę, z której go otwarto
   (Poprzedni/Następny). Zamknięcie formularza zamyka jego panel albo okno.
 - Tak samo działa klik w wiersz listy głównej z Shift (`Panel`) albo Ctrl/Cmd (`Window`), także Shift+Enter
-  i Ctrl/Cmd+Enter.
+  i Ctrl/Cmd+Enter, oraz przyciski nad listą z klasą `DetachOpen` (Dodaj, Otwórz, Aktualizuj).
+- Własny przycisk z `Class="DetachOpen"` (skill `/soneta:form-xml`): metoda wskazana w `MethodName` może przyjąć
+  parametr typu `DetachMode` — dostaje tryb z kliknięcia (Shift/Ctrl) i przekazuje go do zwracanego
+  `FormActionResult`. Nie dotyczy workerów (`MethodName` z `|` lub `:`).
 
 ```csharp
 [Action("Otwórz w nowym oknie")]

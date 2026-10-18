@@ -896,7 +896,7 @@ Stronę kodu opisuje skill `/soneta:programming`: budowę ViewInfo (viewinfo.md)
   `Frozen`, `DisableSelection`, `NoGridLines`, `Chips`, `RadioTab`, `ProgressEdit`,
   `TrafficLightEdit`, `PhoneEdit`/`SkypeEdit`/`GpsEdit`, `RatingEdit`, `SignatureEdit`,
   `OneTimePasswordEdit`, `XmlEdit`, `DataTextEdit`, `AllowDragging`/`AllowEditing`, `Expanded`,
-  `NoTransaction`.
+  `NoTransaction`, `DetachOpen`.
 - **Tylko WinForms:** `PreviewLine`, `PasswordButton`, `ArrowsSelectNext`, `PropertyGridEdit`,
   `CheckButtonEdit` (w web zwykłe radio).
 - `LabelTop` dziedziczy się w dół drzewa (Group/Row/Stack/Page → pola); `LabelLeft` przerywa dziedziczenie.
@@ -932,6 +932,11 @@ Stronę kodu opisuje skill `/soneta:programming`: budowę ViewInfo (viewinfo.md)
 - `CommandIco` - sama ikona
 - `CommandIcoText` - ikona i tekst
 - `WorkerCommand` - polecenie workera
+- `DetachOpen` - polecenie otwierające formularz na liście głównej (Dodaj, Otwórz, Aktualizuj): klik z Shift
+  otwiera formularz w panelu obok (SonetaDesktop) albo nowej karcie przeglądarki, z Ctrl (macOS: Cmd) — w nowym
+  oknie. Metoda polecenia (`MethodName`) dostaje tryb w parametrze typu `DetachMode` i przekazuje go do wyniku
+  (`FormActionResult.DetachMode`, skill `/soneta:programming` — action-result.md); nie dotyczy workerów.
+  Tylko HTML; standardowe przyciski list mają tę klasę automatycznie.
 - `WizardCommand` - polecenie kreatora
 - `SchedulerCommand` - polecenie harmonogramu
 - `FormNavigationCommand` - nawigacja formularza
