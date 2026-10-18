@@ -14,7 +14,7 @@ o sposobie obsługi.
 
 - [Najważniejsza zasada](#najważniejsza-zasada)
 - [Wartości specjalne](#wartości-specjalne) - `null`, `string`, `bool`
-- [Sterowanie aktualnym formularzem](#sterowanie-aktualnym-formularzem) - close, refresh
+- [Sterowanie aktualnym formularzem](#sterowanie-aktualnym-formularzem) - close, refresh, `DetachMode` (panel obok / nowe okno)
 - [Okna informacyjne i pytania do użytkownika](#okna-informacyjne-i-pytania-do-użytkownika) - MessageBox, potwierdzenia, wznowienie operacji, `PromptResult` (agent AI)
 - [Otwieranie obiektów i okien](#otwieranie-obiektów-i-okien) - edycja, podgląd
 - [Nawigacja po programie](#nawigacja-po-programie) - listy, foldery, URL
@@ -89,6 +89,32 @@ return new FormActionResult {
     Action = FormAction.SaveAndClose,
     EditValue = nowyDokument,         // otwarcie kolejnego obiektu po zapisie
     CommittedHandler = context => null,
+};
+```
+
+#### `DetachMode` — formularz w panelu obok albo w nowym oknie
+
+`DetachMode` otwiera formularz `EditValue` od razu poza oknem wywołującym. Działa tylko w wersji HTML
+(przeglądarka, SonetaDesktop); **WinForms ignoruje to ustawienie** i otwiera formularz normalnie.
+
+| Wartość | SonetaDesktop | Przeglądarka |
+|---|---|---|
+| `None` (domyślnie) | formularz w oknie wywołującym | formularz w oknie wywołującym |
+| `Panel` | panel obok bieżącego (podział karty) | nowa karta |
+| `Window` | nowe okno | nowe okno |
+
+- Dotyczy formularza otwieranego z **listy głównej (folderu)**. Akcja wywołana z formularza, podformularze,
+  kreatory (`UseWizard`) i dialogi (`UseDialog`) otwierają się normalnie.
+- Formularz działa w tej samej sesji operatora (bez ponownego logowania) i zna listę, z której go otwarto
+  (Poprzedni/Następny). Zamknięcie formularza zamyka jego panel albo okno.
+- Tak samo działa klik w wiersz listy głównej z Shift (`Panel`) albo Ctrl/Cmd (`Window`), także Shift+Enter
+  i Ctrl/Cmd+Enter.
+
+```csharp
+[Action("Otwórz w nowym oknie")]
+public FormActionResult OtworzWOknie() => new() {
+    EditValue = Kontrahent,
+    DetachMode = DetachMode.Window,   // HTML: nowe okno; WinForms: zwykły formularz
 };
 ```
 
@@ -669,6 +695,7 @@ Operacja na schowku przeglądarki (kopiowanie do / odczyt z).
 | Pokazać komunikat | `string` lub `MessageBoxInformation` |
 | Pokazać błąd | `Exception` (throw) lub `MessageBoxInformation` (Type = Error) |
 | Zapisać/zamknąć formularz | `FormAction.Save*` / `FormAction.Close` |
+| Otworzyć formularz w panelu obok / nowym oknie (HTML) | `FormActionResult { EditValue, DetachMode }` |
 | Zadać pytanie tak/nie | `MessageBoxInformation` z `YesHandler`/`NoHandler` |
 | Zapytać i wznowić operację | `MessageBoxInformation`, handler zwraca rezultat operacji |
 | Zlecić zadanie agentowi AI | `PromptResult` z `ResultHandler` |
