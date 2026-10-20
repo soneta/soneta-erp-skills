@@ -936,7 +936,8 @@ Stronę kodu opisuje skill `/soneta:programming`: budowę ViewInfo (viewinfo.md)
   otwiera formularz w panelu obok (SonetaDesktop) albo nowej karcie przeglądarki, z Ctrl (macOS: Cmd) — w nowym
   oknie. Metoda polecenia (`MethodName`) dostaje tryb w parametrze typu `DetachMode` i przekazuje go do wyniku
   (`FormActionResult.DetachMode`, skill `/soneta:programming` — action-result.md); nie dotyczy workerów.
-  Tylko HTML; standardowe przyciski list mają tę klasę automatycznie.
+  Tylko HTML; standardowe przyciski list mają tę klasę automatycznie. Mają ją też foldery w drzewie menu, w ulubionych
+  i na kafelkach menu folderu (`NavigateToFolder`) — z Shift/Ctrl folder otwiera się w nowej sesji, a bieżąca strona zostaje.
 - `WizardCommand` - polecenie kreatora
 - `SchedulerCommand` - polecenie harmonogramu
 - `FormNavigationCommand` - nawigacja formularza
