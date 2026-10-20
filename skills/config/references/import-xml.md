@@ -235,6 +235,10 @@ Dlatego projektując tabelę z selectorem, enum dyskryminatora numeruje się **o
 i pułapki po stronie definicji tabeli opisuje `/soneta:business-xml` (table-reference, pole
 selector; tam też pułapka „Nierozpoznany typ wiersza").
 
+Gdy mimo elementu selectora wiersze **podrzędne** zapisują się z `0`, a kolumna selectora jest
+`readonly`, wiersze o złożonej strukturze twórz kodem (konstruktor ustawia selector) albo w konwersji
+(`/soneta:business-xml`, konwersje.md), a nie importem rekordowym.
+
 Checklista wierszy z selectorem:
 - [ ] element = nazwa typu wiersza tabeli (nie podklasy)
 - [ ] `class="Typ,Assembly"` przy podklasach selektorowych

@@ -115,6 +115,21 @@ Lista **nie** zawiera `CurrentObject` — ten element wstawia wyłącznie formul
 wiersza pod jego typem). Obecność `CurrentObject` odróżnia więc kontekst formularza od listy —
 wykorzystanie w czynnościach dynamicznych: [worker-extender.md](./worker-extender.md#gdzie-akcja-się-pojawia--formularz-czy-lista).
 
+### Formularz obiektu z historią (`IRowWithHistory`)
+
+Formularz obiektu z historią (np. pracownik, umowa) edytuje **bieżący wiersz historii**
+(`Historia[data aktualności z kontekstu albo dziś]`). Kontekst okna zawiera oba wiersze: najpierw
+hosta, potem wiersz historii — każdy także jako tablicę jednoelementową. `CurrentObject` wskazuje
+wiersz historii. Okno otwarte na samym wierszu historii dokłada hosta przez `IHistory.Parent`.
+
+- Zakładki na typie historii mogą mieć extendery z `[Context]` na typ hosta i na typ historii. Kod,
+  który odtwarza kontekst formularza poza oknem (odczyt wartości, eksport, testy), wstawia **oba**
+  wiersze — inaczej worker z `[Context]` nie powstaje, a `ViewInfo` czytające `args.Context[typeof(IHost)]`
+  rzuca „Wartość o typie … nie istnieje w kontekście”.
+- Kontekst szuka wartości po typie (`IsAssignableFrom`) od ostatniego wpisu. Interfejs znajdzie się
+  bez osobnej rejestracji, a przy interfejsie wspólnym dla hosta i historii wygrywa wpis późniejszy,
+  czyli historia.
+
 ## Odczyt z context
 
 ### Metody GetOrDefault i GetRequired (zalecane)

@@ -1114,6 +1114,7 @@
 			<xs:enumeration value="RadioChips" />
 			<xs:enumeration value="RadioSplitButton" />
 			<xs:enumeration value="RadioTab" />
+			<xs:enumeration value="DetachOpen" />
 		</xs:restriction>
   </xs:simpleType>
 

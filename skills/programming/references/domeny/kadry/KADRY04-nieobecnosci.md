@@ -885,3 +885,24 @@ var pz = new Soneta.Kadry.Pracownik.PracaZdalnaWorker
   i `LokalizacjaPracyZdalnej` (ma publiczny ctor).
 - `LokalizacjaPracyZdalnej` ma publiczny ctor `(Pracownik)` — testowalna wprost.
 
+
+### KADRY-D13 — Weryfikacja podstawy zasiłku (testy integracyjne)
+
+**Cel:** sprawdzić w teście, jaką podstawę przyjęło naliczenie zasiłku i dlaczego.
+
+- Podstawę czytaj z elementu wypłaty rozliczającego nieobecność:
+  `(decimal)element.SkładnikGłówny.Podstawa1.Value`. Elementy zasiłkowe rozpoznaje
+  `element.Definicja.Algorytm.Typ == TypAlgorytmuElementu.JakChorobowe`.
+- Przebieg obliczeń jest w `element.ZapisObliczen`. Stabilne frazy do asercji: „Podstawa pobrana
+  z rozliczenia poprzedniej nieobecności chorobowej.”, „Liczba uwzględnionych miesięcy:”,
+  „Przepracował co najmniej połowę miesiąca”, „Podstawa zasiłków ZUS z kadr”, „Przyrównanie do minimalnej”.
+
+**Pułapki:**
+- Kwoty w zapisie obliczeń są sformatowane w kulturze pl-PL (spacja tysięcy, przecinek) — nie
+  asercjuj ich tekstowo, porównuj `Podstawa1`.
+- Kalendarz standardowy bazy testowej nie daje dnia wolnego za święto w sobotę (np. 3 V i 1 XI 2025).
+  Wypłata takiego miesiąca dostaje dopłatę 100% za nadgodziny, co zmienia średnią podstawy.
+  W testach z oczekiwanymi kwotami unikaj takich miesięcy w oknie podstawy.
+- Ustawienia definicji wpływające na podstawę (`_PodstawaZasiłku`):
+  `/soneta:place-def-elementow` (metody-sterujace-naliczaniem.md). Klasa bazowa testów:
+  [../../integration-tests.md](../../integration-tests.md).
