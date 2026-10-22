@@ -372,6 +372,9 @@ Klasę obiektu biznesowego i klasę tabeli umieszczaj w **osobnych plikach** (`Z
 - **Nazwa w bazie (tablename)**: PascalCase, liczba mnoga, **maks. 16 znaków**, **globalnie unikalna
   w bazie** — uwaga na kolizje z tabelami modułów platformy (np. `Towary`, `DokHandlowe`)
 - **Nazwa kolumny**: PascalCase (np. `KodPocztowy`, `DataWystawienia`)
+- **Klucz zwykłych kolumn tylko przez `<key>`**: `keyprimary`/`keyunique`/`keyclass`/`<keycol>` w `<col>`
+  działają wyłącznie dla kolumny relacji — w zwykłej kolumnie to błąd deklaracji (brak klucza i indeksu,
+  [references/table-reference.md](references/table-reference.md#indeksy-inline-w-col--tylko-kolumna-relacji))
 - **Klucz**: `Wg` + nazwa kolumny (np. `WgKodu`, `WgNazwy`). Klucz kolumny relacji nazywa się
   jak kolumna, a jego akcesor to `Wg<Kolumna>` — klucza zaczynającego się od relacji nie
   definiuj osobnym `<key>` ([references/relations-guide.md](references/relations-guide.md#klucz-kolumny-relacji-i-keycol))

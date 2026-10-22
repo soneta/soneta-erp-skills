@@ -265,14 +265,34 @@ skill `/soneta:programming` (row-types.md).
 | `delete` | string | Akcja przy usuwaniu: `cascade`, `setnull` |
 | `setonlynull` | boolean | `true` = można ustawić tylko raz |
 
-### Indeksy (inline w col)
+### Indeksy (inline w col) — tylko kolumna relacji
 
 | Atrybut | Typ | Opis |
 |---------|-----|------|
-| `keyprimary` | boolean | `true` = część klucza głównego |
-| `keyunique` | boolean | `true` = wartość unikalna |
+| `keyprimary` | boolean | `true` = klucz relacji jest kluczem głównym |
+| `keyunique` | boolean | `true` = klucz relacji unikalny |
 | `keyclass` | string | Klasa indeksu: `History`, `Lp` |
 | `keyclasscol` | string | Kolumna dla keyclass |
+
+> **Atrybuty klucza (`keyprimary`, `keyunique`, `keyclass`, zagnieżdżone `<keycol>`/`<keyinclude>`)
+> działają wyłącznie w `<col>` relacji** (typ = tabela lub interfejs) — opisują klucz tej relacji.
+> W zwykłej kolumnie (`string`, `int`, podrekord…) to **błąd deklaracji**: generator nie tworzy
+> żadnego klucza ani indeksu (deklaracja jest po cichu pomijana; nowsza wersja generatora zgłasza
+> `#error`). Klucz zwykłych kolumn — wyłącznie elementem `<key>`:
+>
+> ```xml
+> <!-- ŹLE: nic nie powstaje -->
+> <col name="Kod" type="string" length="20" keyprimary="true" keyunique="true"/>
+>
+> <!-- DOBRZE -->
+> <col name="Kod" type="string" length="20" required="true"/>
+> <key name="WgKodu" keyprimary="true" keyunique="true">
+>   <keycol name="Kod"/>
+> </key>
+> ```
+>
+> Tabela bez klucza oznaczonego `keyprimary` dostaje jako główny **pierwszy zadeklarowany klucz**
+> (w bazie indeks `<Tabela>_Podstawowy`) — oznaczaj klucz główny jawnie.
 
 ### Lokalizacja
 
