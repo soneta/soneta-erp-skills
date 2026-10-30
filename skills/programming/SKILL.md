@@ -342,7 +342,7 @@ Przykłady w skillu podają wywołania bez przestrzeni nazw. Brak `using` daje `
 
 | Wywołanie | `using` |
 |-----------|---------|
-| `"…".Translate()`, `.TranslateFormat(…)` | `Soneta.Langs` |
+| `"…".Translate()`, `.TranslateFormat(…)`, `.TranslateIgnore()` | `Soneta.Tools` |
 | `tekst.IsNullOrEmpty()` (rozszerzenie `string`) | `Soneta.Tools` |
 | `[Caption]`, `VerifierType` | `Soneta.Types` |
 
