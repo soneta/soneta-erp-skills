@@ -408,3 +408,30 @@ Parallel.ForEach(items, item => {
     }
 });
 ```
+
+### Zapis w tle — osobna sesja w zadaniu
+
+Pomocniczy zapis, na który użytkownik nie musi czekać (log, ślad diagnostyczny), można wykonać
+w tle:
+
+```csharp
+var login = session.Login;               // przechwyć Login przed startem zadania
+_ = Task.Run(() => {
+    try {
+        using var bg = login.CreateSession(readOnly: false, config: false, name: "Zapis w tle");
+        using (var t = bg.Logout(editMode: true)) {
+            // operacje na wierszach odczytanych w tej sesji
+            t.Commit();
+        }
+        bg.Save();
+    }
+    catch (Exception ex) {
+        // zaloguj — nikt nie czeka na Task, wyjątek zginąłby bez śladu
+    }
+});
+```
+
+- Do zadania przekazuj `Login` i identyfikatory, nigdy wiersze ani sesję wątku wywołującego.
+- Kolejność zapisów w tle nie jest gwarantowana.
+- W testach integracyjnych wykonuj taki zapis synchronicznie — szczegóły:
+  [integration-tests.md](integration-tests.md#checklist--pułapki).

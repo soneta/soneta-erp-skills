@@ -269,6 +269,7 @@ O miejscu prezentacji akcji (statycznej i dynamicznej) decydują flagi `ActionMo
 | `ActionMode.OnlyTable` | tylko na liście |
 | `ActionMode.OnlyListOnForm` | tylko na liście osadzonej w formularzu |
 | brak flag `Only*` | wszędzie, gdzie worker pasuje typem danych |
+| `ActionMode.OnlyWebForms` / `OnlyWinForms` | tylko w kliencie web / tylko w wersji okienkowej; łączy się z innymi flagami (`SingleSession \| OnlyWebForms`), działa też dla czynności z `GetActions` (nadpisany `Mode`). Widoczność zależna od czegoś więcej (licencja, prawa, typ urządzenia) → `IsVisible…` |
 | `ActionTarget.Menu` + `LocalMenu` | pozycja w menu „Czynności” i w menu kontekstowym wiersza |
 | `ActionTarget.ToolbarWithText` | osobny przycisk z podpisem w pasku narzędzi formularza lub listy; w pasku **listy** renderuje się tylko przy `ActionMode.SingleSession` lub `IsolatedSession` |
 
@@ -308,6 +309,32 @@ Zasady wykonania na liście:
   Brak dopasowania oznacza brak akcji, bez wyjątku — przy nietypowych sygnaturach sprawdź menu
   na obu rodzajach okien.
 
+### Źródła menu Czynności i paska narzędzi
+
+**Lista (folder):**
+
+- Menu Czynności ma dwa źródła: **tabelę** (lista/widok) i **wiersz** z fokusem. Bez fokusu (np. pusta
+  lista po usunięciu ostatniego wiersza) akcje workerów zarejestrowanych dla typu wiersza nie są
+  pokazywane, a ich `GetActions` nie jest wołane. Workery tabeli są wołane zawsze.
+- Wniosek: `GetActions(Context, TWiersz row)` workera wiersza dostaje w menu listy `row != null`.
+  Czynność, która ma działać także na pustej liście, rejestruj dla tabeli.
+- Pasek listy zawiera akcje tabeli; akcje wiersza trafiają na niego tylko w trybie
+  `ActionMode.IsolatedSession` / `SingleSession`.
+
+**Formularz (klient web):**
+
+- Menu Czynności zbiera akcje obiektu formularza oraz bieżącego wiersza każdego grida na aktywnej
+  zakładce (gdy grid nie ma `ActionsMode="Form"` — `/soneta:form-xml`). Akcje wierszy tworzą osobną grupę.
+- Na pasek narzędzi (`ActionTarget.Toolbar` / `ToolbarWithText`) i do skrótów klawiszowych trafiają
+  tylko akcje obiektu formularza. Wyjątek: czynność dodana przez użytkownika do ulubionych.
+- Pułapka: worker zarejestrowany dla typu obiektu i dla typu wierszy jego grida (np. dokument
+  i pozycje będące dokumentami) daje w menu dwie pozycje o tej samej nazwie. Ogranicz widoczność
+  w `IsVisible…` (dane kontekstu = obiekt formularza) albo ustaw na gridzie `ActionsMode="Form"`.
+
+**Weryfikacja:** na liście — fokus po usunięciu wiersza (sąsiedni wiersz albo brak) i zawartość
+menu (w danych listy pomijaj wiersz sumy, identyfikator zaczyna się od `$`); na formularzu z gridem —
+przycisk akcji raz na pasku, w menu w oczekiwanych grupach.
+
 ### Warunki czynności — `IsVisible…` / `IsEnabled…`
 
 **Najważniejsze:**
@@ -320,6 +347,10 @@ Zasady wykonania na liście:
 - **Przeliczanie po każdej zmianie.** Menu i pasek przeliczają się przy budowie każdej odpowiedzi
   okna: po zmianie w sesji, zmianie zakładki, zmianie wiersza bieżącego **i** liczby zaznaczonych
   (także bez zmiany wiersza bieżącego). Warunek ma być tani (bez SQL w pętli) i bez skutków ubocznych.
+- **Prawo przed kolumnami.** Predykat czytający kolumny wiersza, który może być niedostępny (źródło
+  praw lub wiersz dziedziczący prawo), najpierw sprawdza `row.AccessRight != AccessRights.Denied` —
+  inaczej `AccessDeniedException` przerywa budowanie menu zamiast ukryć pozycję
+  ([rights-source.md](./rights-source.md)).
 
 ```csharp
 public static bool IsEnabledZatwierdz(MojDokument dok) => dok.Bufor;

@@ -312,6 +312,24 @@ Tożsamość ustalana jest kolejno: po nazwie (dla węzłów nazwanych) → po w
 Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wspólnej tożsamości
 (np. przenosząc wzorzec jednym eksportem do obu baz), zamiast poprawiać zrzut ręcznie.
 
+## Pułapki przy pracy na plikach i z automatów
+
+- **Nie parsuj `*.reg.json` ręcznie.** Elementy kolekcji to nie zwykłe obiekty `{Name: …}`: pola
+  kluczowe mają prefiks `#` (np. `#Guid`), wartość zmieniona ma postać `{"$v": …, "$": "modified"}`,
+  a element bywa samym znacznikiem stanu. Wczytuj plik mechanizmem rejestru; w teście wystarczy
+  sprawdzić, czy treść zawiera oczekiwaną nazwę.
+- **Wybór węzłów gubi stan.** Eksport „wybranych elementów” kopiuje węzły bez znaczników
+  added/modified/deleted. Rejestru różnic („zmiany względem zdjęcia”) nie zawężaj wyborem węzłów —
+  porównuj całą bazę.
+- **Kolejność importu:** stan bazy → plik → scalenie → analiza wyniku → zapis drzewa do sesji →
+  dopiero potem zapis sesji. Zapis drzewa do sesji nie zapisuje sesji sam, a rzuca wyjątek przy
+  konflikcie i przy kolekcji `$strict` z wierszami w stanie innym niż dodany/bez zmian. Analizę rób
+  przed zapisem i przy błędach nie zapisuj.
+- **Scalanie dwóch rejestrów bez bazy:** cel wczytany z pliku zamiast stanu bazy, wynik
+  serializowany do JSON, sesja niezapisywana.
+- **Rozmiar:** rejestr całej bazy łatwo przekracza 1 MB — przy przekazywaniu treści przez API/MCP
+  planuj zapis do pliku (`/soneta:config`, mcp-import-export.md).
+
 ## Czego mechanizm jeszcze nie robi
 
 - **Rozstrzyganie konfliktów nie jest dokończone.** Formularz pokazuje filtr „Tylko konflikty"

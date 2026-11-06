@@ -75,7 +75,7 @@ Kompletne pliki do skopiowania: [references/examples.md](references/examples.md)
 |---------|------|
 | `Priority` | Kolejność zakładek (domyślnie 100, niższa = wcześniej) |
 | `RightName` | Opcjonalny. Nazwa uprawnienia do zakładki |
-| `Contexts` | Warunki licencyjne, np. `"Licence.HAN \| Licence.FA"` |
+| `Contexts` | Warunki licencyjne, np. `"Licence.HAN \| Licence.FA"`. **Strona dla użytkownika pulpitu (web user) musi mieć warunek licencji** (np. `Contexts="License.PLN"`) — bez niego strona jest ukryta, a folder z `ObjectPage` znika razem z nią (`/soneta:programming`, viewinfo.md) |
 | `ViewType` | Typ widoku: `None`, `Dialog`, `Form`, `Folder` |
 | `Mode` | Tryb: `None`, `Form`, `Folder`, `Wizard`, `Modal`, `Popup`, `Frame` |
 | `DataType` | Pełna nazwa typu, gdy nie wynika z nazwy pliku. **Wymagany dla zakładki dodatku do typu z obcej biblioteki** (np. kontrahent) — [references/binding.md](references/binding.md) |

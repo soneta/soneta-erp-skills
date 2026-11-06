@@ -15,6 +15,12 @@ Umieszczając deklarację interfejsu serwisu w assembly wspólnym, można udost�
 - Serwis może być `IDisposable`.
 - Dla serwisów App, Database, Login **nie przechowuj obiektów sesyjnych** (Session, Row, Module, Table, Context).
 - `[RequireOwnService]` tylko dla serwisów, które nie mogą być nadpisywane.
+- **Zasięg inny niż `Session` deklaruje także interfejs** — `[RequireServiceScope(ServiceScope.Login)]`.
+  Bez tego start programu kończy się wyjątkiem „Zasięg serwisu … nie jest zgodny z wymaganym zasięgiem
+  interfejsu”.
+- Serwis `Login` jest wspólny dla wszystkich sesji operatora. Trzymaj w nim stan interfejsu, który
+  ma przetrwać zapis (np. rozwinięcie sekcji panelu listy): lista w kliencie web po zapisie dostaje
+  nową sesję, a serwisy `Session` powstają od nowa.
 
 ## Deklaracja
 

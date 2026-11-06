@@ -252,6 +252,24 @@ konkretnej, gdy masz nad nią kontrolę.
 > transakcji serwerowej realizuje mechanizm `Session.Events` / `Session.ServerEvents` —
 > [events.md](events.md) (tam też guardy reentrancji i zmiany dla handlerów przeliczających).
 
+## Pola wyszukiwania listy wyboru — `GetDefaultLocatorFields`
+
+Domyślne pola wyszukiwania tabeli (`Table.LocatorFields`, używane przez listę wyboru/lookup)
+powstają tylko z kluczy, których **pierwsza** kolumna jest tekstowa. Gdy każdy klucz zaczyna się
+od referencji (np. `Pracownik`) albo liczby, otwarcie listy wyboru kończy się błędem
+„Niezdefiniowano pól wyszukiwania w tabeli …”. Nadpisz pola w klasie tabeli (ścieżki przez
+referencje są dozwolone):
+
+```csharp
+public class MojeWpisy : MojModule.MojWpisTable {
+    [TranslateIgnore]
+    protected override string[] GetDefaultLocatorFields() => ["Pracownik.Kod", "Pracownik.Nazwisko", "Kod"];
+}
+```
+
+Pola wyszukiwania pojedynczego pola formularza ustawia atrybut `LocatorFields` w form.xml
+(`/soneta:form-xml`).
+
 ## Skrót — co zaimplementować przy tabeli
 
 1. Klasa obiektu biznesowego (`X : <Moduł>Module.XRow`) i klasa tabeli (`Xs : <Moduł>Module.XTable`).
@@ -259,3 +277,4 @@ konkretnej, gdy masz nad nią kontrolę.
 3. Selector → enum (lub `int`) z jawnymi numerami, `abstract` baza, podtypy z `[DefaultConstructor]`,
    rejestracja `[assembly: BusinessRow]`.
 4. `[assembly: NewRow]` dla typów dostępnych w menu „Nowy" (pomiń, aby blokować dodawanie z UI).
+5. Żaden klucz nie zaczyna się od kolumny tekstowej → `GetDefaultLocatorFields()` w klasie tabeli.

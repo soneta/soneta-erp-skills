@@ -50,6 +50,23 @@ Najważniejsze parametry:
 
 Najważniejsze foldery `path` programu Soneta można znaleźć w skill /soneta-mcp-ui/common-folders.md. 
 
+### Folder obiektu (`ObjectType` + `ObjectPages`) — widoczność
+
+`ObjectPage` (jedna zakładka) jest skrótem `ObjectPages` (lista zakładek otwieranych dla obiektu folderu).
+
+- Folder z `ObjectType` i `ObjectPage` pokazuje się tylko wtedy, gdy co najmniej jedna jego strona
+  (pageform) jest widoczna dla użytkownika.
+- Dla użytkownika pulpitu (web user) strona musi mieć w `DataForm` atrybut `Contexts` z warunkiem
+  licencji, np. `Contexts="License.PLN"` (`/soneta:form-xml`). Bez niego strona jest ukryta, a z nią
+  cały folder: nie ma go w menu, a wejście po adresie wraca do folderu nadrzędnego.
+- Objaw w testach: `NoFolderViewsException` („Brak praw dostępu do folderu programu”) przy nawigacji
+  do folderu, mimo nadanego prawa w roli.
+
+Checklista nowego folderu w pulpicie:
+- [ ] prawo do folderu w roli pulpitu (rola systemowa → rekord roli; inne role → konwersja),
+- [ ] `Contexts` z licencją na pageform,
+- [ ] licencja w `Contexts` atrybutu folderu.
+
 ---
 
 ## Anatomia klasy ViewInfo

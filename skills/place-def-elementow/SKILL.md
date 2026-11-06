@@ -16,6 +16,7 @@ Ten skill zawiera kompletną wiedzę o tworzeniu i konfigurowaniu definicji elem
 | `references/receptury-kodu.md` | Gdy trzeba napisać konkretny fragment kodu C# | 24 kategorie gotowych fragmentów: iterowanie po elementach, wynagrodzenie zasadnicze, nieobecności, wymiar etatu, czas pracy, okresy, staż, cechy, wskaźniki, parametry dodatku, zaokrąglenia, netto→brutto, urlopy, debugowanie |
 | `references/api-algorytmow.md` | Gdy potrzebna jest referencja API — pola, metody, klasy, typy | Pola WypSkladnik, metody pomocnicze, klasy naliczania, moduły, dostęp do konfiguracji, operacje na typach danych, sygnatury metod |
 | `references/metody-sterujace-naliczaniem.md` | Gdy element musi wpływać na podstawy urlopów lub zasiłków | Metody _PodstawaUrlopu, _PodstawaZasiłku, klasa PodstawaZasiłkuArgs |
+| `references/wynagrodzenie-urlopowe.md` | Gdy trzeba wyjaśnić lub zweryfikować kwotę urlopu albo ekwiwalentu | Wzór (część stała + zmienna), rodzaje urlopów, skutki ustawień definicji, ekwiwalent, checklista |
 
 ## Lokalizacja w programie
 
