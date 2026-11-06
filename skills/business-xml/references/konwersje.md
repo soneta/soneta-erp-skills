@@ -49,6 +49,27 @@ UPDATE Pozycje SET Rekord = @B WHERE Rekord = @A;
 
 Klasa bazowa i transakcja testu: `/soneta:programming` (integration-tests.md).
 
+## Kod po konwersji — inicjalizator `[assembly: DatabaseInit]`
+
+Gdy skrypt SQL ani plik `*.dbinit.xml` nie wystarczają (logika biznesowa, dopisanie wierszy
+z pominięciem istniejących), konwersja uruchamia klasę `IDatabaseInitializer`:
+
+```csharp
+[assembly: DatabaseInit("Moje ustawienia", typeof(MojInicjalizator), null, AfterXml = true)]
+
+public sealed class MojInicjalizator : IDatabaseInitializer {
+    public void Initialize(Login login, int version) {
+        // sprawdź wersję i dane — pomiń wiersze już istniejące
+    }
+}
+```
+
+- `versionName = null` = bez wersji — inicjalizator wykonuje się po **każdej** konwersji
+  i utworzeniu bazy; warunek wykonania sprawdzaj w kodzie (parametr `version`, stan danych).
+- `AfterXml = true` — po wczytaniu plików `*.dbinit.xml` (`/soneta:config`, import-xml.md).
+- Działa w ramach konwersji, także w jej transakcji — **wyjątek przerywa konwersję**. Operację
+  pomocniczą, której błąd nie może zatrzymać konwersji, zabezpiecz jawnie i zaloguj błąd.
+
 ## Diagnostyka na żywej bazie
 
 Konsola bazy w IDE trzyma połączenie — `dbmgr convert` czeka wtedy na wylogowanie pozostałych
@@ -61,3 +82,4 @@ z kontekstu `master`, z nazwami trzyczęściowymi (`baza.dbo.Tabela`).
 - [ ] Przepinanie usuwa najpierw kolizje z indeksami unikalnymi.
 - [ ] Pary `X`/`XType` rozpoznane po typie tekstowym kolumny `…Type`.
 - [ ] Test integracyjny uruchamia skrypt z zasobu i sprawdza wynik w nowej sesji.
+- [ ] Inicjalizator `[assembly: DatabaseInit]` bez wersji jest idempotentny (wykona się przy każdej konwersji).

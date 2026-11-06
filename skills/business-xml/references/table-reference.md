@@ -302,6 +302,26 @@ skill `/soneta:programming` (row-types.md).
 | `name12` | string | Skrócona nazwa kolumny (max 12 zn.) |
 | `cstype` | string | Nadpisanie typu C# |
 
+### Kolumny bazy a właściwości wiersza
+
+Kolumny tabeli SQL to pola rekordu z business.xml (w czasie działania: `TableInfo.Columns` →
+`ColumnInfo`). Właściwość wiersza o tej samej nazwie to pole bazodanowe; pozostałe właściwości
+klasy są wyliczane. Nazwa kolumny:
+
+| Pole w business.xml | Kolumna SQL | Przykład |
+|---|---|---|
+| zwykłe | nazwa pola | `Kod` → `Kod` |
+| subrow | prefiks + nazwa pola | `Kontakt.EMAIL` → `KontaktEMAIL` |
+| typ złożony | kolumna na składową | `Kwota.Value` → `KwotaValue` |
+| relacja | kolumna `int` (ID), tabela docelowa w `ColumnInfo.ParentTable` | `Kontrahent` |
+| relacja do interfejsu (`ParentTable == "*"`) | `{nazwa}` + `{nazwa}Type` | `Host`, `HostType` |
+| systemowe | `ID`, `Guid` (tabela guidowana), `Exported` | — |
+
+Nie każda właściwość złożona to subrow: np. adres kontrahenta jest właściwością tylko do odczytu
+z osobnej tabeli adresów, a subrow rekordu kontrahenta to m.in. `Kontakt`. Strukturę sprawdzaj
+skanem (`/soneta:programming`, scan-props.md). Kolumny relacji polimorficznych w skryptach SQL —
+[konwersje.md](konwersje.md#kolumny-polimorficzne).
+
 ---
 
 ## RequiredType - wartości

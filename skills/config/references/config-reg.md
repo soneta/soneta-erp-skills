@@ -327,8 +327,15 @@ Rozwiązanie jest zawsze po stronie danych, nie pliku: doprowadź wiersze do wsp
   przed zapisem i przy błędach nie zapisuj.
 - **Scalanie dwóch rejestrów bez bazy:** cel wczytany z pliku zamiast stanu bazy, wynik
   serializowany do JSON, sesja niezapisywana.
-- **Rozmiar:** rejestr całej bazy łatwo przekracza 1 MB — przy przekazywaniu treści przez API/MCP
-  planuj zapis do pliku (`/soneta:config`, mcp-import-export.md).
+- **Rozmiar:** rejestr całej bazy ma kilka MB nawet w małej bazie testowej — prawie całość to
+  uprawnienia `Business/Entitles` (ok. 6 MB); `Business/Config` to ok. 170 KB, `Business/Operators`
+  i `Business/Dictionary` po kilkadziesiąt KB. Przy przekazywaniu treści przez API/MCP planuj zapis
+  do pliku (`/soneta:config`, mcp-import-export.md).
+- **Zawężaj eksport ścieżkami węzłów**, gdy wystarcza wycinek (`Business/Config`,
+  `Business/FeatureDefs/Name=…`) — zwłaszcza w testach i wywołaniach agenta AI, gdzie treść wraca
+  w odpowiedzi JSON. Wyjątek: rejestr różnic (wyżej) — ten zawsze dla całej bazy.
+- **Zdjęcie trzymaj w bazie** jako wpis rejestru konfiguracji i porównuj z nim po nazwie, zamiast
+  przesyłać jego treść.
 
 ## Czego mechanizm jeszcze nie robi
 

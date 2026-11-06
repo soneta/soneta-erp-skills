@@ -116,6 +116,12 @@ Pasek narzędzi.
 </Bar>
 ```
 
+`Bar` może leżeć w dowolnym kontenerze (`Stack`, `Row`) — jest wyjmowany z układu i trafia do
+pasków okna. Pasek o nazwie rozpoznawanej przez klienta (np. `Name="CaptionBar"`,
+`DataContext="Window"`) to pasek tytułu okna; pusty `<Bar Name="CaptionBar" DataContext="Window"/>`
+daje pasek tytułu bez przycisków. Wspólny pasek kilku okien — przez `Include` z `Suffix=""`
+(niżej).
+
 ### Dashboard
 Panel kafelkowy/kokpit.
 
@@ -152,7 +158,27 @@ Dołączenie zewnętrznego fragmentu lub dynamicznie generowanego elementu UI.
 | `Source` | **Tak** | Nazwa pliku form.xml **lub** wyrażenie bindujące zwracające element DOM (`UIElement`). Wyrażenie jest wywoływane po każdej zmianie danych - umożliwia dynamiczne formularze |
 | `DataContext` | Nie | Kontekst danych dla dołączanego fragmentu |
 | `Path` | Nie | Określa element pliku form.xml do wstawienia (gdy Source jest nazwą pliku) |
-| `Suffix` | Nie | Napis dodawany do każdej nazwy (`Name`) elementów dołączonych przez Include |
+| `Suffix` | Nie | Napis dodawany do każdej nazwy (`Name`) elementów dołączonych przez Include. **Brak atrybutu = przyrostek `__incN`** (unikalność przy wielokrotnym włączeniu); `Suffix=""` zachowuje nazwy |
+
+**★ Elementy rozpoznawane po nazwie wymagają `Suffix=""`.** Bez niego `CaptionBar` staje się
+`CaptionBar__inc0` i klient nie znajdzie paska; tak samo nazwane komendy wyszukiwane przez klienta
+albo kod. Wzorzec wspólnego paska tytułu kilku okien:
+
+```xml
+<!-- WspolnyCaptionBar.form.xml -->
+<DataForm xmlns="http://www.enova.pl/schema/form.xsd">
+  <Bar Name="CaptionBar" DataContext="Window">
+    <Command Name="CloseButton" CaptionHtml="Zamknij" Class="RedFont" Icon="anuluj"
+             MethodName="CloseAction" Key="Escape"/>
+  </Bar>
+</DataForm>
+
+<!-- w formularzu okna -->
+<Include Source="WspolnyCaptionBar.form.xml" Suffix="" />
+```
+
+Plik włączany jest szukany po nazwie zasobu we wszystkich załadowanych bibliotekach — formularz
+z jednej biblioteki może włączać fragment z innej.
 
 ---
 

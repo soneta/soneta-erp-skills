@@ -665,8 +665,9 @@ object r = QueryContextInformation
 
 #### Walidacja typu propertysów
 
-Pola z atrybutem `[Context<T>(nameof(T.Prop))]` muszą mieć właściwy typ wartości docelowej (typ
-property `T.Prop`). Niezgodność → `Context.InvalidValueException` przy wywołaniu
+Pola z atrybutem `[Context<T>(nameof(T.Prop))]` muszą przyjmować wartość `T.Prop` — liczy się typ
+wartości w czasie wykonania, nie zadeklarowany typ property ([context.md](context.md#tworzenie-obiektów)).
+Niezgodność → `Context.InvalidValueException` przy wywołaniu
 `ContextInvoker.CreateObject<>()`.
 
 ### `StartActionInformation`
@@ -681,6 +682,15 @@ do delegowania wykonania workera). Rzadko zwracany ręcznie.
 Wywołanie operacji w aplikacji klienckiej **SonetaFrame** (desktop wrapper). Działa tylko gdy
 `BusTools.DeviceType.IsBrowserApp()`. Pozwala wykonać akcję po stronie klienta (otwarcie pliku
 lokalnego, integracja z systemem operacyjnym) i opcjonalnie odebrać odpowiedź przez `ResponseHandler`.
+
+Domyślnie akcja **wstrzymuje pracę operatora**, aż aplikacja odpowie — przy krótkich akcjach
+(wybór pliku, zoom) niezauważalnie. Akcja długa (zewnętrzne narzędzie, praca agenta AI) →
+`new ClientActionResult { RunInBackground = true, … }` (właściwość `init`): operator pracuje dalej, a `ResponseHandler` wykona się po odpowiedzi.
+
+- `ResponseHandler` akcji w tle działa później, w osobnym żądaniu — okno wywołujące mogło zostać
+  zamknięte (wtedy odpowiedź przepada), a dane zmienione przez operatora.
+- Akcję w tle można uruchomić ponownie, zanim skończy się poprzednia — obsłuż to w aplikacji
+  klienckiej (np. odrzuć drugie wywołanie z komunikatem).
 
 ### `MfaRequest` / `MfaSourceBase`
 

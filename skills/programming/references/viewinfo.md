@@ -16,6 +16,8 @@ Skill `soneta:form-xml` opisuje pełną składnię plików `viewform.xml`/`pagef
 - [Klasa parametrów (`Params` / `WParams` / lub inna nazwa)](#klasa-parametrów-params--wparams--lub-inna-nazwa)
 - [Filtrowanie View — paleta narzędzi](#filtrowanie-view--paleta-narzędzi)
   - [Filtrowanie po cechach (Features)](#filtrowanie-po-cechach-features)
+- [ViewInfo inline — jako property](#viewinfo-inline--jako-property-lista-osadzona-na-oknieformularzu)
+  - [Własna pozycja w menu „Dodaj” listy na formularzu](#własna-pozycja-w-menu-dodaj-listy-na-formularzu)
 - [Powiązanie z `viewform.xml`](#powiązanie-z-viewformxml)
 - [Pełny przykład minimalny](#pełny-przykład-minimalny)
 - [Pułapki i dobre praktyki](#pułapki-i-dobre-praktyki)
@@ -369,6 +371,45 @@ Wybór nośnika stanu filtrów wpływa na bindowanie paska filtra (`Flow Class="
 wewnątrz `Grid`, zob. skill `/soneta:form-xml`): filtry w `Params` (kontekst) → pasek z
 `DataContext="{Context}"` i bindy `{Params.Pole}`; filtry na obiekcie sterującym → pasek bez
 `DataContext` (dziedziczy `{DataSource}`) i bindy wprost `{Pole}`.
+
+### Własna pozycja w menu „Dodaj” listy na formularzu
+
+Menu „Dodaj” grida buduje się **wyłącznie z `NewRowAttribute`** — workerów z `[Action]` w nim nie
+ma. Własną pozycję (np. „Wiele elementów...”) dodaje `ViewInfo` listy:
+
+```csharp
+[Serializable]
+public sealed class WieleElementowNewRow() : NewRowAttribute("Wiele elementów...", typeof(Element));
+
+public ViewInfo ElementyView {
+    get {
+        var vi = new ViewInfo();
+        vi.CreateView += (_, args) => {
+            var view = Dokument.Elementy.CreateView();      // pokazuje też wiersze dodane w sesji formularza
+            view.NewRows = [.. args.Session.GetModul().Elementy.GetNewRowAttributes(),
+                            new WieleElementowNewRow()];
+            args.DataSource = view;
+        };
+        vi.Action += (_, args) => {
+            if (args.Action != ActionEventArgs.Actions.AddNew || args.NewRowAttribute is not WieleElementowNewRow)
+                return;                                     // pozostałe pozycje — standardowa ścieżka
+            args.FocusedData = QueryContextInformation
+                .Create<WieleElementowParams>(DodajWiele)   // handler zwraca null = bez formularza wiersza
+                .SetCaption("Dodaj wiele elementów");
+        };
+        return vi;
+    }
+}
+```
+
+- `RowType` podklasy = typ wiersza z formularzem, inaczej pozycja jest odrzucana; podklasa `[Serializable]`.
+- Domyślne pozycje tabeli: `GetNewRowAttributes()` tabeli — bez nich menu ma tylko własną pozycję.
+- Handler na formularzu edycji: zmiany w `Session.Logout(true)` + `CommitUI()`, **bez `Save`**
+  (zapisuje formularz); zwrot `null` = bez otwierania formularza wiersza. Wariant
+  `CreateForTypes(…)` + `AcceptHandler` — action-result.md.
+- Bez `SetCaption` tytuł okna parametrów to ogólne „Parametry”.
+- Grid przełącz z `EditValue="{Kolekcja}"` na `EditValue="{New Extender.ElementyView}"` (`/soneta:form-xml`).
+- Pozycje menu z `[assembly: NewRow]` — `/soneta:business-xml`, generated-classes.md.
 
 ---
 

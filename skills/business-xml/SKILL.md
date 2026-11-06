@@ -356,12 +356,12 @@ Klasę obiektu biznesowego i klasę tabeli umieszczaj w **osobnych plikach** (`Z
 ## Szczegółowa dokumentacja
 
 - **[references/modules-catalog.md](references/modules-catalog.md)** - katalog 34 modułów Soneta, tabele i interfejsy do relacji
-- **[references/table-reference.md](references/table-reference.md)** - kompletna dokumentacja atrybutów table i col
+- **[references/table-reference.md](references/table-reference.md)** - kompletna dokumentacja atrybutów table i col, nazwy kolumn SQL (subrow, typ złożony, relacja)
 - **[references/generated-classes.md](references/generated-classes.md)** - klasy biznesowe tworzone obok XML (Row/Table, konstruktory, selector, `[BusinessRow]`, `[NewRow]`)
 - **[references/relations-guide.md](references/relations-guide.md)** - tworzenie relacji między obiektami
 - **[references/rights-tree.md](references/rights-tree.md)** - pliki `*.rightstree.xml`: miejsce tabel w drzewie uprawnień, reguła korzenia praw, osadzanie jako zasób
 - **[references/examples.md](references/examples.md)** - przykłady z rzeczywistych modułów Soneta
-- **[references/konwersje.md](references/konwersje.md)** - skrypty `*.convert.sql`: atrybuty, kolumny polimorficzne, przepinanie wierszy, test konwersji
+- **[references/konwersje.md](references/konwersje.md)** - skrypty `*.convert.sql`: atrybuty, kolumny polimorficzne, przepinanie wierszy, test konwersji, inicjalizator `[assembly: DatabaseInit]`
 
 > Po zdefiniowaniu struktury danych w business.xml kolumny prezentuje się w formularzach
 > (elementy Field, Grid) — patrz skill `/soneta:form-xml` (ELEMENTS.md).
