@@ -86,8 +86,8 @@ Kompletne pliki do skopiowania: [references/examples.md](references/examples.md)
 |---------|------|
 | `Name` | Identyfikator elementu (dostępny w kodzie C#) |
 | `Class` | Klasy stylów (lista wartości oddzielonych spacją) |
-| `DataContext` | Zmienia kontekst danych dla elementu i elementów podrzędnych |
-| `Visibility` | Warunek widoczności (bindowalne): `true`/`false`/`{wyrażenie}` |
+| `DataContext` | Zmienia kontekst danych dla elementu i elementów podrzędnych — także dla jego własnych `Visibility`/`IsReadOnly`/`{…}` |
+| `Visibility` | Warunek widoczności (bindowalne): `true`/`false`/`{wyrażenie}` — liczony z **własnego** `DataContext` elementu |
 | `Renderable` | Czy element w ogóle powstaje — liczone **raz**, przy budowie układu (patrz niżej) |
 | `Width` | Szerokość **samego pola edycyjnego** w znakach lub px; `"*"` = wypełnij |
 | `LabelWidth` | Szerokość samej etykiety |
@@ -384,6 +384,9 @@ edytora:
 <!-- Dynamiczny element z kodu C# -->
 <Include Source="{DynamicznyFormularz}" />
 ```
+
+`Include` bez `Suffix` dokleja do nazw elementów `__incN` — element szukany po nazwie
+(np. `Bar Name="CaptionBar"`) wymaga `Suffix=""` ([references/ELEMENTS.md](references/ELEMENTS.md#include)).
 
 `Command` wywołuje metodę (`MethodName`) lub otwiera obiekt (`OpenMethodName`) z kontekstu —
 zwykle z extendera/workera. Co taka akcja zwraca (action result: zamknięcie okna, otwarcie

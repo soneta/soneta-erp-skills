@@ -253,6 +253,25 @@ są elementy z pliku. Modyfikatory: `addnew="true"` (tylko dopisywanie),
 `relationsimportmode="update"` (aktualizacja po GUID; elementy nieobecne w pliku są kasowane
 po zakończeniu), `fromto` (kasowanie ogranicza się do okresu).
 
+**`addnew` nie sprawdza duplikatów.** Element dopisany do kolekcji istniejącego rekordu
+(np. nowe narzędzie agenta AI obok dotychczasowych):
+
+```xml
+<Rekord guid="…">
+  <Pozycje addnew="true">
+    <Pozycja>…</Pozycja>
+  </Pozycje>
+</Rekord>
+```
+
+- Wiersz kolekcji bez guida dopisany drugi raz narusza klucz unikalny — import kończy się błędem.
+- Takiego wiersza nie wskażesz `key`/`where`: wyszukiwanie po kluczu wymaga pola na drugiej
+  pozycji relacji albo na pierwszej pozycji klucza tabeli.
+- Zmiana istniejącego elementu → podaj **całą kolekcję bez `addnew`**: import usunie dotychczasowe
+  wiersze bez guida i wczyta listę z pliku.
+- Dopisanie wierszy w bazach już istniejących, z pominięciem obecnych → inicjalizator w kodzie
+  (zob. *Pliki `*.dbinit.xml`* niżej).
+
 **Detale (wiersze podrzędne) zapisuj zagnieżdżone w rodzicu, bez guidów.** Tabele detali nie
 powinny być guidowane (guided to obiekty główne — zob. *datapack-guidedrow*
 w `/soneta:programming`), a wiersze **nieguidowane importowane top-level tworzą duplikaty** przy
@@ -344,6 +363,10 @@ i pułapki: `/soneta:programming`, artykuł *rights-source*). W dbinit/demo praw
 
 - Kolumny typu interfejsowego (`IEntitle`, `IRightsSource`) serializują się w formacie
   **`NazwaTypuWiersza:guid`**.
+- Kontekstem prawa (`IEntitle`) jest wyłącznie wiersz `Entitle` albo `SystemRole`:
+  `Entitle:{guid}` / `SystemRole:{guid}`. `Entitle` to operator (guid równy guidowi operatora),
+  uprawnienie grupowe albo operator pulpitów. Węzeł „Wszystkie dane” w drzewie praw nie jest
+  rekordem — nie da się go wskazać.
 - Standardowy **Entitle operatora Administrator** ma stały guid
   `00000000-0015-0001-0001-000000000000` — nadanie mu prawa w dbinit sprawia, że funkcja działa
   od razu na każdej nowej bazie (administrator i tak może nadać sobie wszystko).
@@ -447,7 +470,12 @@ regułami:
 - `dbversion` postawiony na `<session>` **nie jest czytany** — musi być na każdym rekordzie;
 - poprawka w kolejnej wersji to **patch**: ten sam `guid`, nowy `dbversion`, unikalny `id`
   (sufiks wersji), tylko zmienione pola, zwykle `updateonly="true"`; miejsce na kod klienta —
-  `insertonly="true"`. Konwencja plików: `Obiekt.dbinit.xml` + `Obiekt_RRMMDDPP.dbinit.xml`.
+  `insertonly="true"`. Konwencja plików: `Obiekt.dbinit.xml` + `Obiekt_RRMMDDPP.dbinit.xml`;
+- `dbversion` nowszy niż wersja bazy działa przy konwersji istniejącej bazy, ale **nie może
+  przekroczyć wersji programu**;
+- gdy plik XML nie wystarcza (dopisanie wierszy kolekcji bez duplikatów, warunek na danych bazy),
+  użyj inicjalizatora w kodzie `[assembly: DatabaseInit(…, AfterXml = true)]` z warunkiem na
+  wersji bazy — `/soneta:business-xml`, [konwersje.md](../../business-xml/references/konwersje.md#kod-po-konwersji--inicjalizator-assembly-databaseinit).
 
 Katalog wzorców wyniesionych z plików standardowych (słowniki, definicje dokumentów, zadania,
 cechy, szablony, konfiguracja, role i prawa, kokpity) z gotowymi szkieletami:
@@ -513,7 +541,7 @@ Zasady:
 - [ ] Pola zweryfikowane narzędziem `scan-props` (`/soneta:programming`): record-mode → tylko pola bazodanowe; business-mode → właściwości biznesowe.
 - [ ] Business-mode: kolejność elementów jak przy wpisywaniu na formularzu; stan dokumentu na końcu.
 - [ ] Referencje przenośne: GUID lub `where` po kodzie/symbolu; bez `#ID`.
-- [ ] Kolekcje: świadomy wybór zastąpienia (domyślne) vs `addnew` vs `relationsimportmode="update"`.
+- [ ] Kolekcje: świadomy wybór zastąpienia (domyślne) vs `addnew` vs `relationsimportmode="update"`; `addnew` z wierszami bez guida wczytany drugi raz = błąd unikalności.
 - [ ] Detale (wiersze podrzędne) bez guidów, zapisane **zagnieżdżone w rodzicu** (wrapper = nazwa kolekcji children); brak komentarzy XML wewnątrz elementów kolekcji.
 - [ ] Tabele z selectorem: element = typ bazowy wiersza, `class` przy podklasach, element kolumny selectora w każdym wierszu (zob. *Wiersze tabel z selektorem*).
 - [ ] Źródła praw (`IRightsSource`): rekord `<Right>` nadający prawo (zob. *Nadawanie praw obiektowych*).

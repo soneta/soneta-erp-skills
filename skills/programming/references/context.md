@@ -209,6 +209,23 @@ Do utworzenia obiektu użyj metody `Context.CreateObject<ObjectType>()`.
 * Atrybut `[Context<ParamType>("propertyName")]` lub `[Context(typeof(ParamType), "propertyName")]` pozwala na 
   wypełnienie property z obiektu parametru ze wskazanego property.
 
+**Kolejność dopasowania po typie** w `context.CreateObject(info, typ, data)` — dla parametru
+konstruktora i property z `[Context]`:
+1. obiekt `data`, gdy jego typ pasuje (`IsAssignableFrom`),
+2. wartość z `Context` (np. `Login`),
+3. dla interfejsów — usługa sesji (`IServiceProvider`).
+
+Gdy `data` to obiekt zbiorczy (np. kontekst wywołania), a konstruktor potrzebuje tylko jego
+właściwości, oznacz **parametr konstruktora** atrybutem ze ścieżką:
+
+```csharp
+public class MyWorker([Context<IMyCallContext>(nameof(IMyCallContext.Owner))] MyOwner owner) { … }
+```
+
+Wartość jest czytana z obiektu typu `T` (z `data` albo z kontekstu). Typ parametru ma pasować do
+**wartości w czasie wykonania**, nie do zadeklarowanego typu właściwości (property typu bazowego
+może zasilić parametr typu pochodnego).
+
 ### Przykład tworzenia obiektu `Osoba` z parametrów
 
 ```csharp

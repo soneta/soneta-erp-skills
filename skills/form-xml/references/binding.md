@@ -72,6 +72,11 @@ w projekcie `.UI` — osadza się automatycznie, jak inne formy (zob. wyżej *Os
   `GetListX()`) opisuje `/soneta:programming` (worker-extender).
 - Typowa zawartość: `Group` + `Grid` bindowany do widoku z extendera + standardowe komendy
   wierszy (Dodaj/Otwórz/Usuń) — grid otwiera formularze obiektów (pageformy `{Typ}.{Zakładka}`).
+- **Strona Opcji to formularz, nie folder listy** — worker zarejestrowany na tabelę
+  (`[assembly: Worker(typeof(X), typeof(Tabela))]`) nie pojawi się tu w menu czynności. Akcję
+  dodaj komendą w formularzu: `<Command CaptionHtml="…" MethodName="{new MojExtender()}.Metoda"/>`;
+  metoda zwracająca `MessageBoxInformation` pokazuje komunikat po wykonaniu
+  (`/soneta:programming`, action-result.md).
 
 ```xml
 <!-- Config.MojeDefinicje.pageform.xml (projekt .UI) -->
@@ -89,6 +94,7 @@ Checklista strony Opcji:
 - [ ] plik `Config.{Nazwa}.pageform.xml` w projekcie `.UI`
 - [ ] `CaptionHtml` z pełną ścieżką drzewa Opcji (człony `/`)
 - [ ] extender w `DataContext="{New …}"` dostarcza widoki list
+- [ ] akcje strony jako `<Command>` w formularzu, nie worker na tabelę
 - [ ] jeżeli obiekty konfiguracyjne są źródłami praw (`IRightsSource`) — prawa nadane przy
       tworzeniu bazy (`/soneta:programming` rights-source, `/soneta:config` import-xml)
 - [ ] weryfikacja wizualna na żywo: `get_configuration_folders "regexFilter=<nazwa>"` →
@@ -105,6 +111,23 @@ Checklista strony Opcji:
   `<Grid EditValue="{Pozycje}">` kolumna `<Field EditValue="{Cena}">` to `Pozycje` → element →
   `Cena`. Pełne ścieżki pól z rozwiniętym kontekstem (marker `[]` dla elementu kolekcji)
   wypisuje skaner **`scan-forms`** (`/soneta:programming`, references/scan-forms.md).
+
+**★ `Visibility` liczy się z własnego `DataContext` elementu.** `Visibility`, `IsReadOnly`
+i formattery `{…}` elementu z `DataContext="{new Extender}"` szukają właściwości w extenderze,
+nie w oknie. Gdy dzieci mają się wiązać z extenderem, a sam kontener bierze widoczność z kontekstu
+rodzica, ustaw extender w **`EditValue`** kontenera zamiast `DataContext`:
+
+```xml
+<Bar Name="ProfileInfoBar" EditValue="{new OperatorInfoExtender}" Visibility="{!IsZoom}">
+  <Label Name="UserName" CaptionHtml="{FullName}" />   <!-- FullName z extendera -->
+</Bar>                                                  <!-- IsZoom z okna -->
+```
+
+Dzieci dostają kontekst `EditValue ?? DataContext` rodzica — także dla `Renderable` liczonego przy
+budowie układu (`Renderable="{Image}"` w dzieciach trafia w extender).
+
+- [ ] Element ma własny `DataContext`? → jego `Visibility` nie widzi właściwości okna; extender
+      tylko dla dzieci → `EditValue` kontenera.
 
 **`{DataSource}` to obiekt sterujący oknem.** Zwykle jest to edytowany `Row`, ale równie dobrze
 może być klasa sterująca oknem narzędziowym/diagnostycznym. Wtedy pola (także filtry w pasku

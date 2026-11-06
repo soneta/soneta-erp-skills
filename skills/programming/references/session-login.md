@@ -391,6 +391,23 @@ using (var session = login.CreateSession(readOnly: false, config: false, name: "
 ### Obiekty single-threaded (NIE współdzielić)
 - `Session`, `Module`, `Table`, `Row`, `Context`
 
+### Równoległe logowania — świeży stan sesji w wątku roboczym
+
+Stan sesji operatora (`SessionState`) przechodzi do wątków uruchamianych z bieżącego kontekstu
+(`Task.Run`, `Task.Factory.StartNew`, kontynuacje `async`). Logowania (`Database.Login`)
+wykonywane równolegle z takich wątków współdzielą ten stan — także kontekst licencji — i wykonują
+się po kolei. Wątek roboczy pracujący na **własnym** loginie zaczynaj od świeżego stanu:
+
+```csharp
+_ = Task.Run(() => {
+    SessionState.ResetAttaching();
+    using (SessionState.Create().Attach()) {
+        using var login = database.Login(parameters);
+        // praca na osobnym loginie
+    }
+});
+```
+
 ```csharp
 // DOBRZE - Login można współdzielić, każdy wątek tworzy własną sesję
 Login sharedLogin = db.Login(new LoginParameters { UserName = "admin", UserPassword = "haslo" });
