@@ -4,10 +4,10 @@
     {
       "id": 1,
       "prompt": "Chcę zaplanować moduł do zarządzania szkoleniami pracowników. Firmy średnie i duże, kadry i HR. Moduł powinien umożliwiać planowanie szkoleń, rejestrację uczestników, śledzenie budżetu szkoleniowego i generowanie zaświadczeń. Zacznij od Etapu 1.",
-      "expected_output": "Dokument Etapu 1 (Wizja i kontekst biznesowy) zawierający sekcje 1.1-1.12, z uwzględnieniem integracji z modułami Kadry/HR, weryfikacją pokrycia przez standard platformy, priorytetyzacją funkcjonalności i scenariuszami użytkownika.",
+      "expected_output": "Dokument Etapu 1 (Wizja i kontekst biznesowy) zawierający sekcje 1.1-1.13, z uwzględnieniem integracji z modułami Kadry/HR, weryfikacją pokrycia przez standard platformy, priorytetyzacją funkcjonalności i scenariuszami użytkownika.",
       "files": [],
       "assertions": [
-        {"description": "Zawiera wszystkie 12 sekcji Etapu 1 (1.1 do 1.12)", "type": "structure"},
+        {"description": "Zawiera wszystkie 13 sekcji Etapu 1 (1.1 do 1.13)", "type": "structure"},
         {"description": "Sekcja 1.4 zawiera podział must-have / should-have / nice-to-have", "type": "content"},
         {"description": "Sekcja 1.5 przedstawia pokrycie zakresu przez standardowe funkcjonalności platformy (lub odsyła do otwartej kwestii, gdy brak środowiska)", "type": "content"},
         {"description": "Sekcja 1.6 zawiera konkretne scenariusze krok po kroku", "type": "content"},
@@ -24,7 +24,7 @@
       "expected_output": "Dokument Etapu 1 z naciskiem na integrację z istniejącymi modułami (Kadry, PracaHybrydowa, Kalend), weryfikacją pokrycia przez standard platformy, workflow zatwierdzania wniosków i raportowanie.",
       "files": [],
       "assertions": [
-        {"description": "Zawiera wszystkie 12 sekcji Etapu 1 (1.1 do 1.12)", "type": "structure"},
+        {"description": "Zawiera wszystkie 13 sekcji Etapu 1 (1.1 do 1.13)", "type": "structure"},
         {"description": "Sekcja 1.4 zawiera podział must-have / should-have / nice-to-have", "type": "content"},
         {"description": "Sekcja 1.5 przedstawia pokrycie zakresu przez standardowe funkcjonalności platformy (lub odsyła do otwartej kwestii, gdy brak środowiska)", "type": "content"},
         {"description": "Sekcja 1.6 zawiera konkretne scenariusze krok po kroku", "type": "content"},
@@ -41,7 +41,7 @@
       "expected_output": "Dokument Etapu 1 z opisem systemu benefitów, relacjami do modułu Kadry, weryfikacją pokrycia przez standard platformy, konfigurowalnością pakietów i rozliczaniem kosztów.",
       "files": [],
       "assertions": [
-        {"description": "Zawiera wszystkie 12 sekcji Etapu 1 (1.1 do 1.12)", "type": "structure"},
+        {"description": "Zawiera wszystkie 13 sekcji Etapu 1 (1.1 do 1.13)", "type": "structure"},
         {"description": "Sekcja 1.4 zawiera podział must-have / should-have / nice-to-have", "type": "content"},
         {"description": "Sekcja 1.5 przedstawia pokrycie zakresu przez standardowe funkcjonalności platformy (lub odsyła do otwartej kwestii, gdy brak środowiska)", "type": "content"},
         {"description": "Sekcja 1.6 zawiera konkretne scenariusze krok po kroku", "type": "content"},
@@ -49,6 +49,22 @@
         {"description": "Wspomina konkretne moduły lub tabele z istniejącego systemu Soneta (np. Kadry, Place)", "type": "content"},
         {"description": "Sekcja 1.7 definiuje procesy biznesowe", "type": "content"},
         {"description": "Sekcja 1.10 zawiera ryzyka z planem mitygacji", "type": "content"},
+        {"description": "Dokument jest w języku polskim", "type": "format"}
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Planujemy dodatek do rejestracji umów serwisowych z klientami (umowa z pozycjami usług, wartość, okres). Handlowcy chcą, żeby agent AI w programie wyszukiwał umowy i przygotowywał nowe umowy na podstawie maila od klienta, ale bez samodzielnego zatwierdzania. Etapy 1 i 2 są zatwierdzone. Opracuj sekcje Etapu 3 dotyczące agentów AI.",
+      "expected_output": "Sekcja 3.17 Etapu 3 z pakietem funkcji: tabela metod (odczyt i zapis umowy z pozycjami jako JsonElement[]), parametry pakietu z bezpiecznymi wartościami domyślnymi, kontrola zapisu (stan roboczy zatwierdzany przez operatora, tryb próbny, limit wartości), dziennik zmian, dane chronione; uzupełnienie 3.11 o prawa agentów i 3.13 o testy metod pakietu.",
+      "files": [],
+      "assertions": [
+        {"description": "Sekcja 3.17 zawiera tabelę metod z nazwami snake_case, rodzajem (odczyt/zapis), parametrami, wynikiem i wymaganym prawem", "type": "structure"},
+        {"description": "Pozycje umowy przyjmowane jako parametr złożony JsonElement[] ze schematem elementu i przykładem JSON", "type": "content"},
+        {"description": "Parametry pakietu (BundleSetting): zapis domyślnie wyłączony i limit wartości umowy", "type": "content"},
+        {"description": "Agent zapisuje umowę w stanie roboczym, zatwierdza operator (human in the loop); jest tryb próbny testing", "type": "content"},
+        {"description": "Operacje zapisu logowane w dzienniku zmian (ChangeInfoType.Bundle)", "type": "content"},
+        {"description": "Sekcja 3.11 wymienia prawa węzła Bundle (dane operacyjne, dane chronione) i prawo do pakietu", "type": "content"},
+        {"description": "Sekcja 3.13 planuje test integracyjny dla każdej metody pakietu", "type": "content"},
         {"description": "Dokument jest w języku polskim", "type": "format"}
       ]
     }

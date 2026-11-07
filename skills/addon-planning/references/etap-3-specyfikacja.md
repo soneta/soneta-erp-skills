@@ -12,6 +12,7 @@ Na tym etapie pytania dotyczą szczegółów poszczególnych obiektów. Pracuj o
 - Czy któryś algorytm zależy od równoległej pracy innych stanowisk? (np. ciągła numeracja, rezerwacja, limit → transakcja serwerowa, 3.8)
 - Jakie wydruki i raporty?
 - Kto ma dostęp do czego?
+- Które metody udostępnić agentom AI, z jakimi parametrami i limitami zapisu? (→ pakiety funkcji, 3.17)
 - Czy moduł wymaga danych konfiguracyjnych zainicjowanych w bazie od razu po instalacji? (słowniki, definicje dokumentów, role, ustawienia domyślne → dane inicjujące, 3.14)
 
 ## Sekcje dokumentu Etapu 3
@@ -132,6 +133,8 @@ Uszczegółowienie procesów z sekcji 1.7:
   wpis dostaje każdy obiekt niedziedziczący praw po obiekcie nadrzędnym (skill
   `/soneta:business-xml`, `references/rights-tree.md`). Bez tego prawa modułu trafią do zbiorczej
   gałęzi „Dodatki".
+- **Prawa agentów AI** (gdy moduł ma pakiety funkcji, 3.17) — które role mają prawo do każdego
+  pakietu oraz prawa węzła Bundle: „Dane operacyjne”, „Dane konfiguracyjne”, „Dane chronione”.
 
 ### 3.12. Integracje szczegółowe
 Uszczegółowienie integracji z sekcji 2.5 i 2.6:
@@ -147,7 +150,9 @@ Testy integracyjne pisze się na prawdziwej bazie (nie na mockach) — patrz ski
   - każdy **worker** i proces w tle (3.7),
   - każdy **algorytm obiektu biznesowego** i inny nietrywialny algorytm (3.7),
   - każdy **weryfikator** — że blokuje/przepuszcza zapis zgodnie z poziomem ważności (3.6),
-  - każda **logika w transakcji serwerowej** — poprawność przy zależności międzystanowiskowej (3.8).
+  - każda **logika w transakcji serwerowej** — poprawność przy zależności międzystanowiskowej (3.8),
+  - każda **metoda pakietu funkcji** — wynik, bramka przy parametrach domyślnych, limity zapisu,
+    tryb próbny, wpis w dzienniku zmian (3.17).
 - **Testy funkcjonalne** — scenariusze pokrywające ścieżki z sekcji 1.6 (kroki, dane wejściowe, oczekiwany rezultat).
 - **Testy współpracy** — integracja z innymi modułami platformy i systemami zewnętrznymi.
 - **Testy wydajnościowe** — weryfikacja założeń z sekcji 2.8 (wolumeny, czasy odpowiedzi).
@@ -182,3 +187,44 @@ do **każdej** bazy z zainstalowanym dodatkiem.
 
 ### 3.16. Słownik terminów
 Definicje kluczowych terminów biznesowych i technicznych, szczególnie przy modułach domenowych (kontroling, logistyka), gdzie terminologia bywa niejednoznaczna lub branżowa.
+
+### 3.17. Pakiety funkcji dla agentów AI (MCP)
+Uszczegółowienie sekcji 2.10; gdy nie dotyczy — odnotuj to jawnie. Implementacja i zasady:
+skill `/soneta:programming` (`bundles-mcp.md`).
+
+**Pakiet:** nazwa klasy, etykieta (`Caption`), wymagana licencja modułu (`Contexts`), czy ma
+własne prawo w rolach.
+
+**Metody** — tabela na pakiet:
+
+| Metoda | Tytuł | Rodzaj | Parametry | Wynik | Prawo | Bramka |
+|--------|-------|--------|-----------|-------|-------|--------|
+| `search_umowy` | Wyszukaj umowy | odczyt | `kontrahent?: string`, `okres?: string`, `limit: int = 15` | lista CSV `id\|numer\|data\|wartosc` + `count`, `truncated` | dane operacyjne — odczyt | — |
+| `save_umowa` | Zapisz umowę roboczą | zapis | `id?: string`, `pozycje: JsonElement[]`, `testing: bool` | umowa + `saved` | dane operacyjne — pełne | `AllowsWrite` |
+
+- **Nazwa metody** `snake_case`, unikalna w całym programie (prefiks domeny lub dodatku).
+- **Typy parametrów:** `string`, `string[]`, `int`, `int[]`, `bool`, enum, `JsonElement[]`.
+  Kwoty i daty jako tekst w formacie niezmiennym.
+- **Parametry złożone** (`JsonElement[]`) — dla każdego podaj schemat elementu z przykładem JSON
+  i regułą operacji na kolekcji (dodanie / zmiana po kluczu / usunięcie).
+- **Wynik** — pola, nagłówek CSV listy, identyfikatory obiektów, ostrzeżenia, limit wyników.
+- **Komunikaty błędów** — główne przypadki odmowy i podpowiedź dla agenta, co zrobić.
+
+**Parametry pakietu** ustawiane przez operatora w definicji agenta:
+
+| Parametr | Typ | Wartość domyślna (bezpieczna) | Etykieta | Skutek |
+|----------|-----|-------------------------------|----------|--------|
+| `AllowsWrite` | bool | `false` | Zapis umów | odblokowuje `save_umowa` |
+| `MaxWartosc` | decimal | `10 000` | Limit wartości | zapis ponad limit odrzucony |
+
+**Kontrola zapisu i human in the loop** — dla każdej metody zapisu: stan, w którym zostaje obiekt
+(roboczy/bufor), kto i gdzie go zatwierdza, limity, tryb próbny `testing`.
+
+**Dziennik zmian** — które metody logują operację (`ChangeInfoType.Bundle`), co trafia do opisu
+(agent, metoda) i do danych (argumenty bez zbędnych danych osobowych).
+
+**Dane chronione** — pola modułu chronione prawem prostym (getter: prawo → oznaczenie odczytu),
+wartości wyniku maskowane dla agenta bez zgody (dostawca niezaufany albo brak prawa „Dane
+chronione”).
+
+> Każda metoda pakietu wymaga **testu integracyjnego** (patrz sekcja 3.13).

@@ -17,6 +17,7 @@ Cel: określić **jak** moduł będzie zbudowany — role, dane, interfejs, inte
 - Jakie dane z istniejących modułów Soneta będą wykorzystywane? *(jeśli jeszcze nie zeskanowano — zeskanuj moduły narzędziem `scan-modules` — patrz `dane-referencyjne.md`)*
 - Czy moduł integruje się z systemami zewnętrznymi?
 - Czy klient ma dane do migracji?
+- Jeśli moduł obsługują agenci AI (1.13): które obszary udostępnić, jak kontrolować zapis, które dane są chronione? (→ 2.10)
 
 ## Sekcje dokumentu Etapu 2
 
@@ -63,3 +64,23 @@ Dane do importu (kartoteki, dokumenty historyczne, salda), źródła (inne ERP, 
 
 ### 2.9. Kierunki rozwoju
 Przyszłe funkcjonalności poza zakresem bieżącej wersji (o ile taki rozwój jest planowany).
+
+### 2.10. Udostępnienie modułu agentom AI (pakiety funkcji)
+Wypełnij, gdy sekcja 1.13 przewiduje agentów AI; inaczej odnotuj „nie dotyczy”. Agent korzysta
+z metod **pakietów funkcji** (bundle) — mechanizm opisuje skill `/soneta:programming`
+(`bundles-mcp.md`).
+
+- **Co daje standard** — standardowe pakiety platformy już czytają listy i pola obiektów,
+  wyszukują obiekty, importują i eksportują dane. Własny pakiet planuj tylko dla operacji
+  dziedzinowych: zapisu złożonych obiektów (dokument z pozycjami), obliczeń modułu, zwięzłego
+  odczytu dla agenta.
+- **Podział na pakiety** — jeden pakiet = spójny obszar (np. „Odczyt umów”, „Rejestracja umów”).
+  Każdy pakiet ma własne prawo w rolach i własną licencję; operator dodaje pakiety do agenta
+  osobno. Zapis oddziel od odczytu, jeśli różne role mają dostawać różne zestawy.
+- **Model kontroli zapisu (human in the loop)** — dla każdego scenariusza zapisu z 1.13: stan
+  roboczy zatwierdzany przez operatora, tryb próbny bez zapisu, parametry operatora (zapis
+  wyłączony domyślnie, limity kwot i liczby obiektów).
+- **Dane chronione** — które obiekty i pola modułu są danymi chronionymi (prawo proste); agent
+  bez zgody dostaje je zamaskowane.
+- **Audyt** — które operacje agenta trafiają do dziennika zmian.
+- **Licencje** — licencja modułu AI oraz licencja modułu dziedzinowego, od której zależy pakiet.
