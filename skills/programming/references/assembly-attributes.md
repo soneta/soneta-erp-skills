@@ -3,7 +3,7 @@
 `AssemblyAttributes` (namespace `Soneta.Tools`) to centralne narzędzie do **odczytu atrybutów
 z załadowanych assembly** w czasie działania programu. Używa się go wszędzie tam, gdzie trzeba
 odkryć rejestracje rozsiane po modułach i dodatkach: `[BusinessRow]`, `[NewRow]`, `[Worker<…>]`,
-`[FolderView]`, `[McpServer]` i własne atrybuty rejestrujące. Mechanizm jest **cache'owany**, więc
+`[FolderView]`, `[Bundle]` i własne atrybuty rejestrujące. Mechanizm jest **cache'owany**, więc
 można go wołać na bieżąco.
 
 > Różnica względem skryptów `scan-*` (patrz `scan-modules.md` itd.): `scan-*` czytają **metadane
@@ -17,15 +17,15 @@ Większość rejestracji w Soneta to atrybuty **assembly-level** dziedziczące p
 
 ```csharp
 // wszystkie atrybuty typu T (i pochodnych) ze wszystkich załadowanych assembly
-McpServerAttribute[] servers = AssemblyAttributes.GetCustom<McpServerAttribute>();
+BundleAttribute[] bundles = AssemblyAttributes.GetCustom<BundleAttribute>();
 
 // z filtrem
-var chat = AssemblyAttributes.GetCustom<McpServerAttribute>(a => a.Target == McpServerTargets.Chat);
+var system = AssemblyAttributes.GetCustom<BundleAttribute>(a => a.Target == BundleTargets.System);
 ```
 
 - **Cache per typ atrybutu** — pierwszy odczyt skanuje assembly (równolegle), kolejne wracają
   z cache. Własny cache jest zbędny.
-- Dla atrybutów dziedziczących po **`PriorityAttribute`** (m.in. `[NewRow]`, `[McpServer]`) wynik
+- Dla atrybutów dziedziczących po **`PriorityAttribute`** (m.in. `[NewRow]`, `[Bundle]`) wynik
   jest **posortowany wg `Priority`** (mniejsza wartość = wyżej).
 - Każdy `AssemblyAttribute` niesie `attr.Assembly` — assembly (dodatek), z którego pochodzi rejestracja.
 - Zbierane są wyłącznie atrybuty z namespace `Soneta.*`.
@@ -36,7 +36,7 @@ var chat = AssemblyAttributes.GetCustom<McpServerAttribute>(a => a.Target == Mcp
 
 ### Kolejność wyników a `PriorityAttribute`
 
-Wiele atrybutów rejestrujących dziedziczy po **`PriorityAttribute`** (m.in. `[NewRow]`, `[McpServer]`).
+Wiele atrybutów rejestrujących dziedziczy po **`PriorityAttribute`** (m.in. `[NewRow]`, `[Bundle]`).
 Gdy `T` jest takim typem, `GetCustom<T>()` zwraca wynik **posortowany rosnąco wg `Priority`** —
 **mniejsza wartość = wcześniej**. To często **steruje kolejnością przetwarzania** (np. kolejnością
 pozycji w menu, kolejnością uruchamiania rejestracji).
@@ -74,5 +74,5 @@ foreach (Assembly asm in AssemblyAttributes.GetAssemblies())          { ... } //
 - **Discovery podtypów selektora** — zebranie `[BusinessRow]` i zbudowanie mapy `selector → typ`
   (patrz [row-types.md](row-types.md)).
 - **Pozycje menu „Nowy"** — `[NewRow]` posortowane wg `Priority`.
-- **Pakiety funkcji MCP** — `[McpServer]` z `Target == Chat` (patrz projekt modułu Agents).
+- **Pakiety funkcji MCP** — `[Bundle]` (patrz [bundles-mcp.md](bundles-mcp.md)).
 - **Inwentaryzacja dodatków** — które rejestracje pochodzą z którego assembly (`attr.Assembly`).

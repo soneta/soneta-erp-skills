@@ -136,6 +136,7 @@ Każdy wzorzec (`HANDEL-Wn`) ma stałą strukturę:
 - [`safe-code.md`](../safe-code.md) — sesja, transakcje, blokada optymistyczna, zasady bezpiecznego kodu.
 - [`session-login.md`](../session-login.md) — `Session`, `Login`, `Database`.
 - [`worker-extender.md`](../worker-extender.md) — workery, akcje menu Czynności, bindowanie.
+- [`bundles-mcp-przyklad.md`](../bundles-mcp-przyklad.md) — pakiet funkcji MCP dla agentów AI: wyszukiwanie, odczyt i zapis dokumentu z pozycjami.
 - [`rowcondition.md`](../rowcondition.md) — serwerowy LINQ, `RowCondition`, `SubTable[condition]`.
 - [`features.md`](../features.md) — cechy (`Features`), typy, dostęp typowany/nietypowany.
 - [`datapack-guidedrow.md`](../datapack-guidedrow.md) — eksport/import, `GuidedRow`.

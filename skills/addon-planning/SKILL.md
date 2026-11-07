@@ -6,7 +6,7 @@ description: >
   /soneta:business-xml, /soneta:form-xml i /soneta:programming. Używaj, gdy użytkownik
   chce zaplanować nowy moduł lub dodatek — partnerski albo standardowy moduł platformy
   tworzony przez zespół Soneta (założenia, specyfikacja funkcjonalna,
-  struktura danych i interfejsu użytkownika).
+  struktura danych i interfejsu użytkownika, udostępnienie funkcji agentom AI).
 ---
 
 # Planowanie projektu modułu/dodatku Soneta
@@ -109,13 +109,14 @@ Po zamknięciu wszystkich etapów wygeneruj dokument TODO z kolejnymi krokami:
 - [ ] Weryfikatory — walidacja danych wprowadzanych przez operatora (→ skill `/soneta:programming`, `verifiers.md`)
 - [ ] Workery i czynności (→ skill `/soneta:programming`, `worker-extender.md`)
 - [ ] Algorytmy w transakcji serwerowej — logika zależna od równoległej pracy stanowisk (→ skill `/soneta:programming`, `events.md`)
+- [ ] Pakiety funkcji dla agentów AI (sekcja 3.17) — metody MCP, parametry operatora, limity zapisu, dziennik zmian, dane chronione (→ skill `/soneta:programming`, `bundles-mcp.md`)
 - [ ] Raporty i wydruki
 - [ ] Procesy Workflow
 - [ ] Wskaźniki i wykresy BI
 - [ ] Uprawnienia i role
 - [ ] Integracje z innymi systemami
 - [ ] Baza Demo i dane demonstracyjne
-- [ ] **Testy integracyjne** — dla każdego workera, każdego algorytmu obiektu biznesowego, każdego weryfikatora i każdej logiki w transakcji serwerowej (→ skill `/soneta:programming`, `integration-tests.md`)
+- [ ] **Testy integracyjne** — dla każdego workera, każdego algorytmu obiektu biznesowego, każdego weryfikatora, każdej logiki w transakcji serwerowej oraz każdej metody pakietu funkcji (→ skill `/soneta:programming`, `integration-tests.md`)
 - [ ] Dokumentacja użytkownika i techniczna
 
 ## Powiązanie z innymi skillami
@@ -125,4 +126,4 @@ Już podczas planowania korzystasz z narzędzi inwentaryzacyjnych: `scan-modules
 Po zatwierdzeniu planu projektu:
 1. **`/soneta:business-xml`** — generowanie pliku business.xml na podstawie modelu danych z Etapu 3 (sekcje 3.1–3.3).
 2. **`/soneta:form-xml`** — generowanie formularzy i widoków UI na podstawie sekcji 3.4 i 3.5.
-3. **`/soneta:programming`** — implementacja logiki biznesowej i testów; dokumenty właściwe dla poszczególnych obszarów Etapu 3 wskazują strzałki (→) przy pozycjach dokumentu TODO powyżej.
+3. **`/soneta:programming`** — implementacja logiki biznesowej, pakietów funkcji dla agentów AI (sekcja 3.17, `bundles-mcp.md`) i testów; dokumenty właściwe dla poszczególnych obszarów Etapu 3 wskazują strzałki (→) przy pozycjach dokumentu TODO powyżej.

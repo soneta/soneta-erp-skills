@@ -10,7 +10,9 @@ description: >
   Context, RowCondition, Datapack, ViewInfo, Features, thread-safety; (3) prosi o code review kodu
   biznesowego Soneta (safe-code); (4) pisze worker, extender, akcję w menu Czynności, folder/listę;
   (5) inwentaryzuje moduły, pola, workery lub formularze/zakładki z bibliotek DLL; (6) zaczyna nowy
-  dodatek — szkielet z CLI (`dotnet new soneta-addon`, Soneta.MsBuild.SDK). Sięgnij też, gdy inny
+  dodatek — szkielet z CLI (`dotnet new soneta-addon`, Soneta.MsBuild.SDK); (7) udostępnia metody
+  agentom AI przez MCP — pakiet funkcji `[Bundle]`/`[BundleMethod]`, `BundleRights`, `BundleSetting`,
+  dane chronione `ProtectedState`. Sięgnij też, gdy inny
   skill potrzebuje warstwy ORM/kodu biznesowego Soneta.
 ---
 
@@ -45,6 +47,7 @@ SKILL.md zawiera "duży obraz" - hierarchię klas, thread-safety, kanoniczne wzo
 | Weryfikatory - walidacja spójności danych (`Verifier`, `RowVerifier<T>`, `ColVerifier<T>`, `MultiColVerifier<T>`, `RequiredVerifier`), poziomy `Error`/`Warning`/`Information`, uzbrajanie na zmianę pól-źródeł (`Session.Verifiers.Add`, `<verifier>` w business.xml), blokada `Save()` przy błędzie | [references/verifiers.md](references/verifiers.md) |
 | Eventy (zdarzenia sesji) - odraczanie ciężkich obliczeń i logika w transakcji serwerowej: **sesyjne** (`Session.Events`, odpalane na `CommitUI`/`Save`/`Invoke`) vs **serwerowe** (`Session.ServerEvents`, w transakcji `Save` — numeracja). Rejestracja `Add(handler[, args])`, dedup po `Equals`/`GetHashCode`, wymuszanie `Invoke(handler)`, argumenty (`BusEventArgs`, `RowEventArgs<TRow>`, `SessionBusEventArgs`), priorytety, transakcyjność | [references/events.md](references/events.md) |
 | Źródła praw (`IRightsSource`) - obiekt sterujący dostępem do danych operacyjnych, `AccessRight`, `Login.GetObjectRight`; nowe źródło domyślnie Denied, `AccessDeniedException` przy odczycie kolumn bez prawa, nadawanie praw i cache ról; prawa proste `SimpleRight`. **Miejsce tabeli w drzewie uprawnień** (pliki `*.rightstree.xml`, reguła korzenia praw, relacje `relright`/`relguided`) → skill `/soneta:business-xml` | [references/rights-source.md](references/rights-source.md) |
+| **Pakiety funkcji (bundle) — metody MCP dla agentów AI** — rejestracja `[assembly: Bundle<T>]`, `[BundleMethod]`/`[Description]`/`[Required]`, typy parametrów i parametry złożone (`JsonElement[]`), wynik (DTO, `[BundleCsv]`, `BundleLimit`, identyfikatory `ObjectIds`), prawa `BundleRights`, parametry operatora `[BundleSetting]` + bramki `IsVisible_`, kontrola zapisu (limity kwot), human in the loop, dziennik `ChangeInfoType.Bundle`, dane chronione (`ProtectedState`, RODO, zaufani dostawcy AI); przykład dokumentu handlowego z pozycjami: [references/bundles-mcp-przyklad.md](references/bundles-mcp-przyklad.md) | [references/bundles-mcp.md](references/bundles-mcp.md) |
 | Notacja klamrowa (`AccessorFormatter`) - wstawki `{ścieżka}` / `{ścieżka:format}` w captionach, szablonach, promptach; metadane modeli (`ApplicationInfo`, `TableInfo`) | [references/metadata-formatting.md](references/metadata-formatting.md) |
 | Gotowe wzorce kodu end-to-end (import, CRUD, obsługa błędów)                                      | [references/examples.md](references/examples.md) |
 | Receptury kodu per obiekt biznesowy (domena CRM) — `Kontrahent` (pola, kolekcje, workery, finanse, RODO, KSeF). Indeks + mapa receptur (CRM-W1–W18); rozdziały `references/domeny/crm/CRM01..CRM10` | [references/domeny/crm.md](references/domeny/crm.md) |

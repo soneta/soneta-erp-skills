@@ -21,6 +21,7 @@ Zacznij od ogólnej idei, potem doprecyzowuj. Zadawaj 2–4 pytania na raz i dos
 - Jakie procesy biznesowe realizuje moduł?
 - Czy są ograniczenia techniczne, prawne, licencyjne?
 - Jakie moduły platformy Soneta będą wykorzystywane?
+- Czy użytkownicy mają pracować z modułem przez agenta AI (czat w programie, agent lokalny)? Co agent ma robić samodzielnie, a co tylko proponować? (→ 1.13)
 
 ## Weryfikacja pokrycia przez standard platformy
 
@@ -53,7 +54,7 @@ Podział na:
 - **Ważne (should-have)** — istotne, ale moduł może działać bez nich w v1.
 - **Opcjonalne (nice-to-have)** — kolejne wersje.
 
-Te funkcjonalności będą rozwijane w Etapie 2 (architektura) i Etapie 3 (specyfikacja szczegółowa, sekcje 3.1–3.16).
+Te funkcjonalności będą rozwijane w Etapie 2 (architektura) i Etapie 3 (specyfikacja szczegółowa, sekcje 3.1–3.17).
 
 ### 1.5. Pokrycie przez standardowe funkcjonalności platformy
 Wynik weryfikacji z sekcji „Weryfikacja pokrycia przez standard platformy". Dla kluczowych funkcjonalności z sekcji 1.4 wskaż, na ile realizuje je już standard:
@@ -85,3 +86,16 @@ Mierzalne kryteria gotowości: funkcjonalne (scenariusze, które muszą działa�
 
 ### 1.12. Harmonogram i kamienie milowe
 Ramowy harmonogram: fazy projektu (planowanie, MVP, testy, pilotaż, produkcja), kamienie milowe (zatwierdzenie specyfikacji, gotowość MVP, koniec testów integracyjnych, wdrożenie pilotażowe, wersja produkcyjna), zależności czasowe (powiązane z sekcją 1.9). Charakter orientacyjny — służy do ogólnego planowania zasobów.
+
+### 1.13. Obsługa przez agentów AI
+Czy klienci mają obsługiwać moduł przez agentów AI (narzędzia MCP). Jeśli nie — odnotuj „nie
+dotyczy” i pomiń sekcję. Jeśli tak, opisz językiem korzyści:
+- **Scenariusze agenta** — co agent robi dla użytkownika: wyszukuje i analizuje dane, przygotowuje
+  propozycję (np. dokument do akceptacji), zapisuje dane.
+- **Poziom autonomii** dla każdego scenariusza: tylko odczyt / propozycja bez zapisu / zapis
+  roboczy zatwierdzany przez człowieka / zapis samodzielny w limitach ustalonych przez klienta.
+- **Dane wrażliwe** — czy agent zetknie się z danymi osobowymi, wynagrodzeniami, danymi objętymi
+  tajemnicą. Takie dane agent widzi jawnie tylko u zaufanego dostawcy AI (wymóg RODO).
+- **Licencje** — agenci wymagają licencji modułu AI (enova365, poza wersją okienkową).
+
+Szczegóły techniczne: Etap 2 (2.10) i Etap 3 (3.17).

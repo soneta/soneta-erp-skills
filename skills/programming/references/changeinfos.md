@@ -42,6 +42,8 @@ Wpis powstaje w bieżącej transakcji (`Session.Logout`) i trafia do bazy przy `
 Enum `ChangeInfoType` zawiera m.in.: `Created`, `Modified`, `Deleted`, `Accepted`, `Login`,
 `Logout`, `Imported`, `Exported`, oraz wartości dziedzinowe/integracyjne. Dla własnego rodzaju
 zdarzenia użyj odpowiedniej istniejącej wartości lub zdefiniowanej dla danej funkcji.
+Operacje wykonane przez agenta AI w pakiecie funkcji loguj typem `ChangeInfoType.Bundle`
+(identyfikator agenta w `Info`, argumenty w `Data`) — [bundles-mcp.md](bundles-mcp.md) §9.
 
 ## Prezentacja na liście
 
