@@ -105,6 +105,9 @@ public class Oceny : OcenyModule.OcenaTable {
   `Login.CurrentRole == null` i `AuthorizationInfo.Operator == null`. Kod praw w `CalcReadOnly`/
   `OnDeleting` bez `?.` rzuca `NullReferenceException`. Brak operatora traktuj jako kontekst
   systemowy (pełny dostęp) — szczegóły importu: `/soneta:config` → `references/demo-data.md`.
+- **Pole chronione przed agentami AI:** po pozytywnym sprawdzeniu prawa prostego getter woła
+  `ProtectedState.Mark()` — agent bez zgody na dane chronione dostaje `***`. Prawa węzła Bundle
+  (`BundleRights`) i zasady maskowania: [bundles-mcp.md](bundles-mcp.md) §6 i §10.
 
 ## Checklista — moduł ze źródłem praw
 
